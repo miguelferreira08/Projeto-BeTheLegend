@@ -1,0 +1,750 @@
+{
+  "checks": [
+    {
+      "label": "1440: palette workbook loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: menu language option",
+      "passed": true,
+      "detail": [
+        "CONTINUAR CARREIRA",
+        "Nova carreira",
+        "Meu Legado",
+        "Som / Trilha sonora",
+        "Contato",
+        "Linguagem"
+      ]
+    },
+    {
+      "label": "1440: no horizontal overflow",
+      "passed": true,
+      "detail": {
+        "scroll": 1440,
+        "width": 1440
+      }
+    },
+    {
+      "label": "1440: language overlay opens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: en translation",
+      "passed": true,
+      "detail": "LANGUAGE"
+    },
+    {
+      "label": "1440: en document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: es translation",
+      "passed": true,
+      "detail": "IDIOMA"
+    },
+    {
+      "label": "1440: es document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: fr translation",
+      "passed": true,
+      "detail": "LANGUE"
+    },
+    {
+      "label": "1440: fr document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: pt-BR translation",
+      "passed": true,
+      "detail": "LINGUAGEM"
+    },
+    {
+      "label": "1440: pt-BR document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: language overlay closes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: layout remains responsive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: palette UEFA Champions League",
+      "passed": true,
+      "detail": "#071B49"
+    },
+    {
+      "label": "1440: palette UEFA Europa League",
+      "passed": true,
+      "detail": "#F26A21"
+    },
+    {
+      "label": "1440: palette UEFA Conference League",
+      "passed": true,
+      "detail": "#17A96B"
+    },
+    {
+      "label": "1440: palette Brasileirão Série B",
+      "passed": true,
+      "detail": "#021B79"
+    },
+    {
+      "label": "1440: palette 2. Bundesliga",
+      "passed": true,
+      "detail": "#CC1825"
+    },
+    {
+      "label": "1440: palette LaLiga",
+      "passed": true,
+      "detail": "#EF3340"
+    },
+    {
+      "label": "1440: palette Ligue 1",
+      "passed": true,
+      "detail": "#0057F8"
+    },
+    {
+      "label": "1440: site-wide source color",
+      "passed": true,
+      "detail": "#071B49"
+    },
+    {
+      "label": "1440: team does not override competition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: career card text clears portrait",
+      "passed": true,
+      "detail": {
+        "ok": true,
+        "face": 937.234375,
+        "name": 966.03125
+      }
+    },
+    {
+      "label": "1440: career layout responsive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: trophy alongside competition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1440: penalty layout fits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: palette workbook loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: menu language option",
+      "passed": true,
+      "detail": [
+        "CONTINUAR CARREIRA",
+        "Nova carreira",
+        "Meu Legado",
+        "Som / Trilha sonora",
+        "Contato",
+        "Linguagem"
+      ]
+    },
+    {
+      "label": "1024: no horizontal overflow",
+      "passed": true,
+      "detail": {
+        "scroll": 1024,
+        "width": 1024
+      }
+    },
+    {
+      "label": "1024: language overlay opens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: en translation",
+      "passed": true,
+      "detail": "LANGUAGE"
+    },
+    {
+      "label": "1024: en document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: es translation",
+      "passed": true,
+      "detail": "IDIOMA"
+    },
+    {
+      "label": "1024: es document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: fr translation",
+      "passed": true,
+      "detail": "LANGUE"
+    },
+    {
+      "label": "1024: fr document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: pt-BR translation",
+      "passed": true,
+      "detail": "LINGUAGEM"
+    },
+    {
+      "label": "1024: pt-BR document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: language overlay closes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: layout remains responsive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: palette UEFA Champions League",
+      "passed": true,
+      "detail": "#071B49"
+    },
+    {
+      "label": "1024: palette UEFA Europa League",
+      "passed": true,
+      "detail": "#F26A21"
+    },
+    {
+      "label": "1024: palette UEFA Conference League",
+      "passed": true,
+      "detail": "#17A96B"
+    },
+    {
+      "label": "1024: palette Brasileirão Série B",
+      "passed": true,
+      "detail": "#021B79"
+    },
+    {
+      "label": "1024: palette 2. Bundesliga",
+      "passed": true,
+      "detail": "#CC1825"
+    },
+    {
+      "label": "1024: palette LaLiga",
+      "passed": true,
+      "detail": "#EF3340"
+    },
+    {
+      "label": "1024: palette Ligue 1",
+      "passed": true,
+      "detail": "#0057F8"
+    },
+    {
+      "label": "1024: site-wide source color",
+      "passed": true,
+      "detail": "#071B49"
+    },
+    {
+      "label": "1024: team does not override competition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: career card text clears portrait",
+      "passed": true,
+      "detail": {
+        "ok": true,
+        "face": 707.609375,
+        "name": 728.078125
+      }
+    },
+    {
+      "label": "1024: career layout responsive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: trophy alongside competition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "1024: penalty layout fits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: palette workbook loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: menu language option",
+      "passed": true,
+      "detail": [
+        "CONTINUAR CARREIRA",
+        "Nova carreira",
+        "Meu Legado",
+        "Som / Trilha sonora",
+        "Contato",
+        "Linguagem"
+      ]
+    },
+    {
+      "label": "768: no horizontal overflow",
+      "passed": true,
+      "detail": {
+        "scroll": 768,
+        "width": 768
+      }
+    },
+    {
+      "label": "768: language overlay opens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: en translation",
+      "passed": true,
+      "detail": "LANGUAGE"
+    },
+    {
+      "label": "768: en document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: es translation",
+      "passed": true,
+      "detail": "IDIOMA"
+    },
+    {
+      "label": "768: es document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: fr translation",
+      "passed": true,
+      "detail": "LANGUE"
+    },
+    {
+      "label": "768: fr document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: pt-BR translation",
+      "passed": true,
+      "detail": "LINGUAGEM"
+    },
+    {
+      "label": "768: pt-BR document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: language overlay closes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: layout remains responsive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: palette UEFA Champions League",
+      "passed": true,
+      "detail": "#071B49"
+    },
+    {
+      "label": "768: palette UEFA Europa League",
+      "passed": true,
+      "detail": "#F26A21"
+    },
+    {
+      "label": "768: palette UEFA Conference League",
+      "passed": true,
+      "detail": "#17A96B"
+    },
+    {
+      "label": "768: palette Brasileirão Série B",
+      "passed": true,
+      "detail": "#021B79"
+    },
+    {
+      "label": "768: palette 2. Bundesliga",
+      "passed": true,
+      "detail": "#CC1825"
+    },
+    {
+      "label": "768: palette LaLiga",
+      "passed": true,
+      "detail": "#EF3340"
+    },
+    {
+      "label": "768: palette Ligue 1",
+      "passed": true,
+      "detail": "#0057F8"
+    },
+    {
+      "label": "768: site-wide source color",
+      "passed": true,
+      "detail": "#071B49"
+    },
+    {
+      "label": "768: team does not override competition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: career card text clears portrait",
+      "passed": true,
+      "detail": {
+        "ok": true,
+        "face": 358.484375,
+        "name": 374.484375
+      }
+    },
+    {
+      "label": "768: career layout responsive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: trophy alongside competition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "768: penalty layout fits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: palette workbook loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: menu language option",
+      "passed": true,
+      "detail": [
+        "CONTINUAR CARREIRA",
+        "Nova carreira",
+        "Meu Legado",
+        "Som / Trilha sonora",
+        "Contato",
+        "Linguagem"
+      ]
+    },
+    {
+      "label": "390: no horizontal overflow",
+      "passed": true,
+      "detail": {
+        "scroll": 390,
+        "width": 390
+      }
+    },
+    {
+      "label": "390: language overlay opens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: en translation",
+      "passed": true,
+      "detail": "LANGUAGE"
+    },
+    {
+      "label": "390: en document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: es translation",
+      "passed": true,
+      "detail": "IDIOMA"
+    },
+    {
+      "label": "390: es document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: fr translation",
+      "passed": true,
+      "detail": "LANGUE"
+    },
+    {
+      "label": "390: fr document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: pt-BR translation",
+      "passed": true,
+      "detail": "LINGUAGEM"
+    },
+    {
+      "label": "390: pt-BR document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: language overlay closes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: layout remains responsive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: palette UEFA Champions League",
+      "passed": true,
+      "detail": "#071B49"
+    },
+    {
+      "label": "390: palette UEFA Europa League",
+      "passed": true,
+      "detail": "#F26A21"
+    },
+    {
+      "label": "390: palette UEFA Conference League",
+      "passed": true,
+      "detail": "#17A96B"
+    },
+    {
+      "label": "390: palette Brasileirão Série B",
+      "passed": true,
+      "detail": "#021B79"
+    },
+    {
+      "label": "390: palette 2. Bundesliga",
+      "passed": true,
+      "detail": "#CC1825"
+    },
+    {
+      "label": "390: palette LaLiga",
+      "passed": true,
+      "detail": "#EF3340"
+    },
+    {
+      "label": "390: palette Ligue 1",
+      "passed": true,
+      "detail": "#0057F8"
+    },
+    {
+      "label": "390: site-wide source color",
+      "passed": true,
+      "detail": "#071B49"
+    },
+    {
+      "label": "390: team does not override competition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: career card text clears portrait",
+      "passed": true,
+      "detail": {
+        "ok": true,
+        "face": 161.234375,
+        "name": 177.234375
+      }
+    },
+    {
+      "label": "390: career layout responsive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: trophy alongside competition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "390: penalty layout fits",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: palette workbook loaded",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: menu language option",
+      "passed": true,
+      "detail": [
+        "CONTINUAR CARREIRA",
+        "Nova carreira",
+        "Meu Legado",
+        "Som / Trilha sonora",
+        "Contato",
+        "Linguagem"
+      ]
+    },
+    {
+      "label": "320: no horizontal overflow",
+      "passed": true,
+      "detail": {
+        "scroll": 320,
+        "width": 320
+      }
+    },
+    {
+      "label": "320: language overlay opens",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: en translation",
+      "passed": true,
+      "detail": "LANGUAGE"
+    },
+    {
+      "label": "320: en document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: es translation",
+      "passed": true,
+      "detail": "IDIOMA"
+    },
+    {
+      "label": "320: es document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: fr translation",
+      "passed": true,
+      "detail": "LANGUE"
+    },
+    {
+      "label": "320: fr document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: pt-BR translation",
+      "passed": true,
+      "detail": "LINGUAGEM"
+    },
+    {
+      "label": "320: pt-BR document lang",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: language overlay closes",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: layout remains responsive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: palette UEFA Champions League",
+      "passed": true,
+      "detail": "#071B49"
+    },
+    {
+      "label": "320: palette UEFA Europa League",
+      "passed": true,
+      "detail": "#F26A21"
+    },
+    {
+      "label": "320: palette UEFA Conference League",
+      "passed": true,
+      "detail": "#17A96B"
+    },
+    {
+      "label": "320: palette Brasileirão Série B",
+      "passed": true,
+      "detail": "#021B79"
+    },
+    {
+      "label": "320: palette 2. Bundesliga",
+      "passed": true,
+      "detail": "#CC1825"
+    },
+    {
+      "label": "320: palette LaLiga",
+      "passed": true,
+      "detail": "#EF3340"
+    },
+    {
+      "label": "320: palette Ligue 1",
+      "passed": true,
+      "detail": "#0057F8"
+    },
+    {
+      "label": "320: site-wide source color",
+      "passed": true,
+      "detail": "#071B49"
+    },
+    {
+      "label": "320: team does not override competition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: career card text clears portrait",
+      "passed": true,
+      "detail": {
+        "ok": true,
+        "face": 138.484375,
+        "name": 154.484375
+      }
+    },
+    {
+      "label": "320: career layout responsive",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: trophy alongside competition",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "label": "320: penalty layout fits",
+      "passed": true,
+      "detail": null
+    }
+  ],
+  "errors": []
+}

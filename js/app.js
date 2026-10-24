@@ -7,7 +7,7 @@ const HALL_RESET_V104_KEY = 'beTheLegendV104HallReset';
 const LEGACY_STORAGE_KEY = 'careerSimV7';
 const LEGACY_V103_CLAIM_KEY = 'beTheLegendV103LegacyClaimed';
 const LEGACY_V95_FOR_MIGRATION = window.BTLAuth?.getCurrentAccount?.() && !localStorage.getItem(LEGACY_V103_CLAIM_KEY) ? localStorage.getItem('beTheLegendV95') : null;
-const BADGE_KEY = 'beTheLegendBadgeCacheV19Official';
+const BADGE_KEY = 'beTheLegendBadgeCacheV20Verified';
 const DRAFT_KEY = 'beTheLegendV92AttributeDraft';
 const PREVIOUS_DRAFT_KEY = 'beTheLegendV91AttributeDraft';
 
@@ -54,8 +54,16 @@ const DEFAULT_THEME = {accent:'#42e88d',secondary:'#f4f7f5',bg:'#071016',panel:'
 
 function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 function saveBadges(){ localStorage.setItem(BADGE_KEY, JSON.stringify(badgeCache)); }
+const badBadgeUrls=new Set();
+const badgeRequestsInFlight=new Map();
+function dropBadgeUrl(url){
+  if(!url)return;badBadgeUrls.add(url);
+  for(const [key,stored] of Object.entries(badgeCache))if(stored===url)delete badgeCache[key];
+  saveBadges();
+}
+
 function badgeCacheKeys(name,countryCode=''){ const code=countryCode||canonicalClubCountryCode(name,''); return [code?`${code}:${name}`:name]; }
-function getCachedBadge(name,countryCode=''){ for(const key of badgeCacheKeys(name,countryCode)){ const hit=safeBadgeImage(badgeCache?.[key]||''); if(hit)return hit; } return ''; }
+function getCachedBadge(name,countryCode=''){ for(const key of badgeCacheKeys(name,countryCode)){ const hit=safeBadgeImage(badgeCache?.[key]||''); if(hit&&!badBadgeUrls.has(hit))return hit; } return ''; }
 function setCachedBadge(name,countryCode='',url=''){ const safe=safeBadgeImage(url); if(!safe)return ''; for(const key of badgeCacheKeys(name,countryCode)) badgeCache[key]=safe; saveBadges(); return safe; }
 // V16: FIFA/ESPN/API-Sports never supply visible club crests.
 // Only Wikimedia Commons file CDN images may enter the badge cache.
@@ -1071,7 +1079,7 @@ function fallbackTrophyDataUri(name='Título'){
   const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" rx="18" fill="#0e171d"/><path d="M33 20h30v8c0 11-6 21-15 27-9-6-15-16-15-27v-8zm-8 6h8v7c0 4-3 8-8 8-4 0-7-4-7-8 0-4 3-7 7-7zm46 0h8c4 0 7 3 7 7 0 4-3 8-7 8-5 0-8-4-8-8v-7zM42 55h12v10h10v7H32v-7h10V55z" fill="#f2c94c"/><text x="48" y="84" text-anchor="middle" fill="#eef3f5" font-size="8" font-family="Orbitron, Arial, sans-serif">${label}</text></svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
-const commonsMisses=new Set();
+const commonsMisses=new Map();
 const commonsInFlight=new Map();
 const COMMONS_ENDPOINT='https://commons.wikimedia.org/w/api.php';
 const COMMONS_CLUB_ALIASES={
@@ -1084,6 +1092,7 @@ const commonsMetaKey='btl-wikimedia-credits-v15';
 function commonsScore(title,club){
  const normalized=x=>stripDiacritics(String(x||'').replace(/^File:/i,'').replace(/\.(svg|png|webp)$/i,'').replace(/\b(logo|escudo|badge|crest|new|official|football|club|2024|2025|2026)\b/gi,' ')).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
  const file=normalized(title),key=normalized(club),tokens=key.split(' ').filter(x=>x.length>2),parts=file.split(' ');
+ if(/\b(old|former|historic|historical|retro|vintage|deprecated|defunct)\b/i.test(title))return -1;
  if(!tokens.length)return -1;if(file===key)return 100;
  return tokens.every(x=>parts.includes(x))?82-Math.max(0,parts.length-tokens.length)*4:-1;
 }
@@ -1096,8 +1105,8 @@ function safeBadgeImage(url){
   const validExt=/\.(svg|png|webp|jpg|jpeg)(?:$|\?)/i.test(u.pathname);
   if(!validExt)return '';
   if(host==='upload.wikimedia.org')return u.href;
-  if(host.endsWith('thesportsdb.com'))return u.href;
-  if(host.endsWith('api-sports.io')||host.endsWith('media.api-sports.io'))return u.href;
+  if(host==='thesportsdb.com'||host.endsWith('.thesportsdb.com'))return u.href;
+  if(host==='api-sports.io'||host.endsWith('.api-sports.io'))return u.href;
   return '';
  }catch{return ''}
 }
@@ -1108,7 +1117,7 @@ function recordCommonsAttribution(club,result){
  try{const records=JSON.parse(localStorage.getItem(commonsMetaKey)||'{}');records[club]={filePage:result.filePage||result.page||'',license:result.license||'Consultar a página do arquivo',credit:result.credit||'',matchedFile:result.matchedFile||''};localStorage.setItem(commonsMetaKey,JSON.stringify(records))}catch(_){}
 }
 async function commonsCrest(name){
- if(!name||commonsMisses.has(name))return '';
+ if(!name||(commonsMisses.get(name)||0)>Date.now())return '';
  if(commonsInFlight.has(name))return commonsInFlight.get(name);
  const promise=(async()=>{
   try{
@@ -1125,7 +1134,7 @@ async function commonsCrest(name){
    }
    const url=safeCommonsImage(result?.logo||'');if(url){recordCommonsAttribution(name,result);return url;}
   }catch(_){}
-  commonsMisses.add(name);return '';
+  commonsMisses.set(name,Date.now()+900000);return '';
  })();commonsInFlight.set(name,promise);
  try{return await promise}finally{commonsInFlight.delete(name)}
 }
@@ -1173,27 +1182,70 @@ async function sportsDbBadge(name,countryCode=''){
 async function apiSportsBadge(name){
  try{
   const code=canonicalClubCountryCode(name,'');const country=countryByCode(code)?.apiName||countryByCode(code)?.name||'';
-  const r=await fetch(`/api/club-badge?name=${encodeURIComponent(name)}${country?`&country=${encodeURIComponent(country)}`:''}`,{signal:AbortSignal.timeout(4500)});
+  const apiId=Number(findClubData(name,code)?.apiId||findClubDataAny(name)?.apiId||0);
+  const idQuery=Number.isInteger(apiId)&&apiId>0?`&id=${apiId}`:'';
+  const r=await fetch(`/api/club-badge?name=${encodeURIComponent(name)}${country?`&country=${encodeURIComponent(country)}`:''}${idQuery}`,{signal:AbortSignal.timeout(4500)});
   if(!r.ok)return '';
   const data=await r.json();
   return safeBadgeImage(data?.logo||'');
  }catch(_){return ''}
 }
 const missingOfficialCrests=new Set();
-window.BTLCrestDiagnostics=()=>({unresolved:[...missingOfficialCrests].sort((a,b)=>a.localeCompare(b,'pt-BR')),verifiedCacheCount:Object.keys(badgeCache).filter(x=>safeBadgeImage(badgeCache[x])).length});
-async function exactClubBadge(name,countryCode=''){
+window.BTLCrestDiagnostics=()=>({unresolved:[...missingOfficialCrests].sort((a,b)=>a.localeCompare(b,'pt-BR')),verifiedCacheCount:Object.keys(badgeCache).filter(x=>safeBadgeImage(badgeCache[x])).length,brokenUrlCount:badBadgeUrls.size,source:'API-Sports / TheSportsDB / Wikimedia Commons / Wikidata'});
+async function wikidataCrest(name,countryCode=''){
+  const aliases=[name,...(CLUB_BADGE_ALIASES[name]||[]),COMMONS_CLUB_ALIASES[name],CURRENT_EUROPE_LOGO_NAMES[name]].filter(Boolean);
+  for(const alias of [...new Set(aliases)].slice(0,2)){
+    try{
+      const url=new URL('https://www.wikidata.org/w/api.php');
+      Object.entries({action:'wbsearchentities',format:'json',search:alias,language:'en',type:'item',limit:'5',origin:'*'}).forEach(([key,val])=>url.searchParams.set(key,val));
+      const result=await fetch(url.href,{signal:AbortSignal.timeout(4100)});if(!result.ok)continue;
+      const body=await result.json();
+      const q=(body.search||[]).find(item=>{
+        const label=normalizeKey(item.label||''),aliasKey=normalizeKey(alias),nameKey=normalizeKey(name);
+        const kind=String(item.description||'').toLowerCase();
+        return (label===aliasKey||label===nameKey)&&/football|soccer|futebol|fútbol/i.test(kind);
+      });
+      if(!q?.id)continue;
+      const entityURL=new URL('https://www.wikidata.org/w/api.php');
+      Object.entries({action:'wbgetentities',format:'json',ids:q.id,props:'claims',origin:'*'}).forEach(([key,val])=>entityURL.searchParams.set(key,val));
+      const entityRequest=await fetch(entityURL.href,{signal:AbortSignal.timeout(4300)});if(!entityRequest.ok)continue;
+      const entity=(await entityRequest.json()).entities?.[q.id];
+      const filename=entity?.claims?.P154?.[0]?.mainsnak?.datavalue?.value;
+      if(typeof filename!=='string'||!/\.(png|svg|webp)$/i.test(filename))continue;
+      const commonsURL=new URL('https://commons.wikimedia.org/w/api.php');
+      Object.entries({action:'query',format:'json',titles:'File:'+filename,prop:'imageinfo',iiprop:'url',iiurlwidth:'220',origin:'*'}).forEach(([key,val])=>commonsURL.searchParams.set(key,val));
+      const fileRequest=await fetch(commonsURL.href,{signal:AbortSignal.timeout(4500)});if(!fileRequest.ok)continue;
+      const pages=Object.values((await fileRequest.json()).query?.pages||{});
+      const logo=safeCommonsImage(pages[0]?.imageinfo?.[0]?.thumburl||pages[0]?.imageinfo?.[0]?.url||'');
+      if(logo&&!badBadgeUrls.has(logo))return logo;
+    }catch(_){/* Wikidata unavailable */}
+  }
+  return '';
+}
+async function exactClubBadge(name,countryCode='',excludeUrls=new Set()){
  if(!name)return '';
  const code=countryCode||canonicalClubCountryCode(name,'');
  const cached=getCachedBadge(name,code);
- if(cached)return cached;
- const apiSports=await apiSportsBadge(name);
- if(apiSports)return setCachedBadge(name,code,apiSports);
- const sportsDb=await sportsDbBadge(name,code);
- if(sportsDb)return setCachedBadge(name,code,sportsDb);
- const commons=await commonsCrest(name);
- if(commons){missingOfficialCrests.delete(`${code}:${name}`);return setCachedBadge(name,code,commons);}
- missingOfficialCrests.add(`${code}:${name}`);
- return '';
+ if(cached&&!excludeUrls.has(cached))return cached;
+ const flightKey=`${code}:${name}:${excludeUrls.size}`;
+ if(badgeRequestsInFlight.has(flightKey))return badgeRequestsInFlight.get(flightKey);
+ const job=(async()=>{
+   // Query trusted providers in parallel to avoid the cumulative latency of multiple unavailable services.
+   const validate=async loader=>{
+     const url=safeBadgeImage(await loader());
+     if(url&&!badBadgeUrls.has(url)&&!excludeUrls.has(url))return url;
+     throw Error('No verified candidate');
+   };
+   try{return await Promise.any([
+     validate(()=>apiSportsBadge(name)),
+     validate(()=>commonsCrest(name)),
+     validate(()=>sportsDbBadge(name,code))
+   ]);}catch(_){}
+   try{return await validate(()=>wikidataCrest(name,code))}catch(_){}
+   missingOfficialCrests.add(`${code}:${name}`);
+   return '';
+ })();badgeRequestsInFlight.set(flightKey,job);
+ try{return await job}finally{badgeRequestsInFlight.delete(flightKey)}
 }
 
 function clubBadgeSources(name,exact=''){
@@ -1924,13 +1976,19 @@ function themedCompetitionContext(){
   if(p?.clubLeague)return {competition:p.clubLeague,type:'league'};
   return {competition:'Be The Legend',type:'generic'};
 }
-function competitionThemeForName(name=''){
+function competitionThemeForName(name='',countryCode=''){
+  const workbookTheme=window.BTLCompetitionPalettes?.theme(name,countryCode);
+  if(workbookTheme)return workbookTheme;
   const hit=COMPETITION_THEME_PRESETS.find(entry=>entry.test.test(name||''));
   if(hit)return hit.theme;
   return {key:'default',accent:'#56ffc9',secondary:'#eefcff',tertiary:'#72c7ff',alt:'#b8ffea',bg:'#07111d',panel:'#0d1b2d',panel2:'#13243b',border:'#345064',buttonText:'#f6fffb',angle:124};
 }
 function applyThemeTokens(theme,competitionLabel=''){
   const root=document.documentElement;
+  root.style.setProperty('--competition-primary',theme.primary||theme.accent);
+  root.style.setProperty('--competition-secondary',theme.secondary||theme.accent);
+  root.style.setProperty('--competition-tertiary',theme.tertiary||theme.alt||theme.accent);
+  root.style.setProperty('--competition-panel',theme.panel||'#101b30');
   root.style.setProperty('--green',theme.accent);
   root.style.setProperty('--volt',theme.accent);
   root.style.setProperty('--cyan',theme.secondary||theme.accent);
@@ -1966,7 +2024,7 @@ function applyThemeTokens(theme,competitionLabel=''){
 }
 function applyCompetitionExperienceTheme(context=themedCompetitionContext()){
   const competitionLabel=context?.competition||'';
-  const theme=competitionThemeForName(competitionLabel);
+  const theme=competitionThemeForName(competitionLabel,context?.countryCode||state.player?.clubCountry||'');
   applyThemeTokens(theme,competitionLabel);
   const current=document.body.dataset.competitionTheme||'';
   if(theme.key && current!==theme.key){
@@ -1978,7 +2036,32 @@ function applyCompetitionExperienceTheme(context=themedCompetitionContext()){
   }
 }
 async function resolveClubBadge(name,countryCode=''){ const exact=await exactClubBadge(name,countryCode); return safeBadgeImage(exact)||''; }
-async function hydrateBadge(img,name,fallback,countryCode=''){ if(!img)return; const exact=await exactClubBadge(name,countryCode); applyImageSources(img,clubBadgeSources(name,exact),fallback); }
+async function hydrateBadge(img,name,fallback,countryCode=''){
+ if(!img||!name)return;
+ const seq=String((Number(img.dataset.badgeSequence||'0')+1));img.dataset.badgeSequence=seq;
+ const code=countryCode||canonicalClubCountryCode(name,'');
+ const rejected=new Set();
+ async function next(){
+   const candidate=await exactClubBadge(name,code,rejected);
+   if(img.dataset.badgeSequence!==seq||!img.isConnected)return;
+   if(!candidate){img.classList.add('hidden');fallback?.classList.remove('hidden');return;}
+   img.onerror=()=>{
+     if(img.dataset.badgeSequence!==seq)return;
+     rejected.add(candidate);dropBadgeUrl(candidate);
+     next();
+   };
+   img.onload=()=>{
+     if(img.dataset.badgeSequence!==seq)return;
+     setCachedBadge(name,code,candidate);
+     missingOfficialCrests.delete(`${code}:${name}`);
+     img.classList.remove('hidden');fallback?.classList.add('hidden');
+     polishSiteImage(img);
+   };
+   img.decoding='async';img.src=candidate;
+   if(img.complete&&img.naturalWidth)img.onload();
+ }
+ await next();
+}
 function clubCrestMarkup(name,countryCode=''){
   const cached=getCachedBadge(name,countryCode);
   const safe=esc(name||'Clube');

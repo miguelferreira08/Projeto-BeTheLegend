@@ -1,0 +1,49 @@
+/* Competition-first interface, bold game HUD, responsive text hierarchy */
+:root{--competition-primary:#071B49;--competition-secondary:#fff;--competition-tertiary:#46A1F8;--btl-v20-edge:color-mix(in srgb,var(--competition-tertiary) 48%,#2f415b)}
+html,body{max-width:100%;}
+body{background:linear-gradient(140deg,#050b16,color-mix(in srgb,var(--competition-primary) 22%,#040913) 65%,#070d19)!important}
+body::before{background:
+ radial-gradient(ellipse 58vw 65vh at 80% 0%,color-mix(in srgb,var(--competition-primary) 24%,transparent),transparent 86%),
+ radial-gradient(ellipse 50vw 60vh at 12% 90%,color-mix(in srgb,var(--competition-tertiary) 10%,transparent),transparent 84%),
+ repeating-linear-gradient(90deg,transparent 0 98px,rgba(255,255,255,.024) 99px,transparent 100px),
+ linear-gradient(130deg,#070e1b,#050912 70%,#070e1b)!important}
+body.career-mode{background:linear-gradient(135deg,#080d16,color-mix(in srgb,var(--competition-primary) 23%,#050915))!important}
+.topbar{background:color-mix(in srgb,var(--competition-primary) 18%,#09101d)!important}
+.btl-game-hud{background:color-mix(in srgb,var(--competition-primary) 29%,#060b16)!important}
+.panel,.home-career-slot,.form-grid,.modal-card{border-color:color-mix(in srgb,var(--competition-primary) 26%,var(--arena-outline))!important}
+#home.game-home{background:radial-gradient(ellipse 70vw 59vh at 77% 26%,color-mix(in srgb,var(--competition-primary) 36%,transparent),transparent 83%)!important}
+.football-menu-option{border-color:color-mix(in srgb,var(--competition-tertiary) 28%,#344152)!important}
+.football-menu-option.primary-option{background:linear-gradient(110deg,color-mix(in srgb,var(--competition-primary) 58%,#172b3b),#0a1424)!important;border-color:var(--competition-tertiary)!important}
+.btl-season-banner{background:linear-gradient(90deg,color-mix(in srgb,var(--competition-primary) 45%,#0d1b2c),transparent)!important}
+.game-home-main{align-items:stretch!important}
+.home-career-slot{background:linear-gradient(145deg,color-mix(in srgb,var(--competition-primary) 25%,#0a1624),#081425 72%,color-mix(in srgb,var(--competition-tertiary) 8%,#0a1220))!important}
+.home-career-slot-head{font-size:clamp(10px,.9vw,14px)!important}
+.home-career-player h2{font-size:clamp(23px,2.3vw,34px)!important;font-weight:900!important;color:#f7fbff!important;line-height:1.15!important}
+.home-career-player>div:last-child{min-width:0!important}
+.home-career-stats>span{background:color-mix(in srgb,var(--competition-primary) 22%,#0b1729)!important}
+.home-career-stats b{font-size:clamp(23px,2.3vw,34px)!important}
+.home-career-slot::after{opacity:.28}
+#home-language-btn .football-menu-number{color:var(--competition-tertiary)!important}
+/* Promote action titles; remove micro-descriptions without hiding safety guidance or forms. */
+.football-menu-copy b{font-size:clamp(12px,1.22vw,17px)!important}
+#home .game-brand-kicker,.game-brand-lockup h1{filter:drop-shadow(0 0 14px color-mix(in srgb,var(--competition-tertiary) 18%,transparent))}
+#home .home-career-stats small,.btl-hud-club small{font-size:10px!important}
+.view.page .page-head h2{font-weight:900!important;color:#f3faff!important}
+.profile-card #p-name,.next-match #match-title,.career-event-card #event-title{font-weight:900!important;text-shadow:0 4px 24px color-mix(in srgb,var(--competition-primary) 30%,transparent)}
+#event-modal .event-choice-content small,#match-decision-modal .visual-choice small{display:none!important}
+#home-career-meta,#home-career-progress-label{display:none!important}
+/* Language settings as an in-game overlay, not a browser dropdown */
+.language-modal-card{width:min(560px,calc(100vw - 24px));max-height:calc(100dvh - 32px);padding:clamp(20px,3.5vw,34px)!important;border:1px solid var(--arena-outline)!important;border-radius:18px!important;overflow:auto;background:linear-gradient(155deg,color-mix(in srgb,var(--competition-primary) 25%,#0d1b2c),#080f1c)!important;box-shadow:0 36px 96px #000a!important}
+.language-modal-head{display:flex;align-items:center;gap:16px;margin-bottom:25px}.language-modal-head h2{margin:4px 0!important;font-size:clamp(19px,3vw,28px)!important;font-weight:900!important}.language-globe{width:58px;height:58px;display:grid;place-items:center;font-size:32px;border:1px solid var(--arena-outline);border-radius:14px;color:var(--arena-accent);background:rgba(255,255,255,.045)}
+.language-modal-head>div{flex:1;min-width:0}.language-modal-head .eyebrow{margin:0!important}
+.language-close{width:38px;height:38px;border-radius:12px;background:#111a2b!important;border:1px solid var(--arena-outline)!important;color:#fff!important}
+.language-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin-bottom:24px}
+.language-option{display:flex;align-items:center;gap:9px;min-height:76px;padding:14px 12px;border-radius:12px;background:#101b2d!important;border:1px solid #34445b!important;color:#edf6ff!important;font-size:12px;font-weight:800;text-align:left}
+.language-option:hover,.language-option.selected{background:color-mix(in srgb,var(--arena-accent) 14%,#101b2d)!important;border-color:var(--arena-accent)!important}
+.language-option>span{font-family:system-ui,sans-serif!important;font-size:28px}.language-option b{flex:1;min-width:0;overflow-wrap:anywhere}.language-option i{font-style:normal;color:var(--arena-accent);opacity:0}.language-option.selected i{opacity:1}
+#language-modal-done{width:100%;height:48px!important}
+@media(max-width:440px){.language-grid{grid-template-columns:1fr}.language-option{min-height:59px}.language-modal-head{gap:12px}.language-globe{width:50px;height:50px}}
+/* screen-fill without horizontal scrolling */
+@media(min-width:1280px){#home .game-home-shell{max-width:min(1800px,calc(100vw - 64px))!important}#home.game-home{padding-inline:clamp(30px,4.5vw,90px)!important}.game-home-main{grid-template-columns:minmax(0,1.07fr) minmax(0,.93fr)!important;gap:clamp(22px,3vw,44px)!important}}
+@media(max-width:780px){.game-home-main{grid-template-columns:minmax(0,1fr)!important}.home-career-slot{min-height:0!important}.home-career-player{grid-template-columns:92px minmax(0,1fr)!important}.home-career-player h2{font-size:clamp(17px,4.5vw,24px)!important}}
+@media(max-width:350px){.football-menu-copy b{font-size:10px!important}.home-career-stats>span{padding:14px 4px!important}.home-career-stats b{font-size:19px!important}}

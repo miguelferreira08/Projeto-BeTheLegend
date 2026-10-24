@@ -20,6 +20,7 @@
   <link rel="stylesheet" href="css/v15-studio.css?v=15.0.0">
   <link rel="stylesheet" href="css/v16-finish.css?v=16.0.0">
   <link rel="stylesheet" href="css/v17-game-ui.css?v=17.0.0">
+<link rel="stylesheet" href="css/v20-polish.css?v=20.0.0">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" role="dialog" aria-modal="true" aria-labelledby="auth-title">
@@ -176,6 +177,11 @@
               <span class="football-menu-number"><svg class="menu-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7M7 16h5"/></svg></span>
               <span class="football-menu-copy"><b>Contato</b></span>
               <span class="football-menu-arrow">✉</span>
+            </button>
+
+            <button class="football-menu-option" id="home-language-btn" type="button" aria-haspopup="dialog">
+              <span class="football-menu-number"><svg class="menu-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c-4 5-4 13 0 18M12 3c4 5 4 13 0 18"/></svg></span>
+              <span class="football-menu-copy"><b>Linguagem</b></span><span class="football-menu-arrow">◎</span>
             </button>
           </nav>
 
@@ -903,6 +909,20 @@
   </div>
   <div id="toast" class="toast"></div>
 
+
+  <div id="language-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="language-modal-title">
+    <div class="modal-card language-modal-card">
+      <div class="language-modal-head"><span class="language-globe">◎</span><div><p class="eyebrow">MENU / SETTINGS</p><h2 id="language-modal-title">Linguagem</h2></div><button type="button" id="language-modal-close" class="language-close" aria-label="Fechar">✕</button></div>
+      <div class="language-grid" role="group" aria-label="Selecionar idioma">
+        <button type="button" data-language="pt-BR" class="language-option"><span>🇧🇷</span><b>Português</b><i>✓</i></button>
+        <button type="button" data-language="en" class="language-option"><span>🇺🇸</span><b>English</b><i>✓</i></button>
+        <button type="button" data-language="es" class="language-option"><span>🇪🇸</span><b>Español</b><i>✓</i></button>
+        <button type="button" data-language="fr" class="language-option"><span>🇫🇷</span><b>Français</b><i>✓</i></button>
+      </div>
+      <button type="button" class="primary" id="language-modal-done">Confirmar</button>
+    </div>
+  </div>
+
   <script src="js/google-auth-config.js?v=11.0.0"></script>
   <script src="js/crest-config.js?v=12.0.0"></script>
   <script src="js/auth.js?v=11.0.0"></script>
@@ -911,7 +931,9 @@
   <script src="js/roster-expansion-2026.js?v=14.0.0"></script>
   <script src="js/rosters.js?v=14.0.0"></script>
   <script src="js/competition-trophy-data.js?v=19.0.0"></script>
-  <script src="js/app.js?v=19.0.0"></script>
+  <script src="js/competition-palettes.js?v=20.0.0"></script>
+  <script src="js/app.js?v=20.0.0"></script>
+  <script src="js/i18n.js?v=20.0.0"></script>
   <script src="js/commons-credits.js?v=15.0.0"></script>
 </body>
 </html>

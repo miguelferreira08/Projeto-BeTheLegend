@@ -18,14 +18,14 @@ const aliases={
 };
 export async function onRequestGet({request,env}){
  const params=new URL(request.url).searchParams;
- const name=(params.get('name')||'').trim(), country=(params.get('country')||'').trim();
+ const name=(params.get('name')||'').trim(), country=(params.get('country')||'').trim(), teamId=Number(params.get('id')||0);
  if(country.length>70||/[^\p{L} .'-]/u.test(country))return Response.json({error:'País inválido'},{status:400});
  if(name.length<2||name.length>90)return Response.json({error:'Clube inválido'},{status:400});
  if(!env?.API_FOOTBALL_KEY)return Response.json({configured:false,logo:''},{status:503,headers:{'Cache-Control':'no-store'}});
  const queries=[name,...(aliases[name]||[])];
  try{
-   for(const q of queries){
-     const url='https://v3.football.api-sports.io/teams?search='+encodeURIComponent(q);
+   for(const q of (Number.isInteger(teamId)&&teamId>0&&teamId<100000000?[String(teamId),...queries]:queries)){
+     const url='https://v3.football.api-sports.io/teams?'+(q===String(teamId)?'id=':'search=')+encodeURIComponent(q);
      const controller=new AbortController(); const timer=setTimeout(()=>controller.abort(),5500);
      try{
        const r=await fetch(url,{headers:{'x-apisports-key':env.API_FOOTBALL_KEY,Accept:'application/json'},signal:controller.signal});
