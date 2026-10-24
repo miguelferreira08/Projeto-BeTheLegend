@@ -1,0 +1,109 @@
+/* Be The Legend v11 — tema "Gramado & Giz". Carregado depois de style.css.
+   Fonte: coloque os arquivos da Thursthipp em assets/fonts/ (veja README-Jersey-M54.txt). */
+
+@font-face{font-family:'Jersey M54';src:url('../assets/fonts/Jersey%20M54.ttf') format('truetype'),url('../assets/fonts/JerseyM54.ttf') format('truetype'),url('../assets/fonts/Jersey-M54.ttf') format('truetype'),local('Jersey M54'),local('JerseyM54');font-weight:100 900;font-style:normal;font-display:swap}
+
+:root{
+  --btl-display-font:'Jersey M54','BTL Unisportion','UT Unisportion FC Demo',system-ui,sans-serif!important;
+  --bg:#07291f;--panel:#0c3a2c;--panel2:#104634;--border:#2c6b54;--text:#f1f5ea;--muted:#a3c7b4;
+  --green:#ffd23f;--green2:#e6b800;--button-text:#1d1600;--theme-flash:#ffd23f;--red:#ff5a4d;--gold:#ff9f1c;
+  --giz:#f1f5ea;--tinta:#0b2a1f;--faixa-a:#0b3a2c;--faixa-b:#093125;
+}
+html body,html body *{font-family:var(--btl-display-font)!important}
+html body .national-flag-image b,html body .btl-select-flag,html body .btl-select-option-flag{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif!important}
+
+/* Fundo: gramado cortado em faixas */
+html body{background:linear-gradient(180deg,rgba(0,0,0,.3),transparent 32%,rgba(0,0,0,.38)),repeating-linear-gradient(90deg,var(--faixa-a) 0 96px,var(--faixa-b) 96px 192px)!important;background-attachment:fixed!important;color:var(--text)}
+html body .football-menu-option,html body .home-career-slot,html body .modal-card,html body .legend-draw-card{border-color:rgba(241,245,234,.22)!important}
+
+/* Menu: ícones no lugar da numeração */
+html body .football-menu-number{display:grid;place-items:center;width:46px;height:46px;border-radius:12px;background:rgba(241,245,234,.09);color:var(--text)}
+html body .football-menu-number svg{width:23px;height:23px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html body .football-menu-option:hover .football-menu-number,html body .football-menu-option.primary-option .football-menu-number{background:var(--green);color:var(--button-text)}
+
+/* Posições: sigla + mini-campo com a posição marcada */
+.pos-ico{display:block;width:16px;height:22px;fill:none;stroke:currentColor;stroke-width:1.3;stroke-opacity:.55}
+.pos-ico .dot{fill:var(--green);stroke:none}
+html body .btl-select-flag:has(.pos-ico),html body .btl-select-option-flag:has(.pos-ico){width:auto;height:auto;border:0;background:none}
+
+/* Card sorteado: só nome (+ bandeira e clube) */
+html body #legend-era,html body #legend-source,html body .legend-rating-line{display:none!important}
+
+/* Login: pitch à esquerda, ficha à direita */
+html body .auth-gate{background:#062117;padding:22px}
+html body .auth-bg span{display:none}
+html body .auth-card .hidden{display:none!important}
+html body .auth-card{position:relative;display:grid;grid-template-columns:minmax(0,5fr) minmax(0,6fr);width:min(900px,100%);padding:0;border:0;border-radius:24px;overflow:hidden;background:var(--giz);color:var(--tinta);box-shadow:0 0 0 2px rgba(241,245,234,.9),0 40px 90px rgba(0,0,0,.55)}
+.auth-aside{position:relative;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;gap:12px;min-height:540px;padding:38px 34px;color:var(--giz);background:repeating-linear-gradient(90deg,#0e4d38 0 60px,#0b4030 60px 120px)}
+.auth-aside::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,transparent 35%,rgba(3,22,15,.75))}
+.auth-pitch{position:absolute;inset:0;z-index:-1;width:100%;height:100%;fill:none;stroke:rgba(241,245,234,.3);stroke-width:2.5;color:rgba(241,245,234,.4)}
+.auth-aside .auth-brand-mark{width:64px;height:64px;margin-bottom:auto}
+.auth-aside h1{margin:0;font-size:clamp(38px,5vw,54px);line-height:.92;color:var(--giz)}
+.auth-aside p{margin:0;max-width:24ch;font-size:16px;line-height:1.35;color:#c4e3d2}
+.auth-panel{display:flex;flex-direction:column;justify-content:center;min-width:0;padding:38px 40px}
+html body .auth-card .auth-tabs{display:flex;margin:0 0 22px;padding:0;border:0;border-bottom:2px solid rgba(11,42,31,.14);background:none}
+html body .auth-card .auth-tabs button{flex:1;margin:0 0 -2px;padding:10px 0 12px;border:0;border-bottom:4px solid transparent;border-radius:0;background:none;color:#58786a;font-size:17px;cursor:pointer}
+html body .auth-card .auth-tabs button.active{color:var(--tinta);border-bottom-color:var(--tinta);background:none}
+html body .auth-card .auth-form,html body .auth-card .auth-google-profile{display:grid;gap:14px}
+html body .auth-card label{display:grid;gap:6px;color:var(--tinta);font-size:14px}
+html body .auth-card input:not([type=checkbox]){width:100%;padding:13px 14px;border:2px solid rgba(11,42,31,.22)!important;border-radius:12px;background:#fff!important;color:var(--tinta)!important;font-size:16px;box-shadow:none!important}
+html body .auth-card input:not([type=checkbox]):focus{outline:none;border-color:var(--tinta)!important;box-shadow:0 0 0 4px rgba(255,210,63,.7)!important}
+html body .auth-card .auth-consent{display:flex;align-items:flex-start;gap:10px;font-size:13px;color:#3f5f50}
+html body .auth-card .primary.full{width:100%;padding:14px 18px;border:0;border-radius:12px;background:var(--green)!important;color:var(--button-text)!important;font-size:17px;box-shadow:0 4px 0 #a98500;cursor:pointer;transition:transform .12s,box-shadow .12s}
+html body .auth-card .primary.full:active{transform:translateY(3px);box-shadow:0 1px 0 #a98500}
+html body .auth-divider{display:flex;align-items:center;gap:12px;margin:18px 0;border:0;background:none;color:#58786a;font-size:13px}
+html body .auth-divider::before,html body .auth-divider::after{content:"";flex:1;height:2px;background:rgba(11,42,31,.12)}
+html body .auth-guest{display:grid;grid-template-columns:auto 1fr;column-gap:12px;align-items:center;width:100%;padding:12px 14px;border:2px dashed rgba(11,42,31,.32);border-radius:12px;background:transparent;color:var(--tinta);text-align:left;cursor:pointer}
+html body .auth-guest:hover{border-style:solid;background:rgba(11,42,31,.05)}
+.auth-guest-ico{grid-row:span 2;display:grid;place-items:center;width:36px;height:36px;border-radius:50%;background:rgba(11,42,31,.09)}
+.auth-guest svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html body .auth-guest b{font-size:15px;color:var(--tinta)}
+html body .auth-guest small{font-size:12px;color:#58786a}
+html body .google-signin-wrap{display:grid;justify-items:center;gap:8px;margin-top:12px}
+#google-signin-container{display:flex;justify-content:center;width:100%}
+html body .google-fallback{display:flex;align-items:center;justify-content:center;gap:12px;width:100%;padding:12px 18px;border:2px solid var(--tinta);border-radius:999px;background:#fff;color:var(--tinta);cursor:pointer}
+html body .google-fallback:hover{background:#f4f6ef;box-shadow:0 3px 0 var(--tinta)}
+html body .google-fallback b{font-size:15px;color:var(--tinta)}
+.google-fallback svg{width:20px;height:20px}
+html body .auth-error{min-height:1.3em;margin:12px 0 0;color:#c2261b;font-size:14px;text-align:center}
+html body .auth-footer,html body .auth-config-note{margin:14px 0 0;padding:0;border:0;color:#58786a;font-size:12px;text-align:center}
+html body .auth-footer button,html body .auth-consent button,html body .auth-back{padding:0;border:0;background:none;color:var(--tinta);font-size:inherit;text-decoration:underline;cursor:pointer}
+html body .auth-google-profile h2{margin:0;font-size:26px;color:var(--tinta)}
+html body .auth-google-profile p{margin:0;color:#3f5f50}
+html body .auth-step-kicker{color:#58786a}
+@media (max-width:760px){
+  html body .auth-card{grid-template-columns:1fr}
+  .auth-aside{min-height:180px;padding:24px}
+  .auth-aside .auth-brand-mark{width:44px;height:44px}
+  .auth-aside h1{font-size:34px}
+  .auth-aside p{display:none}
+  .auth-panel{padding:26px 22px}
+}
+
+/* Card sorteado: bandeira + clube / ICON */
+.legend-meta{display:flex;justify-content:center;align-items:center;gap:12px;margin:8px 0 16px}
+.legend-meta .national-flag-image img{width:32px;height:22px;object-fit:cover;border-radius:3px}
+.meta-club{font-size:18px;color:var(--text)}
+.icon-badge{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;background:linear-gradient(135deg,#f7e08a,#d9a521);color:#3a2a00;font-size:15px}
+.icon-badge svg{width:14px;height:14px;fill:currentColor}
+
+/* Eventos: boletim de vestiário (carreira, aleatório, ídolo, patrocínio, seleção) */
+html body #event-modal .career-event-card{--ev:#0e4d38;display:flex;flex-direction:column;width:min(640px,calc(100vw - 24px));max-height:calc(100vh - 24px);overflow:auto;padding:0!important;border:0!important;border-radius:20px;background:var(--giz)!important;color:var(--tinta)!important;box-shadow:0 0 0 2px rgba(241,245,234,.9),0 30px 80px rgba(0,0,0,.6)!important}
+html body #event-modal .career-event-card[data-ev-kind=incident]{--ev:#b3261e}
+html body #event-modal .career-event-card[data-ev-kind=idol]{--ev:#8a5a00}
+html body #event-modal .career-event-card[data-ev-kind=sponsor]{--ev:#1d4fb8}
+html body #event-modal .career-event-card[data-ev-kind=national]{--ev:#0b6b3a}
+html body #event-modal #event-eyebrow{display:none}
+html body #event-modal #event-choices{display:contents}
+html body #event-modal .ev-banner{order:-1;display:flex;align-items:center;gap:14px;padding:16px 26px;background:var(--ev);color:#fff}
+html body #event-modal .ev-banner svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+html body #event-modal .ev-tag{font-size:21px}
+html body #event-modal .ev-who{margin-left:auto;padding-right:96px;font-size:17px;opacity:.9}
+html body #event-modal #event-title{margin:0;padding:22px 26px 6px;font-size:clamp(28px,5vw,40px);line-height:.98;color:var(--tinta)!important}
+html body #event-modal #event-description{margin:0;padding:0 26px 20px;max-width:58ch;font-size:17px;line-height:1.35;color:#3f5f50!important}
+html body #event-modal .event-choice-grid{display:grid;gap:10px;padding:0 26px 26px}
+html body #event-modal .event-choice{display:grid;grid-template-columns:auto 1fr;column-gap:14px;align-items:center;width:100%;padding:14px 16px;border:2px solid var(--tinta)!important;border-left-width:10px!important;border-radius:12px;background:#fff!important;color:var(--tinta)!important;text-align:left;cursor:pointer;transition:transform .12s,box-shadow .12s}
+html body #event-modal .event-choice:hover{transform:translateY(-2px);box-shadow:0 4px 0 var(--tinta)}
+html body #event-modal .event-choice>span{grid-row:span 2;font-size:22px;color:var(--ev)}
+html body #event-modal .event-choice strong{font-size:19px;color:var(--tinta)}
+html body #event-modal .event-choice small{font-size:14px;color:#58786a}

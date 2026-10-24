@@ -1,0 +1,625 @@
+{
+  "checks": [
+    {
+      "label": "1440 menu 5 ações",
+      "passed": true,
+      "details": [
+        "Continuar carreira",
+        "Nova carreira",
+        "Meu Legado",
+        "Som / Trilha sonora",
+        "Contato"
+      ]
+    },
+    {
+      "label": "1440 descriptions hidden",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 Orbitron configured",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 nav removes stats/market on home",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 no overflow initial",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 idol selected flag",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 idol flags in choices",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 create no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 competition same regardless club",
+      "passed": true,
+      "details": [
+        "#4fd0ff",
+        "#4fd0ff"
+      ]
+    },
+    {
+      "label": "1440 UEL and UECL independent palettes",
+      "passed": true,
+      "details": [
+        "#ff7b2f",
+        "#44d07e"
+      ]
+    },
+    {
+      "label": "1440 current career no overlap",
+      "passed": true,
+      "details": {
+        "face": {
+          "left": 801.015625,
+          "right": 940.6875,
+          "top": 386.203125,
+          "bottom": 550.359375
+        },
+        "name": {
+          "left": 969.484375,
+          "right": 1180.5625,
+          "top": 466.90625,
+          "bottom": 505.65625
+        },
+        "row": {
+          "left": 801.015625,
+          "right": 1180.5625
+        },
+        "ok": true
+      }
+    },
+    {
+      "label": "1440 home no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 selection yellow ribbon removed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 career no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 Champions site-wide theme during penalties",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 penalty has trophy + name",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 penalty centered",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 penalty options fit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 event has choices",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1440 event description hidden",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 menu 5 ações",
+      "passed": true,
+      "details": [
+        "Continuar carreira",
+        "Nova carreira",
+        "Meu Legado",
+        "Som / Trilha sonora",
+        "Contato"
+      ]
+    },
+    {
+      "label": "1024 descriptions hidden",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 Orbitron configured",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 nav removes stats/market on home",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 no overflow initial",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 idol selected flag",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 idol flags in choices",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 create no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 competition same regardless club",
+      "passed": true,
+      "details": [
+        "#4fd0ff",
+        "#4fd0ff"
+      ]
+    },
+    {
+      "label": "1024 UEL and UECL independent palettes",
+      "passed": true,
+      "details": [
+        "#ff7b2f",
+        "#44d07e"
+      ]
+    },
+    {
+      "label": "1024 current career no overlap",
+      "passed": true,
+      "details": {
+        "face": {
+          "left": 610.921875,
+          "right": 710.234375,
+          "top": 445.96875,
+          "bottom": 562.703125
+        },
+        "name": {
+          "left": 730.703125,
+          "right": 891.28125,
+          "top": 507.625,
+          "bottom": 537.046875
+        },
+        "row": {
+          "left": 610.921875,
+          "right": 891.28125
+        },
+        "ok": true
+      }
+    },
+    {
+      "label": "1024 home no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 selection yellow ribbon removed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 career no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 Champions site-wide theme during penalties",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 penalty has trophy + name",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 penalty centered",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "1024 penalty options fit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 menu 5 ações",
+      "passed": true,
+      "details": [
+        "Continuar carreira",
+        "Nova carreira",
+        "Meu Legado",
+        "Som / Trilha sonora",
+        "Contato"
+      ]
+    },
+    {
+      "label": "768 descriptions hidden",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 Orbitron configured",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 nav removes stats/market on home",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 no overflow initial",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 idol selected flag",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 idol flags in choices",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 create no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 competition same regardless club",
+      "passed": true,
+      "details": [
+        "#4fd0ff",
+        "#4fd0ff"
+      ]
+    },
+    {
+      "label": "768 UEL and UECL independent palettes",
+      "passed": true,
+      "details": [
+        "#ff7b2f",
+        "#44d07e"
+      ]
+    },
+    {
+      "label": "768 current career no overlap",
+      "passed": true,
+      "details": {
+        "face": {
+          "left": 268.5,
+          "right": 360.5,
+          "top": 778.796875,
+          "bottom": 888.796875
+        },
+        "name": {
+          "left": 376.5,
+          "right": 499.5,
+          "top": 840.546875,
+          "bottom": 863.046875
+        },
+        "row": {
+          "left": 268.5,
+          "right": 499.5
+        },
+        "ok": true
+      }
+    },
+    {
+      "label": "768 home no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 selection yellow ribbon removed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 career no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 Champions site-wide theme during penalties",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 penalty has trophy + name",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 penalty centered",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "768 penalty options fit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 menu 5 ações",
+      "passed": true,
+      "details": [
+        "Continuar carreira",
+        "Nova carreira",
+        "Meu Legado",
+        "Som / Trilha sonora",
+        "Contato"
+      ]
+    },
+    {
+      "label": "390 descriptions hidden",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 Orbitron configured",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 nav removes stats/market on home",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 no overflow initial",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 idol selected flag",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 idol flags in choices",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 create no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 competition same regardless club",
+      "passed": true,
+      "details": [
+        "#4fd0ff",
+        "#4fd0ff"
+      ]
+    },
+    {
+      "label": "390 UEL and UECL independent palettes",
+      "passed": true,
+      "details": [
+        "#ff7b2f",
+        "#44d07e"
+      ]
+    },
+    {
+      "label": "390 current career no overlap",
+      "passed": true,
+      "details": {
+        "face": {
+          "left": 77.421875,
+          "right": 163.421875,
+          "top": 793.5,
+          "bottom": 898.5
+        },
+        "name": {
+          "left": 179.421875,
+          "right": 312.578125,
+          "top": 851.8125,
+          "bottom": 876.1875
+        },
+        "row": {
+          "left": 77.421875,
+          "right": 312.578125
+        },
+        "ok": true
+      }
+    },
+    {
+      "label": "390 home no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 selection yellow ribbon removed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 career no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 Champions site-wide theme during penalties",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 penalty has trophy + name",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 penalty centered",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 penalty options fit",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 event has choices",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "390 event description hidden",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 menu 5 ações",
+      "passed": true,
+      "details": [
+        "Continuar carreira",
+        "Nova carreira",
+        "Meu Legado",
+        "Som / Trilha sonora",
+        "Contato"
+      ]
+    },
+    {
+      "label": "320 descriptions hidden",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 Orbitron configured",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 nav removes stats/market on home",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 no overflow initial",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 idol selected flag",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 idol flags in choices",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 create no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 competition same regardless club",
+      "passed": true,
+      "details": [
+        "#4fd0ff",
+        "#4fd0ff"
+      ]
+    },
+    {
+      "label": "320 UEL and UECL independent palettes",
+      "passed": true,
+      "details": [
+        "#ff7b2f",
+        "#44d07e"
+      ]
+    },
+    {
+      "label": "320 current career no overlap",
+      "passed": true,
+      "details": {
+        "face": {
+          "left": 54.265625,
+          "right": 140.265625,
+          "top": 765.5,
+          "bottom": 870.5
+        },
+        "name": {
+          "left": 156.265625,
+          "right": 265.71875,
+          "top": 826,
+          "bottom": 846
+        },
+        "row": {
+          "left": 54.265625,
+          "right": 265.71875
+        },
+        "ok": true
+      }
+    },
+    {
+      "label": "320 home no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 selection yellow ribbon removed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 career no overflow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 Champions site-wide theme during penalties",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 penalty has trophy + name",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 penalty centered",
+      "passed": true,
+      "details": null
+    },
+    {
+      "label": "320 penalty options fit",
+      "passed": true,
+      "details": null
+    }
+  ],
+  "errors": []
+}

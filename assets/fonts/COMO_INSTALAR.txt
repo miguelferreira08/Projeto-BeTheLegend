@@ -1,0 +1,11 @@
+JERSEY M54 — APLICAÇÃO LICENCIADA (V14)
+1. Obtenha sua cópia junto ao autor: https://www.dafont.com/jersey-m54.font
+2. Abra Be The Legend e clique em “Aplicar fonte Jersey M54” na tela de login.
+3. Selecione seu .ttf/.woff/.woff2; será instalada localmente no navegador e
+   preservada por IndexedDB. Nada é enviado ao servidor.
+4. Se tiver licença de publicação da fonte, o CSS também aceita um arquivo
+   autorizado assets/fonts/JerseyM54.woff2, colocado pelo responsável no seu
+   próprio ambiente de hospedagem.
+NÃO INCLUÍMOS O ARQUIVO BINÁRIO DA FONTE. O autor concede uso pessoal
+sem custo mas exige acordo para uso comercial, e restringe hospedar cópias
+online a FontSpace/DaFont. Não hospede em CDN sem autorização.

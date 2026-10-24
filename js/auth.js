@@ -50,11 +50,22 @@
     const nickname=normNick(document.getElementById('auth-login-nickname')?.value),password=document.getElementById('auth-login-password')?.value||'';const account=accounts().find(a=>a.type==='local'&&nickKey(a.nickname)===nickKey(nickname));
     if(!account){showError('Conta não encontrada neste dispositivo.');return}try{showError('Verificando…');const hash=await passwordHash(password,account.passwordSalt);if(hash!==account.passwordHash){showError('Senha incorreta.');return}startSession(account)}catch(err){showError(err.message||'Não foi possível entrar.')}
   }
-  function decodeJwtPayload(token){try{const part=token.split('.')[1].replace(/-/g,'+').replace(/_/g,'/'),json=decodeURIComponent(atob(part).split('').map(c=>'%'+('00'+c.charCodeAt(0).toString(16)).slice(-2)).join(''));return JSON.parse(json)}catch(_){return null}}
-  function handleGoogleCredential(response){
-    const payload=decodeJwtPayload(response?.credential||'');if(!payload?.sub){showError('O Google não retornou uma identidade válida.');return}
-    const existing=accounts().find(a=>a.type==='google'&&a.googleSub===payload.sub);if(existing){upsertAccount({...existing,email:payload.email||existing.email||'',googleName:payload.name||existing.googleName||''});startSession(existing);return}
-    pendingGoogle={sub:payload.sub,email:payload.email||'',name:payload.name||''};document.getElementById('auth-main-step')?.classList.add('hidden');document.getElementById('auth-google-profile-step')?.classList.remove('hidden');const suggested=(payload.given_name||payload.name||'').replace(/\s+/g,'').slice(0,20);const input=document.getElementById('auth-google-nickname');if(input&&!input.value)input.value=suggested;
+  async function handleGoogleCredential(response){
+    const credential=String(response?.credential||'');
+    if(!credential){showError('O Google não retornou uma credencial.');return}
+    showError('Validando credencial Google…');let payload;
+    try{
+      const r=await fetch('/api/auth/google',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({credential}),cache:'no-store'});
+      const data=await r.json();if(!r.ok||!data?.identity?.sub)throw Error('unverified');payload=data.identity;
+    }catch(_){showError('Não foi possível validar a identidade. Publique no Cloudflare Pages com funções ativadas e autorize seu domínio no Google Cloud.');return}
+    showError('');
+    const existing=accounts().find(a=>a.type==='google'&&a.googleSub===payload.sub);
+    if(existing){upsertAccount({...existing,email:payload.email||existing.email||'',googleName:payload.name||existing.googleName||''});startSession(existing);return}
+    pendingGoogle={sub:payload.sub,email:payload.email||'',name:payload.name||''};
+    document.getElementById('auth-main-step')?.classList.add('hidden');
+    document.getElementById('auth-google-profile-step')?.classList.remove('hidden');
+    const suggested=(payload.given_name||payload.name||'').replace(/\s+/g,'').slice(0,20);
+    const input=document.getElementById('auth-google-nickname');if(input&&!input.value)input.value=suggested;
   }
   function finishGoogleAccount(){
     if(!pendingGoogle)return;const nickname=normNick(document.getElementById('auth-google-nickname')?.value),accepted=!!document.getElementById('auth-google-terms')?.checked;if(!validNickname(nickname)){showError('Escolha um nickname válido de 3 a 20 caracteres.');return}if(!uniqueNickname(nickname)){showError('Este nickname já existe neste dispositivo.');return}if(!accepted){showError('Aceite os Termos e a Política de Privacidade.');return}
@@ -63,7 +74,7 @@
   function initGoogle(){
     const clientId=String(window.BTL_GOOGLE_CLIENT_ID||'').trim(),container=document.getElementById('google-signin-container'),fallback=document.getElementById('google-signin-unconfigured'),note=document.getElementById('google-config-note');
     if(!clientId){fallback?.classList.remove('hidden');return}
-    fallback?.classList.add('hidden');const script=document.createElement('script');script.src='https://accounts.google.com/gsi/client?hl=pt-BR';script.async=true;script.defer=true;script.onload=()=>{try{google.accounts.id.initialize({client_id:clientId,callback:handleGoogleCredential,auto_select:false,cancel_on_tap_outside:true});if(container){container.innerHTML='';google.accounts.id.renderButton(container,{type:'standard',theme:'filled_black',size:'large',text:'continue_with',shape:'rectangular',logo_alignment:'left',width:360,locale:'pt_BR'})}}catch(_){fallback?.classList.remove('hidden');note?.classList.remove('hidden')}};script.onerror=()=>{fallback?.classList.remove('hidden');note?.classList.remove('hidden')};document.head.appendChild(script)
+    fallback?.classList.add('hidden');const script=document.createElement('script');script.src='https://accounts.google.com/gsi/client?hl=pt-BR';script.async=true;script.defer=true;script.onload=()=>{try{google.accounts.id.initialize({client_id:clientId,callback:handleGoogleCredential,auto_select:false,cancel_on_tap_outside:true});if(container){container.innerHTML='';google.accounts.id.renderButton(container,{type:'standard',theme:'outline',size:'large',text:'continue_with',shape:'rectangular',logo_alignment:'left',width:360,locale:'pt_BR'})}}catch(_){fallback?.classList.remove('hidden');note?.classList.remove('hidden')}};script.onerror=()=>{fallback?.classList.remove('hidden');note?.classList.remove('hidden')};document.head.appendChild(script)
   }
   function logout(){localStorage.removeItem(SESSION_KEY);try{window.google?.accounts?.id?.disableAutoSelect?.()}catch(_){}location.reload()}
   function updateContactEmail(email){const a=getCurrentAccount();if(!a)return;upsertAccount({...a,contactEmail:String(email||'').trim()})}

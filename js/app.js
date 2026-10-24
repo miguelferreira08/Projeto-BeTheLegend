@@ -7,14 +7,14 @@ const HALL_RESET_V104_KEY = 'beTheLegendV104HallReset';
 const LEGACY_STORAGE_KEY = 'careerSimV7';
 const LEGACY_V103_CLAIM_KEY = 'beTheLegendV103LegacyClaimed';
 const LEGACY_V95_FOR_MIGRATION = window.BTLAuth?.getCurrentAccount?.() && !localStorage.getItem(LEGACY_V103_CLAIM_KEY) ? localStorage.getItem('beTheLegendV95') : null;
-const BADGE_KEY = 'beTheLegendBadgeCacheV95';
+const BADGE_KEY = 'beTheLegendBadgeCacheV19Official';
 const DRAFT_KEY = 'beTheLegendV92AttributeDraft';
 const PREVIOUS_DRAFT_KEY = 'beTheLegendV91AttributeDraft';
 
 let state = JSON.parse(localStorage.getItem(STORAGE_KEY) || LEGACY_V95_FOR_MIGRATION || localStorage.getItem('beTheLegendV92') || localStorage.getItem('beTheLegendV91') || localStorage.getItem('beTheLegendV90') || localStorage.getItem('beTheLegendV89') || localStorage.getItem('beTheLegendV88') || localStorage.getItem('beTheLegendV87') || localStorage.getItem('beTheLegendV86') || localStorage.getItem('beTheLegendV85') || localStorage.getItem('beTheLegendV84') || localStorage.getItem('beTheLegendV83') || localStorage.getItem('beTheLegendV82') || localStorage.getItem('beTheLegendV81') || localStorage.getItem('beTheLegendV80') || localStorage.getItem('beTheLegendV79') || localStorage.getItem('beTheLegendV781') || localStorage.getItem('beTheLegendV78') || localStorage.getItem('beTheLegendV77') || localStorage.getItem('beTheLegendV76') || localStorage.getItem('careerSimV75') || localStorage.getItem('careerSimV72') || localStorage.getItem(LEGACY_STORAGE_KEY)) || {
   created:false, player:null, season:null, history:[], offers:[], news:[], pendingEvent:null, savedCareers:[]
 };
-let badgeCache = JSON.parse(localStorage.getItem(BADGE_KEY) || localStorage.getItem('beTheLegendBadgeCacheV92') || localStorage.getItem('beTheLegendBadgeCacheV91') || localStorage.getItem('beTheLegendBadgeCacheV90') || localStorage.getItem('beTheLegendBadgeCacheV89') || localStorage.getItem('beTheLegendBadgeCacheV88') || localStorage.getItem('beTheLegendBadgeCacheV87') || localStorage.getItem('beTheLegendBadgeCacheV86') || localStorage.getItem('beTheLegendBadgeCacheV85') || localStorage.getItem('beTheLegendBadgeCacheV84') || localStorage.getItem('beTheLegendBadgeCacheV83') || localStorage.getItem('beTheLegendBadgeCacheV82') || localStorage.getItem('beTheLegendBadgeCacheV81') || localStorage.getItem('beTheLegendBadgeCacheV80') || localStorage.getItem('beTheLegendBadgeCacheV79') || localStorage.getItem('beTheLegendBadgeCacheV781') || localStorage.getItem('beTheLegendBadgeCacheV78') || localStorage.getItem('beTheLegendBadgeCacheV77') || localStorage.getItem('beTheLegendBadgeCacheV76') || localStorage.getItem('careerSimBadgeCacheV75') || localStorage.getItem('careerSimBadgeCacheV72') || '{}');
+let badgeCache = JSON.parse(localStorage.getItem(BADGE_KEY) || '{}');
 let creationClubPool = [];
 let creationChoices = [];
 let creationClubRerollsRemaining = 3;
@@ -54,6 +54,15 @@ const DEFAULT_THEME = {accent:'#42e88d',secondary:'#f4f7f5',bg:'#071016',panel:'
 
 function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
 function saveBadges(){ localStorage.setItem(BADGE_KEY, JSON.stringify(badgeCache)); }
+function badgeCacheKeys(name,countryCode=''){ const code=countryCode||canonicalClubCountryCode(name,''); return [code?`${code}:${name}`:name]; }
+function getCachedBadge(name,countryCode=''){ for(const key of badgeCacheKeys(name,countryCode)){ const hit=safeBadgeImage(badgeCache?.[key]||''); if(hit)return hit; } return ''; }
+function setCachedBadge(name,countryCode='',url=''){ const safe=safeBadgeImage(url); if(!safe)return ''; for(const key of badgeCacheKeys(name,countryCode)) badgeCache[key]=safe; saveBadges(); return safe; }
+// V16: FIFA/ESPN/API-Sports never supply visible club crests.
+// Only Wikimedia Commons file CDN images may enter the badge cache.
+window.BTLRegisterVerifiedCrest=function(club,url,source){
+  if(source!=='Wikimedia Commons'||typeof club!=='string'||club.length>90||!safeCommonsImage(url))return false;
+  badgeCache[club]=url;saveBadges();return true;
+};
 function rnd(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 function sample(array,count){ return [...array].sort(()=>Math.random()-.5).slice(0,count); }
 function shuffle(array){ return [...array].sort(()=>Math.random()-.5); }
@@ -102,7 +111,8 @@ function syncCustomSelect(select){
   const shell=select.closest('.btl-select-shell'),trigger=shell?.querySelector('.btl-select-trigger');if(!trigger)return;
   const option=select.options?.[select.selectedIndex]||select.options?.[0];
   const label=option?.textContent?.trim()||'Selecione';
-  const flag=select.id==='nationality'&&option?.value?nationalFlagImage(option.value,countryByCode(option.value)?.name||label):'';
+  const idol=select.id==='idol'&&option?.value?idolById(option.value):null;
+  const flag=select.id==='nationality'&&option?.value?nationalFlagImage(option.value,countryByCode(option.value)?.name||label):idol?nationalFlagImage(idol.code,idol.country):'';
   trigger.querySelector('.btl-select-value').innerHTML=`${flag?`<span class="btl-select-flag" aria-hidden="true">${flag}</span>`:''}<span>${esc(label)}</span>`;
   trigger.classList.toggle('is-placeholder',!option?.value);
   trigger.disabled=!!select.disabled;
@@ -120,7 +130,8 @@ function customSelectOptionRows(select,query=''){
     const label=option.textContent?.trim()||'',group=option.parentElement?.tagName==='OPTGROUP'?option.parentElement.label:'';
     if(q&&!normalizeKey(`${label} ${group}`).includes(q))return;
     if(group&&group!==lastGroup){html+=`<div class="btl-select-group">${esc(group)}</div>`;lastGroup=group;}
-    const selected=index===select.selectedIndex,flag=select.id==='nationality'&&option.value?nationalFlagImage(option.value,countryByCode(option.value)?.name||label):'';
+    const selected=index===select.selectedIndex,idol=select.id==='idol'&&option.value?idolById(option.value):null;
+    const flag=select.id==='nationality'&&option.value?nationalFlagImage(option.value,countryByCode(option.value)?.name||label):idol?nationalFlagImage(idol.code,idol.country):'';
     html+=`<button type="button" class="btl-select-option ${selected?'selected':''} ${!option.value?'placeholder-option':''}" data-option-index="${index}" ${option.disabled?'disabled':''}><span class="btl-select-option-mark">${selected?'✓':''}</span>${flag?`<span class="btl-select-option-flag" aria-hidden="true">${flag}</span>`:''}<span>${esc(label)}</span></button>`;
   });
   return html||'<div class="btl-select-empty">Nenhuma opção encontrada.</div>';
@@ -210,14 +221,20 @@ const SOUNDTRACK_DB='beTheLegendAudioV1';
 const SOUNDTRACK_STORE='tracks';
 function saveSoundtrackSettings(){localStorage.setItem(SOUNDTRACK_KEY,JSON.stringify(soundtrackSettings));}
 function esc(value=''){return String(value).replace(/[&<>'"]/g,ch=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[ch]));}
-const DEFAULT_APPEARANCE={hairEnabled:true,hairStyle:'fade',hairColor:'#17120f',beardEnabled:false,beardStyle:'stubble',skin:'skin-3',photoDataUrl:''};
+const DEFAULT_APPEARANCE={hairEnabled:true,hairStyle:'fade',hairColor:'#17120f',beardEnabled:false,beardStyle:'stubble',skin:'skin-3',faceShape:'oval',eyeColor:'#433021',eyeShape:'almond',brows:'natural',nose:'straight',mouth:'neutral',photoDataUrl:''};
 const APPEARANCE_MENU=[
   {key:'appearance-hair-enabled',label:'Cabelo',type:'toggle',options:[{value:'yes',label:'Com cabelo'},{value:'no',label:'Careca'}]},
   {key:'appearance-hair-style',label:'Estilo do cabelo',type:'grid',options:[{value:'fade',label:'Degradê'},{value:'short',label:'Curto'},{value:'curly',label:'Cacheado'},{value:'afro',label:'Afro'},{value:'mohawk',label:'Moicano'},{value:'long',label:'Longo'}]},
   {key:'appearance-hair-color',label:'Cor do cabelo',type:'swatches',options:[{value:'#17120f',label:'Preto'},{value:'#4b2e1f',label:'Castanho'},{value:'#d5b56a',label:'Loiro'},{value:'#8f3f23',label:'Ruivo'},{value:'#8d9298',label:'Grisalho'}]},
   {key:'appearance-beard-enabled',label:'Barba',type:'toggle',options:[{value:'no',label:'Sem barba'},{value:'yes',label:'Com barba'}]},
   {key:'appearance-beard-style',label:'Estilo de barba',type:'grid',options:[{value:'stubble',label:'Por fazer'},{value:'goatee',label:'Cavanhaque'},{value:'full',label:'Cheia'},{value:'mustache',label:'Bigode'}]},
-  {key:'appearance-skin',label:'Tom de pele',type:'swatches',options:[{value:'skin-2',label:'Claro',tone:'#f0c6a6'},{value:'skin-3',label:'Médio',tone:'#c98965'},{value:'skin-4',label:'Moreno',tone:'#9a6348'},{value:'skin-5',label:'Escuro',tone:'#68402f'}]}
+  {key:'appearance-skin',label:'Tom de pele',type:'swatches',options:[{value:'skin-2',label:'Claro',tone:'#f0c6a6'},{value:'skin-3',label:'Médio',tone:'#c98965'},{value:'skin-4',label:'Moreno',tone:'#9a6348'},{value:'skin-5',label:'Escuro',tone:'#68402f'}]},
+  {key:'appearance-face-shape',label:'Formato do rosto',type:'grid',options:[{value:'oval',label:'Oval'},{value:'square',label:'Quadrado'},{value:'round',label:'Redondo'},{value:'slim',label:'Fino'}]},
+  {key:'appearance-eye-color',label:'Cor dos olhos',type:'swatches',options:[{value:'#433021',label:'Castanho'},{value:'#75a3ac',label:'Azul'},{value:'#528263',label:'Verde'},{value:'#ad8153',label:'Mel'}]},
+  {key:'appearance-eye-shape',label:'Formato dos olhos',type:'grid',options:[{value:'almond',label:'Amendoados'},{value:'round',label:'Arredondados'},{value:'narrow',label:'Estreitos'}]},
+  {key:'appearance-brows',label:'Sobrancelhas',type:'grid',options:[{value:'natural',label:'Naturais'},{value:'thick',label:'Marcadas'},{value:'arched',label:'Arqueadas'}]},
+  {key:'appearance-nose',label:'Nariz',type:'grid',options:[{value:'straight',label:'Reto'},{value:'broad',label:'Largo'},{value:'small',label:'Curto'}]},
+  {key:'appearance-mouth',label:'Expressão',type:'grid',options:[{value:'neutral',label:'Natural'},{value:'smile',label:'Sorriso'},{value:'serious',label:'Séria'}]}
 ];
 const SPONSOR_BRANDS=[
   {name:'Nike',tone:'sponsor-nike',base:1450000,minOverall:85,minClubStrength:84,minReputation:48,tier:'global'},
@@ -274,14 +291,51 @@ function currentAppearanceFromForm(){
     beardEnabled:$('#appearance-beard-enabled')?.value==='yes',
     beardStyle:$('#appearance-beard-style')?.value||'stubble',
     skin:$('#appearance-skin')?.value||'skin-3',
+    faceShape:$('#appearance-face-shape')?.value||'oval',eyeColor:$('#appearance-eye-color')?.value||'#433021',eyeShape:$('#appearance-eye-shape')?.value||'almond',brows:$('#appearance-brows')?.value||'natural',nose:$('#appearance-nose')?.value||'straight',mouth:$('#appearance-mouth')?.value||'neutral',
     photoDataUrl:creationPhotoDataUrl
   });
 }
+let faceSvgSequence=0;
 function appearanceMarkup(appearance=DEFAULT_APPEARANCE,compact=false,number='10'){
-  const a=normalizeAppearance(appearance);if(a.photoDataUrl)return `<div class="player-photo ${compact?'compact':''}"><img src="${esc(a.photoDataUrl)}" alt="Foto do jogador"></div>`;
-  const hairClass=a.hairEnabled?`hair-${a.hairStyle}`:'hair-bald',beardClass=a.beardEnabled?`beard-${a.beardStyle}`:'beard-none';
-  return `<div class="player-face ${a.skin} ${hairClass} ${beardClass} ${compact?'compact':''}" style="--hair-color:${a.hairColor}"><span class="face-ear ear-left"></span><span class="face-ear ear-right"></span><span class="face-hair"></span><span class="face-brow brow-left"></span><span class="face-brow brow-right"></span><span class="face-eye eye-left"></span><span class="face-eye eye-right"></span><span class="face-nose"></span><span class="face-mouth"></span><span class="face-beard"></span><span class="face-neck"></span><span class="face-jersey"><b>${number}</b></span></div>`;
+  const a=normalizeAppearance(appearance);
+  if(a.photoDataUrl)return `<div class="player-photo ${compact?'compact':''}"><img src="${esc(a.photoDataUrl)}" alt="Foto do jogador"></div>`;
+  const id=`face${++faceSvgSequence}`,skins={'skin-2':['#f8d3b6','#c99776','#a87455'],'skin-3':['#d9a27b','#ae704e','#8f583e'],'skin-4':['#aa7555','#7e4d38','#613728'],'skin-5':['#80543f','#593526','#432519']};
+  const [skin,shadow,deep]=skins[a.skin]||skins['skin-3'];
+  const colors=['#17120f','#4b2e1f','#d5b56a','#8f3f23','#8d9298'];
+  const hair=colors.includes(a.hairColor)?a.hairColor:'#17120f';
+  const eye=['#433021','#75a3ac','#528263','#ad8153'].includes(a.eyeColor)?a.eyeColor:'#433021';
+  const shape={oval:'M66 74Q65 39 110 38Q155 39 154 74L151 122Q147 152 130 166Q110 180 90 166Q73 150 69 122Z',round:'M62 77Q60 39 110 39Q160 39 158 77L157 122Q148 170 110 174Q72 170 63 122Z',square:'M66 74Q64 41 110 39Q155 41 154 74L153 134Q150 150 133 165L87 165Q70 150 67 134Z',slim:'M72 76Q67 40 110 38Q153 40 148 76L143 122Q141 147 124 171L110 178L96 171Q79 147 77 122Z'}[a.faceShape]||'M66 74Q65 39 110 38Q155 39 154 74L151 122Q147 152 130 166Q110 180 90 166Q73 150 69 122Z';
+  const hairShapes={
+    fade:`<path d="M63 90Q50 38 79 29Q119 11 151 34Q169 53 157 90L150 66Q139 45 112 51Q91 43 70 65Z" fill="${hair}"/><path d="M65 74Q76 52 95 51Q122 59 141 44" stroke="#fff" stroke-opacity=".11" stroke-width="5" fill="none"/>`,
+    short:`<path d="M62 91Q57 43 76 33Q99 18 131 27Q165 34 157 91L151 71Q132 57 116 60Q85 52 69 70Z" fill="${hair}"/><path d="M70 53Q110 30 146 54" stroke="#fff" stroke-opacity=".12" stroke-width="6" fill="none"/>`,
+    curly:`<path d="M60 88Q49 63 62 50Q56 31 77 32Q80 16 102 24Q123 9 138 29Q159 23 159 42Q174 58 157 88L150 73Q136 63 110 62Q84 59 69 76Z" fill="${hair}"/>${[67,84,102,121,140,155].map((x,i)=>`<circle cx="${x}" cy="${i%2?36:43}" r="14" fill="${hair}" stroke="#ffffff" stroke-opacity=".08"/>`).join('')}`,
+    afro:`<ellipse cx="110" cy="58" rx="65" ry="53" fill="${hair}"/>${[52,68,87,105,126,146,166].map((x,i)=>`<circle cx="${x}" cy="${[65,42,29,25,28,44,68][i]}" r="21" fill="${hair}" stroke="#ffffff" stroke-opacity=".05"/>`).join('')}`,
+    mohawk:`<path d="M95 58L86 20L101 29L105 6L115 24L132 10L125 61Q110 54 95 58Z" fill="${hair}"/><path d="M65 87Q57 49 88 52L95 62Q75 59 68 78Z M155 87Q163 49 131 52L126 62Q145 59 152 78Z" fill="${hair}" opacity=".75"/>`,
+    long:`<path d="M60 83Q55 25 110 26Q166 25 160 84L170 168L144 167L149 80Q130 53 110 57Q84 52 72 80L76 166L52 168Z" fill="${hair}"/><path d="M73 47Q110 30 148 53" stroke="#fff" stroke-opacity=".1" stroke-width="5" fill="none"/>`
+  };
+  const eyebrows=a.brows==='arched'?['M79 92Q91 82 101 89','M119 89Q132 82 142 92']:a.brows==='thick'?['M79 90Q91 84 101 89','M119 89Q132 84 142 90']:['M80 92Q90 87 101 91','M119 91Q132 87 141 92'];
+  const bw=a.brows==='thick'?5:3.5;
+  const eyes=a.eyeShape==='round'?`<ellipse cx="91" cy="108" rx="8" ry="6" fill="#f8f3eb"/><ellipse cx="130" cy="108" rx="8" ry="6" fill="#f8f3eb"/>`:a.eyeShape==='narrow'?`<path d="M81 108Q91 104 101 108Q91 112 81 108M120 108Q130 104 140 108Q130 112 120 108" fill="#f8f3eb"/>`:`<path d="M81 109Q91 101 101 109Q91 116 81 109M120 109Q130 101 140 109Q130 116 120 109" fill="#f8f3eb"/>`;
+  const nose=a.nose==='broad'?'M102 118L100 133Q108 140 120 133L118 118':'M110 116L106 132Q110 137 116 132';
+  const mouth=a.mouth==='smile'?'M94 146Q110 161 127 146':a.mouth==='serious'?'M96 150Q109 148 125 150':'M96 148Q110 153 125 148';
+  const beard=a.beardEnabled?({
+   stubble:`<path d="M73 125Q78 163 110 175Q142 163 147 125Q133 164 110 163Q87 164 73 125Z" fill="${hair}" opacity=".19"/>`,
+   goatee:`<path d="M100 150Q110 158 121 150L118 173Q109 185 103 171Z" fill="${hair}"/><path d="M99 141Q110 137 121 141" stroke="${hair}" stroke-width="3"/>`,
+   mustache:`<path d="M92 141Q101 132 110 140Q119 132 128 141Q118 149 110 145Q102 149 92 141" fill="${hair}"/>`,
+   full:`<path d="M73 117Q74 154 90 166L99 184Q110 191 121 184L130 166Q147 151 147 117L137 142Q132 161 110 169Q88 161 83 142Z" fill="${hair}"/><path d="M92 140Q102 134 110 140Q119 134 128 140Q120 149 110 145Q100 149 92 140" fill="${hair}"/>`
+  }[a.beardStyle]||''):'';
+  return `<div class="player-face-svg-wrap ${compact?'compact':''}"><svg class="player-face-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 250" role="img" aria-label="Avatar ilustrado personalizável do jogador"><defs><linearGradient id="${id}skin" x1=".15" y1=".08" x2=".95" y2=".85"><stop stop-color="${skin}"/><stop offset=".65" stop-color="${skin}"/><stop offset="1" stop-color="${shadow}"/></linearGradient><linearGradient id="${id}shirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e4ff79"/><stop offset="1" stop-color="#4bbc95"/></linearGradient><radialGradient id="${id}light"><stop stop-color="#68d5b8" stop-opacity=".17"/><stop offset="1" stop-color="#05161e" stop-opacity="0"/></radialGradient></defs>
+    <rect width="220" height="250" fill="#0c222c"/><circle cx="110" cy="115" r="116" fill="url(#${id}light)"/>
+    <path d="M10 250Q23 195 82 190L139 190Q197 197 210 250Z" fill="url(#${id}shirt)"/><path d="M67 195L110 233L153 195" fill="none" stroke="#ffffff" stroke-opacity=".24" stroke-width="4"/><path d="M89 170V201Q109 216 131 201V170" fill="${shadow}"/><path d="M98 189Q110 193 122 189" fill="none" stroke="${deep}" stroke-opacity=".25" stroke-width="5"/>
+    <ellipse cx="68" cy="113" rx="10" ry="18" fill="${shadow}"/><ellipse cx="152" cy="113" rx="10" ry="18" fill="${shadow}"/><path d="${shape}" fill="url(#${id}skin)" stroke="${deep}" stroke-opacity=".4" stroke-width="1.4"/>
+    <path d="M80 114Q87 123 98 117M122 117Q132 123 141 114" stroke="${deep}" stroke-opacity=".09" stroke-width="7" fill="none"/>
+    ${a.hairEnabled?(hairShapes[a.hairStyle]||hairShapes.fade):''}
+    <path d="${eyebrows[0]}" stroke="${hair}" stroke-width="${bw}" fill="none" stroke-linecap="round"/><path d="${eyebrows[1]}" stroke="${hair}" stroke-width="${bw}" fill="none" stroke-linecap="round"/>
+    ${eyes}<circle cx="91" cy="109" r="${a.eyeShape==='narrow'?2.3:3.5}" fill="${eye}"/><circle cx="130" cy="109" r="${a.eyeShape==='narrow'?2.3:3.5}" fill="${eye}"/><circle cx="92" cy="108" r="1" fill="#fff"/><circle cx="131" cy="108" r="1" fill="#fff"/>
+    <path d="${nose}" stroke="${deep}" stroke-width="2.7" fill="none" stroke-linecap="round" opacity=".55"/><path d="${mouth}" stroke="#754738" stroke-width="2.7" fill="none" stroke-linecap="round"/><path d="M102 156Q110 158 118 156" stroke="#fff" stroke-opacity=".18" stroke-width="2" fill="none"/>
+    ${beard}<text x="110" y="241" text-anchor="middle" fill="#06302b" font-size="16" font-family="Orbitron, Arial, sans-serif" font-weight="900">${esc(String(number).slice(0,2))}</text></svg></div>`;
 }
+
 function updateAppearancePreview(){const box=$('#appearance-preview');if(box)box.innerHTML=appearanceMarkup(currentAppearanceFromForm(),false,$('#number')?.value||'10');$('#appearance-photo-remove')?.classList.toggle('hidden',!creationPhotoDataUrl);syncAppearanceStudio();syncCustomSelects();}
 async function photoCropFrame(img){
   const width=img.naturalWidth,height=img.naturalHeight,fallbackSide=Math.min(width,height),fallback={sx:Math.max(0,(width-fallbackSide)/2),sy:Math.max(0,(height-fallbackSide)/2),side:fallbackSide,faceAware:false};
@@ -309,7 +363,7 @@ function appearanceOptionMarkup(cfg,opt,current){
   return `<button type="button" class="appearance-chip preset-card${active}" data-target="${cfg.key}" data-value="${opt.value}" aria-pressed="${active?'true':'false'}">${appearancePresetVisual(cfg,opt)}<b>${opt.label}</b></button>`;
 }
 function appearanceGroupsForTab(tab){
-  if(tab==='skin')return APPEARANCE_MENU.filter(c=>c.key==='appearance-skin');
+  if(tab==='skin')return APPEARANCE_MENU.filter(c=>['appearance-skin','appearance-face-shape','appearance-eye-color','appearance-eye-shape','appearance-brows','appearance-nose','appearance-mouth'].includes(c.key));
   if(tab==='beard')return APPEARANCE_MENU.filter(c=>c.key.includes('beard'));
   return APPEARANCE_MENU.filter(c=>c.key.includes('hair'));
 }
@@ -319,7 +373,7 @@ function renderAppearanceStudio(){
   box.innerHTML=`<div class="appearance-tabs" role="tablist">
     <button type="button" data-appearance-tab="hair" class="${appearanceStudioTab==='hair'?'active':''}"><span>✂</span>Cabelo</button>
     <button type="button" data-appearance-tab="beard" class="${appearanceStudioTab==='beard'?'active':''}"><span>◆</span>Barba</button>
-    <button type="button" data-appearance-tab="skin" class="${appearanceStudioTab==='skin'?'active':''}"><span>◉</span>Rosto</button>
+    <button type="button" data-appearance-tab="skin" class="${appearanceStudioTab==='skin'?'active':''}"><span>◉</span>Face + detalhes</button>
   </div><div class="appearance-panel">${groups.map(cfg=>{
     const select=$("#"+cfg.key),current=select?.value||'';
     const hidden=(cfg.key==='appearance-hair-style'&&$('#appearance-hair-enabled')?.value==='no')||(cfg.key==='appearance-beard-style'&&$('#appearance-beard-enabled')?.value==='no');
@@ -336,7 +390,8 @@ function renderAppearanceStudio(){
 function syncAppearanceStudio(){renderAppearanceStudio();}
 const CAREER_APPEARANCE_KEY_MAP={
   'appearance-hair-enabled':'hairEnabled','appearance-hair-style':'hairStyle','appearance-hair-color':'hairColor',
-  'appearance-beard-enabled':'beardEnabled','appearance-beard-style':'beardStyle','appearance-skin':'skin'
+  'appearance-beard-enabled':'beardEnabled','appearance-beard-style':'beardStyle','appearance-skin':'skin',
+  'appearance-face-shape':'faceShape','appearance-eye-color':'eyeColor','appearance-eye-shape':'eyeShape','appearance-brows':'brows','appearance-nose':'nose','appearance-mouth':'mouth'
 };
 function careerAppearanceValue(cfg){
   const prop=CAREER_APPEARANCE_KEY_MAP[cfg.key],value=careerAppearanceDraft?.[prop];
@@ -358,7 +413,7 @@ function renderCareerAppearanceEditor(){
   studio.innerHTML=`<div class="appearance-tabs" role="tablist">
     <button type="button" data-career-appearance-tab="hair" class="${careerAppearanceTab==='hair'?'active':''}"><span>✂</span>Cabelo</button>
     <button type="button" data-career-appearance-tab="beard" class="${careerAppearanceTab==='beard'?'active':''}"><span>◆</span>Barba</button>
-    <button type="button" data-career-appearance-tab="skin" class="${careerAppearanceTab==='skin'?'active':''}"><span>◉</span>Rosto</button>
+    <button type="button" data-career-appearance-tab="skin" class="${careerAppearanceTab==='skin'?'active':''}"><span>◉</span>Face + detalhes</button>
   </div><div class="appearance-panel">${groups.map(cfg=>{
     const current=careerAppearanceValue(cfg);
     const hidden=(cfg.key==='appearance-hair-style'&&!careerAppearanceDraft.hairEnabled)||(cfg.key==='appearance-beard-style'&&!careerAppearanceDraft.beardEnabled);
@@ -994,14 +1049,8 @@ const CLUB_BADGE_ALIASES = {
   'Kashima Antlers':['Kashima Antlers'],
   'Athletic Club':['Athletic Club','Athletic Bilbao']
 };
-const CLUB_BADGE_STATIC = {
-  'Ipswich Town':['https://upload.wikimedia.org/wikipedia/en/4/43/Ipswich_Town.svg'],
-  'Bayern de Munique':['https://commons.wikimedia.org/wiki/Special:FilePath/FC_Bayern_M%C3%BCnchen_logo_%282024%29.svg'],
-  'Sport':[
-    'https://sportrecife.com.br/wp-content/uploads/2024/05/sport-clube-recife.svg',
-    'https://pt.wikipedia.org/wiki/Special:FilePath/Sport-clube-recife.svg'
-  ]
-};
+// A crest must come from a verified Wikimedia Commons file; no external static badges.
+const CLUB_BADGE_STATIC = Object.freeze({});
 const CURRENT_EUROPE_LOGO_FOLDERS={ENG:'England - Premier League',DE:'Germany - Bundesliga',ES:'Spain - LaLiga',IT:'Italy - Serie A',FR:'France - Ligue 1',PT:'Portugal - Liga Portugal',NL:'Netherlands - Eredivisie',SCO:'Scotland - Scottish Premiership',BE:'Belgium - Jupiler Pro League',TR:'Türkiye - Süper Lig'};
 const CURRENT_EUROPE_LOGO_NAMES={
   'Arsenal':'Arsenal FC','Liverpool':'Liverpool FC','Chelsea':'Chelsea FC','Everton':'Everton FC','Fulham':'Fulham FC','Bournemouth':'AFC Bournemouth','Brighton':'Brighton & Hove Albion','Sunderland':'Sunderland AFC','Tottenham':'Tottenham Hotspur','West Ham':'West Ham United','Wolverhampton':'Wolverhampton Wanderers',
@@ -1012,65 +1061,145 @@ const CURRENT_EUROPE_LOGO_NAMES={
   'Sporting CP':'Sporting CP','Celtic':'Celtic FC','Rangers':'Rangers FC','Hearts':'Heart of Midlothian FC','St Mirren':'St. Mirren FC'
 };
 const CLUB_COUNTRY_SLUG={BR:'brazil',AR:'argentina',UY:'uruguay',CO:'colombia',CL:'chile',ES:'spain',ENG:'england',SCO:'scotland',GB:'united-kingdom',DE:'germany',IT:'italy',FR:'france',PT:'portugal',NL:'netherlands',BE:'belgium',TR:'turkey',MX:'mexico',US:'usa',JP:'japan',SA:'saudi-arabia'};
-const CLUB_LOGO_CATALOG_URL='https://raw.githubusercontent.com/hixcoder/football-teams-flags/refs/heads/main/football_teams.json';
-let clubLogoCatalogPromise=null;
+// V16: obsolete FCLOGO, Github logo catalogs and their proxy removed.
 function stripDiacritics(str=''){ return str.normalize('NFD').replace(/[̀-ͯ]/g,''); }
 function normalizeKey(str=''){ return stripDiacritics(str).toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,''); }
 function slugifyClub(name=''){ return stripDiacritics(name).toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
-function fallbackClubDataUri(name='Clube'){
-  const initials=(name.split(/\s+/).filter(Boolean).slice(0,2).map(x=>x[0]).join('')||'FC').toUpperCase();
-  const label=(name.length>18?name.slice(0,18)+'…':name).replace(/&/g,'&amp;');
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop offset="0" stop-color="#0e1b22"/><stop offset="1" stop-color="#1f3b48"/></linearGradient></defs><path d="M48 5l32 11v22c0 22-15 40-32 53C31 78 16 60 16 38V16L48 5z" fill="url(#g)" stroke="#d8efe6" stroke-width="3"/><text x="48" y="46" text-anchor="middle" fill="#d8efe6" font-size="22" font-family="UT Unisportion FC, Unisportion FC, sans-serif" font-weight="700">${initials}</text><text x="48" y="66" text-anchor="middle" fill="#7ce7a7" font-size="8" font-family="UT Unisportion FC, Unisportion FC, sans-serif">${label}</text></svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
+function fallbackClubDataUri(){return '';}// Sem escudos artificiais: revelar estado indisponível até a imagem real do Commons.
 function fallbackTrophyDataUri(name='Título'){
   const label=(name.length>22?name.slice(0,22)+'…':name).replace(/&/g,'&amp;');
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" rx="18" fill="#0e171d"/><path d="M33 20h30v8c0 11-6 21-15 27-9-6-15-16-15-27v-8zm-8 6h8v7c0 4-3 8-8 8-4 0-7-4-7-8 0-4 3-7 7-7zm46 0h8c4 0 7 3 7 7 0 4-3 8-7 8-5 0-8-4-8-8v-7zM42 55h12v10h10v7H32v-7h10V55z" fill="#f2c94c"/><text x="48" y="84" text-anchor="middle" fill="#eef3f5" font-size="8" font-family="UT Unisportion FC, Unisportion FC, sans-serif">${label}</text></svg>`;
+  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" rx="18" fill="#0e171d"/><path d="M33 20h30v8c0 11-6 21-15 27-9-6-15-16-15-27v-8zm-8 6h8v7c0 4-3 8-8 8-4 0-7-4-7-8 0-4 3-7 7-7zm46 0h8c4 0 7 3 7 7 0 4-3 8-7 8-5 0-8-4-8-8v-7zM42 55h12v10h10v7H32v-7h10V55z" fill="#f2c94c"/><text x="48" y="84" text-anchor="middle" fill="#eef3f5" font-size="8" font-family="Orbitron, Arial, sans-serif">${label}</text></svg>`;
   return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
 }
-async function ensureClubLogoCatalog(){
-  if(clubLogoCatalogPromise) return clubLogoCatalogPromise;
-  clubLogoCatalogPromise=fetch(CLUB_LOGO_CATALOG_URL).then(r=>r.ok?r.json():[]).then(rows=>Array.isArray(rows)?rows:[]).catch(()=>[]);
-  return clubLogoCatalogPromise;
+const commonsMisses=new Set();
+const commonsInFlight=new Map();
+const COMMONS_ENDPOINT='https://commons.wikimedia.org/w/api.php';
+const COMMONS_CLUB_ALIASES={
+  'Bayern de Munique':'FC Bayern München','Inter de Milão':'Inter Milan','Milan':'AC Milan',
+  'Grêmio':'Grêmio Foot-Ball Porto Alegrense','Atlético Mineiro':'Clube Atlético Mineiro',
+  'Flamengo':'CR Flamengo','Corinthians':'SC Corinthians Paulista',
+  'Sporting CP':'Sporting Clube de Portugal','São Paulo':'São Paulo FC','Inter Miami':'Inter Miami CF'
+};
+const commonsMetaKey='btl-wikimedia-credits-v15';
+function commonsScore(title,club){
+ const normalized=x=>stripDiacritics(String(x||'').replace(/^File:/i,'').replace(/\.(svg|png|webp)$/i,'').replace(/\b(logo|escudo|badge|crest|new|official|football|club|2024|2025|2026)\b/gi,' ')).toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+ const file=normalized(title),key=normalized(club),tokens=key.split(' ').filter(x=>x.length>2),parts=file.split(' ');
+ if(!tokens.length)return -1;if(file===key)return 100;
+ return tokens.every(x=>parts.includes(x))?82-Math.max(0,parts.length-tokens.length)*4:-1;
 }
-function repoFileVariants(name=''){
-  const manual={'Bayern de Munique':['Bayern_Munchen','Bayern_Munich','FC_Bayern_Munchen'],'Inter de Milão':['Inter','Inter_Milan'],'Milan':['Milan','AC_Milan'],'Betis':['Real_Betis'],'Atlético de Madrid':['Atletico_Madrid'],'Paris Saint-Germain':['Paris_Saint-Germain','Paris_Saint_Germain'],'Sporting CP':['Sporting_CP'],'Tottenham':['Tottenham_Hotspur'],'West Ham':['West_Ham_United'],'Porto':['FC_Porto'],'Benfica':['Benfica','SL_Benfica'],'Vitória de Guimarães':['Vitoria_de_Guimaraes'],'Beşiktaş':['Besiktas'],'Fenerbahçe':['Fenerbahce'],'İstanbul Başakşehir':['Istanbul_Basaksehir'],'América':['Club_America','America'],'Guadalajara':['Guadalajara','Chivas'],'Tigres UANL':['Tigres_UANL'],'Los Angeles FC':['Los_Angeles_FC'],'Yokohama F. Marinos':['Yokohama_F_Marinos'],'Atlético Mineiro':['Atletico_Mineiro'],'Grêmio':['Gremio'],'São Paulo':['Sao_Paulo'],'Peñarol':['Penarol'],'Atlético Nacional':['Atletico_Nacional'],'América de Cali':['America_de_Cali'],'Independiente Medellín':['Independiente_Medellin'],'Universidad Católica':['Universidad_Catolica'],'PSV':['PSV_Eindhoven','PSV'],'Inter Miami':['Inter_Miami','Inter_Miami_CF']};
-  const base=[name,stripDiacritics(name)].map(x=>x.replace(/\s+/g,'_').replace(/\./g,'').replace(/'/g,''));
-  return [...new Set([...(manual[name]||[]),...base].filter(Boolean))];
+function safeCommonsImage(url){try{const u=new URL(url);return u.protocol==='https:'&&u.hostname==='upload.wikimedia.org'&&/\.(svg|png|webp)(?:$|\?)/i.test(u.pathname)?u.href:''}catch{return ''}}
+function safeBadgeImage(url){
+ try{
+  const u=new URL(String(url||''));
+  if(u.protocol!=='https:')return '';
+  const host=u.hostname.toLowerCase();
+  const validExt=/\.(svg|png|webp|jpg|jpeg)(?:$|\?)/i.test(u.pathname);
+  if(!validExt)return '';
+  if(host==='upload.wikimedia.org')return u.href;
+  if(host.endsWith('thesportsdb.com'))return u.href;
+  if(host.endsWith('api-sports.io')||host.endsWith('media.api-sports.io'))return u.href;
+  return '';
+ }catch{return ''}
 }
-function clubCodeFor(name){const found=allTransferClubs().find(c=>c.name===name)?.countryCode;if(found)return found;return state.player?.club===name?(state.player.clubCountry||''):'';}
-function clubAliasCandidates(name=''){
-  const aliases=CLUB_BADGE_ALIASES[name]||[];
-  const extra=[name,stripDiacritics(name),name.replace(/\bFC\b/gi,'').trim(),name.replace(/\bSC\b/gi,'').trim(),name.replace(/\bCF\b/gi,'').trim()];
-  return [...new Set([...aliases,...extra].filter(Boolean))];
+// Clear all legacy providers on startup. Old saves stay untouched.
+for(const [team,url] of Object.entries(badgeCache))if(!safeBadgeImage(url))delete badgeCache[team];
+saveBadges();
+function recordCommonsAttribution(club,result){
+ try{const records=JSON.parse(localStorage.getItem(commonsMetaKey)||'{}');records[club]={filePage:result.filePage||result.page||'',license:result.license||'Consultar a página do arquivo',credit:result.credit||'',matchedFile:result.matchedFile||''};localStorage.setItem(commonsMetaKey,JSON.stringify(records))}catch(_){}
 }
-async function exactClubBadge(name){
-  if(!name)return '';
-  if(CLUB_BADGE_STATIC[name]?.length)return CLUB_BADGE_STATIC[name][0];
-  if(badgeCache[name]){
-    if(/football-logos\.cc/i.test(badgeCache[name])){delete badgeCache[name];saveBadges();}
-    else return badgeCache[name];
-  }
-  const rows=await ensureClubLogoCatalog();
-  if(rows?.length){
-    const candidates=clubAliasCandidates(name).map(normalizeKey);
-    const direct=rows.find(r=>candidates.includes(normalizeKey(r.name||'')))||rows.find(r=>candidates.some(c=>normalizeKey(r.name||'').includes(c)||c.includes(normalizeKey(r.name||''))));
-    if(direct?.logoUrl&&!/football-logos\.cc/i.test(direct.logoUrl)){badgeCache[name]=direct.logoUrl;saveBadges();return direct.logoUrl;}
-  }
+async function commonsCrest(name){
+ if(!name||commonsMisses.has(name))return '';
+ if(commonsInFlight.has(name))return commonsInFlight.get(name);
+ const promise=(async()=>{
+  try{
+   let result=null;
+   // Prefer own proxy when deployed to Cloudflare Pages, but also work on static hosts.
+   try{const r=await fetch(`/api/commons-crest?name=${encodeURIComponent(name)}`,{signal:AbortSignal.timeout(4200)});if(r.ok)result=await r.json()}catch(_){}
+   if(!safeCommonsImage(result?.logo||'')){
+    const q=COMMONS_CLUB_ALIASES[name]||CLUB_BADGE_ALIASES[name]?.[1]||CURRENT_EUROPE_LOGO_NAMES[name]||name,url=new URL(COMMONS_ENDPOINT);
+    for(const [k,v] of Object.entries({action:'query',format:'json',generator:'search',gsrsearch:`${q} football club logo`,gsrnamespace:'6',gsrlimit:'15',prop:'imageinfo',iiprop:'url|extmetadata',iiurlwidth:'220',origin:'*'}))url.searchParams.set(k,v);
+    const r=await fetch(url.href,{signal:AbortSignal.timeout(5500)});if(!r.ok)throw Error('Wikimedia indisponível');
+    const pages=Object.values((await r.json()).query?.pages||{});
+    const found=pages.map(p=>({rank:commonsScore(p.title,q),matchedFile:p.title,logo:p.imageinfo?.[0]?.thumburl||p.imageinfo?.[0]?.url||'',filePage:p.imageinfo?.[0]?.descriptionurl||'',license:p.imageinfo?.[0]?.extmetadata?.LicenseShortName?.value||'',credit:p.imageinfo?.[0]?.extmetadata?.Artist?.value||''})).filter(p=>p.rank>=55&&safeCommonsImage(p.logo)).sort((a,b)=>b.rank-a.rank);
+    result=found[0]||null;
+   }
+   const url=safeCommonsImage(result?.logo||'');if(url){recordCommonsAttribution(name,result);return url;}
+  }catch(_){}
+  commonsMisses.add(name);return '';
+ })();commonsInFlight.set(name,promise);
+ try{return await promise}finally{commonsInFlight.delete(name)}
+}
+async function sportsDbBadgeByCountry(name,countryCode=''){
+  const country=countryByCode(countryCode)?.apiName||countryByCode(countryCode)?.name||'';
+  if(!country)return '';
+  try{
+    const url=`https://www.thesportsdb.com/api/v1/json/123/search_all_teams.php?s=Soccer&c=${encodeURIComponent(country)}`;
+    const r=await fetch(url,{signal:AbortSignal.timeout(5200)});if(!r.ok)return '';
+    const data=await r.json();
+    const aliases=[name,...(CLUB_BADGE_ALIASES[name]||[]),COMMONS_CLUB_ALIASES[name],CURRENT_EUROPE_LOGO_NAMES[name]].filter(Boolean);
+    const wanted=new Set(aliases.map(normalizeKey));
+    const teams=(data.teams||[]).filter(t=>t?.idTeam&&t?.strTeam&&t?.strSport==='Soccer');
+    const scoreTeam=t=>{
+      const fields=[t.strTeam,t.strTeamShort,t.strAlternate,t.strLeague].filter(Boolean).map(normalizeKey);
+      if(fields.some(f=>wanted.has(f)))return 100;
+      const joined=fields.join(' '),tokens=normalizeKey(name).match(/[a-z0-9]{3,}/g)||[];
+      return tokens.filter(tok=>joined.includes(tok)).length;
+    };
+    const ranked=teams.map(team=>({team,score:scoreTeam(team)})).filter(x=>x.score>=100).sort((a,b)=>b.score-a.score);
+    const exact=ranked[0]?.team;
+    const badge=safeBadgeImage(exact?.strBadge||'');
+    if(badge){rememberClubColors(exact,{name});return badge;}
+  }catch(_){/* próximo fallback */}
   return '';
 }
-function clubBadgeSources(name,exact=''){
-  const code=clubCodeFor(name),country=CLUB_COUNTRY_SLUG[code]||'england';
-  const sources=[...(CLUB_BADGE_STATIC[name]||[]),exact];
-  const currentFolder=CURRENT_EUROPE_LOGO_FOLDERS[code],currentName=CURRENT_EUROPE_LOGO_NAMES[name]||name;
-  if(currentFolder){
-    const githubBase='https://raw.githubusercontent.com/luukhopman/football-logos/master/logos';
-    for(const file of [...new Set([currentName,name,...clubAliasCandidates(name)])])sources.push(`${githubBase}/${encodeURIComponent(currentFolder)}/${encodeURIComponent(file)}.png`);
+async function sportsDbBadge(name,countryCode=''){
+  const aliases=[name,...(CLUB_BADGE_ALIASES[name]||[]),COMMONS_CLUB_ALIASES[name],CURRENT_EUROPE_LOGO_NAMES[name]].filter(Boolean);
+  const seen=new Set();
+  for(const query of aliases){
+    const key=normalizeKey(query);if(seen.has(key))continue;seen.add(key);
+    try{
+      const url=`https://www.thesportsdb.com/api/v1/json/123/searchteams.php?t=${encodeURIComponent(query)}`;
+      const r=await fetch(url,{signal:AbortSignal.timeout(5000)});if(!r.ok)continue;
+      const data=await r.json();
+      const country=countryByCode(countryCode)?.apiName||countryByCode(countryCode)?.name||'';
+      const teams=(data.teams||[]).filter(t=>t?.idTeam&&t?.strTeam&&t?.strSport==='Soccer'&&(!country||t.strCountry&&normalizeKey(t.strCountry)===normalizeKey(country)));
+      const exact=teams.find(t=>normalizeKey(t.strTeam)===normalizeKey(query)||normalizeKey(t.strTeam)===normalizeKey(name)||normalizeKey(t.strAlternate||'')===normalizeKey(name));
+      const badge=safeBadgeImage(exact?.strBadge||'');
+      if(badge){rememberClubColors(exact,{name});return badge;}
+    }catch(_){/* tentar próximo alias */}
   }
-  for(const file of repoFileVariants(name))sources.push(`https://raw.githubusercontent.com/JoseArroyave/football-logos/refs/heads/main/logos/${country}/${encodeURIComponent(file)}.svg`);
-  sources.push(fallbackClubDataUri(name),'assets/fallback-club.svg');
-  return [...new Set(sources.filter(Boolean))];
+  return await sportsDbBadgeByCountry(name,countryCode);
 }
+async function apiSportsBadge(name){
+ try{
+  const code=canonicalClubCountryCode(name,'');const country=countryByCode(code)?.apiName||countryByCode(code)?.name||'';
+  const r=await fetch(`/api/club-badge?name=${encodeURIComponent(name)}${country?`&country=${encodeURIComponent(country)}`:''}`,{signal:AbortSignal.timeout(4500)});
+  if(!r.ok)return '';
+  const data=await r.json();
+  return safeBadgeImage(data?.logo||'');
+ }catch(_){return ''}
+}
+const missingOfficialCrests=new Set();
+window.BTLCrestDiagnostics=()=>({unresolved:[...missingOfficialCrests].sort((a,b)=>a.localeCompare(b,'pt-BR')),verifiedCacheCount:Object.keys(badgeCache).filter(x=>safeBadgeImage(badgeCache[x])).length});
+async function exactClubBadge(name,countryCode=''){
+ if(!name)return '';
+ const code=countryCode||canonicalClubCountryCode(name,'');
+ const cached=getCachedBadge(name,code);
+ if(cached)return cached;
+ const apiSports=await apiSportsBadge(name);
+ if(apiSports)return setCachedBadge(name,code,apiSports);
+ const sportsDb=await sportsDbBadge(name,code);
+ if(sportsDb)return setCachedBadge(name,code,sportsDb);
+ const commons=await commonsCrest(name);
+ if(commons){missingOfficialCrests.delete(`${code}:${name}`);return setCachedBadge(name,code,commons);}
+ missingOfficialCrests.add(`${code}:${name}`);
+ return '';
+}
+
+function clubBadgeSources(name,exact=''){
+  return [safeBadgeImage(exact)].filter(Boolean);
+}
+
 function averageCornerColor(data,w,h){
   const pts=[[1,1],[w-2,1],[1,h-2],[w-2,h-2]],colors=pts.map(([x,y])=>{const i=(y*w+x)*4;return [data[i],data[i+1],data[i+2],data[i+3]];});
   const alpha=colors.reduce((s,c)=>s+c[3],0)/colors.length;if(alpha<180)return null;
@@ -1190,6 +1319,13 @@ function trophySourcesFor(name){const hit=trophyEntryFor(name);return [...(hit?.
 function trophyArtFor(name){return trophySourcesFor(name)[0];}
 function honourInitials(name){return (name||'BTL').split(/\s+/).filter(Boolean).slice(0,3).map(x=>x[0]).join('').toUpperCase();}
 function honourVisual(name){const sources=trophySourcesFor(name),encoded=sources.map(encodeURIComponent).join('|');return `<span class="honour-art"><img src="${sources[0]}" data-sources="${encoded}" data-index="0" alt="${name}" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" onload="polishSiteImage(this)" onerror="cycleHonourImage(this)"><b>${honourInitials(name)}</b></span>`;}
+function competitionHeaderMarkup(name,sub=''){
+ const main=String(name||'COMPETIÇÃO'),extra=String(sub||'').trim();
+ const found=trophyEntryFor(main),icon=(found?.urls||[]).find(x=>/assets\/trophies\/[a-z0-9-]+\.svg$/i.test(x))||'';
+ const inline=window.BTL_COMPETITION_TROPHY_DATA?.[icon]||'';
+ const art=inline?`<span class="honour-art"><img src="${inline}" alt="Troféu de ${esc(main)}"></span>`:honourVisual(main);
+ return `<span class="competition-inline">${art}<span class="competition-inline-copy"><b>${esc(main)}</b>${extra?`<small>${esc(extra)}</small>`:''}</span></span>`;
+}
 window.cycleHonourImage=function(img){const sources=(img.dataset.sources||'').split('|').map(decodeURIComponent).filter(Boolean),i=Number(img.dataset.index||0)+1;if(i<sources.length){img.dataset.index=String(i);delete img.dataset.bgCleaned;delete img.dataset.bgCleaning;img.src=sources[i];return;}const parent=img.parentElement;img.remove();parent?.classList.add('fallback');};
 const TROPHY_PRELOAD_CACHE=[];
 function preloadTrophyImages(){
@@ -1457,6 +1593,78 @@ function drawLegendForDraft(excludeName=''){
   attributeDraft.current={legend:player,values:legendAttributeSet(player,pendingPlayerProfile?.position)};
 }
 function selectedDraftCount(){return attributeDraft?Object.keys(attributeDraft.selections||{}).length:0;}
+// Editable roster snapshot; never infer a live transfer from a name.
+const BTL_PLAYER_NATIONS={
+ 'BR':'Pelé|Garrincha|Ronaldo Nazário|Ronaldinho|Kaká|Rivaldo|Roberto Carlos|Cafu|Zico|Romário|Sócrates|Jairzinho|Tostão|Marcelo|Bebeto|Careca|Djalma Santos|Leônidas da Silva|Neymar Jr|Raphinha|Vini Jr.|Gabriel Magalhães|Alisson|Ederson|Casemiro|Rodrygo|Vinícius Júnior',
+ 'AR':'Diego Maradona|Lionel Messi|Alfredo Di Stéfano|Javier Zanetti|Juan Román Riquelme|Gabriel Batistuta|Sergio Agüero|Ángel Di María|Julián Álvarez|Lautaro Martínez|Emiliano Martínez|Omar Sívori|José Manuel Moreno',
+ 'PT':'Cristiano Ronaldo|Eusébio|Luís Figo|Deco|Rúben Dias|Nuno Mendes|Vitinha|Bruno Fernandes|João Neves|Bernardo Silva|Diogo Costa|Rui Costa',
+ 'FR':'Zinedine Zidane|Thierry Henry|Kylian Mbappé|Karim Benzema|Patrick Vieira|Claude Makélélé|N’Golo Kanté|Nicolas Anelka|Jean-Pierre Papin|Michel Platini|Marcel Desailly|Just Fontaine|Franck Ribéry|William Saliba|Theo Hernández|Jules Koundé',
+ 'DE':'Franz Beckenbauer|Gerd Müller|Miroslav Klose|Bastian Schweinsteiger|Matthias Sammer|Günter Netzer|Toni Kroos|Thomas Müller|Joshua Kimmich|Florian Wirtz|Jamal Musiala|Manuel Neuer|Philipp Lahm|Oliver Kahn|Lothar Matthäus',
+ 'ES':'Xavi|Andrés Iniesta|Iker Casillas|Sergio Ramos|Carles Puyol|David Villa|Gerard Piqué|Xabi Alonso|Fernando Hierro|Raúl|Pedri|Lamine Yamal|Nico Williams|Unai Simón|Rodri|David de Gea|Emilio Butragueño|Fernando Torres',
+ 'IT':'Paolo Maldini|Andrea Pirlo|Francesco Totti|Alessandro Del Piero|Roberto Baggio|Gianluigi Buffon|Gianluigi Donnarumma|Giorgio Chiellini|Fabio Cannavaro|Marco Verratti|Gaetano Scirea|Giacinto Facchetti|Gianfranco Zola|Alessandro Bastoni|Nicolò Barella',
+ 'ENG':'David Beckham|Steven Gerrard|Frank Lampard|Paul Scholes|Wayne Rooney|John Terry|Ashley Cole|Rio Ferdinand|Michael Owen|Gary Lineker|Paul Gascoigne|Harry Kane|Bukayo Saka|Cole Palmer|Jude Bellingham|Declan Rice|Alexander Isak',
+ 'NL':'Johan Cruyff|Marco van Basten|Ruud Gullit|Dennis Bergkamp|Arjen Robben|Robin van Persie|Virgil van Dijk|Frenkie de Jong|Edwin van der Sar|Ruud van Nistelrooy|Wesley Sneijder|Patrick Kluivert|Edgar Davids|Jaap Stam|Ruud Krol',
+ 'BE':'Kevin De Bruyne|Eden Hazard|Romelu Lukaku|Thibaut Courtois|Vincent Kompany|Youri Tielemans',
+ 'UY':'Luis Suárez|Edinson Cavani|Diego Forlán|Enzo Francescoli|Obdulio Varela|José Nasazzi|Federico Valverde',
+ 'HR':'Luka Modrić|Ivan Rakitić|Mario Mandžukić|Mateo Kovačić',
+ 'NO':'Erling Haaland|Martin Ødegaard',
+ 'EG':'Mohamed Salah', 'SE':'Zlatan Ibrahimović|Alexander Isak|Gunnar Nordahl',
+ 'CI':'Didier Drogba|Yaya Touré', 'CM':'Samuel Eto’o|Roger Milla|André Onana',
+ 'GH':'Michael Essien|Abedi Pelé','CZ':'Petr Čech|Pavel Nedvěd',
+ 'MX':'Hugo Sánchez', 'RO':'Gheorghe Hagi', 'RS':'Nemanja Vidić|Dragan Džajić',
+ 'HU':'Ferenc Puskás|Sándor Kocsis|Nándor Hidegkuti','PL':'Robert Lewandowski|Wojciech Szczęsny',
+ 'SK':'Marek Hamšík', 'TR':'Hakan Çalhanoğlu|Arda Güler',
+ 'MA':'Achraf Hakimi', 'GE':'Khvicha Kvaratskhelia', 'NG':'Victor Osimhen',
+ 'DK':'Michael Laudrup|Christian Eriksen', 'US':'Christian Pulisic',
+ 'JP':'Takefusa Kubo', 'CH':'Granit Xhaka', 'AT':'David Alaba'
+};
+const BTL_EXTRA_NATIONS={
+  'FR':'Ousmane Dembélé|Michael Olise|Raymond Kopa|Lilian Thuram',
+  'AR':'Paulo Dybala|Mario Kempes|Daniel Passarella',
+  'SE':'Viktor Gyökeres',
+  'PT':'Rafael Leão',
+  'NIR':'George Best',
+  'ENG':'Bobby Charlton|Kevin Keegan|Stanley Matthews|Bobby Moore|Gordon Banks|Alan Shearer',
+  'RU':'Lev Yashin',
+  'IT':'Franco Baresi|Giuseppe Meazza|Dino Zoff|Gianni Rivera|Sandro Mazzola|Valentino Mazzola|Alessandro Nesta|Paolo Rossi',
+  'ES':'Luis Suárez Miramontes',
+  'SCO':'Kenny Dalglish',
+  'DE':'Karl-Heinz Rummenigge',
+  'BR':'Rivelino|Didi|Falcão|Nilton Santos|Carlos Alberto Torres|Dani Alves',
+  'DK':'Peter Schmeichel',
+  'NL':'Frank Rijkaard|Clarence Seedorf|Johan Neeskens',
+  'LR':'George Weah',
+  'BG':'Hristo Stoichkov'
+};
+Object.entries(BTL_EXTRA_NATIONS).forEach(([code,names])=>{BTL_PLAYER_NATIONS[code]=(BTL_PLAYER_NATIONS[code]?BTL_PLAYER_NATIONS[code]+'|':'')+names;});
+const BTL_PLAYER_NATION_INDEX=Object.fromEntries(Object.entries(BTL_PLAYER_NATIONS).flatMap(([code,names])=>names.split('|').map(name=>[normalizeKey(name),code])));
+const BTL_PLAYER_CLUBS={
+ 'Ousmane Dembélé':'Paris Saint-Germain','Frenkie de Jong':'Barcelona','Jules Koundé':'Barcelona',
+ 'Kylian Mbappé':'Real Madrid','Jude Bellingham':'Real Madrid','Vini Jr.':'Real Madrid','Federico Valverde':'Real Madrid','Thibaut Courtois':'Real Madrid',
+ 'Rodri':'Barcelona','Erling Haaland':'Manchester City','Rúben Dias':'Manchester City','Bernardo Silva':'Real Madrid',
+ 'Lamine Yamal':'Barcelona','Pedri':'Barcelona','Raphinha':'Barcelona','Robert Lewandowski':'Chicago Fire',
+ 'Mohamed Salah':'Trabzonspor','Virgil van Dijk':'Liverpool','Florian Wirtz':'Liverpool','Alexander Isak':'Liverpool','Alisson':'Liverpool',
+ 'Bukayo Saka':'Arsenal','Declan Rice':'Arsenal','William Saliba':'Arsenal','Gabriel Magalhães':'Arsenal','Viktor Gyökeres':'Arsenal',
+ 'Harry Kane':'Bayern de Munique','Jamal Musiala':'Bayern de Munique','Joshua Kimmich':'Bayern de Munique','Michael Olise':'Bayern de Munique',
+ 'Lautaro Martínez':'Inter de Milão','Alessandro Bastoni':'Inter de Milão','Nicolò Barella':'Inter de Milão','Hakan Çalhanoğlu':'Inter de Milão',
+ 'Achraf Hakimi':'Paris Saint-Germain','Nuno Mendes':'Paris Saint-Germain','Vitinha':'Paris Saint-Germain','João Neves':'Paris Saint-Germain','Khvicha Kvaratskhelia':'Paris Saint-Germain',
+ 'Cristiano Ronaldo':'Al-Nassr','Lionel Messi':'Inter Miami','Neymar Jr':'Santos','Bruno Fernandes':'Manchester United','Cole Palmer':'Chelsea',
+ 'Gianluigi Donnarumma':'Manchester City','Kevin De Bruyne':'Napoli','Julián Álvarez':'Atlético de Madrid','Paulo Dybala':'Roma',
+ 'Victor Osimhen':'Galatasaray','Theo Hernández':'Al-Hilal','Rafael Leão':'Milan','Martin Ødegaard':'Arsenal',
+ 'David Raya':'Arsenal','Diogo Costa':'Porto','Unai Simón':'Athletic Bilbao','Emiliano Martínez':'Aston Villa',
+ 'Ederson':'Fenerbahçe','Jan Oblak':'Atlético de Madrid','Mike Maignan':'Milan','Nico Williams':'Athletic Bilbao'
+};
+function currentCardClub(card){const p=window.BTLRosterHub?.lookupPlayer?.(normalizeKey(card.name));return p?.club||CURRENT_PLAYER_META?.[card.name]?.[0]||BTL_PLAYER_CLUBS[card.name]||'';}
+function renderDrawIdentity(card){
+  const flag=$('#legend-country'),club=$('#legend-club');if(!flag||!club)return;
+  const code=BTL_PLAYER_NATION_INDEX[normalizeKey(card.name)]||CURRENT_PLAYER_META?.[card.name]?.[2]||'';
+  flag.innerHTML=code?nationalFlagImage(code,countryByCode(code)?.name||code):'<span aria-hidden="true">🌐</span>';
+  flag.setAttribute('title',code?countryByCode(code)?.name||code:'Nacionalidade não informada');
+  const historical=card.category!=='current';
+  club.innerHTML=historical?'<span class="legend-icon-crest" aria-label="Ídolo histórico">ICON ★</span>':`<span class="legend-club-inline">${clubCrestMarkup(currentCardClub(card))}</span><span>${esc(currentCardClub(card)||'Clube não verificado')}</span>`;
+  if(!historical)hydratePenaltyBadges(club);
+}
+
 function renderAttributeDraft(){
   if(!attributeDraft)return;
   const fields=attributeFieldsForPosition(pendingPlayerProfile?.position),current=attributeDraft.current,selected=attributeDraft.selections,count=selectedDraftCount();
@@ -1467,7 +1675,7 @@ function renderAttributeDraft(){
   $('#legend-badge').textContent=current.legend.name.split(' ').map(x=>x[0]).join('').slice(0,2).toUpperCase();
   $('#legend-name').textContent=current.legend.name;$('#legend-rating').textContent=current.legend.rating;
   if($('#legend-era'))$('#legend-era').textContent=current.legend.category==='current'?'ATUAL · MELHOR FASE':'HISTÓRICO · AUGE';
-  if($('#legend-source'))$('#legend-source').textContent=current.legend.source||'Referência de auge';
+  renderDrawIdentity(current.legend);
   const noSkipLeft=(attributeDraft.skipsRemaining||0)<=0;$('#reroll-legend').disabled=noSkipLeft;$('#reroll-legend').textContent=noSkipLeft?'Pulo único já utilizado':'Pular este jogador · resta 1';
   const values=current.values,primaryId=primaryAttributeForPosition(pendingPlayerProfile?.position);
   $('#legend-attributes').innerHTML=fields.map(f=>{const already=!!selected[f.id],isPrimary=f.id===primaryId;return `<button type="button" class="draft-attribute-choice ${already?'locked':''} ${isPrimary?'role-primary':''}" data-draft-attribute="${f.id}" ${already?'disabled':''}><span>${f.short}${isPrimary?' ★':''}</span><strong>${attributeDisplayValue(f.id,values[f.id])}</strong><small>${already?'já escolhido':isPrimary?`atributo principal · ${pendingPlayerProfile?.position||''}`:'usar este atributo'}</small></button>`;}).join('');
@@ -1553,21 +1761,86 @@ function deterministicClubTertiary(name,theme){
 }
 function generatedClubTheme(name){
   if(!name)return DEFAULT_THEME;
-  const palettes=[
-    {accent:'#d9343f',secondary:'#ffffff',bg:'#190708',panel:'#2e0f12',panel2:'#43161a',border:'#6d2930',buttonText:'#ffffff'},
-    {accent:'#397bd8',secondary:'#ffffff',bg:'#061126',panel:'#0b2045',panel2:'#103160',border:'#294f82',buttonText:'#ffffff'},
-    {accent:'#2f9f65',secondary:'#ffffff',bg:'#05180f',panel:'#0a2a1c',panel2:'#10412b',border:'#286747',buttonText:'#ffffff'},
-    {accent:'#f0d33c',secondary:'#111111',bg:'#171505',panel:'#2a270b',panel2:'#3d3910',border:'#655e22',buttonText:'#111111'},
-    {accent:'#f2f2f2',secondary:'#111111',bg:'#060606',panel:'#121212',panel2:'#1d1d1d',border:'#3c3c3c',buttonText:'#080808'},
-    {accent:'#7c54d8',secondary:'#ffffff',bg:'#10091d',panel:'#1d1033',panel2:'#2b184a',border:'#513172',buttonText:'#ffffff'}
-  ];
-  const hash=clubThemeHash(name),base={...palettes[hash%palettes.length]};base.tertiary=deterministicClubTertiary(name,base);base.angle=24+(hash%133);return base;
+  // Fallback for unregistered clubs: deterministic, distinct per club. Colours
+  // are illustrative until the club is added to the curated palette below.
+  const hash=clubThemeHash(name),hue=hash%360,hue2=(hue+44+(hash%76))%360;
+  return {accent:`hsl(${hue} 78% 67%)`,secondary:`hsl(${hue2} 67% 77%)`,tertiary:`hsl(${hue2} 63% 57%)`,
+    bg:`hsl(${hue} 36% 6%)`,panel:`hsl(${hue} 34% 11%)`,panel2:`hsl(${hue2} 27% 16%)`,
+    border:`hsl(${hue} 28% 31%)`,buttonText:'#071015',angle:hash%160+10};
 }
+// Identidade de clubes com cores conhecidas: cada registro mantém padronagens,
+// ângulos e variações próprias com base no nome do clube.
+const BTL_CURATED_TEAM_COLORS={
+ 'Flamengo':['#e43d3d','#151515'],'Vasco':['#f8f8f8','#131313'],'Botafogo':['#f6f6f6','#171717'],'Fluminense':['#8c2246','#2a856a'],
+ 'Palmeiras':['#27a36a','#e7ece7'],'Corinthians':['#f5f4f1','#17191b'],'Santos':['#f4f4f3','#101011'],'São Paulo':['#e33a4b','#ffffff'],
+ 'Internacional':['#ed4349','#ffffff'],'Grêmio':['#53b5ed','#121f35'],'Cruzeiro':['#3e85f6','#f2f2f2'],'Atlético Mineiro':['#f1f1f1','#141414'],
+ 'Bahia':['#3277e5','#db343e'],'Fortaleza':['#2e72e6','#e03f43'],'Ceará':['#ffffff','#121212'],'Athletico Paranaense':['#dc293a','#191919'],
+ 'Vitória':['#d83f44','#161616'],'Sport Recife':['#de3338','#f5cb4d'],'Coritiba':['#3d9b5b','#ffffff'],'Goiás':['#3ba95a','#fff'],
+ 'Real Madrid':['#f3f0e9','#c9a750'],'Barcelona':['#ac1646','#174d9e'],'Atlético de Madrid':['#e54551','#2860b6'],'Athletic Bilbao':['#d74446','#fff'],
+ 'Sevilla':['#e54040','#ffffff'],'Real Betis':['#2db973','#ffffff'],'Betis':['#2db973','#ffffff'],'Valencia':['#f7f7f7','#171717'],
+ 'Villarreal':['#f0d949','#192d6d'],'Real Sociedad':['#3e7fe8','#f3f4f5'],'Celta de Vigo':['#93c9f6','#ffffff'],
+ 'Arsenal':['#e8414e','#f5f5f5'],'Liverpool':['#e03f48','#f1efe8'],'Manchester City':['#7ed4f3','#ffffff'],
+ 'Manchester United':['#df3c38','#eac34b'],'Chelsea':['#3376dc','#f4f4f4'],'Tottenham':['#f5f5f5','#182d50'],
+ 'Newcastle United':['#f3f3f3','#171717'],'Aston Villa':['#9d3554','#8ed0f5'],'West Ham':['#8d294e','#7dc8eb'],
+ 'Brighton':['#3679df','#f8f8f8'],'Everton':['#3677df','#f5f5f5'],'Leeds United':['#f4f4f4','#e6d548'],
+ 'Bayern de Munique':['#df3e4f','#f2f2f2'],'Borussia Dortmund':['#edd640','#181919'],'Bayer Leverkusen':['#de3138','#181818'],
+ 'RB Leipzig':['#ec414a','#f3f3f3'],'Stuttgart':['#e5414c','#f5f5f5'],'Eintracht Frankfurt':['#de3d3e','#111111'],
+ 'Schalke 04':['#397ce3','#f5f5f5'],'Hamburgo':['#3465ab','#f6f6f6'],'Hertha Berlim':['#3678d7','#f3f3f3'],
+ 'Juventus':['#f3f3f3','#111111'],'Milan':['#d84448','#131313'],'Inter de Milão':['#3978d4','#161616'],
+ 'Napoli':['#59b7ef','#f7f7f7'],'Roma':['#aa3133','#e5b24a'],'Lazio':['#94cbe8','#f4f4f4'],'Atalanta':['#3278d6','#111111'],
+ 'Paris Saint-Germain':['#294f93','#e94653'],'Marseille':['#64c6ec','#f7f7f7'],'Lyon':['#3e6fbb','#e03b3f'],'Monaco':['#e24b50','#ffffff'],
+ 'Porto':['#3779d8','#f5f5f5'],'Benfica':['#df4044','#f2f2f2'],'Sporting CP':['#35a56a','#f5f5f5'],'Braga':['#db3b3f','#ffffff'],
+ 'Ajax':['#e14449','#fff'],'PSV':['#e2474b','#fff'],'Feyenoord':['#e04b50','#f7f7f7'],
+ 'Boca Juniors':['#234f9a','#f3c83e'],'River Plate':['#f3f3f3','#d53d45'],'Racing Club':['#7cc9ed','#f9f9f9'],
+ 'Independiente':['#d94143','#f6f6f6'],'San Lorenzo':['#173b87','#c43d42'],'Inter Miami':['#ef9fc3','#191919'],
+ 'LA Galaxy':['#f2f2f2','#e6c85b'],'Los Angeles FC':['#222222','#c9a650'],'Al Nassr':['#e4ca3b','#2968c3'],
+ 'Al Hilal':['#386bdd','#f3f3f3'],'Al Ittihad':['#f4ca40','#151515']
+};
+const BTL_EXTERNAL_CLUB_COLORS_KEY='btl-v17-real-club-colors';
+let externalClubColors={};
+try{externalClubColors=JSON.parse(localStorage.getItem(BTL_EXTERNAL_CLUB_COLORS_KEY)||'{}')||{}}catch(_){externalClubColors={}}
+function rememberClubColors(team,club){
+  if(!team?.idTeam||!club?.name||team.strTeam!==club.name)return;
+  const valid=v=>/^#[0-9a-f]{6}$/i.test(String(v||''));
+  if(valid(team.strColour1)&&valid(team.strColour2)){
+    externalClubColors[club.name]=[team.strColour1,team.strColour2];
+    localStorage.setItem(BTL_EXTERNAL_CLUB_COLORS_KEY,JSON.stringify(externalClubColors));
+  }
+}
+const btlPaletteMisses=new Set();
+async function discoverDocumentedClubPalette(club){
+ if(!club||BTL_CURATED_TEAM_COLORS[club]||CLUB_THEMES[club]||externalClubColors[club]||btlPaletteMisses.has(club))return;
+ btlPaletteMisses.add(club);
+ const code=state.player?.clubCountry,country=countryByCode(code)?.apiName;
+ if(!country)return;
+ try{
+  const api=`https://www.thesportsdb.com/api/v1/json/123/search_all_teams.php?s=Soccer&c=${encodeURIComponent(country)}`;
+  const response=await fetch(api,{signal:AbortSignal.timeout(5000)});
+  if(!response.ok)return;
+  const json=await response.json();
+  const team=(json.teams||[]).find(x=>x.idTeam&&x.strSport==='Soccer'&&normalizeKey(x.strTeam)===normalizeKey(club));
+  if(!team)return;
+  rememberClubColors(team,{name:team.strTeam});
+  
+ }catch(_){/* Paleta incerta: manter tom neutro até encontrar fonte confirmada. */}
+}
+function curatedTheme(name){
+ const colors=BTL_CURATED_TEAM_COLORS[name];if(!colors)return null;
+ const hash=clubThemeHash(name),accent=colors[0],secondary=colors[1];
+ return {accent,secondary,tertiary:deterministicClubTertiary(name,{secondary}),bg:'#060d13',panel:'#101d29',panel2:'#172735',border:'#344957',buttonText:'#071014',angle:20+hash%160};
+}
+
 function applyClubTheme(name){
-  const base=CLUB_THEMES[name] || generatedClubTheme(name),signature=CLUB_THEME_SIGNATURES[name]||{};
+  const saved=externalClubColors[name];
+  const confirmedColors=Array.isArray(saved)&&saved.length===2?{accent:saved[0],secondary:saved[1],tertiary:saved[1],bg:'#060d13',panel:'#101d29',panel2:'#172735',border:'#344957',buttonText:'#071014',angle:20+clubThemeHash(name)%160}:null;
+  const base=curatedTheme(name) || CLUB_THEMES[name] || confirmedColors || DEFAULT_THEME,signature=CLUB_THEME_SIGNATURES[name]||{};
   const theme={...base,tertiary:signature.tertiary||base.tertiary||deterministicClubTertiary(name,base),angle:signature.angle||base.angle||(24+clubThemeHash(name)%133)};
   const root=document.documentElement;
   root.style.setProperty('--green',theme.accent);
+  root.style.setProperty('--volt',theme.accent);
+  root.style.setProperty('--cyan',theme.secondary||theme.accent);
+  root.style.setProperty('--club-ambient',theme.accent);
+  root.style.setProperty('--club-ink',theme.bg||'#060d13');
   root.style.setProperty('--green2',theme.accent2||theme.accent);
   root.style.setProperty('--club-primary',theme.accent||DEFAULT_THEME.accent);
   root.style.setProperty('--club-secondary',theme.secondary||'#f4f7f5');
@@ -1580,6 +1853,22 @@ function applyClubTheme(name){
   root.style.setProperty('--panel2',theme.panel2);
   root.style.setProperty('--border',theme.border);
   root.style.setProperty('--theme-flash',theme.accent);
+  root.style.setProperty('--club-haze',`color-mix(in srgb, ${theme.accent} 24%, #080f1b)`);
+  root.style.setProperty('--club-panel-shine',`color-mix(in srgb, ${theme.secondary} 10%, #111d2b)`);
+  root.style.setProperty('--game-club-color',theme.accent);
+  root.style.setProperty('--game-club-rival',theme.secondary||theme.accent);
+  root.style.setProperty('--game-club-third',theme.tertiary||theme.accent);
+  root.style.setProperty('--game-club-dark',theme.bg||'#061016');
+  root.style.setProperty('--story-accent',theme.accent);
+  const hudClub=document.getElementById('btl-hud-club');
+  const hudLeague=document.getElementById('btl-hud-league');
+  const hudSeason=document.getElementById('btl-hud-season');
+  const hudRating=document.getElementById('btl-hud-rating');
+  if(hudClub)hudClub.textContent=name||'INÍCIO DE CARREIRA';
+  if(hudLeague)hudLeague.textContent=name?(state.player?.clubLeague||'CLUBE ATUAL'):'SELECIONE SUA TRAJETÓRIA';
+  if(hudSeason)hudSeason.textContent=state.season?.year||'—';
+  if(hudRating)hudRating.textContent=state.player?`GER ${state.player.overall||'—'}`:'GER —';
+  if(name)void discoverDocumentedClubPalette(name);
   const current=document.body.dataset.clubTheme||'';
   if(name && current!==name){
     document.body.dataset.clubTheme=name;
@@ -1589,34 +1878,143 @@ function applyClubTheme(name){
     setTimeout(()=>document.body.classList.remove('theme-pulse'),700);
   }else if(!name) document.body.dataset.clubTheme='';
 }
-async function resolveClubBadge(name){ const exact=await exactClubBadge(name); return clubBadgeSources(name,exact)[0]||fallbackClubDataUri(name); }
-async function hydrateBadge(img,name,fallback){ if(!img)return; const exact=await exactClubBadge(name); applyImageSources(img,clubBadgeSources(name,exact),fallback); }
+
+const COMPETITION_THEME_PRESETS=[
+  {test:/Scottish Premiership|Scottish Cup/i,theme:{key:'scotland',accent:'#57c8fb',secondary:'#ffffff',tertiary:'#172e78',alt:'#abebff',bg:'#071323',panel:'#0c2138',panel2:'#103252',border:'#376d9d',buttonText:'#ffffff',angle:121}},
+  {test:/Belgian Pro League|Copa da B[eé]lgica|Belgian Cup/i,theme:{key:'belgium',accent:'#e9d052',secondary:'#ffffff',tertiary:'#151515',alt:'#fff0ac',bg:'#15130a',panel:'#242114',panel2:'#332e19',border:'#786a40',buttonText:'#ffffff',angle:116}},
+  {test:/S[uü]per Lig|Copa da Turquia/i,theme:{key:'turkey',accent:'#e6586d',secondary:'#ffffff',tertiary:'#111521',alt:'#f5a4ad',bg:'#170b14',panel:'#261323',panel2:'#361b30',border:'#744958',buttonText:'#ffffff',angle:119}},
+  {test:/Liga MX|Copa MX/i,theme:{key:'mx',accent:'#f664b7',secondary:'#ffffff',tertiary:'#7528b2',alt:'#ffb6df',bg:'#17091e',panel:'#290f38',panel2:'#3c164f',border:'#7d4b8b',buttonText:'#ffffff',angle:118}},
+  {test:/CONCACAF Champions Cup/i,theme:{key:'concacaf',accent:'#36e3d2',secondary:'#ffffff',tertiary:'#173c7e',alt:'#9bfaf0',bg:'#07141c',panel:'#0d2532',panel2:'#163745',border:'#397382',buttonText:'#ffffff',angle:118}},
+  {test:/AFC Champions League Elite|AFC Champions League Two/i,theme:{key:'afc',accent:'#f7c465',secondary:'#ffffff',tertiary:'#222b67',alt:'#ffe5a1',bg:'#13101f',panel:'#24192f',panel2:'#332743',border:'#796477',buttonText:'#ffffff',angle:118}},
+  {test:/CAF Champions League/i,theme:{key:'caf',accent:'#eeaa4e',secondary:'#ffffff',tertiary:'#175c36',alt:'#fbd49a',bg:'#11190e',panel:'#1b2a16',panel2:'#293b1d',border:'#657b3c',buttonText:'#ffffff',angle:120}},
+  {test:/OFC Champions League/i,theme:{key:'ofc',accent:'#84d0ff',secondary:'#ffffff',tertiary:'#125b95',alt:'#c3eaff',bg:'#061522',panel:'#0e273c',panel2:'#143951',border:'#457c9f',buttonText:'#ffffff',angle:112}},
+  {test:/EFL Championship|EFL League One/i,theme:{key:'efl',accent:'#5e9cf6',secondary:'#ffffff',tertiary:'#182b64',alt:'#b0cbff',bg:'#071322',panel:'#12243b',panel2:'#183451',border:'#426a97',buttonText:'#ffffff',angle:124}},
+  {test:/Primera Divisi[oó]n Uruguaia|Copa AUF Uruguay/i,theme:{key:'uy',accent:'#75cef4',secondary:'#ffffff',tertiary:'#1f4b8c',alt:'#c0ecfd',bg:'#071725',panel:'#10283c',panel2:'#163951',border:'#457b94',buttonText:'#ffffff',angle:121}},
+  {test:/Categor[ií]a Primera A|Copa Colombia/i,theme:{key:'col',accent:'#f7d24e',secondary:'#ffffff',tertiary:'#cf3b3b',alt:'#f9e79d',bg:'#17100b',panel:'#292015',panel2:'#3b2b1b',border:'#78613e',buttonText:'#ffffff',angle:118}},
+  {test:/Primera Divisi[oó]n do Chile|Copa Chile/i,theme:{key:'chile',accent:'#4aa9ed',secondary:'#ffffff',tertiary:'#ef4b62',alt:'#9cddff',bg:'#0b1325',panel:'#152239',panel2:'#1a3050',border:'#4c6b91',buttonText:'#ffffff',angle:116}},
+
+  {test:/UEFA Champions League/i,theme:{key:'ucl',accent:'#4fd0ff',secondary:'#ffffff',tertiary:'#173c9b',alt:'#7ad9ff',bg:'#031122',panel:'#081a38',panel2:'#0f2753',border:'#2f5d94',buttonText:'#f7fcff',angle:118}},
+  {test:/UEFA Europa League/i,theme:{key:'uel',accent:'#ff7b2f',secondary:'#ffffff',tertiary:'#161616',alt:'#ffb57d',bg:'#140904',panel:'#241106',panel2:'#33180b',border:'#8f4b27',buttonText:'#fff7f2',angle:106}},
+  {test:/UEFA Conference League/i,theme:{key:'uecl',accent:'#44d07e',secondary:'#ffffff',tertiary:'#0e0f10',alt:'#94efb6',bg:'#07130d',panel:'#0f2418',panel2:'#133220',border:'#2f7950',buttonText:'#f5fff8',angle:130}},
+  {test:/CONMEBOL Libertadores/i,theme:{key:'lib',accent:'#d9b15a',secondary:'#ffffff',tertiary:'#0f214d',alt:'#f0d396',bg:'#081120',panel:'#0d1a33',panel2:'#12264a',border:'#6f6090',buttonText:'#fffaf0',angle:112}},
+  {test:/CONMEBOL Sul-Americana/i,theme:{key:'sula',accent:'#f29b38',secondary:'#ffffff',tertiary:'#101010',alt:'#ffd08a',bg:'#12100b',panel:'#24190d',panel2:'#312010',border:'#7b5930',buttonText:'#fff9f1',angle:104}},
+  {test:/Premier League|FA Cup|League Cup|Community Shield/i,theme:{key:'pl',accent:'#34f5c5',secondary:'#ffffff',tertiary:'#5d2a86',alt:'#8df8df',bg:'#180622',panel:'#250b35',panel2:'#34114a',border:'#5f4784',buttonText:'#fbf8ff',angle:132}},
+  {test:/LaLiga|Copa del Rey|Supercopa da Espanha/i,theme:{key:'laliga',accent:'#ff5f7d',secondary:'#ffffff',tertiary:'#ff9a2f',alt:'#ff9eb0',bg:'#1a0a18',panel:'#31122d',panel2:'#42173c',border:'#7b4e70',buttonText:'#fff8fb',angle:123}},
+  {test:/Bundesliga|DFB-Pokal|DFL-Supercup/i,theme:{key:'bund',accent:'#ff4343',secondary:'#ffffff',tertiary:'#111111',alt:'#ff9898',bg:'#140709',panel:'#290d12',panel2:'#361018',border:'#7f4550',buttonText:'#fff8f8',angle:118}},
+  {test:/Serie A|Coppa Italia|Supercoppa Italiana/i,theme:{key:'seriea',accent:'#52b7ff',secondary:'#ffffff',tertiary:'#103d8b',alt:'#9ed8ff',bg:'#06111e',panel:'#0c1c33',panel2:'#122b4d',border:'#315c87',buttonText:'#f7fcff',angle:116}},
+  {test:/Ligue 1|Coupe de France|Trophée des Champions/i,theme:{key:'ligue1',accent:'#c6f750',secondary:'#ffffff',tertiary:'#182b59',alt:'#e4ff9f',bg:'#08111e',panel:'#0d1a31',panel2:'#122548',border:'#445e83',buttonText:'#f8fff1',angle:124}},
+  {test:/Primeira Liga|Taça de Portugal|Supertaça Cândido de Oliveira/i,theme:{key:'primeiraliga',accent:'#18d07e',secondary:'#ffffff',tertiary:'#c73b44',alt:'#7decb4',bg:'#081510',panel:'#10251d',panel2:'#173227',border:'#44655b',buttonText:'#f6fff9',angle:128}},
+  {test:/Eredivisie|KNVB Beker|Johan Cruyff Shield/i,theme:{key:'ered',accent:'#ff7b27',secondary:'#ffffff',tertiary:'#111111',alt:'#ffb36e',bg:'#150a06',panel:'#271108',panel2:'#33170b',border:'#8a4c28',buttonText:'#fff8f3',angle:112}},
+  {test:/Brasileir[aã]o|Copa do Brasil|Supercopa do Brasil|Supercopa Rei/i,theme:{key:'br',accent:'#23b7ff',secondary:'#ffffff',tertiary:'#ffd648',alt:'#90dcff',bg:'#041521',panel:'#0a2236',panel2:'#10304a',border:'#3a6081',buttonText:'#f8fdff',angle:119}},
+  {test:/Liga Profesional Argentina|Copa Argentina/i,theme:{key:'arg',accent:'#79d6ff',secondary:'#ffffff',tertiary:'#1f87d9',alt:'#bbefff',bg:'#07131f',panel:'#0d1f31',panel2:'#13304a',border:'#436681',buttonText:'#f8fdff',angle:121}},
+  {test:/Major League Soccer|MLS|U\.S\. Open Cup/i,theme:{key:'mls',accent:'#ffffff',secondary:'#8fd0ff',tertiary:'#ff5a5f',alt:'#cfe9ff',bg:'#0a101a',panel:'#111c2b',panel2:'#18263b',border:'#4a5d75',buttonText:'#f8fbff',angle:110}},
+  {test:/Saudi Pro League|King Cup/i,theme:{key:'spl',accent:'#d4ff45',secondary:'#ffffff',tertiary:'#0b5d3b',alt:'#edff9e',bg:'#09150f',panel:'#12251b',panel2:'#183126',border:'#446657',buttonText:'#fbfff1',angle:126}},
+  {test:/J1 League|Copa do Imperador/i,theme:{key:'j1',accent:'#ffffff',secondary:'#ff4c57',tertiary:'#101010',alt:'#ff9ea6',bg:'#12090a',panel:'#251011',panel2:'#35181a',border:'#7d4d55',buttonText:'#fff9f9',angle:107}},
+  {test:/FIFA World Cup|Copa do Mundo|Eliminat[oó]rias da Copa do Mundo/i,theme:{key:'wc',accent:'#f1cb67',secondary:'#ffffff',tertiary:'#18306f',alt:'#f7dfa0',bg:'#091121',panel:'#111d38',panel2:'#182953',border:'#5d6290',buttonText:'#fffdf6',angle:117}},
+  {test:/Copa Am[eé]rica/i,theme:{key:'ca',accent:'#6ed6ff',secondary:'#ffffff',tertiary:'#e6bc55',alt:'#b5edff',bg:'#061322',panel:'#0d2136',panel2:'#12304b',border:'#516487',buttonText:'#f8fdff',angle:118}},
+  {test:/UEFA Nations League|Finalissima/i,theme:{key:'nations',accent:'#79b7ff',secondary:'#ffffff',tertiary:'#834ad8',alt:'#bedaff',bg:'#091225',panel:'#111d37',panel2:'#182b53',border:'#556286',buttonText:'#f8fbff',angle:118}}
+];
+function themedCompetitionContext(){
+  if(state.pendingPenaltyShootout?.competition)return {competition:state.pendingPenaltyShootout.competition,stage:state.pendingPenaltyShootout.stage,type:'cup'};
+  if(state.pendingMatchDecision?.event?.competition)return state.pendingMatchDecision.event;
+  if(nextEventCache?.competition)return nextEventCache;
+  const s=state.season,p=state.player;
+  if(s?.league?.name)return {competition:s.league.name,type:'league'};
+  if(p?.clubCup)return {competition:p.clubCup,type:'cup'};
+  if(p?.clubLeague)return {competition:p.clubLeague,type:'league'};
+  return {competition:'Be The Legend',type:'generic'};
+}
+function competitionThemeForName(name=''){
+  const hit=COMPETITION_THEME_PRESETS.find(entry=>entry.test.test(name||''));
+  if(hit)return hit.theme;
+  return {key:'default',accent:'#56ffc9',secondary:'#eefcff',tertiary:'#72c7ff',alt:'#b8ffea',bg:'#07111d',panel:'#0d1b2d',panel2:'#13243b',border:'#345064',buttonText:'#f6fffb',angle:124};
+}
+function applyThemeTokens(theme,competitionLabel=''){
+  const root=document.documentElement;
+  root.style.setProperty('--green',theme.accent);
+  root.style.setProperty('--volt',theme.accent);
+  root.style.setProperty('--cyan',theme.secondary||theme.accent);
+  root.style.setProperty('--club-ambient',theme.accent);
+  root.style.setProperty('--club-ink',theme.bg||'#060d13');
+  root.style.setProperty('--green2',theme.alt||theme.accent);
+  root.style.setProperty('--club-primary',theme.accent);
+  root.style.setProperty('--club-secondary',theme.secondary||theme.accent);
+  root.style.setProperty('--club-tertiary',theme.tertiary||theme.alt||theme.accent);
+  root.style.setProperty('--club-angle',`${theme.angle||120}deg`);
+  root.style.setProperty('--club-pattern-size','52px');
+  root.style.setProperty('--button-text',theme.buttonText||'#ffffff');
+  root.style.setProperty('--bg',theme.bg||'#07111d');
+  root.style.setProperty('--panel',theme.panel||'#0d1b2d');
+  root.style.setProperty('--panel2',theme.panel2||'#13243b');
+  root.style.setProperty('--border',theme.border||'#345064');
+  root.style.setProperty('--theme-flash',theme.accent);
+  root.style.setProperty('--club-haze',`color-mix(in srgb, ${theme.accent} 22%, #08101b)`);
+  root.style.setProperty('--club-panel-shine',`color-mix(in srgb, ${theme.secondary||theme.accent} 10%, #111d2b)`);
+  root.style.setProperty('--game-club-color',theme.accent);
+  root.style.setProperty('--game-club-rival',theme.secondary||theme.accent);
+  root.style.setProperty('--game-club-third',theme.tertiary||theme.accent);
+  root.style.setProperty('--game-club-dark',theme.bg||'#061016');
+  root.style.setProperty('--story-accent',theme.accent);
+  const hudClub=document.getElementById('btl-hud-club');
+  const hudLeague=document.getElementById('btl-hud-league');
+  const hudSeason=document.getElementById('btl-hud-season');
+  const hudRating=document.getElementById('btl-hud-rating');
+  if(hudClub)hudClub.textContent=state.player?.club||state.player?.nationality||'BE THE LEGEND';
+  if(hudLeague)hudLeague.textContent=competitionLabel||state.player?.clubLeague||'MODO CARREIRA';
+  if(hudSeason)hudSeason.textContent=state.season?.year||'—';
+  if(hudRating)hudRating.textContent=state.player?`GER ${state.player.overall||'—'}`:'GER —';
+}
+function applyCompetitionExperienceTheme(context=themedCompetitionContext()){
+  const competitionLabel=context?.competition||'';
+  const theme=competitionThemeForName(competitionLabel);
+  applyThemeTokens(theme,competitionLabel);
+  const current=document.body.dataset.competitionTheme||'';
+  if(theme.key && current!==theme.key){
+    document.body.dataset.competitionTheme=theme.key;
+    document.body.classList.remove('theme-pulse');
+    void document.body.offsetWidth;
+    document.body.classList.add('theme-pulse');
+    setTimeout(()=>document.body.classList.remove('theme-pulse'),650);
+  }
+}
+async function resolveClubBadge(name,countryCode=''){ const exact=await exactClubBadge(name,countryCode); return safeBadgeImage(exact)||''; }
+async function hydrateBadge(img,name,fallback,countryCode=''){ if(!img)return; const exact=await exactClubBadge(name,countryCode); applyImageSources(img,clubBadgeSources(name,exact),fallback); }
 function clubCrestMarkup(name,countryCode=''){
-  const cached=badgeCache?.[name]||'';
+  const cached=getCachedBadge(name,countryCode);
   const safe=esc(name||'Clube');
-  const src=cached||fallbackClubDataUri(name||'Clube');
-  return `<span class="crest-shell penalty-crest" data-penalty-club="${safe}"><img class="club-badge-img" src="${src}" alt="${safe}" loading="eager"><span class="crest-fallback hidden">⚽</span></span>`;
+  const src=cached;
+  return `<span class="crest-shell penalty-crest" data-penalty-club="${safe}" data-penalty-country="${esc(countryCode||'')}"><img class="club-badge-img ${src?'':'hidden'}" ${src?`src="${esc(src)}"`:''} alt="Escudo de ${safe}" loading="lazy"><span class="crest-fallback ${src?'hidden':''}" title="Escudo oficial indisponível no momento">S/D</span></span>`;
 }
 function hydratePenaltyBadges(root=document){
-  root?.querySelectorAll?.('[data-penalty-club]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.penaltyClub,el.querySelector('.crest-fallback')));
+  root?.querySelectorAll?.('[data-penalty-club]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.penaltyClub,el.querySelector('.crest-fallback'),el.dataset.penaltyCountry||''));
 }
 function hydrateRenderedBadges(){
-  $$('.club-option[data-club-name]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.clubName,el.querySelector('.crest-fallback')));
-  $$('.offer[data-club-name]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.clubName,el.querySelector('.crest-fallback')));
+  $$('.club-option[data-club-name]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.clubName,el.querySelector('.crest-fallback'),el.dataset.clubCountry||''));
+  $$('.offer[data-club-name]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.clubName,el.querySelector('.crest-fallback'),el.dataset.clubCountry||''));
 }
+
+const POSITION_MENU_UI={
+ 'Goleiro':{code:'GOL',icon:'🧤'},'Zagueiro':{code:'ZAG',icon:'🛡️'},
+ 'Lateral direito':{code:'LD',icon:'↗️'},'Lateral esquerdo':{code:'LE',icon:'↖️'},
+ 'Volante':{code:'VOL',icon:'⚓'},'Meia central':{code:'MC',icon:'🎯'},
+ 'Meia ofensivo':{code:'MEI',icon:'✨'},'Meia direita':{code:'MD',icon:'➡️'},
+ 'Meia esquerda':{code:'ME',icon:'⬅️'},'Segundo atacante':{code:'SA',icon:'⚡'},
+ 'Ponta direita':{code:'PD',icon:'💨'},'Ponta esquerda':{code:'PE',icon:'🔥'},
+ 'Centroavante':{code:'ATA',icon:'🥅'}
+};
 
 function populateCreationFields(){
   const countrySelect=$('#nationality');
   COUNTRIES.slice().sort((a,b)=>a.name.localeCompare(b.name,'pt-BR')).forEach(c=>{
     const opt=document.createElement('option');opt.value=c.code;opt.textContent=c.name;countrySelect.appendChild(opt);
   });
-  POSITIONS.forEach(pos=>{ const opt=document.createElement('option');opt.value=pos;opt.textContent=pos;$('#position').appendChild(opt); });
-  const idolSelect=$('#idol');if(idolSelect){IDOL_POOL.forEach(i=>{const opt=document.createElement('option');opt.value=i.id;opt.textContent=`${i.name} · ${i.country}`;idolSelect.appendChild(opt);});idolSelect.addEventListener('change',updateIdolPreview);updateIdolPreview();}
+  POSITIONS.forEach(pos=>{const opt=document.createElement('option');opt.value=pos;opt.textContent=`${POSITION_MENU_UI[pos]?.icon||'⚽'} ${POSITION_MENU_UI[pos]?.code||pos}`;opt.title=pos;$('#position').appendChild(opt);});
+  const idolSelect=$('#idol');if(idolSelect){IDOL_POOL.forEach(i=>{const opt=document.createElement('option');opt.value=i.id;opt.textContent=i.name;idolSelect.appendChild(opt);});idolSelect.addEventListener('change',updateIdolPreview);updateIdolPreview();}
 }
 function updateIdolPreview(){
   const box=$('#idol-preview'),idol=idolById($('#idol')?.value);if(!box)return;
-  if(!idol){box.innerHTML='<span class="idol-preview-empty">Escolha quem vai inspirar sua trajetória.</span>';return;}
-  box.innerHTML=`<span class="idol-avatar-mark">${idolInitials(idol.name)}</span><div><strong>${esc(idol.name)}</strong><small>${countryFlag(idol.code)} ${esc(idol.country)} · ${esc(idol.role)}</small><em>Influência: ${esc(idol.style)}</em></div>`;
+  if(!idol){box.innerHTML='<span class="idol-preview-empty">Escolha seu ídolo.</span>';return;}
+  box.innerHTML=`<span class="idol-avatar-mark">${idolInitials(idol.name)}</span><div><strong>${esc(idol.name)} ${nationalFlagImage(idol.code,idol.country)}</strong></div>`;
 }
 
 
@@ -1630,21 +2028,37 @@ function countryClubBase(code){
 }
 async function fetchCountryClubs(country){
   const local=countryClubBase(country.code);
-  if(local.length>=3)return {clubs:local,source:'clubes nacionais e divisões disponíveis'};
-  const status=$('#club-status');status.textContent=`Buscando clubes de ${country.name}...`;status.classList.add('loading');
+  const status=$('#club-status');status.textContent=`Confirmando clubes reais de ${country.name}...`;status.classList.add('loading');
   try{
+    // Preferir IDs validados por API-Sports quando o deploy possui uma chave.
+    // Escudos tentam API-Sports, TheSportsDB e, por último, Wikimedia Commons.
+    try{
+      const response=await fetch(`/api/verified-clubs?country=${encodeURIComponent(country.apiName)}`,{signal:AbortSignal.timeout(5000)});
+      if(response.ok){
+        const data=await response.json(),rule=getCompetitionRule(country.code,country.name);
+        const apiTeams=(data.clubs||[]).filter(c=>Number(c.id)>0&&c.name).map(c=>{
+          const existing=local.find(x=>normalizeKey(x.name)===normalizeKey(c.name));
+          return existing||{name:c.name,strength:clubStrength(c.name,country.code),badge:'',countryCode:country.code,league:rule.league,cup:rule.cup,divisionLevel:1,apiId:c.id};
+        });
+        if(apiTeams.length>=3){
+          const unique=[...new Map([...local,...apiTeams].map(x=>[normalizeKey(x.name),x])).values()];
+          return {clubs:unique,source:'API-Sports · identidades por ID e base nacional'};
+        }
+      }
+    }catch(_){/* Sem chave configurada ou offline: usar listas reais já cadastradas. */}
+    if(local.length>=3)return {clubs:local,source:'base cadastrada de clubes reais'};
     const response=await fetch(`https://www.thesportsdb.com/api/v1/json/123/search_all_teams.php?s=Soccer&c=${encodeURIComponent(country.apiName)}`);
     if(!response.ok)throw new Error('Falha na API');
     const data=await response.json();const base=getCompetitionRule(country.code,country.name);
-    const teams=(data.teams||[]).filter(t=>t.strTeam&&(!t.strSport||t.strSport==='Soccer')).map(t=>({...normalizedClub(t,country.code),league:base.league,cup:base.cup,divisionLevel:1}));
-    const unique=[...new Map(teams.map(t=>[t.name,t])).values()];if(unique.length>=3)return {clubs:unique,source:'TheSportsDB'};throw new Error('Poucos clubes');
+    const teams=(data.teams||[]).filter(t=>t.strTeam&&t.strSport==='Soccer'&&t.idTeam&&!/^(?:club|team|clube|time)\s*\d+$/i.test(t.strTeam)).map(t=>({...normalizedClub(t,country.code),league:base.league,cup:base.cup,divisionLevel:1}));
+    const unique=[...new Map(teams.map(t=>[t.name,t])).values()];teams.forEach((club,i)=>rememberClubColors((data.teams||[]).filter(t=>t.strTeam&&t.strSport==='Soccer'&&t.idTeam&&!/^(?:club|team|clube|time)\s*\d+$/i.test(t.strTeam))[i],club));if(unique.length>=3)return {clubs:unique,source:'TheSportsDB'};throw new Error('Poucos clubes');
   }catch(_){
     const base=getCompetitionRule(country.code,country.name);
-    return {clubs:[{name:`Atlético ${country.name}`,strength:70,badge:'',countryCode:country.code,league:base.league,cup:base.cup,divisionLevel:1},{name:`Sporting ${country.name}`,strength:69,badge:'',countryCode:country.code,league:base.league,cup:base.cup,divisionLevel:1},{name:`${country.name} FC`,strength:68,badge:'',countryCode:country.code,league:base.league,cup:base.cup,divisionLevel:1}],source:'clubes fictícios de fallback'};
+    return {clubs:local,source:'Base local de clubes reais · consulta externa indisponível'};
   }finally{status.classList.remove('loading');}
 }
 function updateClubRerollButton(){
-  const btn=$('#reroll-clubs');if(!btn)return;btn.disabled=!$('#nationality').value||creationClubRerollsRemaining<=0;btn.textContent=creationClubRerollsRemaining>0?`Sortear novamente · ${creationClubRerollsRemaining} restante(s)`:'Limite de 3 novos sorteios atingido';
+  const btn=$('#reroll-clubs');if(!btn)return;btn.disabled=!$('#nationality').value||creationClubRerollsRemaining<=0||creationClubPool.length===0;btn.textContent=creationClubRerollsRemaining>0?`Sortear novamente · ${creationClubRerollsRemaining} restante(s)`:'Limite de 3 novos sorteios atingido';
 }
 async function loadClubChoices(){
   const code=$('#nationality').value;$('#selected-club').value='';$('#create-submit').disabled=true;$('#club-options').innerHTML='';creationClubRerollsRemaining=3;creationSeenClubs=new Set();
@@ -1654,10 +2068,10 @@ async function loadClubChoices(){
 function drawThreeClubs(){
   const source=$('#club-status').dataset.source||'base de clubes';let pool=creationClubPool.filter(c=>!creationSeenClubs.has(c.name));if(pool.length<3)pool=creationClubPool;
   creationChoices=sample(pool,Math.min(3,pool.length));creationChoices.forEach(c=>creationSeenClubs.add(c.name));
-  $('#club-status').innerHTML=`Escolha um dos três clubes. O sorteio mistura as divisões disponíveis do país.<div class="club-source">${source} · novos sorteios restantes: ${creationClubRerollsRemaining}</div>`;
+  $('#club-status').innerHTML=creationChoices.length?`Escolha um clube da lista confirmada. <div class="club-source">${esc(source)} · novos sorteios restantes: ${creationClubRerollsRemaining}</div>`:`Nenhum clube real pôde ser confirmado para este país. Verifique sua conexão ou escolha outra nacionalidade. Não serão criados clubes fictícios.`;
   $('#club-options').innerHTML=creationChoices.map((c,i)=>{
     const profile={...clubCompetitionProfile(c.name,c.countryCode),...c};const division=profile.divisionLevel>1?` · ${profile.divisionLevel}ª divisão`:'';
-    return `<button type="button" class="club-option" data-club-index="${i}" data-club-name="${c.name.replace(/"/g,'&quot;')}"><span class="check"></span><span class="crest-shell small"><img class="club-badge-img hidden" alt=""><span class="crest-fallback">⚽</span></span><strong>${c.name}</strong><small>${profile.league||getCompetitionRule(c.countryCode,countryByCode(c.countryCode)?.name||'').league}${division}</small><small>Força estimada: ${c.strength}</small></button>`;
+    return `<button type="button" class="club-option" data-club-index="${i}" data-club-name="${c.name.replace(/"/g,'&quot;')}"><span class="check"></span><span class="crest-shell small"><img class="club-badge-img hidden" alt=""><span class="crest-fallback" title="Escudo real ainda não localizado">S/D</span></span><strong>${c.name}</strong><small>${profile.league||getCompetitionRule(c.countryCode,countryByCode(c.countryCode)?.name||'').league}${division}</small><small>Força estimada: ${c.strength}</small></button>`;
   }).join('');
   $$('.club-option').forEach(btn=>btn.addEventListener('click',()=>selectCreationClub(+btn.dataset.clubIndex)));hydrateRenderedBadges();updateClubRerollButton();
 }
@@ -1690,17 +2104,19 @@ function leaguePoolForCountry(code,currentClub,leagueName=''){
   }
   if(!names.includes(currentClub)) names.unshift(currentClub);
   names=[...new Set(names)];
-  const country=countryByCode(code)?.name||'Nacional';let i=1;
-  while(names.length<format.teams){ const fake=`${leagueName||country} Clube ${String(i).padStart(2,'0')}`;if(!names.includes(fake))names.push(fake);i++; }
-  return names.slice(0,format.teams);
+  // Nunca criar clubes inventados para completar classificações.
+  return names.filter(x=>x&&typeof x==='string'&&!/Clube \d{2}$/i.test(x)).slice(0,format.teams);
 }
 function generateLeagueSchedule(code,currentClub,leagueName){
   const format=getLeagueFormatForClub(code,leagueName);const teams=leaguePoolForCountry(code,currentClub,leagueName);const opponents=shuffle(teams.filter(t=>t!==currentClub));const events=[];
-  if(format.mode==='double_round_robin'){
+  if(!opponents.length)return events; // A carreira só pode começar com adversários reais conhecidos.
+  if(format.mode==='double_round_robin'&&opponents.length*2>=format.matches){
     opponents.forEach((opp,i)=>{ const home=i%2===0;events.push({type:'league',competition:leagueName,round:i+1,home:home?currentClub:opp,away:home?opp:currentClub,opponent:opp}); });
     opponents.forEach((opp,i)=>{ const home=i%2!==0;events.push({type:'league',competition:leagueName,round:opponents.length+i+1,home:home?currentClub:opp,away:home?opp:currentClub,opponent:opp}); });
     return events;
   }
+  // Se a base tiver menos equipes que o formato padrão, repetir jogos contra
+  // adversários existentes e identificados; nunca criar nomes fictícios.
   for(let i=0;i<format.matches;i++){
     const opp=opponents[i%opponents.length];const home=i%2===0;events.push({type:'league',competition:leagueName,round:i+1,home:home?currentClub:opp,away:home?opp:currentClub,opponent:opp});
   }
@@ -1713,7 +2129,9 @@ function createKnockoutState(name,stages,nextLeagueRound=3){
 function generateContinentalPhaseSchedule(p,name,format){
   if(!format.phaseMatches)return [];
   const conf=confederation(p.clubCountry);let pool=allTransferClubs().filter(c=>c.countryCode!==p.clubCountry&&confederation(c.countryCode)===conf).map(c=>c.name);
-  pool=[...new Set(pool)];while(pool.length<format.phaseMatches){pool.push(`Rival internacional ${pool.length+1}`);}
+  pool=[...new Set(pool)].filter(Boolean);
+  // Sem adversários fictícios: repetir equipes reais se o catálogo for curto.
+  if(pool.length>0){const real=pool.slice();for(let i=0;pool.length<format.phaseMatches;i++)pool.push(real[i%real.length]);}
   const selected=sample(pool,Math.min(format.phaseMatches,pool.length));const events=[];
   if(format.phaseMatches===6 && name.includes('CONMEBOL')){
     const three=selected.slice(0,3);three.forEach((opp,i)=>events.push({type:'continental',competition:name,stage:format.phase,round:i+1,home:i%2===0?p.club:opp,away:i%2===0?opp:p.club,opponent:opp}));
@@ -1742,9 +2160,9 @@ function superCupOpponent(sc){
     const playerConf=confederation(p.nationalityCode),pool=playerConf==='UEFA'?['AR','BR','UY','CO']:['FR','ES','ENG','PT','DE','IT','NL'];const code=pool.filter(x=>x!==p.nationalityCode).sort((a,b)=>nationalTeamStrength(b)-nationalTeamStrength(a))[rnd(0,Math.min(3,pool.length-1))];return {name:countryByCode(code)?.name||code,code};
   }
   if(sc.name==='UEFA Super Cup'){
-    const pool=allTransferClubs().filter(c=>c.name!==p.club&&confederation(c.countryCode)==='UEFA'&&(c.strength||0)>=84);const rival=pool[rnd(0,Math.max(0,pool.length-1))];return {name:rival?.name||'Campeão europeu',code:rival?.countryCode||'ES'};
+    const pool=allTransferClubs().filter(c=>c.name!==p.club&&confederation(c.countryCode)==='UEFA'&&(c.strength||0)>=84);const rival=pool[rnd(0,Math.max(0,pool.length-1))];return {name:rival?.name||p.club,code:rival?.countryCode||'ES'};
   }
-  const pool=leaguePoolForCountry(p.clubCountry,p.club,p.clubLeague).filter(x=>x!==p.club);return {name:pool[rnd(0,Math.max(0,pool.length-1))]||'Rival nacional',code:p.clubCountry};
+  const pool=leaguePoolForCountry(p.clubCountry,p.club,p.clubLeague).filter(x=>x!==p.club);return {name:pool[rnd(0,Math.max(0,pool.length-1))]||p.club,code:p.clubCountry};
 }
 function getSuperCupEvent(sc,index){
   const p=state.player,stage=sc.stages[sc.stageIndex];if(!sc.active||!stage)return null;if(!sc.opponent)sc.opponent=superCupOpponent(sc);const home=Math.random()<.5;
@@ -1777,7 +2195,7 @@ function createSeason(p,year,continentalOverride){
 function knockoutOpponent(domestic=true){
   const p=state.player;
   if(domestic){ const leagueName=state.season?.league?.name||p.clubLeague||clubCompetitionProfile(p.club,p.clubCountry).league;const pool=leaguePoolForCountry(p.clubCountry,p.club,leagueName).filter(n=>n!==p.club);return pool[rnd(0,pool.length-1)]; }
-  const conf=confederation(p.clubCountry);const pool=allTransferClubs().filter(c=>c.countryCode!==p.clubCountry&&confederation(c.countryCode)===conf);return pool.length?pool[rnd(0,pool.length-1)].name:'Rival internacional';
+  const conf=confederation(p.clubCountry);const pool=allTransferClubs().filter(c=>c.countryCode!==p.clubCountry&&confederation(c.countryCode)===conf);return pool.length?pool[rnd(0,pool.length-1)].name:(allTransferClubs().find(c=>c.name!==p.club)?.name||'');
 }
 function getKnockoutEvent(comp,type){
   const p=state.player;const stage=comp.stages[comp.stageIndex];if(!stage)return null;
@@ -2400,7 +2818,7 @@ function buildShootoutScenario(pending){
   const base=[{label:'Forte no ângulo esquerdo',effect:'Alta exigência técnica, mas muito difícil de pegar.',chance:.76,type:'goal'},{label:'Rasteiro no canto direito',effect:'Cobrança segura buscando deslocar o goleiro.',chance:.74,type:'goal'},{label:'Cavadinha no centro',effect:'Muita personalidade, porém bastante risco.',chance:.60,type:'goal'}];
   return {visual:'penalty',minute:120,title:'Disputa por pênaltis',description:'Chegou a sua cobrança. Escolha como bater.',options:base,prompt:'Escolha sua cobrança'};
 }
-function buildPenaltyOrderOptions(){return Array.from({length:5},(_,i)=>({slot:i+1,label:`${i+1}º pênalti`,effect:i===4?'Pode nem ser batido se a disputa já estiver decidida.':'A disputa será simulada até chegar a sua vez.'}));}
+function buildPenaltyOrderOptions(){return Array.from({length:5},(_,i)=>({slot:i+1,label:`${i+1}ª cobrança`}));}
 function penaltyTeamVisualMarkup(pending,team){
   if(pending.scope==='worldcup'||pending.event?.type==='national')return `<span class="penalty-national-flag">${nationalFlagImage(codeForCountryName(team),team)}</span>`;
   return clubCrestMarkup(team,team===pending.team?state.player?.clubCountry:'');
@@ -2436,7 +2854,7 @@ function continuePenaltySimulation(pending){
     if(live.phase==='standard'&&shootoutMathematicallyFinished(pending,live)){finalizePenaltyShootout(pending);return;}
     if(live.phase==='standard'&&live.round>5){if(live.score.home!==live.score.away){finalizePenaltyShootout(pending);return;}live.phase='sudden';live.round=6;live.nextTeam=live.first;}
     const isPlayerTurn=live.phase==='standard'&&live.nextTeam===pending.team&&live.round===pending.playerKickRound;
-    if(isPlayerTurn){live.waitingForPlayer=true;renderPenaltyLive(pending);const scenario=buildShootoutScenario(pending);$('#decision-title').textContent=`Sua vez · ${pending.playerKickRound}º pênalti`;$('#decision-description').textContent='A disputa chegou à cobrança que você escolheu.';$('#decision-choices').classList.remove('hidden');$('#decision-choices').innerHTML=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><strong>${o.label}</strong><small>${o.effect}</small></button>`).join('');$('#decision-choices').querySelectorAll('[data-decision-option]').forEach(b=>b.addEventListener('click',()=>resolvePenaltyShootout(+b.dataset.decisionOption)));return;}
+    if(isPlayerTurn){live.waitingForPlayer=true;renderPenaltyLive(pending);const scenario=buildShootoutScenario(pending);$('#decision-title').textContent=`Sua vez · ${pending.playerKickRound}º pênalti`;$('#decision-description').textContent='Escolha o chute.';$('#decision-choices').classList.remove('hidden');$('#decision-choices').innerHTML=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><span class="decision-choice-index">${String(i+1).padStart(2,'0')}</span><span><strong>${o.label}</strong></span><b class="decision-choice-arrow">↗</b></button>`).join('');$('#decision-choices').querySelectorAll('[data-decision-option]').forEach(b=>b.addEventListener('click',()=>resolvePenaltyShootout(+b.dataset.decisionOption)));return;}
     const team=live.nextTeam,round=live.round,scored=Math.random()<simulatedPenaltyChance(pending,team);appendPenaltyKick(pending,team,round,scored,false);advancePenaltyCursor(pending);renderPenaltyLive(pending);playMatchVisualFX('penalty',scored?'success':'miss','shootout');
     if(live.phase==='sudden'&&live.nextTeam===live.first&&live.kicks.filter(k=>k.round===round).length===2&&live.score.home!==live.score.away){setTimeout(()=>finalizePenaltyShootout(pending),500);return;}
     setTimeout(tick,560);
@@ -2445,8 +2863,9 @@ function continuePenaltySimulation(pending){
 }
 function openPenaltyShootoutDecision(){
   const pending=state.pendingPenaltyShootout;if(!pending)return;
-  const card=$('#match-decision-modal .decision-card');card.classList.add('scene-finale');applyDecisionCompetitionTheme(card,pending);$('#decision-competition').textContent=`${pending.competition} · ${pending.stage} · pênaltis`;$('#decision-match').textContent=`${pending.home} x ${pending.away}`;$('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');$('#decision-visual').className='decision-visual penalty-shootout-preview';
-  if(!pending.playerKickRound){$('#decision-title').textContent="120' · Escolha qual pênalti você vai bater";$('#decision-description').textContent='Depois da escolha, as cobranças serão simuladas na ordem normal até chegar a sua vez.';$('#decision-visual').innerHTML=penaltyProgressMarkup(pending);hydratePenaltyBadges($('#decision-visual'));const box=$('#decision-choices');box.className='event-choices penalty-order-choices';box.innerHTML=buildPenaltyOrderOptions().map(o=>`<button class="event-choice decision-option" data-penalty-order="${o.slot}"><strong>${o.label}</strong><small>${o.effect}</small></button>`).join('');box.querySelectorAll('[data-penalty-order]').forEach(b=>b.addEventListener('click',()=>{pending.playerKickRound=Number(b.dataset.penaltyOrder);initPenaltyLive(pending);save();continuePenaltySimulation(pending);}));$('#match-decision-modal').classList.remove('hidden');return;}
+  applyCompetitionExperienceTheme(pending);
+  const card=$('#match-decision-modal .decision-card');card.classList.add('scene-finale');applyDecisionCompetitionTheme(card,pending);$('#decision-competition').innerHTML=competitionHeaderMarkup(pending.competition,[pending.stage,'PÊNALTIS'].filter(Boolean).join(' · '));$('#decision-match').textContent=`${pending.home} x ${pending.away}`;$('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');$('#decision-visual').className='decision-visual penalty-shootout-preview';
+  if(!pending.playerKickRound){$('#decision-title').textContent="120' · Escolha qual pênalti você vai bater";$('#decision-description').textContent='Quando você vai bater?';$('#decision-visual').innerHTML=penaltyProgressMarkup(pending);hydratePenaltyBadges($('#decision-visual'));const box=$('#decision-choices');box.className='event-choices penalty-order-choices';box.innerHTML=buildPenaltyOrderOptions().map(o=>`<button class="event-choice decision-option" data-penalty-order="${o.slot}"><strong>${o.label}</strong></button>`).join('');box.querySelectorAll('[data-penalty-order]').forEach(b=>b.addEventListener('click',()=>{pending.playerKickRound=Number(b.dataset.penaltyOrder);initPenaltyLive(pending);save();continuePenaltySimulation(pending);}));$('#match-decision-modal').classList.remove('hidden');return;}
   continuePenaltySimulation(pending);$('#match-decision-modal').classList.remove('hidden');
 }
 function resolvePenaltyShootout(index){
@@ -2772,14 +3191,23 @@ function maybeTriggerIdolInteraction(){
 function maybeTriggerCareerEvent(){
   const s=state.season;
   if(!s||state.pendingEvent||worldCupTournamentLockActive(s,state.player)||s.totalGames-(s.lastCareerEventAt||0)<5||Math.random()>(.19*INTERACTION_FREQUENCY))return false;
-  const incidentPool=typeof INCIDENT_EVENTS!=='undefined'?INCIDENT_EVENTS:[];
-  const useIncident=incidentPool.length&&Math.random()<.52;
-  const pool=useIncident?incidentPool:CAREER_EVENTS;
+  const incidentPool=[...(typeof INCIDENT_EVENTS!=='undefined'?INCIDENT_EVENTS:[]),...BTL_PREMIUM_RANDOM_EVENTS];
+  const iconEligible=(state.player?.overall||0)>=90||(state.player?.reputation||0)>=70;
+  const chance=Math.random();
+  const pool=iconEligible&&chance<.13?BTL_ICON_EVENTS:chance<.55?incidentPool:[...CAREER_EVENTS,...BTL_PREMIUM_CAREER_EVENTS];
   const event=pickFreshCareerEvent(pool);if(!event)return false;
   state.pendingEvent={...event};s.lastCareerEventAt=s.totalGames;state.resumeSeasonAfterEvent=true;save();openPendingEvent();return true;
 }
 function eventChoiceIcon(action=''){if(/train|learn|video|specialist|adapt/i.test(action))return '↗';if(/recover|rest|rehab|illness|travel/i.test(action))return '✚';if(/market|agent|contract|sponsor/i.test(action))return '€';if(/lead|ambitious|captain|derby|mentor|charity/i.test(action))return '★';if(/controversy|public|confront|fire|leak/i.test(action))return '!';if(/peace|humble|stability|stay|safe|share/i.test(action))return '●';return '◆';}
 const EVENT_SCENE_LIBRARY={
+  academy_reunion:{scene:'academy',theme:'locker',icon:'★',label:'BASE · O PRIMEIRO CAPÍTULO',props:['academy-bench','ball','clipboard']},
+  captain_vacancy:{scene:'captain',theme:'locker',icon:'✦',label:'VESTIÁRIO · LIDERANÇA',props:['captain-band','lockers','tactics-board']},
+  scouting_notebook:{scene:'scout',theme:'office',icon:'⌁',label:'BASTIDORES · OBSERVAÇÃO',props:['clipboard','phone','papers']},
+  derby_choreo:{scene:'ultras',theme:'night-pitch',icon:'⚑',label:'ARQUIBANCADA · CLÁSSICO',props:['floodlights','fans','banner']},
+  weather_blackout:{scene:'blackout',theme:'night-pitch',icon:'ϟ',label:'CT · IMPREVISTO',props:['floodlights','cones','ball']},
+  icon_mentor_visit:{scene:'hall',theme:'museum',icon:'★',label:'HALL DA FAMA · LENDAS',props:['trophy-case','statue','plaque']},
+  icon_legacy_project:{scene:'legacy',theme:'museum',icon:'♛',label:'MUSEU · LEGADO',props:['trophy-case','plaque','statue']},
+  icon_hall_invite:{scene:'awards',theme:'museum',icon:'✧',label:'HISTÓRIA · RECONHECIMENTO',props:['trophy-case','statue','plaque']},
   minor_injury:{scene:'minor-injury',theme:'medical',icon:'✚',label:'DM · MACA DE FISIOTERAPIA',props:['physio-table','monitor','ice-pack']},
   controversy:{scene:'controversy',theme:'social',icon:'@',label:'REDES · REPERCUSSÃO',props:['phone','comments','camera-flash']},
   locker_room:{scene:'locker-room',theme:'locker',icon:'◇',label:'VESTIÁRIO · PÓS-JOGO',props:['lockers','bench','jersey']},
@@ -2852,13 +3280,16 @@ function eventObjectMarkup(token,index){
 const SPONSOR_LOGO_URLS={nike:'https://cdn.simpleicons.org/nike/ffffff',adidas:'https://cdn.simpleicons.org/adidas/ffffff',puma:'https://cdn.simpleicons.org/puma/ffffff','new-balance':'https://cdn.simpleicons.org/newbalance/ffffff','under-armour':'https://cdn.simpleicons.org/underarmour/ffffff',mizuno:'https://cdn.simpleicons.org/mizuno/ffffff',umbro:'https://cdn.simpleicons.org/umbro/ffffff'};
 function sponsorWordmark(brand=''){const safe=esc(String(brand||'MARCA').toUpperCase()),key=normalizeKey(brand),src=SPONSOR_LOGO_URLS[key];if(!src)return `<span class="sponsor-transparent-logo sponsor-logo-${key}" aria-label="${safe}">${safe}</span>`;return `<span class="sponsor-transparent-logo sponsor-logo-${key}" aria-label="${safe}"><img src="${src}" alt="${safe}" referrerpolicy="no-referrer" onerror="const p=this.parentElement;this.remove();if(p){p.classList.add('logo-fallback');p.append(document.createTextNode('${safe.replace("'","\'")}'));}"></span>`;}
 function eventSceneMarkup(e){
-  const m=eventSceneMeta(e),sceneClass=String(m.scene).replace(/[^a-z0-9-]/gi,'-').toLowerCase();
-  const hash=[...(e.id||e.title||m.scene)].reduce((n,ch,i)=>n+ch.charCodeAt(0)*(i+3),17);const layout=hash%12;
-  const shift=(hash%19)-9,tilt=(hash%13)-6,scale=(92+(hash%17))/100;
-  const hero=e.type==='sponsor'?`<div class="scene-brand-stage">${sponsorWordmark(e.sponsorBrand)}<span>${esc(e.sponsorBrand||'Patrocinador')}</span></div>`:e.type==='idol'?`<span class="scene-person-card"><b>★</b><small>${esc(e.idolName||'Ídolo')}</small></span>`:'';
-  const signature=e.type==='sponsor'?'<span class="scene-signature signature-contract">CONTRATO</span>':e.type==='idol'?'<span class="scene-signature signature-idol">LEGADO</span>':e.type==='national'?`<span class="scene-signature signature-national">${countryFlag(state.player?.nationalityCode)||'⚑'}</span>`:`<span class="scene-signature signature-career">${String(layout+1).padStart(2,'0')}</span>`;
-  return `<div class="career-event-scene scene-event-${sceneClass} scene-theme-${m.theme} event-layout-${layout}" data-scene="${esc(m.scene)}" data-event-kind="${esc(e.type||'career')}" style="--event-shift:${shift}px;--event-tilt:${tilt}deg;--event-scale:${scale}"><div class="scene-ambient"><i></i><i></i><i></i><i></i></div><div class="scene-architecture"><span></span><span></span><span></span><span></span></div>${signature}${hero}<div class="scene-world">${(m.props||[]).map(eventObjectMarkup).join('')}</div><div class="scene-depth"><span></span><span></span><span></span></div><div class="scene-focus">${m.icon}</div><small>${esc(m.label)}</small></div>`;
+  const m=eventSceneMeta(e),kind=e.type==='icon'?'icon':e.type==='random'?'random':e.type==='idol'?'icon':e.type==='national'?'career':e.type==='sponsor'?'career':'career';
+  const key=String(e.id||e.title||'evento'),n=clubThemeHash(key),number=String((n%97)+1).padStart(2,'0');
+  const title=esc(e.title||'Novo capítulo');
+  const category=kind==='icon'?'LEGENDARY MOMENT':kind==='random'?'BREAKING / EXCLUSIVO':'BE THE LEGEND / BASTIDORES';
+  const glyph=kind==='icon'?'★':kind==='random'?'⚡':'✦';
+  if(kind==='icon')return `<div class="career-event-scene btl-event-stage btl-icon-stage" data-event-kind="icon"><div class="btl-icon-sparks">✦ &nbsp; ★ &nbsp; ✦</div><div class="btl-icon-card"><span class="btl-icon-number">ICON ${number}</span><div class="btl-icon-medallion"><span>★</span></div><strong>${title}</strong><small>UM ENCONTRO QUE MARCA A HISTÓRIA</small></div><div class="btl-icon-caption">${category} <span>◆ ◆ ◆</span></div></div>`;
+  if(kind==='random')return `<div class="career-event-scene btl-event-stage btl-random-stage" data-event-kind="random"><div class="btl-random-marquee"><span>● AO VIVO</span><span>ÚLTIMA HORA</span><span>BTL / ${number}</span></div><div class="btl-random-screen"><div class="btl-random-glyph">${glyph}</div><div><small>FORA DO ROTEIRO</small><strong>${title}</strong><em>NEM TUDO ACONTECE DENTRO DE CAMPO.</em></div></div><div class="btl-random-ticker"><span>FLASH • DESTAQUE • FLASH • DESTAQUE • </span></div></div>`;
+  return `<div class="career-event-scene btl-event-stage btl-career-stage" data-event-kind="career"><div class="btl-career-film"><span>BTL // ${number}</span><span>● REC</span></div><div class="btl-career-story"><div class="btl-career-emblem">${glyph}</div><div><small>${category}</small><strong>${title}</strong><span>UM CAPÍTULO DA SUA TRAJETÓRIA</span></div></div><div class="btl-career-progress"><i></i><i></i><i></i><i></i><i></i><b>YOUR STORY / ${state.season?.year||2026}</b></div></div>`;
 }
+
 function playCareerEventResolution(e,message){
   const scene=$('#event-modal .career-event-scene');if(!scene)return;scene.classList.add('resolved');const badge=document.createElement('div');badge.className='scene-result-badge';badge.innerHTML=`<b>✓</b><span>${message}</span>`;scene.appendChild(badge);
 }
@@ -2874,11 +3305,11 @@ function resumePausedCareerOverlay(){
   else if(kind==='event'&&state.pendingEvent)openPendingEvent();
 }
 function openPendingEvent(){
-  if(pausedCareerOverlay||state.journeyPaused)return;const e=state.pendingEvent;if(!e)return;const modal=$('#event-modal');
-  modal.classList.toggle('sponsor-event-active',e.type==='sponsor');modal.classList.toggle('national-event-active',e.type==='national');modal.classList.toggle('idol-event-active',e.type==='idol');modal.classList.toggle('career-event-active',!['sponsor','national','idol'].includes(e.type));
+  if(pausedCareerOverlay||state.journeyPaused)return;const e=state.pendingEvent;if(!e)return;applyCompetitionExperienceTheme(themedCompetitionContext());const modal=$('#event-modal');
+  modal.classList.toggle('sponsor-event-active',e.type==='sponsor');modal.classList.toggle('national-event-active',e.type==='national');modal.classList.toggle('idol-event-active',e.type==='idol');modal.classList.toggle('career-event-active',!['sponsor','national','idol','icon','random'].includes(e.type));modal.classList.toggle('icon-event-active',e.type==='icon');modal.classList.toggle('random-event-active',e.type==='random');
   const card=modal.querySelector('.career-event-card');if(card){[...card.classList].filter(c=>c.startsWith('event-kind-')||c.startsWith('event-scene-card-')).forEach(c=>card.classList.remove(c));card.classList.add(`event-kind-${e.type||'career'}`,`event-scene-card-${normalizeKey(e.id||e.title||'event')}`);}
-  const eyebrow=$('#event-eyebrow');if(eyebrow)eyebrow.textContent=e.type==='national'?'INTERAÇÃO DA SELEÇÃO':e.type==='idol'?'INTERAÇÃO COM ÍDOLO':e.type==='sponsor'?'PATROCÍNIO':'EVENTO DE CARREIRA';$('#event-title').textContent=e.title;$('#event-description').textContent=e.description;
-  $('#event-choices').innerHTML=eventSceneMarkup(e)+(e.type==='sponsor'?`<div class="sponsor-brand-banner ${e.sponsorTone||''}">${sponsorWordmark(e.sponsorBrand)}<span>PARCERIA</span><strong>${e.sponsorBrand||'Marca esportiva'}</strong><small>${money(e.sponsorValue||0)} / temporada</small></div>`:'')+`<div class="event-choice-grid">${e.choices.map((c,i)=>`<button class="event-choice visual-event-choice" data-choice="${i}"><span>${eventChoiceIcon(c.action)}</span><strong>${c.label}</strong><small>${c.effect}</small></button>`).join('')}</div>`;
+  const eyebrow=$('#event-eyebrow');const eyebrowLabel=e.type==='national'?'SELEÇÃO':e.type==='idol'?'ÍDOLO':e.type==='sponsor'?'PATROCÍNIO':e.type==='icon'?'LENDAS':e.type==='random'?'EXTRA':'EVENTO';if(eyebrow)eyebrow.innerHTML=e.competition?competitionHeaderMarkup(e.competition,e.stage||''):competitionHeaderMarkup(eyebrowLabel,'');$('#event-title').textContent=e.title;$('#event-description').textContent='';
+  $('#event-choices').innerHTML=`<div class="btl-story-topline"><span>◆ ${e.type==='icon'?'ARQUIVO DE LENDAS':e.type==='random'?'TRANSMISSÃO URGENTE':'DIÁRIO DE CARREIRA'}</span><span>EDIÇÃO ${String(state.season?.year||'2026')}</span></div>`+eventSceneMarkup(e)+(e.type==='sponsor'?`<div class="sponsor-brand-banner ${e.sponsorTone||''}">${sponsorWordmark(e.sponsorBrand)}<span>PARCERIA</span><strong>${e.sponsorBrand||'Marca esportiva'}</strong><small>${money(e.sponsorValue||0)} / temporada</small></div>`:'')+`<div class="btl-choice-label">DECISÃO <span>Escolha seu próximo passo</span></div><div class="event-choice-grid">${e.choices.map((c,i)=>`<button class="event-choice visual-event-choice" data-choice="${i}"><span class="event-choice-glyph">${eventChoiceIcon(c.action)}</span><span class="event-choice-content"><strong>${c.label}</strong><small>${c.effect}</small></span><span class="event-choice-arrow">↗</span></button>`).join('')}</div>`;
   $$('#event-choices .event-choice').forEach(b=>b.addEventListener('click',()=>resolveCareerEvent(+b.dataset.choice)));modal.classList.remove('hidden');
 }
 function resolveCareerEvent(index){
@@ -3055,7 +3486,7 @@ function competitionStatus(){
   return items;
 }
 const CURRENT_PLAYER_META={
-'Mohamed Salah':['Liverpool','ENG','EG'],'Kylian Mbappé':['Real Madrid','ES','FR'],'Erling Haaland':['Manchester City','ENG','NO'],'Jude Bellingham':['Real Madrid','ES','ENG'],'Ousmane Dembélé':['Paris Saint-Germain','FR','FR'],'Rodri':['Manchester City','ENG','ES'],'Virgil van Dijk':['Liverpool','ENG','NL'],'Raphinha':['Barcelona','ES','BR'],'Lamine Yamal':['Barcelona','ES','ES'],'Pedri':['Barcelona','ES','ES'],'Vini Jr.':['Real Madrid','ES','BR'],'Joshua Kimmich':['Bayern de Munique','DE','DE'],'Harry Kane':['Bayern de Munique','DE','ENG'],'Florian Wirtz':['Liverpool','ENG','DE'],'Federico Valverde':['Real Madrid','ES','UY'],'Jamal Musiala':['Bayern de Munique','DE','DE'],'Lautaro Martínez':['Inter de Milão','IT','AR'],'Robert Lewandowski':['Barcelona','ES','PL'],'Bukayo Saka':['Arsenal','ENG','ENG'],'Cole Palmer':['Chelsea','ENG','ENG'],'Kevin De Bruyne':['Napoli','IT','BE'],'Frenkie de Jong':['Barcelona','ES','NL'],'Bruno Fernandes':['Manchester United','ENG','PT'],'Martin Ødegaard':['Arsenal','ENG','NO'],'Michael Olise':['Bayern de Munique','DE','FR'],'Paulo Dybala':['Roma','IT','AR'],'Hakan Çalhanoğlu':['Inter de Milão','IT','TR'],'Nico Williams':['Athletic Club','ES','ES'],'Nuno Mendes':['Paris Saint-Germain','FR','PT'],'Lionel Messi':['Inter Miami','US','AR'],'Neymar Jr':['Santos','BR','BR'],'Cristiano Ronaldo':['Al-Nassr','SA','PT'],'Achraf Hakimi':['Paris Saint-Germain','FR','MA'],'Theo Hernández':['Al-Hilal','SA','FR'],'William Saliba':['Arsenal','ENG','FR'],'Gabriel Magalhães':['Arsenal','ENG','BR'],'Vitinha':['Paris Saint-Germain','FR','PT'],'Khvicha Kvaratskhelia':['Paris Saint-Germain','FR','GE'],'Nicolò Barella':['Inter de Milão','IT','IT'],'Declan Rice':['Arsenal','ENG','ENG'],'Alexander Isak':['Liverpool','ENG','SE'],'Victor Osimhen':['Galatasaray','TR','NG'],'Viktor Gyökeres':['Arsenal','ENG','SE'],'Julián Álvarez':['Atlético de Madrid','ES','AR'],'João Neves':['Paris Saint-Germain','FR','PT'],'Alessandro Bastoni':['Inter de Milão','IT','IT'],'Rúben Dias':['Manchester City','ENG','PT'],'Bernardo Silva':['Manchester City','ENG','PT'],'Rafael Leão':['Milan','IT','PT'],'Jules Koundé':['Barcelona','ES','FR']};
+'Mohamed Salah':['Trabzonspor','TR','EG'],'Kylian Mbappé':['Real Madrid','ES','FR'],'Erling Haaland':['Manchester City','ENG','NO'],'Jude Bellingham':['Real Madrid','ES','ENG'],'Ousmane Dembélé':['Paris Saint-Germain','FR','FR'],'Rodri':['Barcelona','ES','ES'],'Virgil van Dijk':['Liverpool','ENG','NL'],'Raphinha':['Barcelona','ES','BR'],'Lamine Yamal':['Barcelona','ES','ES'],'Pedri':['Barcelona','ES','ES'],'Vini Jr.':['Real Madrid','ES','BR'],'Joshua Kimmich':['Bayern de Munique','DE','DE'],'Harry Kane':['Bayern de Munique','DE','ENG'],'Florian Wirtz':['Liverpool','ENG','DE'],'Federico Valverde':['Real Madrid','ES','UY'],'Jamal Musiala':['Bayern de Munique','DE','DE'],'Lautaro Martínez':['Inter de Milão','IT','AR'],'Robert Lewandowski':['Chicago Fire','US','PL'],'Bukayo Saka':['Arsenal','ENG','ENG'],'Cole Palmer':['Chelsea','ENG','ENG'],'Kevin De Bruyne':['Napoli','IT','BE'],'Frenkie de Jong':['Barcelona','ES','NL'],'Bruno Fernandes':['Manchester United','ENG','PT'],'Martin Ødegaard':['Arsenal','ENG','NO'],'Michael Olise':['Bayern de Munique','DE','FR'],'Paulo Dybala':['Roma','IT','AR'],'Hakan Çalhanoğlu':['Inter de Milão','IT','TR'],'Nico Williams':['Athletic Club','ES','ES'],'Nuno Mendes':['Paris Saint-Germain','FR','PT'],'Lionel Messi':['Inter Miami','US','AR'],'Neymar Jr':['Santos','BR','BR'],'Cristiano Ronaldo':['Al-Nassr','SA','PT'],'Achraf Hakimi':['Paris Saint-Germain','FR','MA'],'Theo Hernández':['Al-Hilal','SA','FR'],'William Saliba':['Arsenal','ENG','FR'],'Gabriel Magalhães':['Arsenal','ENG','BR'],'Vitinha':['Paris Saint-Germain','FR','PT'],'Khvicha Kvaratskhelia':['Paris Saint-Germain','FR','GE'],'Nicolò Barella':['Inter de Milão','IT','IT'],'Declan Rice':['Arsenal','ENG','ENG'],'Alexander Isak':['Liverpool','ENG','SE'],'Victor Osimhen':['Galatasaray','TR','NG'],'Viktor Gyökeres':['Arsenal','ENG','SE'],'Julián Álvarez':['Atlético de Madrid','ES','AR'],'João Neves':['Paris Saint-Germain','FR','PT'],'Alessandro Bastoni':['Inter de Milão','IT','IT'],'Rúben Dias':['Manchester City','ENG','PT'],'Bernardo Silva':['Real Madrid','ES','PT'],'Rafael Leão':['Milan','IT','PT'],'Jules Koundé':['Barcelona','ES','FR']};
 const CURRENT_PLAYER_BIRTH_YEARS={
 'Mohamed Salah':1992,'Kylian Mbappé':1998,'Erling Haaland':2000,'Jude Bellingham':2003,'Ousmane Dembélé':1997,'Rodri':1996,'Virgil van Dijk':1991,'Raphinha':1996,'Lamine Yamal':2007,'Pedri':2002,'Vini Jr.':2000,'Joshua Kimmich':1995,'Harry Kane':1993,'Florian Wirtz':2003,'Federico Valverde':1998,'Jamal Musiala':2003,'Lautaro Martínez':1997,'Robert Lewandowski':1988,'Bukayo Saka':2001,'Cole Palmer':2002,'Kevin De Bruyne':1991,'Frenkie de Jong':1997,'Bruno Fernandes':1994,'Martin Ødegaard':1998,'Michael Olise':2001,'Paulo Dybala':1993,'Hakan Çalhanoğlu':1994,'Nico Williams':2002,'Nuno Mendes':2002,'Lionel Messi':1987,'Neymar Jr':1992,'Cristiano Ronaldo':1985,'Achraf Hakimi':1998,'Theo Hernández':1997,'William Saliba':2001,'Gabriel Magalhães':1997,'Vitinha':2000,'Khvicha Kvaratskhelia':2001,'Nicolò Barella':1997,'Declan Rice':1999,'Alexander Isak':1999,'Victor Osimhen':1998,'Viktor Gyökeres':1998,'Julián Álvarez':2000,'João Neves':2004,'Alessandro Bastoni':1999,'Rúben Dias':1997,'Bernardo Silva':1994,'Rafael Leão':1999,'Jules Koundé':1998};
 function inferredWorldPlayerBirthYear(name=''){
@@ -3124,9 +3555,50 @@ function ensureWorldPlayers(){
     const base=(typeof CURRENT_DRAFT_PLAYERS!=='undefined'?CURRENT_DRAFT_PLAYERS:[]).map(x=>{const m=CURRENT_PLAYER_META[x.name]||[];return {id:normalizeKey(x.name),name:x.name,rating:x.rating||84,position:x.position||'ATA',club:m[0]||'',countryCode:m[1]||'',nationalCode:m[2]||'',birthYear:inferredWorldPlayerBirthYear(x.name),retired:false};});
     state.worldPlayers=[...base,...EXTRA_ACTIVE_PLAYERS.map(x=>({...x,id:normalizeKey(x.name),birthYear:x.birthYear||inferredWorldPlayerBirthYear(x.name),retired:false}))];
   }
+  // Primeira inicialização da temporada 2026: importa elencos de fontes oficiais
+  // sem apagar progresso e sem reescrever temporadas já avançadas.
+  if(!state.officialSquadImported2026 && (state.season?.year||START_YEAR)===2026 && (state.created||state.player) && window.BTLOfficialSquads){
+    const existing=new Map(state.worldPlayers.map(x=>[normalizeKey(x.name),x]));
+    for(const squad of Object.values(window.BTLOfficialSquads)){
+      for(const item of squad.players||[]){
+        const id=normalizeKey(item.name);if(!id)continue;
+        const current=existing.get(id);
+        if(current){current.club=squad.club;current.countryCode=squad.country;continue;}
+        const record={id,name:item.name,club:squad.club,countryCode:squad.country,nationalCode:'',
+          position:item.position||'MC',rating:73+(stableHash(id)%11),
+          birthYear:inferredWorldPlayerBirthYear(item.name),retired:false,
+          source:'2026/27 · fonte oficial',estimatedSimulationRating:true};
+        state.worldPlayers.push(record);existing.set(id,record);
+      }
+    }
+    state.officialSquadImported2026=true;save();
+  }
   state.worldPlayers.forEach(wp=>{wp.birthYear=wp.birthYear||inferredWorldPlayerBirthYear(wp.name);wp.retired=!!wp.retired;});
   return state.worldPlayers;
 }
+/* V14: opt-in roster changes. Source and date accompany each player.
+   No overwriting historic saves: only active initial 2026 careers can import. */
+window.BTLImportRosterToCareer=function(roster){
+  if(!state?.created && !state?.player)return {ok:false,message:'Crie uma carreira antes de importar um plantel.'};
+  if(Number(state.season?.year||START_YEAR)!==2026)return {ok:false,message:'Importação direta disponível só em 2026. Para evitar alterações retroativas, saves de temporadas posteriores não são modificados.'};
+  if(!roster||!Array.isArray(roster.players)||roster.players.length<1||roster.players.length>120)return {ok:false,message:'O elenco selecionado está inválido.'};
+  const club=String(roster.club||'').trim();if(club.length<2)return {ok:false,message:'Nome de clube inválido.'};
+  const team=findClubDataAny(club)||findClubData(club,roster.country||'')||{};
+  const canonical=team.name||club;const countryCode=team.countryCode||roster.country||'';
+  const world=ensureWorldPlayers(),all=new Map(world.map(x=>[normalizeKey(x.name),x]));
+  const sourceDate=String(roster.retrievedAt||new Date().toISOString());let added=0,updated=0;
+  const touched=new Set();
+  for(const athlete of roster.players){
+    const name=String(athlete.name||'').trim().slice(0,100),id=normalizeKey(name);
+    if(!id||name.length<3||touched.has(id))continue;touched.add(id);
+    const existing=all.get(id);const code=String(athlete.nationalCode||'').toUpperCase();
+    const fields={club:canonical,countryCode,nationalCode:code||existing?.nationalCode||'',rosterSource:roster.source||'fonte externa',rosterUpdatedAt:sourceDate};
+    if(existing){Object.assign(existing,fields);updated++}
+    else {const rating=Number(athlete.rating);const record={id,name,position:athlete.position||'MC',rating:Number.isFinite(rating)&&rating>=40&&rating<=99?rating:73+stableHash(id)%11,birthYear:inferredWorldPlayerBirthYear(name),retired:false,...fields,estimatedSimulationRating:!(rating>=40&&rating<=99)};world.push(record);all.set(id,record);added++}
+  }
+  if(!added&&!updated)return {ok:false,message:'Nenhum jogador válido para importar.'};
+  save();return {ok:true,message:`${canonical}: ${added} atletas adicionados, ${updated} atualizados. Outros jogadores não foram removidos sem confirmação do destino. Fonte: ${roster.source||'arquivo próprio'}.`};
+};
 function simulateWorldTransfers(){
   simulateWorldRetirements(state.season?.year||START_YEAR);
   const pool=allTransferClubs().filter(c=>(c.strength||0)>=76);
@@ -3183,25 +3655,58 @@ function worldPlayerEligibleForCompetition(wp,title=''){
   return true;
 }
 function leaderboardCandidates(title){
+  const s=state.season,p=state.player;if(!s||!p||!title)return [];
   const players=ensureWorldPlayers().filter(wp=>worldPlayerEligibleForCompetition(wp,title));
-  const specificClubs=clubsForLeaderboardCompetition(title);
-  if(specificClubs?.size){
-    let scoped=players.filter(wp=>specificClubs.has(wp.club));
-    if(/Supercopa|Super Cup|Community Shield|Trophée|Cruyff Shield|Recopa/i.test(title))return scoped.slice(0,30);
-    if(scoped.length<9)scoped=[...scoped,...players.filter(x=>!scoped.includes(x)).sort((a,b)=>(b.rating||0)-(a.rating||0)).slice(0,12-scoped.length)];
-    return scoped.slice(0,30);
+  const normalizeClub=n=>normalizeKey(String(n||''));
+  const allowed=clubsForLeaderboardCompetition(title);
+  const country=String(s.countryAtStart||p.clubCountry||'');
+  // League tables are EXCLUSIVE to clubs enrolled in this specific league;
+  // never 'pad' the list with unrelated stars (e.g. Messi in 2.Bundesliga).
+  if(title===s.league?.name){
+    const leagueClubs=new Set((s.league?.teams||s.league?.clubs||[]).map(t=>normalizeClub(typeof t==='string'?t:t.name)).filter(Boolean));
+    for(const club of (allowed||[]))leagueClubs.add(normalizeClub(club));
+    return players.filter(wp=>wp.countryCode===country&&leagueClubs.has(normalizeClub(wp.club))).slice(0,80);
   }
-  const s=state.season,p=state.player;if(!s||!p)return players.slice(0,30);
-  let list=players;
-  if(title===s.league?.name||title===s.cup?.name)list=players.filter(x=>x.countryCode===s.countryAtStart);
-  else if(/Champions League|Europa League|Conference League|Libertadores|Sudamericana|AFC Champions|CAF Champions|CONCACAF Champions/i.test(title))list=players.filter(x=>confederation(x.countryCode)===confederation(s.countryAtStart));
-  else if(/Supercopa|Super Cup|Community Shield|Trophée|Cruyff Shield|Recopa/i.test(title))list=players.filter(x=>x.countryCode===s.countryAtStart);
-  return list.slice(0,30);
+  // Domestic cups use clubs of this country; participant pool when known.
+  if(title===s.cup?.name){
+    return players.filter(wp=>wp.countryCode===country&&(!allowed?.size||allowed.has(wp.club))).slice(0,80);
+  }
+  const supercup=(s.superCups||[]).find(sc=>sc.name===title);
+  if(supercup){return players.filter(wp=>allowed?.has(wp.club)).slice(0,60);}
+  if(title===s.continental?.name){
+    // Only clubs actually scheduled for the tournament; no cross-league fillers.
+    return players.filter(wp=>allowed?.has(wp.club)).slice(0,80);
+  }
+  if(/World Cup|Copa do Mundo|EURO|Copa América|Nations|Finalissima/i.test(title)){
+    const conf=/EURO|Nations/i.test(title)?'UEFA':/Copa América/i.test(title)?'CONMEBOL':null;
+    return players.filter(wp=>wp.nationalCode&&(!conf||confederation(wp.nationalCode)===conf)).slice(0,80);
+  }
+  // Unknown competition => show tracked user stats, not fabricated outsiders.
+  return [];
 }
+
 function leaderboardTeamVisual(row,title=''){
   const national=/World Cup|Copa do Mundo|EURO|Copa América|Nations|Finalissima/i.test(title);
   if(national){const code=row.nationalCode||codeForCountryName(row.team||'');return `<span class="leaderboard-team-visual national" title="${esc(row.team||'Seleção')}">${nationalFlagImage(code,row.team||'Seleção')}</span>`;}
   return `<span class="leaderboard-team-visual club" title="${esc(row.team||row.club||'Clube')}">${clubCrestMarkup(row.team||row.club||'Clube',row.countryCode||'')}</span>`;
+}
+function userEligibleForLeaderboard(title,stat={}){
+  const s=state.season,p=state.player;if(!s||!p||!title)return false;
+  // A played match is a genuine historic appearance, even after a later transfer.
+  if(Number(stat.games||0)>0)return true;
+  // With zero appearances do not fabricate a participant from a foreign league.
+  const isNational=/World Cup|Copa do Mundo|EURO|Copa América|Nations|Finalissima/i.test(title);
+  if(isNational)return false;
+  const normalizeClub=name=>normalizeKey(String(name||''));
+  const allowed=clubsForLeaderboardCompetition(title);
+  if(title===s.league?.name){
+    const clubs=(s.league.teams||s.league.clubs||[]).map(t=>normalizeClub(typeof t==='string'?t:t.name));
+    if(allowed)clubs.push(...[...allowed].map(normalizeClub));
+    return String(s.countryAtStart||p.clubCountry||'')===String(p.clubCountry||'')&&clubs.includes(normalizeClub(p.club));
+  }
+  if(title===s.cup?.name)return String(s.countryAtStart||p.clubCountry||'')===String(p.clubCountry||'')&&(!allowed?.size||allowed.has(p.club));
+  if(allowed)return allowed.has(p.club);
+  return false;
 }
 function renderCompetitionLeaderboards(){
   const tabs=$('#leaderboard-competition-tabs'),box=$('#competition-leaderboard');if(!tabs||!box)return;const s=state.season,p=state.player;if(!s||!p){tabs.innerHTML='';box.innerHTML='<p class="muted">Inicie uma temporada para acompanhar artilharia e assistências.</p>';return;}
@@ -3209,9 +3714,16 @@ function renderCompetitionLeaderboards(){
   tabs.innerHTML=comps.map(c=>`<button type="button" class="${c===leaderboardCompetition?'active':''}" data-leader-competition="${esc(c)}">${esc(c)}</button>`).join('');
   $$('.leaderboard-mode-tabs [data-leader-mode]').forEach(btn=>btn.classList.toggle('active',btn.dataset.leaderMode===leaderboardMode));
   const progress=competitionProgressForLeaderboard(leaderboardCompetition),rows=leaderboardCandidates(leaderboardCompetition).map(wp=>{const stat=simulatedLeaderStat(wp,leaderboardCompetition,s.year,progress);return {...wp,...stat,team:wp.club||countryByCode(wp.nationalCode)?.name||'—'};});
-  const userStat=s.competitionStats?.[leaderboardCompetition]||{games:0,goals:0,assists:0};rows.push({id:'user',name:p.name,rating:p.overall,position:rankingPositionLabel(p.position),club:p.club,team:/World Cup|EURO|Copa América|Nations|Finalissima/i.test(leaderboardCompetition)?p.nationality:p.club,games:userStat.games||0,goals:userStat.goals||0,assists:userStat.assists||0,isUser:true});
+  const userStat=s.competitionStats?.[leaderboardCompetition]||{games:0,goals:0,assists:0};
+  if(userEligibleForLeaderboard(leaderboardCompetition,userStat)){
+    const currentAllowed=clubsForLeaderboardCompetition(leaderboardCompetition);
+    const countryCup=/World Cup|Copa do Mundo|EURO|Copa América|Nations|Finalissima/i.test(leaderboardCompetition);
+    const playedAtPreviousClub=(userStat.games||0)>0&&currentAllowed?.size&&!currentAllowed.has(p.club);
+    const userClub=playedAtPreviousClub?(s.clubAtStart||p.club):p.club;
+    rows.push({id:'user',name:p.name,rating:p.overall,position:rankingPositionLabel(p.position),club:userClub,team:countryCup?p.nationality:userClub,games:userStat.games||0,goals:userStat.goals||0,assists:userStat.assists||0,isUser:true});
+  }
   rows.sort((a,b)=>(b[leaderboardMode]||0)-(a[leaderboardMode]||0)||(b.goals||0)-(a.goals||0)||(b.rating||0)-(a.rating||0));const top=rows.slice(0,8),userIndex=rows.findIndex(x=>x.isUser);if(userIndex>=8)top.push({...rows[userIndex],shownRank:userIndex+1});
-  box.innerHTML=`<div class="leaderboard-head"><span>#</span><span>Jogador</span><span>Equipe</span><span>${leaderboardMode==='goals'?'Gols':'Assist.'}</span></div>${top.map((r,i)=>`<div class="leaderboard-row ${r.isUser?'is-user':''}"><b>${r.shownRank||i+1}</b><span><strong>${esc(r.name)}</strong><small>${esc(r.position||'')}</small></span>${leaderboardTeamVisual(r,leaderboardCompetition)}<strong>${r[leaderboardMode]||0}</strong></div>`).join('')}`;hydratePenaltyBadges(box);
+  box.innerHTML=`<p class="leaderboard-integrity-note">Somente clubes participantes da competição · estatísticas dos rivais simuladas</p><div class="leaderboard-head"><span>#</span><span>Jogador</span><span>Equipe</span><span>${leaderboardMode==='goals'?'Gols':'Assist.'}</span></div>${top.map((r,i)=>`<div class="leaderboard-row ${r.isUser?'is-user':''}"><b>${r.shownRank||i+1}</b><span><strong>${esc(r.name)}</strong><small>${esc(r.position||'')}</small></span>${leaderboardTeamVisual(r,leaderboardCompetition)}<strong>${r[leaderboardMode]||0}</strong></div>`).join('')}`;hydratePenaltyBadges(box);
   tabs.querySelectorAll('[data-leader-competition]').forEach(btn=>btn.addEventListener('click',()=>{leaderboardCompetition=btn.dataset.leaderCompetition;renderCompetitionLeaderboards();}));
   $$('.leaderboard-mode-tabs [data-leader-mode]').forEach(btn=>btn.onclick=()=>{leaderboardMode=btn.dataset.leaderMode;renderCompetitionLeaderboards();});
 }
@@ -3220,14 +3732,14 @@ function renderHomeHub(){
   const ovr=$('#home-career-overall'),year=$('#home-career-season'),titles=$('#home-career-titles'),fill=$('#home-career-progress-fill'),label=$('#home-career-progress-label');
   if(!face||!name)return;
   if(!state.created||!state.player){
-    face.classList.remove('face-avatar');face.innerHTML='<span>10</span>';name.textContent='Crie sua lenda';club.textContent='SEM CLUBE';meta.textContent='Escolha país, posição e primeiro clube.';status.textContent='NOVA';
-    if(ovr)ovr.textContent='68';if(year)year.textContent='—';if(titles)titles.textContent='0';if(fill)fill.style.width='8%';if(label)label.textContent='Pronto para o primeiro contrato';return;
+    face.classList.remove('face-avatar');face.innerHTML='<span>10</span>';name.textContent='Crie sua lenda';club.textContent='SEM CLUBE';meta.textContent='';status.textContent='NOVA';
+    if(ovr)ovr.textContent='68';if(year)year.textContent='—';if(titles)titles.textContent='0';if(fill)fill.style.width='8%';if(label)label.textContent='';return;
   }
   const p=state.player,s=state.season,seasons=(state.history||[]).length;
   face.innerHTML=appearanceMarkup(p.appearance,true,p.number||10);face.classList.add('face-avatar');
-  name.textContent=p.name;club.textContent=p.club||'SEM CLUBE';meta.textContent=`${p.position} · ${p.nationality} · camisa ${p.number||10}`;status.textContent=p.retired?'ENCERRADA':'ATIVA';
+  name.textContent=p.name;club.textContent=p.club||'SEM CLUBE';meta.textContent='';status.textContent=p.retired?'ENCERRADA':'ATIVA';
   if(ovr)ovr.textContent=p.overall;if(year)year.textContent=s?.year||p.retiredAge||'—';if(titles)titles.textContent=(p.trophies||[]).length;
-  if(fill)fill.style.width=`${clamp(12+seasons*5,12,100)}%`;if(label)label.textContent=p.retired?'Carreira concluída · legado preservado':`${seasons} temporada(s) concluída(s) · ${s?.league?.name||p.clubLeague||'temporada atual'}`;
+  if(fill)fill.style.width=`${clamp(12+seasons*5,12,100)}%`;if(label)label.textContent='';
 }
 
 function renderAccountPanel(){
@@ -3244,21 +3756,22 @@ function nextMatchTeamMarkup(name,event){
     const code=name===state.player?.nationality?state.player?.nationalityCode:(event.opponent===name?event.opponentCode:codeForCountryName(name));
     return `<span class="next-team-visual national" title="${esc(name)}" aria-label="${esc(name)}">${nationalFlagImage(code,name)}</span>`;
   }
-  return `<span class="next-team-visual club" data-next-club="${esc(name)}" title="${esc(name)}" aria-label="${esc(name)}"><span class="crest-shell"><img class="club-badge-img hidden" alt="${esc(name)}"><span class="crest-fallback">⚽</span></span></span>`;
+  return `<span class="next-team-visual club" data-next-club="${esc(name)}" title="${esc(name)}" aria-label="${esc(name)}"><span class="crest-shell"><img class="club-badge-img hidden" alt="${esc(name)}"><span class="crest-fallback" title="Escudo real ainda não localizado">S/D</span></span></span>`;
 }
 function hydrateNextMatchBadges(){document.querySelectorAll('[data-next-club]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.nextClub,el.querySelector('.crest-fallback')));}
 function decisionScoreboardMarkup(log){
-  const comp=esc(log.event.competition||'Partida'),stage=log.event.stage?`<span>${esc(log.event.stage)}</span>`:'';
-  return `<div class="decision-scoreboard"><div class="decision-score-meta"><b>${comp}</b>${stage}</div><div class="decision-score-main"><div class="decision-score-team">${nextMatchTeamMarkup(log.event.home,log.event)}<strong>${esc(log.event.home)}</strong></div><div class="decision-score-numbers"><small>PLACAR</small><b>${log.homeGoals}<i>×</i>${log.awayGoals}</b></div><div class="decision-score-team">${nextMatchTeamMarkup(log.event.away,log.event)}<strong>${esc(log.event.away)}</strong></div></div></div>`;
+  const compMarkup=competitionHeaderMarkup(log.event.competition||'Partida',log.event.stage||'');
+  return `<div class="decision-scoreboard"><div class="decision-score-meta">${compMarkup}</div><div class="decision-score-main"><div class="decision-score-team">${nextMatchTeamMarkup(log.event.home,log.event)}<strong>${esc(log.event.home)}</strong></div><div class="decision-score-numbers"><small>PLACAR</small><b>${log.homeGoals}<i>×</i>${log.awayGoals}</b></div><div class="decision-score-team">${nextMatchTeamMarkup(log.event.away,log.event)}<strong>${esc(log.event.away)}</strong></div></div></div>`;
 }
 function syncViewportMetrics(){const topbar=document.querySelector('.topbar');document.documentElement.style.setProperty('--app-topbar-height',`${topbar?.offsetHeight||72}px`);}
 function render(){
   syncViewportMetrics();enhanceAllSelects();syncCustomSelects();renderHomeHub();renderAccountPanel();
   document.body.classList.toggle('home-screen',!!$('#home')?.classList.contains('active'));
+  $('#home-new-career')?.classList.remove('hidden');
   const activeCareer=!!(state.created&&state.player&&!state.player.retired);document.body.classList.toggle('career-mode',activeCareer);const homeNav=$('#nav [data-view="home"]');if(homeNav)homeNav.classList.remove('hidden');
-  const startLabel=$('#start-btn b'),startHint=$('#start-btn small');if(startLabel)startLabel.textContent=state.created?'Continuar carreira':'Nova carreira';if(startHint)startHint.textContent=state.created?'Voltar ao vestiário e seguir a temporada':'Criar jogador e iniciar sua trajetória';$$('.game-menu-entry[data-view="stats"],.game-menu-entry[data-view="market"],.football-menu-option[data-view="stats"],.football-menu-option[data-view="market"]').forEach(btn=>btn.disabled=!state.created);
-  if(!state.created){renderSavedCareers();$('#mini-profile').classList.add('hidden');$('#reset-career').classList.add('hidden');applyClubTheme(null);return;}
-  const p=state.player,s=state.season;applyClubTheme(p.club);$('#mini-profile').classList.remove('hidden');$('#reset-career').classList.remove('hidden');$('#mini-profile').textContent=`${p.name} · ${p.overall}`;
+  const startLabel=$('#start-btn b'),startHint=$('#start-btn small');if(startLabel)startLabel.textContent='Continuar carreira';if(startHint)startHint.textContent=state.created?'Voltar ao vestiário e seguir a temporada':'Criar jogador e iniciar sua trajetória';$$('.game-menu-entry[data-view="stats"],.game-menu-entry[data-view="market"],.football-menu-option[data-view="stats"],.football-menu-option[data-view="market"]').forEach(btn=>btn.disabled=!state.created);
+  if(!state.created){renderSavedCareers();$('#mini-profile').classList.add('hidden');$('#reset-career').classList.add('hidden');applyCompetitionExperienceTheme({competition:'Be The Legend',type:'generic'});return;}
+  const p=state.player,s=state.season;$('#mini-profile').classList.remove('hidden');$('#reset-career').classList.remove('hidden');$('#mini-profile').textContent=`${p.name} · ${p.overall}`;
   $('#p-name').textContent=p.name;$('#p-pos').textContent=p.position;$('#p-age').textContent=p.age;$('#p-country').textContent=p.nationality;$('#p-birthdate').textContent=formatDateBR(p.birthdate);$('#p-overall').textContent=p.overall;$('#p-potential').textContent=p.potential;$('#p-club').textContent=p.club;$('#p-league').textContent=s?.league?.name||p.clubLeague||clubCompetitionProfile(p.club,p.clubCountry).league;$('#p-value').textContent=money(p.value);$('#avatar').innerHTML=appearanceMarkup(p.appearance,true,p.number||10);$('#avatar').classList.add('face-avatar');const sponsorChip=$('#p-sponsor-chip');sponsorChip?.classList.toggle('hidden',!p.sponsor?.brand);if($('#p-sponsor'))$('#p-sponsor').innerHTML=p.sponsor?.brand?`${sponsorWordmark(p.sponsor.brand)}<span>${esc(p.sponsor.brand)}</span>`:'';const idolChip=$('#p-idol-chip');idolChip?.classList.toggle('hidden',!p.idol?.name);if($('#p-idol'))$('#p-idol').textContent=p.idol?.name||'';const injuryChip=$('#p-injury-chip');injuryChip?.classList.toggle('hidden',!(p.injuryGames>0));if($('#p-injury-status'))$('#p-injury-status').textContent=p.injuryGames>0?`${p.injuryGames} jogo(s) fora`:'';
   const attrs=ensureAttributeOverallSync(p)||normalizePlayerAttributes(p),origins=p.attributeOrigins||{};
   const dna=p.dnaAttributes||attrs,renderFields=attributeFieldsForPosition(p.position),primaryId=primaryAttributeForPosition(p.position);$('#player-attributes').innerHTML=renderFields.map(f=>`<div class="player-attribute ${f.id===primaryId?'role-primary':''}"><span><em>${ATTRIBUTE_ICONS[f.id]||'•'}</em>${f.short}${f.id===primaryId?' ★':''}</span><strong>${attributeDisplayValue(f.id,attrs[f.id])}</strong><small>${origins[f.id]?.legend?`DNA ${attributeDisplayValue(f.id,dna[f.id])} · ${origins[f.id].legend}`:f.label}</small></div>`).join('');
@@ -3282,17 +3795,14 @@ function render(){
   }else{
     $('#season-year').textContent='—';$('#s-games').textContent='0';$('#s-goals').textContent='0';$('#s-assists').textContent='0';$('#s-rating').textContent='—';$('#league-round-label').textContent='Carreira encerrada';$('#league-points').textContent='';$('#league-progress-bar').style.width='100%';$('#season-progress').textContent='Aposentado';$('#finish-season').disabled=true;$('#finish-season').textContent='Carreira encerrada';$('#competitions-list').innerHTML='<div class="competition-item"><strong>👟 Carreira concluída</strong><small>Veja o histórico completo na aba Estatísticas.</small></div>';$('#match-title').textContent='Carreira encerrada';$('#home-team').textContent='';$('#away-team').textContent='';$('#match-competition').textContent='';$('#match-context').textContent='';$('#favorite-line').textContent='';$('#favorite-percent').textContent='';$('#favorite-meter-fill').style.width='0%';$('#strength-line').textContent='';$('#simulate-btn').disabled=true;$('#simulate-btn').textContent='Aposentado';
   }
+  applyCompetitionExperienceTheme(themedCompetitionContext());
   $('#national-country').textContent=`Seleção de ${p.nationality}`;$('#national-flag').innerHTML=nationalFlagImage(p.nationalityCode,p.nationality);
   const wcStatus=s&&isWorldCupYear(s.year)?ensureWorldCupState(s,p):null;
   const calendarStatus=s?nationalCalendarStatusText(s,p):'';
   const wcOngoing=!!(wcStatus&&wcStatus.active&&!wcStatus.finished);
   $('#national-status').textContent=p.calledUp?(wcOngoing?`Copa do Mundo · ${worldCupStatusText(wcStatus)}`:(calendarStatus||'Convocado')):'Fora da lista';
   const wcHostNote=s&&isWorldCupYear(s.year)?` · Sede: ${worldCupHostShortLabel(s.year)}`:'';
-  $('#national-message').textContent=p.calledUp
-    ?(wcOngoing
-      ?((!wcStatus.drawPresented?'◆ Sorteio da Copa pendente':wcStatus.started?'◆ Seleção priorizada no calendário':'◆ Convocado para a Copa · torneio entra no meio da temporada')+wcHostNote)
-      :(calendarStatus==='Datas FIFA concluídas'?(wcStatus?.champion?'★ Campeão do Mundo · calendário de seleções concluído':'✓ Calendário da seleção concluído'):`${p.nationalCaptain?'★ Capitão':'● Convocado'} · ${calendarStatus}`))
-    :(wcStatus&&!wcStatus.finished?`Copa se aproxima · desempenho no clube pode render convocação${wcHostNote}`:'Suba GER + desempenho para receber convocação');
+  $('#national-message').textContent='';
   const trust=clamp(p.nationalTrust||0,0,100);$('#national-trust-fill').style.width=`${trust}%`;$('#national-trust-label').textContent=`${trust}%`;$('#nt-games').textContent=p.nationalTeamGames;$('#nt-goals').textContent=p.nationalTeamGoals;$('#national-role').textContent=nationalRoleForPlayer(p);const nationalAction=$('#national-action');if(nationalAction){nationalAction.classList.add('hidden');nationalAction.disabled=true;}
   const newsIcon=n=>/les[aã]o|tratamento|fora/i.test(n)?'✚':/campe[aã]o|t[ií]tulo|trof[eé]u/i.test(n)?'★':/sele[cç][aã]o|convoca/i.test(n)?'◉':/proposta|mercado|clube/i.test(n)?'↗':'●';
   $('#news').innerHTML=(state.news.slice(-4).reverse().map(n=>`<div class="news-item compact"><span class="news-icon">${newsIcon(n)}</span><div><strong>${n}</strong></div></div>`).join('')||'<div class="empty-visual">○<span>Sem notícias</span></div>');
@@ -3474,7 +3984,7 @@ function renderMarketTier(){
   $('#market-tier').innerHTML=`<div class="market-tier-visual"><span class="market-tier-icon">${icon}</span><div><small>FAIXA ATUAL</small><strong>${tier}</strong></div><div class="market-ger"><b>${o}</b><small>GER</small></div></div><div class="market-tier-track"><span style="width:${level}%"></span></div><div class="market-tier-chips"><span>€ teto ${money(MAX_MARKET_VALUE).replace('€ ','')}</span><span>${state.offers.length} proposta(s)</span></div>`;renderLegacyClubChoice();
 }
 function renderOffers(){
-  if(!state.created)return;const box=$('#offers');box.innerHTML=state.offers.length?state.offers.map((o,i)=>`<article class="panel offer compact-offer" data-club-name="${o.club.replace(/"/g,'&quot;')}"><div class="offer-main"><span class="crest-shell"><img class="club-badge-img hidden" alt=""><span class="crest-fallback">⚽</span></span><div><small>${o.countryName} · ${o.league}</small><h3>${o.club}</h3><div class="offer-metrics"><span>€ ${money(o.value).replace('€ ','')}</span><span>FOR ${o.strength}</span></div></div></div><div class="offer-actions"><button class="primary" onclick="acceptOffer(${i})">Aceitar</button><button class="danger" onclick="rejectOffer(${i})">×</button></div></article>`).join(''):'<div class="empty-market"><span>◎</span><strong>Sem propostas</strong><small>Simule mais uma temporada para movimentar o mercado.</small></div>';hydrateRenderedBadges();
+  if(!state.created)return;const box=$('#offers');box.innerHTML=state.offers.length?state.offers.map((o,i)=>`<article class="panel offer compact-offer" data-club-name="${o.club.replace(/"/g,'&quot;')}"><div class="offer-main"><span class="crest-shell"><img class="club-badge-img hidden" alt=""><span class="crest-fallback" title="Escudo real ainda não localizado">S/D</span></span><div><small>${o.countryName} · ${o.league}</small><h3>${o.club}</h3><div class="offer-metrics"><span>€ ${money(o.value).replace('€ ','')}</span><span>FOR ${o.strength}</span></div></div></div><div class="offer-actions"><button class="primary" onclick="acceptOffer(${i})">Aceitar</button><button class="danger" onclick="rejectOffer(${i})">×</button></div></article>`).join(''):'<div class="empty-market"><span>◎</span><strong>Sem propostas</strong><small>Simule mais uma temporada para movimentar o mercado.</small></div>';hydrateRenderedBadges();
 }
 
 function soundtrackTrack(id){return FIFA_SOUNDTRACK.find(t=>t.id===id)||null;}
@@ -3951,7 +4461,7 @@ function showCareerLegacyCard(){
   $('#legacy-card-name').textContent=p.name;$('#legacy-card-subtitle').textContent=`${p.position} · ${p.nationality} · camisa ${p.number||10} · aposentado aos ${p.retiredAge||p.age} anos`;
   $('#legacy-rank').textContent=r.rank<=100?`#${r.rank}`:'FORA';$('#legacy-final-overall').textContent=p.overall||'—';$('#legacy-peak-overall').textContent=r.peak;$('#legacy-seasons').textContent=(state.history||[]).length;$('#legacy-titles').textContent=trophies.length;$('#legacy-awards').textContent=awards.length;$('#legacy-position').textContent=p.position;$('#legacy-games').textContent=tot.games;$('#legacy-goals').textContent=tot.goals;$('#legacy-assists').textContent=tot.assists;$('#legacy-nt').textContent=p.nationalTeamGames||0;$('#legacy-shirt-name').textContent=p.name.split(' ').slice(-1)[0].toUpperCase();$('#legacy-shirt-number').textContent=p.number||10;$('#legacy-face').innerHTML=appearanceMarkup(p.appearance,true,p.number||10);$('#legacy-face').classList.add('face-avatar','legacy-face-avatar');
   $('#legacy-major-titles').innerHTML=[{label:'Copa do Mundo',count:r.worldCups,art:'FIFA World Cup'},{label:'Champions',count:r.champions,art:'UEFA Champions League'},{label:'Mundial',count:r.clubWorlds,art:'FIFA Club World Cup'},{label:'Libertadores',count:r.libertadores,art:'CONMEBOL Libertadores'},{label:'Ligas/Copas',count:leagueTitles,art:trophies[0]?.name||'Premier League'},{label:'Bola de Ouro',count:r.ballons,art:'Bola de Ouro'}].map(item=>`<div class="legacy-major-item">${honourVisual(item.art)}<span><strong>${item.count}</strong><small>${item.label}</small></span></div>`).join('');
-  $('#legacy-clubs').innerHTML=clubs.length?clubs.map(name=>`<div class="legacy-club-chip"><span class="crest-shell small"><img class="club-badge-img hidden" alt=""><span class="crest-fallback">⚽</span></span><b>${name}</b></div>`).join(''):'<p class="muted">Nenhum clube registrado.</p>';
+  $('#legacy-clubs').innerHTML=clubs.length?clubs.map(name=>`<div class="legacy-club-chip"><span class="crest-shell small"><img class="club-badge-img hidden" alt=""><span class="crest-fallback" title="Escudo real ainda não localizado">S/D</span></span><b>${name}</b></div>`).join(''):'<p class="muted">Nenhum clube registrado.</p>';
   const groupedTitles=[...trophies.reduce((m,t)=>{const name=(t?.name||'Título').trim();if(name)m.set(name,(m.get(name)||0)+1);return m;},new Map()).entries()].sort((a,b)=>b[1]-a[1]||a[0].localeCompare(b[0],'pt-BR'));$('#legacy-honours-preview').innerHTML=groupedTitles.length?groupedTitles.map(([name,count])=>`<div class="legacy-grouped-title">${honourVisual(name)}<span><strong>${esc(name)}</strong><small>${count}× campeão</small></span><b>${count}×</b></div>`).join(''):'<p class="muted">A carreira terminou sem títulos registrados.</p>';
   if($('#legacy-icon-card'))$('#legacy-icon-card').innerHTML=iconCardMarkup(buildCareerIconCardSnapshot(p),false);
   $('#legacy-rank-tier').textContent=`${r.tier} · ${r.rank<=100?`#${r.rank}`:'sem posição no Top 100'}`;$('#legacy-rank-detail').textContent=`Pontuação histórica ${r.score}. Critérios: auge, desempenho médio, números ajustados por posição, títulos, Champions/Libertadores, Copa do Mundo, prêmios individuais, idolatria, seleção e longevidade. O Top 100 exige uma carreira histórica; o Top 5 e o #1 têm travas adicionais de domínio sustentado, seleção, produção, títulos de elite e prêmios por posição.`;
@@ -3961,7 +4471,7 @@ function showCareerLegacyCard(){
 
 function signLegacyClub(){
   const p=state.player;if(!legacyClubEligible())return;const raw=$('#legacy-club-choice').value;if(!raw)return;const sep=raw.indexOf('|'),code=raw.slice(0,sep),name=raw.slice(sep+1);const club=allTransferClubs().find(c=>c.countryCode===code&&c.name===name);if(!club)return;
-  const old=p.club;p.club=club.name;p.clubCountry=club.countryCode;p.clubCountryName=countryByCode(club.countryCode)?.name||club.countryCode;p.clubStrength=club.strength||clubStrength(club.name,club.countryCode);p.clubLeague=club.league||clubCompetitionProfile(club.name,club.countryCode).league;p.clubCup=club.cup||clubCompetitionProfile(club.name,club.countryCode).cup;p.clubDivisionLevel=club.divisionLevel||1;p.clubRole=null;ensureClubRoleState(p);p.value=marketValue(p.value);state.offers=[];state.news.push(`${p.name}, já consolidado, escolhe o ${club.name} para um dos últimos capítulos da carreira, deixando o ${old}.`);applyClubTheme(p.club);save();render();showCelebration('✍️',`Destino escolhido: ${club.name}`,`${p.name} decide onde quer escrever o fim da própria história.`);
+  const old=p.club;p.club=club.name;p.clubCountry=club.countryCode;p.clubCountryName=countryByCode(club.countryCode)?.name||club.countryCode;p.clubStrength=club.strength||clubStrength(club.name,club.countryCode);p.clubLeague=club.league||clubCompetitionProfile(club.name,club.countryCode).league;p.clubCup=club.cup||clubCompetitionProfile(club.name,club.countryCode).cup;p.clubDivisionLevel=club.divisionLevel||1;p.clubRole=null;ensureClubRoleState(p);p.value=marketValue(p.value);state.offers=[];state.news.push(`${p.name}, já consolidado, escolhe o ${club.name} para um dos últimos capítulos da carreira, deixando o ${old}.`);save();render();showCelebration('✍️',`Destino escolhido: ${club.name}`,`${p.name} decide onde quer escrever o fim da própria história.`);
 }
 
 function showSeasonSpotlight(log){
@@ -4032,13 +4542,33 @@ $('#finish-season').addEventListener('click',()=>{
 });
 
 window.acceptOffer=index=>{
-  const o=state.offers[index],p=state.player;if(!o||p.retired)return;const old=p.club;p.club=o.club;p.clubCountry=o.countryCode;p.clubCountryName=o.countryName;p.clubStrength=o.strength;p.clubLeague=o.league||clubCompetitionProfile(o.club,o.countryCode).league;p.clubCup=o.cup||clubCompetitionProfile(o.club,o.countryCode).cup;p.clubDivisionLevel=o.divisionLevel||1;p.clubRole=null;ensureClubRoleState(p);p.value=marketValue(o.value);p.morale=clamp(p.morale+5,40,100);state.news.push(`${p.name} deixa o ${old} e é anunciado pelo ${o.club}${p.clubDivisionLevel>1?` (${p.clubLeague})`:''}.`);state.offers=[];applyClubTheme(p.club);save();render();showCelebration('✍️',`Novo clube: ${o.club}`,`${p.name} inicia um novo capítulo da carreira.`);
+  const o=state.offers[index],p=state.player;if(!o||p.retired)return;const old=p.club;p.club=o.club;p.clubCountry=o.countryCode;p.clubCountryName=o.countryName;p.clubStrength=o.strength;p.clubLeague=o.league||clubCompetitionProfile(o.club,o.countryCode).league;p.clubCup=o.cup||clubCompetitionProfile(o.club,o.countryCode).cup;p.clubDivisionLevel=o.divisionLevel||1;p.clubRole=null;ensureClubRoleState(p);p.value=marketValue(o.value);p.morale=clamp(p.morale+5,40,100);state.news.push(`${p.name} deixa o ${old} e é anunciado pelo ${o.club}${p.clubDivisionLevel>1?` (${p.clubLeague})`:''}.`);state.offers=[];save();render();showCelebration('✍️',`Novo clube: ${o.club}`,`${p.name} inicia um novo capítulo da carreira.`);
 };
 window.rejectOffer=index=>{state.offers.splice(index,1);save();render();toast('Proposta recusada.');};
 
-$('#reset-career').addEventListener('click',()=>{
-  if(!confirm('Apagar a carreira atual e começar novamente?'))return;const savedCareers=getSavedCareers();localStorage.removeItem(STORAGE_KEY);localStorage.removeItem(LEGACY_STORAGE_KEY);clearDraftState();pendingPlayerProfile=null;attributeDraft=null;creationPhotoDataUrl='';state={created:false,player:null,season:null,history:[],offers:[],news:[],pendingEvent:null,savedCareers};nextEventCache=null;applyClubTheme(null);save();render();showView('home');toast('Nova carreira iniciada. O Hall da Fama foi preservado.');
-});
+function openNewCareerConfirmation(){
+  if(!state.created){showView('create');return;}
+  $('#new-career-modal')?.classList.remove('hidden');
+  $('#new-career-cancel')?.focus();
+}
+function closeNewCareerConfirmation(){ $('#new-career-modal')?.classList.add('hidden'); }
+function deleteCurrentCareerAndCreate(){
+  const savedCareers=[...getSavedCareers()];
+  localStorage.removeItem(STORAGE_KEY);
+  localStorage.removeItem(LEGACY_STORAGE_KEY);
+  clearDraftState();pendingPlayerProfile=null;attributeDraft=null;creationPhotoDataUrl='';
+  state={created:false,player:null,season:null,history:[],offers:[],news:[],pendingEvent:null,savedCareers};
+  state.pendingMatchDecision=null;state.pendingPenaltyShootout=null;
+  nextEventCache=null;pausedCareerOverlay=null;pendingSeasonCelebration=null;
+  document.querySelectorAll('.modal-backdrop:not(#new-career-modal)').forEach(el=>el.classList.add('hidden'));
+  closeNewCareerConfirmation();save();render();showView('create');
+  toast('Carreira anterior excluída. Hall da Fama preservado.');
+}
+$('#reset-career').addEventListener('click',openNewCareerConfirmation);
+$('#home-new-career')?.addEventListener('click',()=>state.created?openNewCareerConfirmation():(showView('create'),startSoundtrackForGameplay()));
+$('#new-career-cancel')?.addEventListener('click',closeNewCareerConfirmation);
+$('#new-career-confirm')?.addEventListener('click',deleteCurrentCareerAndCreate);
+$('#new-career-modal')?.addEventListener('click',e=>{if(e.target.id==='new-career-modal')closeNewCareerConfirmation();});
 
 
 $('#retire-career').addEventListener('click',()=>{
@@ -4401,6 +4931,23 @@ function buildDecisionScenario(event){
       {label:'Cruzar no segundo pau',effect:'Busque um companheiro livre.',type:'assist',chance:.64,rating:.58},
       {label:'Segurar e cavar a falta',effect:'Tente ganhar uma bola parada perigosa.',type:'control',chance:.69,rating:.46}], 'Uma jogada para mudar o clima do estádio')
   );
+  // Chapter 11: new on-pitch stories, with distinct positional decisions.
+  goalkeeper.push(make('gk_last_second_throw','build','Contra-ataque no último segundo','Você segura a bola após um escanteio e percebe três companheiros correndo contra dois defensores.',[
+    {label:'Lançamento com a mão',effect:'Explora o espaço antes do rival se recompor.',type:'assist',chance:.58,rating:.70},
+    {label:'Bola longa de primeira',effect:'Mais alcance, menos precisão.',type:'assist',chance:.45,rating:.85},
+    {label:'Prender e administrar',effect:'Protege o placar sem arriscar.',type:'control',chance:.87,rating:.22}], 'A última saída de bola pode decidir tudo'));
+  defenders.push(make('def_captain_block','defense','O bloqueio do capitão','O camisa 9 rival prepara uma bicicleta na entrada da pequena área e todos dependem da sua leitura.',[
+    {label:'Interceptar de cabeça',effect:'Antecipe antes da finalização.',type:'defense',chance:.57,rating:.80,risk:.20},
+    {label:'Fechar o primeiro poste',effect:'Reduza o ângulo da conclusão.',type:'defense',chance:.68,rating:.53,risk:.09},
+    {label:'Controlar o rebote',effect:'Evite a segunda finalização.',type:'defense',chance:.71,rating:.46,risk:.08}], 'Seja a última barreira'));
+  midfield.push(make('mid_quick_triangle','build','O triângulo impossível','Três marcadores cercam você entre as linhas. Um companheiro infiltra no espaço que acabou de surgir.',[
+    {label:'Passe de primeira',effect:'Quebra linhas na velocidade da jogada.',type:'assist',chance:.57,rating:.72},
+    {label:'Giro de proteção',effect:'Escapa da marcação e mantém o ataque.',type:'control',chance:.69,rating:.45},
+    {label:'Bola por cobertura',effect:'Uma assistência de alto risco.',type:'assist',chance:.43,rating:.91}], 'Encontre a solução em segundos'));
+  attackers.push(make('att_bicycle_kick','chance','A chance da bicicleta','O cruzamento passa atrás do seu corpo no último lance. O estádio prende a respiração.',[
+    {label:'Tentar a bicicleta',effect:'Golaço improvável; execução muito difícil.',type:'goal',chance:.30,rating:1.05},
+    {label:'Dominar e girar',effect:'Mais controle e uma conclusão trabalhada.',type:'goal',chance:.60,rating:.54},
+    {label:'Escorar para trás',effect:'Encontre o meia que chega de frente.',type:'assist',chance:.68,rating:.51}], 'Como transformar a última bola?'));
   let pool;
   if(p.position==='Goleiro')pool=goalkeeper;
   else if(['Zagueiro','Lateral direito','Lateral esquerdo'].includes(p.position))pool=defenders;
@@ -4426,7 +4973,7 @@ function renderDecisionChoices(scenario){
   visual.className='decision-visual hidden';
   choiceBox.innerHTML='';
   choiceBox.classList.remove('hidden');
-  const buttons=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><strong>${o.label}</strong><small>${o.effect}</small></button>`).join('');
+  const buttons=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><span class="decision-choice-index">${String(i+1).padStart(2,'0')}</span><span><strong>${o.label}</strong>${scenario.visual==='penalty'?'':`<small>${o.effect}</small>`}</span><b class="decision-choice-arrow">↗</b></button>`).join('');
   if(['goal','penalty','chance','goalkeeper','defense','build'].includes(scenario.visual)){
     const slotClasses=(scenario.visual==='goal'||scenario.visual==='penalty')?
       ['slot-left','slot-center','slot-right']:
@@ -4440,10 +4987,10 @@ function renderDecisionChoices(scenario){
     const typeClass=scenario.visual==='goal'||scenario.visual==='penalty'?'goal-mouth':scenario.visual==='chance'?'chance-board':scenario.visual==='goalkeeper'?'goalkeeper-board':scenario.visual==='defense'?'defense-board':'build-board';
     visual.className=`decision-visual ${typeClass}`;
     const label=scenario.prompt|| (scenario.visual==='penalty'?'Escolha o tipo de cobrança':scenario.visual==='goal'?'Escolha a finalização':scenario.visual==='chance'?'Escolha como atacar o lance':'Escolha sua leitura no lance');
-    const inner=scenario.options.map((o,i)=>`<button class="visual-choice ${slotClasses[i]||''}" data-decision-option="${i}"><span>${o.type==='assist'?'🤝':o.type==='defense'?'🛡️':o.type==='control'?'⏱️':'⚽'}</span><strong>${o.label}</strong><small>${o.effect}</small></button>`).join('');
+    const inner=scenario.options.map((o,i)=>`<button class="visual-choice ${slotClasses[i]||''}" data-decision-option="${i}"><span>${o.type==='assist'?'🤝':o.type==='defense'?'🛡️':o.type==='control'?'⏱️':'⚽'}</span><strong>${o.label}</strong>${scenario.visual==='penalty'?'':`<small>${o.effect}</small>`}</button>`).join('');
     const sceneHash=[...(scenario.id||scenario.title||scenario.visual)].reduce((n,ch,i)=>n+ch.charCodeAt(0)*(i+5),29);const variant=sceneHash%12;visual.style.setProperty('--decision-shift',`${(sceneHash%23)-11}px`);visual.style.setProperty('--decision-tilt',`${(sceneHash%15)-7}deg`);visual.style.setProperty('--decision-scale',`${(90+(sceneHash%19))/100}`);
     visual.classList.add(`decision-layout-${variant}`,`decision-scenario-${String(scenario.id||'generic').replace(/[^a-z0-9-]/gi,'-').toLowerCase()}`);
-    visual.innerHTML=`<div class="decision-visual-label">${label}</div><div class="decision-scene-architecture"><i></i><i></i><i></i><i></i></div><div class="visual-stage">${inner}</div>`;
+    visual.innerHTML=`<div class="decision-visual-label">${label}</div><div class="btl-tactics-header"><span>◉ CENTRAL TÁTICA</span><span>${scenario.visual==='penalty'?'12 PASSOS, UMA DECISÃO':'SUA JOGADA'}</span></div><div class="btl-pitch-graphic" aria-hidden="true"><i></i><i></i><i></i><span>—</span></div><div class="visual-stage">${inner}</div>`;
     choiceBox.classList.add('hidden');
     visual.querySelectorAll('[data-decision-option]').forEach(b=>b.addEventListener('click',()=>state.pendingPenaltyShootout?resolvePenaltyShootout(+b.dataset.decisionOption):resolveMatchDecision(+b.dataset.decisionOption)));
     return;
@@ -4575,7 +5122,7 @@ function hexRgbTriplet(hex='#ffffff'){
   return `${parseInt(full.slice(0,2),16)||0}, ${parseInt(full.slice(2,4),16)||0}, ${parseInt(full.slice(4,6),16)||0}`;
 }
 function applyDecisionCompetitionTheme(card,event={}){
-  if(!card)return;const theme=competitionDecisionTheme(event),colors=theme.colors||['#182536','#ffffff','#42e88d'];
+  if(!card)return;const theme=competitionDecisionTheme(event),experience=competitionThemeForName(event.competition||''),colors=[experience.panel||'#182536',experience.accent||'#ffffff',experience.secondary||'#42e88d'];
   card.classList.add('competition-themed');card.dataset.competitionTheme=theme.key||'generic';
   card.style.setProperty('--comp-primary',colors[0]);card.style.setProperty('--comp-secondary',colors[1]||'#ffffff');card.style.setProperty('--comp-accent',colors[2]||colors[1]||'#ffffff');
   card.style.setProperty('--comp-primary-rgb',hexRgbTriplet(colors[0]));card.style.setProperty('--comp-secondary-rgb',hexRgbTriplet(colors[1]||'#ffffff'));card.style.setProperty('--comp-accent-rgb',hexRgbTriplet(colors[2]||colors[1]||'#ffffff'));
@@ -4601,9 +5148,10 @@ function animateSeasonDashboard(){
   if(s&&!s.closed){$$('#competitions-list .competition-item').forEach((el,i)=>el.style.setProperty('--stagger',`${i*.12}s`));}
 }
 function openMatchDecision(event){
+  applyCompetitionExperienceTheme(event);
   const scenario=buildDecisionScenario(event);state.pendingMatchDecision={event,scenario,isNationalDecision:event.type==='national'};if(event.type==='national')state.season.nationalDecisionCount=(state.season.nationalDecisionCount||0)+1;save();
   const card=$('#match-decision-modal .decision-card');card.classList.remove('scene-night','scene-rain','scene-sunset','scene-derby','scene-fog','scene-floodlights','scene-finale','scene-storm','scene-snow','scene-heat','scene-away','scene-hostile','scene-cup-night','scene-extra-time','scene-morning','scene-national-night','scene-afternoon','scene-wind','scene-neon','scene-tunnel');card.classList.add(`scene-${scenario.scene||'night'}`);applyDecisionCompetitionTheme(card,event);
-  $('#decision-competition').textContent=`${event.competition}${event.stage?` · ${event.stage}`:''}`;$('#decision-title').textContent=`${scenario.minute}' · ${scenario.title}`;$('#decision-match').textContent=`${event.home} × ${event.away}`;$('#decision-description').textContent=scenario.description;
+  $('#decision-competition').innerHTML=competitionHeaderMarkup(event.competition,event.stage||'');$('#decision-title').textContent=`${scenario.minute}' · ${scenario.title}`;$('#decision-match').textContent=`${event.home} × ${event.away}`;$('#decision-description').textContent='';
   $('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');renderDecisionChoices(scenario);$('#match-decision-modal').classList.remove('hidden');playMatchVisualFX(scenario.visual||'build','intro',scenario.id||'');
 }
 function simulateInteractiveMatch(event,option){

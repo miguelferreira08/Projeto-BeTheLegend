@@ -6,18 +6,26 @@
   <meta name="description" content="Be The Legend - simulador de carreira no futebol.">
   <title>Be The Legend — Sua história. Seu futebol.</title>
   <link rel="preconnect" href="https://www.thesportsdb.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <link rel="preconnect" href="https://commons.wikimedia.org" crossorigin>
   <link rel="preconnect" href="https://upload.wikimedia.org" crossorigin>
   <link rel="preconnect" href="https://flagcdn.com" crossorigin>
   <link rel="icon" type="image/svg+xml" href="assets/favicon.svg?v=10.3">
   <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png?v=10.3">
   <link rel="shortcut icon" href="assets/favicon.ico?v=10.3">
-  <link rel="stylesheet" href="css/style.css?v=10.7.6">
+  <link rel="stylesheet" href="css/style.css?v=12.0.0">
+  <link rel="stylesheet" href="css/legend-atelier.css?v=15.0.0">
+  <link rel="stylesheet" href="css/v15-studio.css?v=15.0.0">
+  <link rel="stylesheet" href="css/v16-finish.css?v=16.0.0">
+  <link rel="stylesheet" href="css/v17-game-ui.css?v=17.0.0">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" role="dialog" aria-modal="true" aria-labelledby="auth-title">
     <div class="auth-bg" aria-hidden="true"><span></span><span></span><span></span></div>
     <section class="auth-card">
+      <div class="auth-content">
       <header class="auth-brand">
         <img src="assets/favicon.svg" alt="" class="auth-brand-mark">
         <div><span>CAREER MODE</span><h1>Be The <strong>Legend</strong></h1><p>Entre para continuar construindo seu legado.</p></div>
@@ -41,9 +49,9 @@
         </form>
         <div class="auth-divider"><span>ou</span></div>
         <button id="auth-guest" class="auth-guest" type="button"><span>👤</span><b>Jogar como convidado</b><small>O progresso fica salvo neste dispositivo</small></button>
-        <div id="google-signin-wrap" class="google-signin-wrap">
+        <div id="google-signin-wrap" class="google-signin-wrap"><span class="google-signin-label">ENTRE COM SUA CONTA</span>
           <div id="google-signin-container"></div>
-          <button id="google-signin-unconfigured" class="google-fallback" type="button"><span class="google-g">G</span><b>Continuar com o Google</b></button>
+          <button id="google-signin-unconfigured" class="google-fallback" type="button"><svg viewBox="0 0 48 48" width="21" height="21" aria-hidden="true"><path fill="#EA4335" d="M24 9.5c3.5 0 6.7 1.2 9.2 3.6l6.9-6.9C35.9 2.2 30.5 0 24 0 14.6 0 6.5 5.4 2.5 13.2l8 6.2C12.4 13.6 17.8 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.23 5.48-4.72 7.18l7.73 6C44.47 38.02 46.98 31.87 46.98 24.55z"/><path fill="#FBBC05" d="M10.53 28.59A14.7 14.7 0 0 1 9.75 24c0-1.6.27-3.15.76-4.59l-8-6.2A24 24 0 0 0 0 24c0 3.87.93 7.52 2.55 10.78z"/><path fill="#34A853" d="M24 48c6.48 0 11.92-2.14 15.9-5.8l-7.73-6c-2.14 1.44-4.88 2.3-8.17 2.3-6.2 0-11.58-4.1-13.48-9.67l-8 6.2C6.51 42.6 14.59 48 24 48z"/></svg><b>Continuar com Google</b><span class="google-arrow">→</span></button>
           <small id="google-config-note" class="auth-config-note hidden">O login Google precisa do Client ID do domínio publicado.</small>
         </div>
         <p id="auth-error" class="auth-error" aria-live="polite"></p>
@@ -58,6 +66,14 @@
         <label class="auth-consent"><input id="auth-google-terms" type="checkbox"><span>Li e aceito os <button type="button" data-legal-open="terms">Termos de Uso</button> e a <button type="button" data-legal-open="privacy">Política de Privacidade</button>.</span></label>
         <button id="auth-google-finish" class="primary full" type="button">Criar conta com Google</button>
       </div>
+      </div>
+      <aside class="auth-feature" aria-label="Bem-vindo ao Be The Legend">
+        <div class="auth-feature-top"><span class="auth-live-dot"></span> O SEU NOME. A SUA HISTÓRIA. <span>BTL / 26</span></div>
+        <div class="auth-feature-mid"><span class="auth-feature-vertical">NEXT GENERATION CAREER</span><span class="auth-feature-watermark" aria-hidden="true">07</span>
+          <div class="auth-feature-mark" aria-hidden="true"><span class="auth-orbit orbit-a"></span><span class="auth-orbit orbit-b"></span><b>★</b></div>
+        </div>
+        <div class="auth-feature-bottom"><span class="auth-edition">EDIÇÃO LEGACY</span><h2>Todo ídolo<br>começa em<br><em>algum lugar.</em></h2><p>Crie o jogador. Escreva a temporada. Conquiste um legado que não termina no apito final.</p><div class="auth-feature-stats"><span><b>18</b><small>TEMPORADAS</small></span><span><b>200</b><small>CRAQUES</small></span><span><b>∞</b><small>HISTÓRIAS</small></span></div></div>
+      </aside>
     </section>
   </div>
 
@@ -92,6 +108,11 @@
       <button class="primary full" type="button" data-legal-close="privacy">Entendi</button>
     </article>
   </div>
+  <div class="btl-game-hud" aria-label="Status da carreira">
+    <div class="btl-hud-edition"><span class="btl-live-led"></span> BTL <span class="btl-hud-divider">//</span> CAREER ENGINE <b>2026</b></div>
+    <div class="btl-hud-club"><span class="btl-hud-indicator">◆</span><strong id="btl-hud-club">INÍCIO DE CARREIRA</strong><small id="btl-hud-league">SELECIONE SUA TRAJETÓRIA</small></div>
+    <div class="btl-hud-right"><span class="btl-hud-caption">TEMPORADA <b id="btl-hud-season">—</b></span><span class="btl-hud-rank" id="btl-hud-rating">GER —</span></div>
+  </div>
   <header class="topbar">
     <a class="logo" href="#" data-view="home">Be The <span>Legend</span></a>
     <nav id="nav">
@@ -122,42 +143,38 @@
         <header class="game-brand-lockup">
           <img src="assets/favicon.svg" alt="" class="game-brand-mark">
           <div>
-            <span class="game-brand-kicker">CAREER MODE</span>
+            <span class="game-brand-kicker">THE JOURNEY / 01</span>
             <h1>Be The <strong>Legend</strong></h1>
-            <p>Sua história. Seu futebol.</p>
+            
           </div>
         </header>
 
+        
         <div class="game-home-main">
           <nav class="football-menu-list" aria-label="Menu principal do jogo">
             <button class="football-menu-option primary-option" id="start-btn" type="button">
-              <span class="football-menu-number">01</span>
-              <span class="football-menu-copy"><b>Nova carreira</b><small>Criar jogador e começar sua trajetória</small></span>
+              <span class="football-menu-number"><svg class="menu-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 3h6v4l-1 4-2 2-2-2-1-4zM9 5H5v3c0 3 2 4 5 4M15 5h4v3c0 3-2 4-5 4M12 13v5m-5 3h10m-9-3h8v3H8z"/></svg></span>
+              <span class="football-menu-copy"><b>Nova carreira</b></span>
               <span class="football-menu-arrow">▶</span>
             </button>
-            <button class="football-menu-option" data-view="stats" type="button">
-              <span class="football-menu-number">02</span>
-              <span class="football-menu-copy"><b>Estatísticas</b><small>Histórico, recordes, títulos e desempenho</small></span>
-              <span class="football-menu-arrow">›</span>
-            </button>
-            <button class="football-menu-option" data-view="market" type="button">
-              <span class="football-menu-number">03</span>
-              <span class="football-menu-copy"><b>Mercado</b><small>Propostas, destinos e status da carreira</small></span>
-              <span class="football-menu-arrow">›</span>
+            <button class="football-menu-option" id="home-new-career" type="button">
+              <span class="football-menu-number"><svg class="menu-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v16M4 12h16M5 5h14v14H5z"/></svg></span>
+              <span class="football-menu-copy"><b>Nova carreira</b></span>
+              <span class="football-menu-arrow">+</span>
             </button>
             <button class="football-menu-option" id="home-hall-btn" data-view="legacy" type="button">
-              <span class="football-menu-number">04</span>
-              <span class="football-menu-copy"><b>Meu Legado</b><small>Conta, ID e Hall da Fama das suas carreiras</small></span>
+              <span class="football-menu-number"><svg class="menu-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m12 2 2.8 6.7 7.2.6-5.5 4.8 1.8 7-6.3-3.8-6.3 3.8 1.8-7L2 9.3l7.2-.6z"/></svg></span>
+              <span class="football-menu-copy"><b>Meu Legado</b></span>
               <span class="football-menu-arrow">★</span>
             </button>
             <button class="football-menu-option" id="soundtrack-btn" type="button">
-              <span class="football-menu-number">05</span>
-              <span class="football-menu-copy"><b>Som / Trilha sonora</b><small>Escolher músicas, volume e reprodução durante a gameplay</small></span>
+              <span class="football-menu-number"><svg class="menu-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l12-3v13M9 18c0 2-2 4-5 4s-4-3-1-5c2-1 4-1 6-1m12-1c0 2-2 4-5 4s-4-3-1-5c2-1 4-1 6-1M9 9l12-3"/></svg></span>
+              <span class="football-menu-copy"><b>Som / Trilha sonora</b></span>
               <span class="football-menu-arrow">♫</span>
             </button>
             <button class="football-menu-option" data-view="contact" type="button">
-              <span class="football-menu-number">06</span>
-              <span class="football-menu-copy"><b>Contato</b><small>Sugerir melhorias e novas ideias ao desenvolvedor</small></span>
+              <span class="football-menu-number"><svg class="menu-line-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18v14H3zM3 6l9 7 9-7M7 16h5"/></svg></span>
+              <span class="football-menu-copy"><b>Contato</b></span>
               <span class="football-menu-arrow">✉</span>
             </button>
           </nav>
@@ -172,7 +189,7 @@
               <div>
                 <small id="home-career-club">SEM CLUBE</small>
                 <h2 id="home-current-player">Crie sua lenda</h2>
-                <p id="home-career-meta">Escolha país, posição e primeiro clube.</p>
+                <p id="home-career-meta"></p>
               </div>
             </div>
             <div class="home-career-stats">
@@ -181,12 +198,13 @@
               <span><b id="home-career-titles">0</b><small>TÍTULOS</small></span>
             </div>
             <div class="home-career-progress"><span id="home-career-progress-fill"></span></div>
-            <small id="home-career-progress-label">Pronto para o primeiro contrato</small>
+            <small id="home-career-progress-label"></small>
+
           </aside>
         </div>
 
         <div class="game-home-footer-strip" aria-hidden="true">
-          <span>⚽ CARREIRA</span><i></i><span>🏆 TÍTULOS</span><i></i><span>🌍 SELEÇÃO</span><i></i><span>⇄ MERCADO</span><i></i><span>★ LEGADO</span>
+          <span>⚽ CARREIRA</span><i></i><span>🏆 TÍTULOS</span><i></i><span>🌍 SELEÇÃO</span><i></i><span>★ LEGADO</span>
         </div>
       </div>
     </section>
@@ -251,6 +269,24 @@
                 <option value="full">Cheia</option>
                 <option value="mustache">Bigode</option>
               </select>
+            </label>
+            <label>Formato do rosto
+              <select id="appearance-face-shape"><option value="oval">Oval</option><option value="square">Quadrado</option><option value="round">Redondo</option><option value="slim">Fino</option></select>
+            </label>
+            <label>Cor dos olhos
+              <select id="appearance-eye-color"><option value="#433021">Castanhos</option><option value="#75a3ac">Azuis</option><option value="#528263">Verdes</option><option value="#ad8153">Mel</option></select>
+            </label>
+            <label>Olhos
+              <select id="appearance-eye-shape"><option value="almond">Amendoados</option><option value="round">Arredondados</option><option value="narrow">Estreitos</option></select>
+            </label>
+            <label>Sobrancelhas
+              <select id="appearance-brows"><option value="natural">Naturais</option><option value="thick">Marcadas</option><option value="arched">Arqueadas</option></select>
+            </label>
+            <label>Nariz
+              <select id="appearance-nose"><option value="straight">Reto</option><option value="broad">Largo</option><option value="small">Curto</option></select>
+            </label>
+            <label>Boca
+              <select id="appearance-mouth"><option value="neutral">Natural</option><option value="smile">Sorriso</option><option value="serious">Séria</option></select>
             </label>
             <label>Tom de pele
               <select id="appearance-skin">
@@ -327,8 +363,7 @@
           <div class="legend-card-head"><span id="legend-position">ATA</span><small id="legend-era">HISTÓRICO · AUGE</small></div>
           <div class="legend-badge" id="legend-badge">PL</div>
           <h3 id="legend-name">Pelé</h3>
-          <div class="legend-rating-line"><span>GER da carta de referência</span><strong id="legend-rating">99</strong></div>
-          <small class="legend-source" id="legend-source">Referência EA SPORTS FC</small>
+          <div class="legend-player-meta"><span id="legend-country" class="legend-country"></span><span id="legend-club" class="legend-club"></span></div><div class="legend-rating-line"><span>GER</span><strong id="legend-rating">99</strong></div><small class="legend-source hidden" id="legend-source"></small>
           <div id="legend-attributes" class="legend-attributes"></div>
           <div class="draft-actions single">
             <button id="reroll-legend" class="secondary" type="button">Pular este jogador · resta 1</button>
@@ -373,7 +408,7 @@
             <div class="potential"><strong id="p-potential">85</strong><small>POT</small></div>
           </div>
           <div class="club-line">
-            <div class="crest-shell"><img id="p-club-badge" class="club-badge-img hidden" alt=""><span id="p-club-fallback">⚽</span></div>
+            <div class="crest-shell"><img id="p-club-badge" class="club-badge-img hidden" alt=""><span id="p-club-fallback" title="Escudo ainda não localizado no Wikimedia Commons">S/D</span></div>
             <div><strong id="p-club"></strong><small id="p-league"></small></div>
           </div>
           <div class="value-line"><span>Valor de mercado</span><strong id="p-value"></strong></div>
@@ -443,7 +478,7 @@
             <div><strong id="nt-goals">0</strong><small>Gols</small></div>
           </div>
           <div class="national-role-line"><span>Função</span><strong id="national-role">Fora do grupo</strong></div>
-          <div class="selection-contact-note"><span>✉</span><small>A comissão entra em contato automaticamente durante convocações e Datas FIFA.</small></div><button id="national-action" class="secondary full hidden" type="button">Interação automática</button>
+          <div class="selection-contact-note"><span>✦</span><small>Convocações automáticas nas Datas FIFA.</small></div><button id="national-action" class="secondary full hidden" type="button">Interação automática</button>
         </article>
 
         <article class="panel news-card">
@@ -501,7 +536,7 @@
           <div><small>CONTA CRIADA</small><strong id="legacy-account-created">—</strong></div>
           <div><small>PRÓXIMO LOGIN</small><strong id="legacy-account-session">—</strong></div>
         </div>
-        <div class="account-legacy-actions"><button type="button" class="secondary" data-legal-open="terms">Termos</button><button type="button" class="secondary" data-legal-open="privacy">Privacidade</button><button id="legacy-logout" type="button" class="danger secondary">Sair da conta</button></div>
+        <div class="account-legacy-actions"><button type="button" class="secondary" data-legal-open="terms">Termos</button><button type="button" class="secondary" data-legal-open="privacy">Privacidade</button><button id="commons-attribution-open" type="button" class="secondary">Créditos dos escudos</button><button id="legacy-logout" type="button" class="danger secondary">Sair da conta</button></div>
       </article>
       <section class="home-hall game-hall" id="home-hall-section">
           <div class="section-title">
@@ -541,6 +576,7 @@
           <button id="legacy-club-sign" class="primary" type="button">Assinar com este clube</button>
         </div>
       </article>
+      <!-- V15: telas de elencos e fonte removidas da carreira a pedido do usuário -->
       <div id="offers" class="offers"></div>
     </section>
   </main>
@@ -851,10 +887,31 @@
     <button id="now-playing-next" type="button" aria-label="Próxima faixa">›</button>
   </div>
 
+
+  <div id="commons-attribution-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Créditos de escudos Wikimedia Commons">
+    <div class="modal-card commons-attribution-card"><button id="commons-attribution-close" type="button" class="secondary">Fechar ✕</button><p class="eyebrow">TRANSPARÊNCIA</p><h2>Créditos dos escudos</h2><p>Imagens pesquisadas no Wikimedia Commons, sujeitas às licenças e direitos de marca de cada arquivo. A página original informa a autoria e as condições de reutilização.</p><div id="commons-attribution-list"></div></div>
+  </div>
+  <div id="new-career-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="new-career-title">
+    <section class="modal-card game-confirm-card">
+      <div class="game-confirm-icon" aria-hidden="true">↻</div>
+      <p class="eyebrow">SAVE / CARREIRA ATIVA</p>
+      <h2 id="new-career-title">Começar uma nova história?</h2>
+      <p>Você está prestes a <strong>excluir a carreira atual</strong>, incluindo a temporada em andamento, os números e as propostas. Esta ação não pode ser desfeita.</p>
+      <p class="game-confirm-info">As carreiras aposentadas do Hall da Fama serão preservadas. Sua conta e preferências também continuarão disponíveis.</p>
+      <div class="game-confirm-actions"><button id="new-career-cancel" class="secondary" type="button">VOLTAR AO JOGO</button><button id="new-career-confirm" class="danger" type="button">EXCLUIR E CRIAR NOVA ↗</button></div>
+    </section>
+  </div>
   <div id="toast" class="toast"></div>
-  <script src="js/google-auth-config.js?v=10.7.6"></script>
-  <script src="js/auth.js?v=10.7.6"></script>
-  <script src="js/data.js?v=10.7.6"></script>
-  <script src="js/app.js?v=10.7.6"></script>
+
+  <script src="js/google-auth-config.js?v=11.0.0"></script>
+  <script src="js/crest-config.js?v=12.0.0"></script>
+  <script src="js/auth.js?v=11.0.0"></script>
+  <script src="js/data.js?v=11.0.0"></script>
+  <script src="js/roster-snapshot-2026.js?v=13.0.0"></script>
+  <script src="js/roster-expansion-2026.js?v=14.0.0"></script>
+  <script src="js/rosters.js?v=14.0.0"></script>
+  <script src="js/competition-trophy-data.js?v=19.0.0"></script>
+  <script src="js/app.js?v=19.0.0"></script>
+  <script src="js/commons-credits.js?v=15.0.0"></script>
 </body>
 </html>

@@ -1,0 +1,8 @@
+/* BTL 17: manutenção de escolhas e pênaltis; tipografia agora definida pelo Orbitron. */
+/* Missing Portuguese accents correctly fall back to next usable font. */
+.national-flag-image,.ranking-flag,.btl-select-flag,.btl-select-option-flag,.position-glyph{font-family:'Apple Color Emoji','Segoe UI Emoji','Noto Color Emoji',sans-serif!important}
+#event-modal .visual-event-choice,#match-decision-modal .decision-option{min-width:0!important;overflow-wrap:anywhere}
+#event-modal .event-choice-content strong{line-height:1.22!important}
+#match-decision-modal #decision-choices.penalty-order-choices .decision-option{min-height:80px!important}
+/* The font import entry never obscures gameplay or soundtrack controls. */
+@media(max-width:740px){body:not(:has(.auth-gate:not(.hidden))) #btl-jersey-quickload{display:none!important}}
