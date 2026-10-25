@@ -7,7 +7,7 @@ const HALL_RESET_V104_KEY = 'beTheLegendV104HallReset';
 const LEGACY_STORAGE_KEY = 'careerSimV7';
 const LEGACY_V103_CLAIM_KEY = 'beTheLegendV103LegacyClaimed';
 const LEGACY_V95_FOR_MIGRATION = window.BTLAuth?.getCurrentAccount?.() && !localStorage.getItem(LEGACY_V103_CLAIM_KEY) ? localStorage.getItem('beTheLegendV95') : null;
-const BADGE_KEY = 'beTheLegendBadgeCacheV20Verified';
+const BADGE_KEY = 'beTheLegendBadgeCacheV21Verified';
 const DRAFT_KEY = 'beTheLegendV92AttributeDraft';
 const PREVIOUS_DRAFT_KEY = 'beTheLegendV91AttributeDraft';
 
@@ -1191,7 +1191,8 @@ async function apiSportsBadge(name){
  }catch(_){return ''}
 }
 const missingOfficialCrests=new Set();
-window.BTLCrestDiagnostics=()=>({unresolved:[...missingOfficialCrests].sort((a,b)=>a.localeCompare(b,'pt-BR')),verifiedCacheCount:Object.keys(badgeCache).filter(x=>safeBadgeImage(badgeCache[x])).length,brokenUrlCount:badBadgeUrls.size,source:'API-Sports / TheSportsDB / Wikimedia Commons / Wikidata'});
+const badgeAttemptStatus=new Map();
+window.BTLCrestDiagnostics=()=>({unresolved:[...missingOfficialCrests].sort((a,b)=>a.localeCompare(b,'pt-BR')),verifiedCacheCount:Object.keys(badgeCache).filter(x=>safeBadgeImage(badgeCache[x])).length,brokenUrlCount:badBadgeUrls.size,source:'API-Sports / Wikidata / Wikimedia Commons / TheSportsDB',tried:[...badgeAttemptStatus.entries()]});
 async function wikidataCrest(name,countryCode=''){
   const aliases=[name,...(CLUB_BADGE_ALIASES[name]||[]),COMMONS_CLUB_ALIASES[name],CURRENT_EUROPE_LOGO_NAMES[name]].filter(Boolean);
   for(const alias of [...new Set(aliases)].slice(0,2)){
@@ -1236,13 +1237,14 @@ async function exactClubBadge(name,countryCode='',excludeUrls=new Set()){
      if(url&&!badBadgeUrls.has(url)&&!excludeUrls.has(url))return url;
      throw Error('No verified candidate');
    };
-   try{return await Promise.any([
-     validate(()=>apiSportsBadge(name)),
-     validate(()=>commonsCrest(name)),
-     validate(()=>sportsDbBadge(name,code))
-   ]);}catch(_){}
-   try{return await validate(()=>wikidataCrest(name,code))}catch(_){}
-   missingOfficialCrests.add(`${code}:${name}`);
+   // API-Sports, when configured, is preferred because the team identifier is stable.
+   try{return await validate(()=>apiSportsBadge(name))}catch(_){}
+   // Parallel free sources avoid a long series of timeouts when one is unavailable.
+   // Both must first pass strict entity / filename validation.
+   try{return await Promise.any([validate(()=>wikidataCrest(name,code)),validate(()=>commonsCrest(name))])}catch(_){}
+   // TheSportsDB free tier limits general team-name searches; use as last fallback.
+   try{return await validate(()=>sportsDbBadge(name,code))}catch(_){}
+   missingOfficialCrests.add(`${code}:${name}`);badgeAttemptStatus.set(`${code}:${name}`,{status:'unresolved',checkedAt:new Date().toISOString()});
    return '';
  })();badgeRequestsInFlight.set(flightKey,job);
  try{return await job}finally{badgeRequestsInFlight.delete(flightKey)}
@@ -1883,52 +1885,8 @@ function curatedTheme(name){
 }
 
 function applyClubTheme(name){
-  const saved=externalClubColors[name];
-  const confirmedColors=Array.isArray(saved)&&saved.length===2?{accent:saved[0],secondary:saved[1],tertiary:saved[1],bg:'#060d13',panel:'#101d29',panel2:'#172735',border:'#344957',buttonText:'#071014',angle:20+clubThemeHash(name)%160}:null;
-  const base=curatedTheme(name) || CLUB_THEMES[name] || confirmedColors || DEFAULT_THEME,signature=CLUB_THEME_SIGNATURES[name]||{};
-  const theme={...base,tertiary:signature.tertiary||base.tertiary||deterministicClubTertiary(name,base),angle:signature.angle||base.angle||(24+clubThemeHash(name)%133)};
-  const root=document.documentElement;
-  root.style.setProperty('--green',theme.accent);
-  root.style.setProperty('--volt',theme.accent);
-  root.style.setProperty('--cyan',theme.secondary||theme.accent);
-  root.style.setProperty('--club-ambient',theme.accent);
-  root.style.setProperty('--club-ink',theme.bg||'#060d13');
-  root.style.setProperty('--green2',theme.accent2||theme.accent);
-  root.style.setProperty('--club-primary',theme.accent||DEFAULT_THEME.accent);
-  root.style.setProperty('--club-secondary',theme.secondary||'#f4f7f5');
-  root.style.setProperty('--club-tertiary',theme.tertiary||theme.secondary||'#8da0aa');
-  root.style.setProperty('--club-angle',`${theme.angle}deg`);
-  root.style.setProperty('--club-pattern-size',`${34+(clubThemeHash(name||'default')%42)}px`);
-  root.style.setProperty('--button-text',theme.buttonText||'#ffffff');
-  root.style.setProperty('--bg',theme.bg);
-  root.style.setProperty('--panel',theme.panel);
-  root.style.setProperty('--panel2',theme.panel2);
-  root.style.setProperty('--border',theme.border);
-  root.style.setProperty('--theme-flash',theme.accent);
-  root.style.setProperty('--club-haze',`color-mix(in srgb, ${theme.accent} 24%, #080f1b)`);
-  root.style.setProperty('--club-panel-shine',`color-mix(in srgb, ${theme.secondary} 10%, #111d2b)`);
-  root.style.setProperty('--game-club-color',theme.accent);
-  root.style.setProperty('--game-club-rival',theme.secondary||theme.accent);
-  root.style.setProperty('--game-club-third',theme.tertiary||theme.accent);
-  root.style.setProperty('--game-club-dark',theme.bg||'#061016');
-  root.style.setProperty('--story-accent',theme.accent);
-  const hudClub=document.getElementById('btl-hud-club');
-  const hudLeague=document.getElementById('btl-hud-league');
-  const hudSeason=document.getElementById('btl-hud-season');
-  const hudRating=document.getElementById('btl-hud-rating');
-  if(hudClub)hudClub.textContent=name||'INÍCIO DE CARREIRA';
-  if(hudLeague)hudLeague.textContent=name?(state.player?.clubLeague||'CLUBE ATUAL'):'SELECIONE SUA TRAJETÓRIA';
-  if(hudSeason)hudSeason.textContent=state.season?.year||'—';
-  if(hudRating)hudRating.textContent=state.player?`GER ${state.player.overall||'—'}`:'GER —';
-  if(name)void discoverDocumentedClubPalette(name);
-  const current=document.body.dataset.clubTheme||'';
-  if(name && current!==name){
-    document.body.dataset.clubTheme=name;
-    document.body.classList.remove('theme-pulse');
-    void document.body.offsetWidth;
-    document.body.classList.add('theme-pulse');
-    setTimeout(()=>document.body.classList.remove('theme-pulse'),700);
-  }else if(!name) document.body.dataset.clubTheme='';
+ // Legacy compatibility: only render()/match handlers may select a competition theme.
+ // Transfers never override the active match palette.
 }
 
 const COMPETITION_THEME_PRESETS=[
@@ -2053,7 +2011,7 @@ async function hydrateBadge(img,name,fallback,countryCode=''){
    img.onload=()=>{
      if(img.dataset.badgeSequence!==seq)return;
      setCachedBadge(name,code,candidate);
-     missingOfficialCrests.delete(`${code}:${name}`);
+     missingOfficialCrests.delete(`${code}:${name}`);badgeAttemptStatus.set(`${code}:${name}`,{status:'loaded',source:candidate,checkedAt:new Date().toISOString()});
      img.classList.remove('hidden');fallback?.classList.add('hidden');
      polishSiteImage(img);
    };
@@ -5205,7 +5163,9 @@ function hexRgbTriplet(hex='#ffffff'){
   return `${parseInt(full.slice(0,2),16)||0}, ${parseInt(full.slice(2,4),16)||0}, ${parseInt(full.slice(4,6),16)||0}`;
 }
 function applyDecisionCompetitionTheme(card,event={}){
-  if(!card)return;const theme=competitionDecisionTheme(event),experience=competitionThemeForName(event.competition||''),colors=[experience.panel||'#182536',experience.accent||'#ffffff',experience.secondary||'#42e88d'];
+  if(!card)return;const theme=competitionDecisionTheme(event),experience=competitionThemeForName(event.competition||'',event.countryCode||state.player?.clubCountry||'');
+  // Match dialogues use the exact same competition palette as the full app.
+  const colors=[experience.source?.primary||experience.primary||experience.panel||'#182536',experience.source?.secondary||experience.secondary||'#ffffff',experience.source?.tertiary||experience.tertiary||experience.accent||'#42e88d'];
   card.classList.add('competition-themed');card.dataset.competitionTheme=theme.key||'generic';
   card.style.setProperty('--comp-primary',colors[0]);card.style.setProperty('--comp-secondary',colors[1]||'#ffffff');card.style.setProperty('--comp-accent',colors[2]||colors[1]||'#ffffff');
   card.style.setProperty('--comp-primary-rgb',hexRgbTriplet(colors[0]));card.style.setProperty('--comp-secondary-rgb',hexRgbTriplet(colors[1]||'#ffffff'));card.style.setProperty('--comp-accent-rgb',hexRgbTriplet(colors[2]||colors[1]||'#ffffff'));

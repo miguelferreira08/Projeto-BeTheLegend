@@ -1,0 +1,3148 @@
+{
+  "generatedAt": "2026-10-24T23:46:30.738Z",
+  "inventoryTotal": 590,
+  "distinctClubs": 448,
+  "probed": 448,
+  "origin": "https://SEU-SITE.pages.dev",
+  "statusCounts": {
+    "unreachable": 448
+  },
+  "records": [
+    {
+      "name": "Al-Ain",
+      "country": "AE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Shabab Al-Ahli",
+      "country": "AE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Argentinos Juniors",
+      "country": "AR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Boca Juniors",
+      "country": "AR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Estudiantes",
+      "country": "AR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Independiente",
+      "country": "AR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Racing Club",
+      "country": "AR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "River Plate",
+      "country": "AR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Rosario Central",
+      "country": "AR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "San Lorenzo",
+      "country": "AR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Talleres",
+      "country": "AR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Vélez Sarsfield",
+      "country": "AR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Austria Wien",
+      "country": "AT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Rapid Wien",
+      "country": "AT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Red Bull Salzburg",
+      "country": "AT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sturm Graz",
+      "country": "AT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Anderlecht",
+      "country": "BE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Club Brugge",
+      "country": "BE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Genk",
+      "country": "BE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Gent",
+      "country": "BE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Union Saint-Gilloise",
+      "country": "BE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "América Mineiro",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Athletic Club",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Athletico Paranaense",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Atlético Goianiense",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Atlético Mineiro",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Avaí",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bahia",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Botafogo",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Botafogo-SP",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Ceará",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Chapecoense",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Corinthians",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Coritiba",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "CRB",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Criciúma",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Cruzeiro",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Cuiabá",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Flamengo",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Fluminense",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Fortaleza",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Goiás",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Grêmio",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Internacional",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Juventude",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Londrina",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Mirassol",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Náutico",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Novorizontino",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Operário-PR",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Palmeiras",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Ponte Preta",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Red Bull Bragantino",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Remo",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Santos",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "São Bernardo",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "São Paulo",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sport",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Vasco da Gama",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Vila Nova",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Vitória",
+      "country": "BR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Basel",
+      "country": "CH",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "FC Zürich",
+      "country": "CH",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Servette",
+      "country": "CH",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Young Boys",
+      "country": "CH",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Colo-Colo",
+      "country": "CL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Huachipato",
+      "country": "CL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Palestino",
+      "country": "CL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Universidad Católica",
+      "country": "CL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Universidad de Chile",
+      "country": "CL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "América de Cali",
+      "country": "CO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Atlético Nacional",
+      "country": "CO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Independiente Medellín",
+      "country": "CO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Junior",
+      "country": "CO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Millonarios",
+      "country": "CO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Slavia Praha",
+      "country": "CZ",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sparta Praha",
+      "country": "CZ",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Viktoria Plzeň",
+      "country": "CZ",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Arminia Bielefeld",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Augsburg",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bayer Leverkusen",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bayern de Munique",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bochum",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Borussia Dortmund",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Borussia Mönchengladbach",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Darmstadt 98",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Dynamo Dresden",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Eintracht Braunschweig",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Eintracht Frankfurt",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Elversberg",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Energie Cottbus",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Freiburg",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Greuther Fürth",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Hamburgo",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Hannover 96",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Heidenheim",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Hertha Berlin",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Hoffenheim",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Holstein Kiel",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Kaiserslautern",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Karlsruhe",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Köln",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Magdeburg",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Mainz",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Nürnberg",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Paderborn",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "RB Leipzig",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Schalke 04",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "St. Pauli",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Stuttgart",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Union Berlin",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "VfL Osnabrück",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Werder Bremen",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Wolfsburg",
+      "country": "DE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Brøndby",
+      "country": "DK",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Copenhagen",
+      "country": "DK",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Midtjylland",
+      "country": "DK",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Nordsjælland",
+      "country": "DK",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "AFC Wimbledon",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Arsenal",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Aston Villa",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Barnsley",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Birmingham City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Blackburn Rovers",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Blackpool",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bolton Wanderers",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bournemouth",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bradford City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Brentford",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Brighton",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bristol City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bromley",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Burnley",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Burton Albion",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Cambridge United",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Cardiff City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Charlton Athletic",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Chelsea",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Coventry City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Crystal Palace",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Derby County",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Doncaster Rovers",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Everton",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Fulham",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Huddersfield Town",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Hull City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Ipswich Town",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Leeds United",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Leicester City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Leyton Orient",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Lincoln City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Liverpool",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Luton Town",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Manchester City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Manchester United",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Mansfield Town",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Middlesbrough",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Millwall",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Milton Keynes Dons",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Newcastle United",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Norwich City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Nottingham Forest",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Notts County",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Oxford United",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Peterborough United",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Plymouth Argyle",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Portsmouth",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Preston North End",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Queens Park Rangers",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Reading",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sheffield United",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sheffield Wednesday",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Southampton",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Stevenage",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Stockport County",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Stoke City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sunderland",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Swansea City",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Tottenham",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Watford",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "West Bromwich Albion",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "West Ham",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "West Ham United",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Wigan Athletic",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Wolverhampton Wanderers",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Wrexham",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Wycombe Wanderers",
+      "country": "ENG",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "AD Ceuta",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Alavés",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Albacete",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Almería",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Athletic Club",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Atlético de Madrid",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Barcelona",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Betis",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Burgos",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Cádiz",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Castellón",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Celta de Vigo",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Celta Fortuna",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Córdoba",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Deportivo La Coruña",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Eibar",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Elche",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Eldense",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Espanyol",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "FC Andorra",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Getafe",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Girona",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Granada",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Las Palmas",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Leganés",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Levante",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Málaga",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Mallorca",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Osasuna",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Racing Santander",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Rayo Vallecano",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Real Madrid",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Real Oviedo",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Real Sociedad",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Real Sociedad B",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Real Valladolid",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sabadell",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sevilla",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sporting Gijón",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Tenerife",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Valencia",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Villarreal",
+      "country": "ES",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Angers",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Annecy",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Auxerre",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Boulogne",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Brest",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Clermont Foot",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Dijon",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Dunkerque",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Grenoble",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Guingamp",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Laval",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Le Havre",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Le Mans",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Lens",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Lille",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Lorient",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Lyon",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Marseille",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Metz",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Monaco",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Montpellier",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Nancy",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Nantes",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Nice",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Paris FC",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Paris Saint-Germain",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Pau",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Red Star",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Reims",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Rennes",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Rodez",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Saint-Étienne",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sochaux",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Strasbourg",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Toulouse",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Troyes",
+      "country": "FR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "AEK Athens",
+      "country": "GR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Olympiacos",
+      "country": "GR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Panathinaikos",
+      "country": "GR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "PAOK",
+      "country": "GR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Dinamo Zagreb",
+      "country": "HR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Hajduk Split",
+      "country": "HR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Rijeka",
+      "country": "HR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Arezzo",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Ascoli",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Atalanta",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Avellino",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Benevento",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bologna",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Cagliari",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Carrarese",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Catanzaro",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Cesena",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Como",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Cremonese",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Empoli",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Fiorentina",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Frosinone",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Genoa",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Hellas Verona",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Inter de Milão",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Juve Stabia",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Juventus",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "L.R. Vicenza",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Lazio",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Lecce",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Mantova",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Milan",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Modena",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Monza",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Napoli",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Padova",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Palermo",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Parma",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Pisa",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Roma",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sampdoria",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sassuolo",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Südtirol",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Torino",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Udinese",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Venezia",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Virtus Entella",
+      "country": "IT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Kashima Antlers",
+      "country": "JP",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Kawasaki Frontale",
+      "country": "JP",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Urawa Red Diamonds",
+      "country": "JP",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Vissel Kobe",
+      "country": "JP",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Yokohama F. Marinos",
+      "country": "JP",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "FC Seoul",
+      "country": "KR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Jeonbuk Hyundai Motors",
+      "country": "KR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Ulsan HD",
+      "country": "KR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "América",
+      "country": "MX",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Club América",
+      "country": "MX",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Cruz Azul",
+      "country": "MX",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Guadalajara",
+      "country": "MX",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Monterrey",
+      "country": "MX",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Pachuca",
+      "country": "MX",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Tigres UANL",
+      "country": "MX",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Toluca",
+      "country": "MX",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Ajax",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "AZ Alkmaar",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Excelsior",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Feyenoord",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Fortuna Sittard",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Go Ahead Eagles",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Groningen",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Heerenveen",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Heracles",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "NAC Breda",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "NEC",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "PEC Zwolle",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "PSV",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sparta Rotterdam",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Telstar",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Twente",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Utrecht",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Volendam",
+      "country": "NL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Bodø/Glimt",
+      "country": "NO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Molde",
+      "country": "NO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Rosenborg",
+      "country": "NO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Lech Poznań",
+      "country": "PL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Legia Warszawa",
+      "country": "PL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Raków Częstochowa",
+      "country": "PL",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Académica",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Académico de Viseu",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Alverca",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Amarante",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Arouca",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "AVS",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Benfica",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Benfica B",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Braga",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Casa Pia",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Chaves",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Estoril",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Estrela da Amadora",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Famalicão",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Farense",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Feirense",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Felgueiras 1932",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Gil Vicente",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Leixões",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Lusitânia de Lourosa",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Marítimo",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Moreirense",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Nacional da Madeira",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Penafiel",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Portimonense",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Porto",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Porto B",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Rio Ave",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Santa Clara",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sporting B",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Sporting CP",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Tondela",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Torreense",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "União de Leiria",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Vitória de Guimarães",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Vizela",
+      "country": "PT",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Duhail",
+      "country": "QA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Sadd",
+      "country": "QA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "CFR Cluj",
+      "country": "RO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "FCSB",
+      "country": "RO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Partizan",
+      "country": "RS",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Red Star Belgrade",
+      "country": "RS",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Ahli",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Ettifaq",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Fateh",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Fayha",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Hilal",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Ittihad",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Khaleej",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Kholood",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Nassr",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Okhdood",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Qadsiah",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Raed",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Riyadh",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Shabab",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Taawoun",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Al-Wehda",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Damac",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Neom SC",
+      "country": "SA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Aberdeen",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Celtic",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Dundee",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Dundee United",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Falkirk",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Hearts",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Hibernian",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Kilmarnock",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Livingston",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Motherwell",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Rangers",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "St Mirren",
+      "country": "SCO",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "AIK",
+      "country": "SE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Djurgårdens IF",
+      "country": "SE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Malmö FF",
+      "country": "SE",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Beşiktaş",
+      "country": "TR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Fenerbahçe",
+      "country": "TR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Galatasaray",
+      "country": "TR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "İstanbul Başakşehir",
+      "country": "TR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Trabzonspor",
+      "country": "TR",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Dynamo Kyiv",
+      "country": "UA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Shakhtar Donetsk",
+      "country": "UA",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Atlanta United",
+      "country": "US",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Columbus Crew",
+      "country": "US",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "FC Cincinnati",
+      "country": "US",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Inter Miami",
+      "country": "US",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "LA Galaxy",
+      "country": "US",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Los Angeles FC",
+      "country": "US",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "New York City FC",
+      "country": "US",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Orlando City",
+      "country": "US",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Seattle Sounders",
+      "country": "US",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Danubio",
+      "country": "UY",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Defensor Sporting",
+      "country": "UY",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Liverpool Montevideo",
+      "country": "UY",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Nacional",
+      "country": "UY",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    },
+    {
+      "name": "Peñarol",
+      "country": "UY",
+      "id": null,
+      "status": "unreachable",
+      "detail": "fetch failed"
+    }
+  ]
+}

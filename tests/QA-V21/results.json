@@ -1,0 +1,1007 @@
+{
+  "passed": 200,
+  "total": 200,
+  "pageerrors": [],
+  "checks": [
+    {
+      "label": "1440: 100 palette spreadsheet",
+      "passed": true,
+      "observed": "100"
+    },
+    {
+      "label": "1440: responsive home",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1440: language opens",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1440: four flags shown",
+      "passed": true,
+      "observed": "4"
+    },
+    {
+      "label": "1440: four SVG flags load",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1440: locale en",
+      "passed": true,
+      "observed": "en"
+    },
+    {
+      "label": "1440: language selector translated en",
+      "passed": true,
+      "observed": "language"
+    },
+    {
+      "label": "1440: navigation translated en",
+      "passed": true,
+      "observed": "new career"
+    },
+    {
+      "label": "1440: header translated en",
+      "passed": true,
+      "observed": "current career"
+    },
+    {
+      "label": "1440: locale es",
+      "passed": true,
+      "observed": "es"
+    },
+    {
+      "label": "1440: language selector translated es",
+      "passed": true,
+      "observed": "idioma"
+    },
+    {
+      "label": "1440: navigation translated es",
+      "passed": true,
+      "observed": "nueva carrera"
+    },
+    {
+      "label": "1440: header translated es",
+      "passed": true,
+      "observed": "carrera actual"
+    },
+    {
+      "label": "1440: locale fr",
+      "passed": true,
+      "observed": "fr"
+    },
+    {
+      "label": "1440: language selector translated fr",
+      "passed": true,
+      "observed": "langue"
+    },
+    {
+      "label": "1440: navigation translated fr",
+      "passed": true,
+      "observed": "nouvelle carrière"
+    },
+    {
+      "label": "1440: header translated fr",
+      "passed": true,
+      "observed": "carrière actuelle"
+    },
+    {
+      "label": "1440: locale pt-BR",
+      "passed": true,
+      "observed": "pt-BR"
+    },
+    {
+      "label": "1440: language selector translated pt-BR",
+      "passed": true,
+      "observed": "linguagem"
+    },
+    {
+      "label": "1440: navigation translated pt-BR",
+      "passed": true,
+      "observed": "nova carreira"
+    },
+    {
+      "label": "1440: header translated pt-BR",
+      "passed": true,
+      "observed": "carreira atual"
+    },
+    {
+      "label": "1440: dynamic English",
+      "passed": true,
+      "observed": "ACTIVE"
+    },
+    {
+      "label": "1440: dynamic French",
+      "passed": true,
+      "observed": "ACTIVE"
+    },
+    {
+      "label": "1440: reversibility",
+      "passed": true,
+      "observed": "ATIVA"
+    },
+    {
+      "label": "1440: career card portrait clearance",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1440: home no horizontal overflow after career",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1440: theme UEFA Champions League",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "1440: club cannot override competition UEFA Champions League",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "1440: theme UEFA Europa League",
+      "passed": true,
+      "observed": "#F26A21"
+    },
+    {
+      "label": "1440: club cannot override competition UEFA Europa League",
+      "passed": true,
+      "observed": "#F26A21"
+    },
+    {
+      "label": "1440: theme UEFA Conference League",
+      "passed": true,
+      "observed": "#17A96B"
+    },
+    {
+      "label": "1440: club cannot override competition UEFA Conference League",
+      "passed": true,
+      "observed": "#17A96B"
+    },
+    {
+      "label": "1440: theme Brasileirão Série A",
+      "passed": true,
+      "observed": "#C7FF00"
+    },
+    {
+      "label": "1440: club cannot override competition Brasileirão Série A",
+      "passed": true,
+      "observed": "#C7FF00"
+    },
+    {
+      "label": "1440: theme Premier League",
+      "passed": true,
+      "observed": "#37003C"
+    },
+    {
+      "label": "1440: club cannot override competition Premier League",
+      "passed": true,
+      "observed": "#37003C"
+    },
+    {
+      "label": "1440: modal competition uses UCL theme",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "1440: decision palette matches workbook",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "1440: penalty options visible",
+      "passed": true,
+      "observed": "5"
+    },
+    {
+      "label": "1440: modal choices fit",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1024: 100 palette spreadsheet",
+      "passed": true,
+      "observed": "100"
+    },
+    {
+      "label": "1024: responsive home",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1024: language opens",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1024: four flags shown",
+      "passed": true,
+      "observed": "4"
+    },
+    {
+      "label": "1024: four SVG flags load",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1024: locale en",
+      "passed": true,
+      "observed": "en"
+    },
+    {
+      "label": "1024: language selector translated en",
+      "passed": true,
+      "observed": "language"
+    },
+    {
+      "label": "1024: navigation translated en",
+      "passed": true,
+      "observed": "new career"
+    },
+    {
+      "label": "1024: header translated en",
+      "passed": true,
+      "observed": "current career"
+    },
+    {
+      "label": "1024: locale es",
+      "passed": true,
+      "observed": "es"
+    },
+    {
+      "label": "1024: language selector translated es",
+      "passed": true,
+      "observed": "idioma"
+    },
+    {
+      "label": "1024: navigation translated es",
+      "passed": true,
+      "observed": "nueva carrera"
+    },
+    {
+      "label": "1024: header translated es",
+      "passed": true,
+      "observed": "carrera actual"
+    },
+    {
+      "label": "1024: locale fr",
+      "passed": true,
+      "observed": "fr"
+    },
+    {
+      "label": "1024: language selector translated fr",
+      "passed": true,
+      "observed": "langue"
+    },
+    {
+      "label": "1024: navigation translated fr",
+      "passed": true,
+      "observed": "nouvelle carrière"
+    },
+    {
+      "label": "1024: header translated fr",
+      "passed": true,
+      "observed": "carrière actuelle"
+    },
+    {
+      "label": "1024: locale pt-BR",
+      "passed": true,
+      "observed": "pt-BR"
+    },
+    {
+      "label": "1024: language selector translated pt-BR",
+      "passed": true,
+      "observed": "linguagem"
+    },
+    {
+      "label": "1024: navigation translated pt-BR",
+      "passed": true,
+      "observed": "nova carreira"
+    },
+    {
+      "label": "1024: header translated pt-BR",
+      "passed": true,
+      "observed": "carreira atual"
+    },
+    {
+      "label": "1024: dynamic English",
+      "passed": true,
+      "observed": "ACTIVE"
+    },
+    {
+      "label": "1024: dynamic French",
+      "passed": true,
+      "observed": "ACTIVE"
+    },
+    {
+      "label": "1024: reversibility",
+      "passed": true,
+      "observed": "ATIVA"
+    },
+    {
+      "label": "1024: career card portrait clearance",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1024: home no horizontal overflow after career",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "1024: theme UEFA Champions League",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "1024: club cannot override competition UEFA Champions League",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "1024: theme UEFA Europa League",
+      "passed": true,
+      "observed": "#F26A21"
+    },
+    {
+      "label": "1024: club cannot override competition UEFA Europa League",
+      "passed": true,
+      "observed": "#F26A21"
+    },
+    {
+      "label": "1024: theme UEFA Conference League",
+      "passed": true,
+      "observed": "#17A96B"
+    },
+    {
+      "label": "1024: club cannot override competition UEFA Conference League",
+      "passed": true,
+      "observed": "#17A96B"
+    },
+    {
+      "label": "1024: theme Brasileirão Série A",
+      "passed": true,
+      "observed": "#C7FF00"
+    },
+    {
+      "label": "1024: club cannot override competition Brasileirão Série A",
+      "passed": true,
+      "observed": "#C7FF00"
+    },
+    {
+      "label": "1024: theme Premier League",
+      "passed": true,
+      "observed": "#37003C"
+    },
+    {
+      "label": "1024: club cannot override competition Premier League",
+      "passed": true,
+      "observed": "#37003C"
+    },
+    {
+      "label": "1024: modal competition uses UCL theme",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "1024: decision palette matches workbook",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "1024: penalty options visible",
+      "passed": true,
+      "observed": "5"
+    },
+    {
+      "label": "1024: modal choices fit",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "768: 100 palette spreadsheet",
+      "passed": true,
+      "observed": "100"
+    },
+    {
+      "label": "768: responsive home",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "768: language opens",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "768: four flags shown",
+      "passed": true,
+      "observed": "4"
+    },
+    {
+      "label": "768: four SVG flags load",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "768: locale en",
+      "passed": true,
+      "observed": "en"
+    },
+    {
+      "label": "768: language selector translated en",
+      "passed": true,
+      "observed": "language"
+    },
+    {
+      "label": "768: navigation translated en",
+      "passed": true,
+      "observed": "new career"
+    },
+    {
+      "label": "768: header translated en",
+      "passed": true,
+      "observed": "current career"
+    },
+    {
+      "label": "768: locale es",
+      "passed": true,
+      "observed": "es"
+    },
+    {
+      "label": "768: language selector translated es",
+      "passed": true,
+      "observed": "idioma"
+    },
+    {
+      "label": "768: navigation translated es",
+      "passed": true,
+      "observed": "nueva carrera"
+    },
+    {
+      "label": "768: header translated es",
+      "passed": true,
+      "observed": "carrera actual"
+    },
+    {
+      "label": "768: locale fr",
+      "passed": true,
+      "observed": "fr"
+    },
+    {
+      "label": "768: language selector translated fr",
+      "passed": true,
+      "observed": "langue"
+    },
+    {
+      "label": "768: navigation translated fr",
+      "passed": true,
+      "observed": "nouvelle carrière"
+    },
+    {
+      "label": "768: header translated fr",
+      "passed": true,
+      "observed": "carrière actuelle"
+    },
+    {
+      "label": "768: locale pt-BR",
+      "passed": true,
+      "observed": "pt-BR"
+    },
+    {
+      "label": "768: language selector translated pt-BR",
+      "passed": true,
+      "observed": "linguagem"
+    },
+    {
+      "label": "768: navigation translated pt-BR",
+      "passed": true,
+      "observed": "nova carreira"
+    },
+    {
+      "label": "768: header translated pt-BR",
+      "passed": true,
+      "observed": "carreira atual"
+    },
+    {
+      "label": "768: dynamic English",
+      "passed": true,
+      "observed": "ACTIVE"
+    },
+    {
+      "label": "768: dynamic French",
+      "passed": true,
+      "observed": "ACTIVE"
+    },
+    {
+      "label": "768: reversibility",
+      "passed": true,
+      "observed": "ATIVA"
+    },
+    {
+      "label": "768: career card portrait clearance",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "768: home no horizontal overflow after career",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "768: theme UEFA Champions League",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "768: club cannot override competition UEFA Champions League",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "768: theme UEFA Europa League",
+      "passed": true,
+      "observed": "#F26A21"
+    },
+    {
+      "label": "768: club cannot override competition UEFA Europa League",
+      "passed": true,
+      "observed": "#F26A21"
+    },
+    {
+      "label": "768: theme UEFA Conference League",
+      "passed": true,
+      "observed": "#17A96B"
+    },
+    {
+      "label": "768: club cannot override competition UEFA Conference League",
+      "passed": true,
+      "observed": "#17A96B"
+    },
+    {
+      "label": "768: theme Brasileirão Série A",
+      "passed": true,
+      "observed": "#C7FF00"
+    },
+    {
+      "label": "768: club cannot override competition Brasileirão Série A",
+      "passed": true,
+      "observed": "#C7FF00"
+    },
+    {
+      "label": "768: theme Premier League",
+      "passed": true,
+      "observed": "#37003C"
+    },
+    {
+      "label": "768: club cannot override competition Premier League",
+      "passed": true,
+      "observed": "#37003C"
+    },
+    {
+      "label": "768: modal competition uses UCL theme",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "768: decision palette matches workbook",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "768: penalty options visible",
+      "passed": true,
+      "observed": "5"
+    },
+    {
+      "label": "768: modal choices fit",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "390: 100 palette spreadsheet",
+      "passed": true,
+      "observed": "100"
+    },
+    {
+      "label": "390: responsive home",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "390: language opens",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "390: four flags shown",
+      "passed": true,
+      "observed": "4"
+    },
+    {
+      "label": "390: four SVG flags load",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "390: locale en",
+      "passed": true,
+      "observed": "en"
+    },
+    {
+      "label": "390: language selector translated en",
+      "passed": true,
+      "observed": "language"
+    },
+    {
+      "label": "390: navigation translated en",
+      "passed": true,
+      "observed": "new career"
+    },
+    {
+      "label": "390: header translated en",
+      "passed": true,
+      "observed": "current career"
+    },
+    {
+      "label": "390: locale es",
+      "passed": true,
+      "observed": "es"
+    },
+    {
+      "label": "390: language selector translated es",
+      "passed": true,
+      "observed": "idioma"
+    },
+    {
+      "label": "390: navigation translated es",
+      "passed": true,
+      "observed": "nueva carrera"
+    },
+    {
+      "label": "390: header translated es",
+      "passed": true,
+      "observed": "carrera actual"
+    },
+    {
+      "label": "390: locale fr",
+      "passed": true,
+      "observed": "fr"
+    },
+    {
+      "label": "390: language selector translated fr",
+      "passed": true,
+      "observed": "langue"
+    },
+    {
+      "label": "390: navigation translated fr",
+      "passed": true,
+      "observed": "nouvelle carrière"
+    },
+    {
+      "label": "390: header translated fr",
+      "passed": true,
+      "observed": "carrière actuelle"
+    },
+    {
+      "label": "390: locale pt-BR",
+      "passed": true,
+      "observed": "pt-BR"
+    },
+    {
+      "label": "390: language selector translated pt-BR",
+      "passed": true,
+      "observed": "linguagem"
+    },
+    {
+      "label": "390: navigation translated pt-BR",
+      "passed": true,
+      "observed": "nova carreira"
+    },
+    {
+      "label": "390: header translated pt-BR",
+      "passed": true,
+      "observed": "carreira atual"
+    },
+    {
+      "label": "390: dynamic English",
+      "passed": true,
+      "observed": "ACTIVE"
+    },
+    {
+      "label": "390: dynamic French",
+      "passed": true,
+      "observed": "ACTIVE"
+    },
+    {
+      "label": "390: reversibility",
+      "passed": true,
+      "observed": "ATIVA"
+    },
+    {
+      "label": "390: career card portrait clearance",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "390: home no horizontal overflow after career",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "390: theme UEFA Champions League",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "390: club cannot override competition UEFA Champions League",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "390: theme UEFA Europa League",
+      "passed": true,
+      "observed": "#F26A21"
+    },
+    {
+      "label": "390: club cannot override competition UEFA Europa League",
+      "passed": true,
+      "observed": "#F26A21"
+    },
+    {
+      "label": "390: theme UEFA Conference League",
+      "passed": true,
+      "observed": "#17A96B"
+    },
+    {
+      "label": "390: club cannot override competition UEFA Conference League",
+      "passed": true,
+      "observed": "#17A96B"
+    },
+    {
+      "label": "390: theme Brasileirão Série A",
+      "passed": true,
+      "observed": "#C7FF00"
+    },
+    {
+      "label": "390: club cannot override competition Brasileirão Série A",
+      "passed": true,
+      "observed": "#C7FF00"
+    },
+    {
+      "label": "390: theme Premier League",
+      "passed": true,
+      "observed": "#37003C"
+    },
+    {
+      "label": "390: club cannot override competition Premier League",
+      "passed": true,
+      "observed": "#37003C"
+    },
+    {
+      "label": "390: modal competition uses UCL theme",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "390: decision palette matches workbook",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "390: penalty options visible",
+      "passed": true,
+      "observed": "5"
+    },
+    {
+      "label": "390: modal choices fit",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "320: 100 palette spreadsheet",
+      "passed": true,
+      "observed": "100"
+    },
+    {
+      "label": "320: responsive home",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "320: language opens",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "320: four flags shown",
+      "passed": true,
+      "observed": "4"
+    },
+    {
+      "label": "320: four SVG flags load",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "320: locale en",
+      "passed": true,
+      "observed": "en"
+    },
+    {
+      "label": "320: language selector translated en",
+      "passed": true,
+      "observed": "language"
+    },
+    {
+      "label": "320: navigation translated en",
+      "passed": true,
+      "observed": "new career"
+    },
+    {
+      "label": "320: header translated en",
+      "passed": true,
+      "observed": "current career"
+    },
+    {
+      "label": "320: locale es",
+      "passed": true,
+      "observed": "es"
+    },
+    {
+      "label": "320: language selector translated es",
+      "passed": true,
+      "observed": "idioma"
+    },
+    {
+      "label": "320: navigation translated es",
+      "passed": true,
+      "observed": "nueva carrera"
+    },
+    {
+      "label": "320: header translated es",
+      "passed": true,
+      "observed": "carrera actual"
+    },
+    {
+      "label": "320: locale fr",
+      "passed": true,
+      "observed": "fr"
+    },
+    {
+      "label": "320: language selector translated fr",
+      "passed": true,
+      "observed": "langue"
+    },
+    {
+      "label": "320: navigation translated fr",
+      "passed": true,
+      "observed": "nouvelle carrière"
+    },
+    {
+      "label": "320: header translated fr",
+      "passed": true,
+      "observed": "carrière actuelle"
+    },
+    {
+      "label": "320: locale pt-BR",
+      "passed": true,
+      "observed": "pt-BR"
+    },
+    {
+      "label": "320: language selector translated pt-BR",
+      "passed": true,
+      "observed": "linguagem"
+    },
+    {
+      "label": "320: navigation translated pt-BR",
+      "passed": true,
+      "observed": "nova carreira"
+    },
+    {
+      "label": "320: header translated pt-BR",
+      "passed": true,
+      "observed": "carreira atual"
+    },
+    {
+      "label": "320: dynamic English",
+      "passed": true,
+      "observed": "ACTIVE"
+    },
+    {
+      "label": "320: dynamic French",
+      "passed": true,
+      "observed": "ACTIVE"
+    },
+    {
+      "label": "320: reversibility",
+      "passed": true,
+      "observed": "ATIVA"
+    },
+    {
+      "label": "320: career card portrait clearance",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "320: home no horizontal overflow after career",
+      "passed": true,
+      "observed": "True"
+    },
+    {
+      "label": "320: theme UEFA Champions League",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "320: club cannot override competition UEFA Champions League",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "320: theme UEFA Europa League",
+      "passed": true,
+      "observed": "#F26A21"
+    },
+    {
+      "label": "320: club cannot override competition UEFA Europa League",
+      "passed": true,
+      "observed": "#F26A21"
+    },
+    {
+      "label": "320: theme UEFA Conference League",
+      "passed": true,
+      "observed": "#17A96B"
+    },
+    {
+      "label": "320: club cannot override competition UEFA Conference League",
+      "passed": true,
+      "observed": "#17A96B"
+    },
+    {
+      "label": "320: theme Brasileirão Série A",
+      "passed": true,
+      "observed": "#C7FF00"
+    },
+    {
+      "label": "320: club cannot override competition Brasileirão Série A",
+      "passed": true,
+      "observed": "#C7FF00"
+    },
+    {
+      "label": "320: theme Premier League",
+      "passed": true,
+      "observed": "#37003C"
+    },
+    {
+      "label": "320: club cannot override competition Premier League",
+      "passed": true,
+      "observed": "#37003C"
+    },
+    {
+      "label": "320: modal competition uses UCL theme",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "320: decision palette matches workbook",
+      "passed": true,
+      "observed": "#071B49"
+    },
+    {
+      "label": "320: penalty options visible",
+      "passed": true,
+      "observed": "5"
+    },
+    {
+      "label": "320: modal choices fit",
+      "passed": true,
+      "observed": "True"
+    }
+  ]
+}
