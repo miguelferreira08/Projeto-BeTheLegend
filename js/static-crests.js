@@ -15,6 +15,13 @@ for(const [country,name,path] of rows){
  const item={country,name,path};byId.set(`${country}|${normalize(name)}`,item);
  const k=normalize(name),arr=byName.get(k)||[];arr.push(item);byName.set(k,arr);
 }
+const verifiedExternal=Object.freeze({
+  'RO|fcsb':'https://commons.wikimedia.org/wiki/Special:FilePath/Fcsb-logo.svg'
+});
+function approvedUrl(name,countryCode=''){
+  const country=String(countryCode||'').toUpperCase(),key=normalize(name);
+  return verifiedExternal[`${country}|${key}`]||'';
+}
 function find(name,countryCode=''){
  const key=normalize(name);if(!key)return null;
  const country=String(countryCode||'').toUpperCase();
@@ -24,8 +31,8 @@ function find(name,countryCode=''){
 }
 function urlForPath(path){return BASE+String(path||'').split('/').map(encodeURIComponent).join('/');}
 const api=Object.freeze({repository:REPO,commit:COMMIT,base:BASE,count:rows.length,
- find, resolve:(name,country='')=>{const item=find(name,country);return item?urlForPath(item.path):'';},
- isCatalogUrl:url=>{try{const u=new URL(String(url||''));return u.protocol==='https:'&&u.hostname==='raw.githubusercontent.com'&&u.pathname.startsWith(`/${REPO}/${COMMIT}/logos/`)&&u.pathname.endsWith('.svg');}catch{return false;}},
+ find, resolve:(name,country='')=>{const exact=approvedUrl(name,country);if(exact)return exact;const item=find(name,country);return item?urlForPath(item.path):'';},
+ isCatalogUrl:url=>{try{const u=new URL(String(url||''));return (u.protocol==='https:'&&u.hostname==='raw.githubusercontent.com'&&u.pathname.startsWith(`/${REPO}/${COMMIT}/logos/`)&&u.pathname.endsWith('.svg'))||Object.values(verifiedExternal).includes(url);}catch{return false;}},
  list:()=>rows.map(([country,name,path])=>({country,name,path}))});
 window.BTLStaticCrests=api;
 })();

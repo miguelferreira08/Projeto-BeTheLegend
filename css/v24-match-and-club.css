@@ -1,0 +1,66 @@
+/* V24: club identity outside the pitch; event and decision scenes inherit all of the competition palette. */
+:root { --v24-scope-color:var(--competition-primary); }
+body[data-visual-scope="club"] .panel,
+body[data-visual-scope="club"] .home-career-slot,
+body[data-visual-scope="club"] #season-summary-modal .modal-card {
+  border-color:color-mix(in srgb,var(--club-primary) 55%,#33445b)!important;
+}
+#event-modal .career-event-card,
+#match-decision-modal .decision-card{
+ --v24-primary:var(--competition-primary);
+ --v24-secondary:var(--competition-secondary);
+ --v24-tertiary:var(--competition-tertiary);
+ color:#f9fbff!important;
+ border:2px solid color-mix(in srgb,var(--v24-tertiary) 70%,#334b63)!important;
+ background: radial-gradient(ellipse at 12% 0%,color-mix(in srgb,var(--v24-secondary) 15%,transparent),transparent 50%),
+ linear-gradient(135deg,color-mix(in srgb,var(--v24-primary) 72%,#0a1524),color-mix(in srgb,var(--v24-tertiary) 18%,#0a1524))!important;
+ box-shadow:0 0 0 1px color-mix(in srgb,var(--v24-secondary) 15%,transparent),0 24px 85px #030710!important;
+}
+#event-modal .career-event-card::before,#match-decision-modal .decision-card::before{
+ background:linear-gradient(90deg,var(--v24-primary),var(--v24-secondary),var(--v24-tertiary))!important;
+}
+#event-modal .btl-event-stage,#event-modal .career-event-scene,
+#match-decision-modal .decision-visual,#match-decision-modal .decision-scoreboard{
+ background:linear-gradient(110deg,color-mix(in srgb,var(--v24-primary) 56%,#0d1c2d),color-mix(in srgb,var(--v24-tertiary) 22%,#091829))!important;
+ border-color:color-mix(in srgb,var(--v24-secondary) 34%,#314258)!important;
+}
+#event-modal .event-choice-grid .event-choice,#match-decision-modal .decision-option{
+ background:linear-gradient(120deg,color-mix(in srgb,var(--v24-primary) 32%,#152437),color-mix(in srgb,var(--v24-tertiary) 12%,#101b2c))!important;
+ border-color:color-mix(in srgb,var(--v24-secondary) 36%,#44536a)!important;
+}
+#event-modal .event-choice:hover,#match-decision-modal .decision-option:hover{
+ border-color:var(--v24-tertiary)!important;box-shadow:0 9px 25px color-mix(in srgb,var(--v24-tertiary) 16%,transparent)!important;
+}
+#event-modal .event-choice-glyph,#match-decision-modal .decision-choice-index{
+ color:var(--v24-secondary)!important;border-color:var(--v24-tertiary)!important;
+}
+#event-modal #event-title,#match-decision-modal #decision-title{color:#fff!important;text-wrap:balance}
+#event-modal .scene-result-badge,#match-decision-modal .decision-result{border-color:var(--v24-tertiary)!important}
+#competitions-list .competition-item .honour-art img{object-fit:contain!important;mix-blend-mode:normal!important}
+@media(max-width:650px){#event-modal .career-event-card,#match-decision-modal .decision-card{max-width:calc(100vw - 12px)!important;width:calc(100vw - 12px)!important;padding:clamp(14px,4vw,24px)!important}}
+/* Winner-takes-priority selectors: old kind-specific scenes must not reapply their generic green/purple palettes. */
+#event-modal.career-event-active .career-event-card,
+#event-modal.random-event-active .career-event-card,
+#event-modal.icon-event-active .career-event-card,
+#event-modal.national-event-active .career-event-card,
+#event-modal.sponsor-event-active .career-event-card,
+#event-modal.idol-event-active .career-event-card,
+#event-modal .career-event-card {
+  border-color:color-mix(in srgb,var(--competition-primary) 78%,var(--competition-secondary))!important;
+  background:radial-gradient(ellipse at 12% 8%,color-mix(in srgb,var(--competition-primary) 45%,transparent),transparent 55%),linear-gradient(125deg,color-mix(in srgb,var(--competition-primary) 50%,#0d1728),color-mix(in srgb,var(--competition-tertiary) 22%,#081320))!important;
+  --story-accent:var(--competition-primary)!important;
+}
+#event-modal .career-event-card .career-event-scene.btl-event-stage,
+#event-modal .career-event-card .career-event-scene.btl-career-stage,
+#event-modal .career-event-card .career-event-scene.btl-random-stage,
+#event-modal .career-event-card .career-event-scene.btl-icon-stage {
+  background:radial-gradient(ellipse at 22% 48%,color-mix(in srgb,var(--competition-primary) 46%,transparent),transparent 65%),linear-gradient(135deg,color-mix(in srgb,var(--competition-primary) 48%,#0e1f30),color-mix(in srgb,var(--competition-tertiary) 24%,#06111f))!important;
+  border-color:var(--competition-primary)!important;
+  box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--competition-secondary) 17%,transparent),0 18px 52px rgba(0,0,0,.3)!important;
+}
+#event-modal .career-event-card .event-choice-grid .event-choice{
+ border-color:color-mix(in srgb,var(--competition-primary) 52%,#3d4a5e)!important;
+ background:linear-gradient(110deg,color-mix(in srgb,var(--competition-primary) 24%,#0e1f30),color-mix(in srgb,var(--competition-tertiary) 18%,#09172a))!important;
+}
+#event-modal .career-event-card .event-choice-grid .event-choice:hover{border-color:var(--competition-primary)!important}
+#event-modal .career-event-card .scene-star,#event-modal .career-event-card .scene-orb{color:var(--competition-primary)!important}

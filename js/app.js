@@ -1210,7 +1210,7 @@ const TROPHY_ART=[
   {test:/J1 League/i,urls:['https://www.thesportsdb.com/images/media/honour/trophy/p97twq1655894364.png','assets/trophies/j1-league.svg'],kind:'real-trophy'},
   {test:/Saudi Pro League/i,urls:['https://www.thesportsdb.com/images/media/honour/trophy/71r6nh1747536339.png','assets/trophies/saudi-pro-league.svg'],kind:'real-trophy'},
 
-  {test:/Copa do Brasil/i,urls:['https://www.thesportsdb.com/images/media/honour/trophy/dn1f2q1773714824.png','assets/trophies/copa-do-brasil.svg'],kind:'real-trophy'},
+  {test:/Copa do Brasil/i,urls:['https://upload.wikimedia.org/wikipedia/commons/a/a3/CopadoBrasil2013-.png','assets/trophies/copa-do-brasil.svg'],kind:'real-trophy'},
   {test:/Copa Argentina/i,urls:['https://www.thesportsdb.com/images/media/honour/trophy/kcxstl1735693591.png','assets/trophies/copa-argentina.svg'],kind:'real-trophy'},
   {test:/Copa AUF Uruguay/i,urls:['https://assets.debate.com.uy/__export/1761093037830/sites/debate/img/2025/10/21/copa_auf_jpg_830916777.jpeg_423682103.jpeg','assets/trophies/copa-auf-uruguay.svg'],kind:'real-trophy'},
   {test:/Copa Colombia/i,urls:['https://commons.wikimedia.org/wiki/Special:FilePath/Copa_Betplay_Trophy.png','https://assets.directvsports.com/__export/1766488475592/sites/dsports/img/2025/12/23/cop-141036.jpg_264373127.jpg','assets/trophies/copa-colombia.svg'],kind:'real-trophy'},
@@ -1320,7 +1320,7 @@ function canonicalClubCountryCode(name,fallback=''){
   const hits=[...new Set([...localHits,...poolHits,...transferHits,...marketHits])];
   if(hits.length===1)return hits[0];
   if(fallback&&hits.includes(fallback))return fallback;
-  return hits[0]||fallback||'';
+  return hits.length===1?hits[0]:(fallback||''); // Country ambiguous: do not select Bilbao over Athletic-MG.
 }
 function leagueForClub(name,fallbackCode=''){
   const code=canonicalClubCountryCode(name,fallbackCode);
@@ -1753,8 +1753,17 @@ function curatedTheme(name){
 }
 
 function applyClubTheme(name){
- // Legacy compatibility: only render()/match handlers may select a competition theme.
- // Transfers never override the active match palette.
+  const selected=name||state.player?.club||'';
+  const colors=BTL_CURATED_TEAM_COLORS[selected]||externalClubColors[selected]||null;
+  const c=curatedTheme(selected)||CLUB_THEMES[selected];
+  const primary=c?.accent||colors?.[0]||'#56ffc9',secondary=c?.secondary||colors?.[1]||'#effffc';
+  const theme={key:'club-'+normalizeKey(selected),accent:primary,primary,secondary,tertiary:c?.tertiary||secondary,alt:secondary,
+    bg:c?.bg||'#07111d',panel:c?.panel||'#0d1b2d',panel2:c?.panel2||'#13243b',border:c?.border||'#345064',
+    buttonText:c?.buttonText||'#fff',angle:c?.angle||125};
+  applyThemeTokens(theme,'');
+  document.body.dataset.visualScope='club';
+  document.body.dataset.clubTheme=normalizeKey(selected)||'neutral';
+  return theme;
 }
 
 const COMPETITION_THEME_PRESETS=[
@@ -1849,6 +1858,7 @@ function applyThemeTokens(theme,competitionLabel=''){
   if(hudRating)hudRating.textContent=state.player?`GER ${state.player.overall||'—'}`:'GER —';
 }
 function applyCompetitionExperienceTheme(context=themedCompetitionContext()){
+  document.body.dataset.visualScope='competition';
   const competitionLabel=context?.competition||'';
   const theme=competitionThemeForName(competitionLabel,context?.countryCode||state.player?.clubCountry||'');
   applyThemeTokens(theme,competitionLabel);
@@ -2923,6 +2933,32 @@ function simulateRivalSeason(r){
   const minutes=clamp(Math.round((getLeagueFormat(r.countryCode)?.matches||34)*rnd(70,88)),1900,3400);const titles=simulateRivalTitles(r);
   return {...r,nationalCode:RIVAL_NATIONAL_CODES[r.name]||'',goals:leagueGoals,assists:leagueAssists,allGoals,allAssists,avg,minutes,titles,goldenPoints:Number((leagueGoals*factor).toFixed(1)),titleScore:titleScoreFor(titles),fairPlay:rnd(82,99)};
 }
+// One authoritative rival record per year. Leaderboards, Golden Shoe and ceremonies
+// must read the exact same league goal total, never independent random samples.
+function ensureSeasonRivalRecords(s=state.season){
+  if(!s)return [];
+  if(!Array.isArray(s.rivalSeasonRecords)||s.rivalSeasonYear!==s.year){
+    const world=typeof ensureWorldPlayers==='function'?ensureWorldPlayers():[];
+    const priorRace=s.awardRaceResults?.goldenShoe;
+    const historic=new Map([...(priorRace?.top||[]),...(priorRace?.winner?[priorRace.winner]:[])].filter(x=>!x.isUser).map(x=>[normalizeKey(x.name),x]));
+    s.rivalSeasonRecords=WORLD_AWARD_RIVALS.map(r=>{
+      const athlete=world.find(w=>normalizeKey(w.name)===normalizeKey(r.name)&&!w.retired);
+      const old=historic.get(normalizeKey(r.name));
+      const code=athlete?.countryCode||old?.countryCode||r.countryCode;
+      const generated=simulateRivalSeason({...r,countryCode:code});
+      // Restore goal totals awarded on older saves, so rankings never contradict a trophy.
+      if(old){generated.goals=old.goals;generated.assists=old.assists;generated.goldenPoints=old.goldenPoints;}
+      return {...generated,club:athlete?.club||old?.club||'',seasonYear:s.year};
+    });
+    s.rivalSeasonYear=s.year;
+  }
+  return s.rivalSeasonRecords;
+}
+function authoritativeRivalStats(player,s=state.season){
+  if(!s||!player)return null;
+  return ensureSeasonRivalRecords(s).find(r=>normalizeKey(r.name)===normalizeKey(player.name)&&
+    r.countryCode===player.countryCode&&(!r.club||normalizeKey(r.club)===normalizeKey(player.club)))||null;
+}
 function ballonIndividualScore({avg,goals,assists,rating}){
   const ratingPart=clamp((avg-6.6)*27,0,70);const outputPart=clamp(goals*.72+assists*.48,0,42);const qualityPart=clamp((rating-84)*1.4,0,16);
   return clamp(ratingPart+outputPart+qualityPart,0,100);
@@ -2939,7 +2975,7 @@ function majorEuropeanClubContext(p=state.player,s=state.season){
   return {eligible:topFlight&&strength>=85,strength,club};
 }
 function buildAwardRaceResults(avg){
-  const p=state.player,s=state.season;const rivals=WORLD_AWARD_RIVALS.filter(r=>normalizeKey(r.name)!==normalizeKey(p.name)).map(simulateRivalSeason);const seasonTitles=seasonTitleNames();
+  const p=state.player,s=state.season;const rivals=ensureSeasonRivalRecords(s).filter(r=>normalizeKey(r.name)!==normalizeKey(p.name));const seasonTitles=seasonTitleNames();
   const awardClub=majorEuropeanClubContext(p,s),wonChampions=seasonTitles.some(n=>/UEFA Champions League/i.test(n)),wonWorldCup=seasonTitles.some(n=>/FIFA World Cup|Copa do Mundo/i.test(n));
   if(wonWorldCup)rivals.filter(r=>r.nationalCode===p.nationalityCode).forEach(r=>{if(!r.titles.includes('FIFA World Cup'))r.titles.push('FIFA World Cup');r.titleScore=titleScoreFor(r.titles);});
   const roleState=ensureClubRoleState(p),establishedForMajorAwards=wonWorldCup||((p.overall||68)>=83&&(s.clubGames||0)>=22&&((roleState.trust||35)>=58||currentCareerSeasonNumber()>3));
@@ -3206,7 +3242,7 @@ function syncPausedOverlayButton(){const btn=$('#resume-career-overlay');if(!btn
 function pauseCareerOverlay(kind){
   pausedCareerOverlay=kind;state.journeyPaused=kind;state.simulatingSeason=false;save();
   $('#match-decision-modal')?.classList.add('hidden');$('#event-modal')?.classList.add('hidden');
-  syncPausedOverlayButton();showView('career');toast('Jornada pausada. As interações só voltarão quando você clicar em “Retomar jornada”.');
+  applyClubTheme(state.player?.club);syncPausedOverlayButton();showView('career');toast('Jornada pausada. As interações só voltarão quando você clicar em “Retomar jornada”.');
 }
 function resumePausedCareerOverlay(){
   const kind=pausedCareerOverlay||state.journeyPaused;if(!kind)return;pausedCareerOverlay=null;state.journeyPaused=null;save();syncPausedOverlayButton();showView('career');
@@ -3214,10 +3250,10 @@ function resumePausedCareerOverlay(){
   else if(kind==='event'&&state.pendingEvent)openPendingEvent();
 }
 function openPendingEvent(){
-  if(pausedCareerOverlay||state.journeyPaused)return;const e=state.pendingEvent;if(!e)return;applyCompetitionExperienceTheme(themedCompetitionContext());const modal=$('#event-modal');
+  if(pausedCareerOverlay||state.journeyPaused)return;const e=state.pendingEvent;if(!e)return;const activeComp=e.competition||nextEventCache?.competition||state.season?.league?.name||state.player?.clubLeague||'';applyCompetitionExperienceTheme({competition:activeComp,countryCode:state.season?.countryAtStart||state.player?.clubCountry});const modal=$('#event-modal');
   modal.classList.toggle('sponsor-event-active',e.type==='sponsor');modal.classList.toggle('national-event-active',e.type==='national');modal.classList.toggle('idol-event-active',e.type==='idol');modal.classList.toggle('career-event-active',!['sponsor','national','idol','icon','random'].includes(e.type));modal.classList.toggle('icon-event-active',e.type==='icon');modal.classList.toggle('random-event-active',e.type==='random');
-  const card=modal.querySelector('.career-event-card');if(card){[...card.classList].filter(c=>c.startsWith('event-kind-')||c.startsWith('event-scene-card-')).forEach(c=>card.classList.remove(c));card.classList.add(`event-kind-${e.type||'career'}`,`event-scene-card-${normalizeKey(e.id||e.title||'event')}`);}
-  const eyebrow=$('#event-eyebrow');const eyebrowLabel=e.type==='national'?'SELEÇÃO':e.type==='idol'?'ÍDOLO':e.type==='sponsor'?'PATROCÍNIO':e.type==='icon'?'LENDAS':e.type==='random'?'EXTRA':'EVENTO';if(eyebrow)eyebrow.innerHTML=e.competition?competitionHeaderMarkup(e.competition,e.stage||''):competitionHeaderMarkup(eyebrowLabel,'');$('#event-title').textContent=e.title;$('#event-description').textContent='';
+  const card=modal.querySelector('.career-event-card');if(card){[...card.classList].filter(c=>c.startsWith('event-kind-')||c.startsWith('event-scene-card-')).forEach(c=>card.classList.remove(c));card.classList.add(`event-kind-${e.type||'career'}`,`event-scene-card-${normalizeKey(e.id||e.title||'event')}`);applyDecisionCompetitionTheme(card,{...e,competition:activeComp,type:e.type==='national'?'national':'league'});}
+  const eyebrow=$('#event-eyebrow');const eyebrowLabel=e.type==='national'?'SELEÇÃO':e.type==='idol'?'ÍDOLO':e.type==='sponsor'?'PATROCÍNIO':e.type==='icon'?'LENDAS':e.type==='random'?'EXTRA':'EVENTO';if(eyebrow)eyebrow.innerHTML=competitionHeaderMarkup(activeComp||eyebrowLabel,e.stage||'');$('#event-title').textContent=e.title;$('#event-description').textContent='';
   $('#event-choices').innerHTML=`<div class="btl-story-topline"><span>◆ ${e.type==='icon'?'ARQUIVO DE LENDAS':e.type==='random'?'TRANSMISSÃO URGENTE':'DIÁRIO DE CARREIRA'}</span><span>EDIÇÃO ${String(state.season?.year||'2026')}</span></div>`+eventSceneMarkup(e)+(e.type==='sponsor'?`<div class="sponsor-brand-banner ${e.sponsorTone||''}">${sponsorWordmark(e.sponsorBrand)}<span>PARCERIA</span><strong>${e.sponsorBrand||'Marca esportiva'}</strong><small>${money(e.sponsorValue||0)} / temporada</small></div>`:'')+`<div class="btl-choice-label">DECISÃO <span>Escolha seu próximo passo</span></div><div class="event-choice-grid">${e.choices.map((c,i)=>`<button class="event-choice visual-event-choice" data-choice="${i}"><span class="event-choice-glyph">${eventChoiceIcon(c.action)}</span><span class="event-choice-content"><strong>${c.label}</strong><small>${c.effect}</small></span><span class="event-choice-arrow">↗</span></button>`).join('')}</div>`;
   $$('#event-choices .event-choice').forEach(b=>b.addEventListener('click',()=>resolveCareerEvent(+b.dataset.choice)));modal.classList.remove('hidden');
 }
@@ -3622,7 +3658,12 @@ function renderCompetitionLeaderboards(){
   const comps=[...new Set(competitionStatus().map(x=>x.title).filter(Boolean))];if(!comps.length){box.innerHTML='<p class="muted">Sem competições ativas.</p>';return;}if(!leaderboardCompetition||!comps.includes(leaderboardCompetition))leaderboardCompetition=comps[0];
   tabs.innerHTML=comps.map(c=>`<button type="button" class="${c===leaderboardCompetition?'active':''}" data-leader-competition="${esc(c)}">${esc(c)}</button>`).join('');
   $$('.leaderboard-mode-tabs [data-leader-mode]').forEach(btn=>btn.classList.toggle('active',btn.dataset.leaderMode===leaderboardMode));
-  const progress=competitionProgressForLeaderboard(leaderboardCompetition),rows=leaderboardCandidates(leaderboardCompetition).map(wp=>{const stat=simulatedLeaderStat(wp,leaderboardCompetition,s.year,progress);return {...wp,...stat,team:wp.club||countryByCode(wp.nationalCode)?.name||'—'};});
+  const progress=competitionProgressForLeaderboard(leaderboardCompetition),rows=leaderboardCandidates(leaderboardCompetition).map(wp=>{
+    const stat=simulatedLeaderStat(wp,leaderboardCompetition,s.year,progress);
+    const rival=leaderboardCompetition===s.league?.name&&s.divisionLevel===1?authoritativeRivalStats(wp,s):null;
+    const synced=rival?{...stat,goals:Math.round(rival.goals*progress),assists:Math.round(rival.assists*progress)}:stat;
+    return {...wp,...synced,team:wp.club||countryByCode(wp.nationalCode)?.name||'—'};
+  });
   const userStat=s.competitionStats?.[leaderboardCompetition]||{games:0,goals:0,assists:0};
   if(userEligibleForLeaderboard(leaderboardCompetition,userStat)){
     const currentAllowed=clubsForLeaderboardCompetition(leaderboardCompetition);
@@ -3679,13 +3720,13 @@ function render(){
   $('#home-new-career')?.classList.remove('hidden');
   const activeCareer=!!(state.created&&state.player&&!state.player.retired);document.body.classList.toggle('career-mode',activeCareer);const homeNav=$('#nav [data-view="home"]');if(homeNav)homeNav.classList.remove('hidden');
   const startLabel=$('#start-btn b'),startHint=$('#start-btn small');if(startLabel)startLabel.textContent='Continuar carreira';if(startHint)startHint.textContent=state.created?'Voltar ao vestiário e seguir a temporada':'Criar jogador e iniciar sua trajetória';$$('.game-menu-entry[data-view="stats"],.game-menu-entry[data-view="market"],.football-menu-option[data-view="stats"],.football-menu-option[data-view="market"]').forEach(btn=>btn.disabled=!state.created);
-  if(!state.created){renderSavedCareers();$('#mini-profile').classList.add('hidden');$('#reset-career').classList.add('hidden');applyCompetitionExperienceTheme({competition:'Be The Legend',type:'generic'});return;}
+  if(!state.created){renderSavedCareers();$('#mini-profile').classList.add('hidden');$('#reset-career').classList.add('hidden');applyClubTheme(null);return;}
   const p=state.player,s=state.season;$('#mini-profile').classList.remove('hidden');$('#reset-career').classList.remove('hidden');$('#mini-profile').textContent=`${p.name} · ${p.overall}`;
   $('#p-name').textContent=p.name;$('#p-pos').textContent=p.position;$('#p-age').textContent=p.age;$('#p-country').textContent=p.nationality;$('#p-birthdate').textContent=formatDateBR(p.birthdate);$('#p-overall').textContent=p.overall;$('#p-potential').textContent=p.potential;$('#p-club').textContent=p.club;$('#p-league').textContent=s?.league?.name||p.clubLeague||clubCompetitionProfile(p.club,p.clubCountry).league;$('#p-value').textContent=money(p.value);$('#avatar').innerHTML=appearanceMarkup(p.appearance,true,p.number||10);$('#avatar').classList.add('face-avatar');const sponsorChip=$('#p-sponsor-chip');sponsorChip?.classList.toggle('hidden',!p.sponsor?.brand);if($('#p-sponsor'))$('#p-sponsor').innerHTML=p.sponsor?.brand?`${sponsorWordmark(p.sponsor.brand)}<span>${esc(p.sponsor.brand)}</span>`:'';const idolChip=$('#p-idol-chip');idolChip?.classList.toggle('hidden',!p.idol?.name);if($('#p-idol'))$('#p-idol').textContent=p.idol?.name||'';const injuryChip=$('#p-injury-chip');injuryChip?.classList.toggle('hidden',!(p.injuryGames>0));if($('#p-injury-status'))$('#p-injury-status').textContent=p.injuryGames>0?`${p.injuryGames} jogo(s) fora`:'';
   const attrs=ensureAttributeOverallSync(p)||normalizePlayerAttributes(p),origins=p.attributeOrigins||{};
   const dna=p.dnaAttributes||attrs,renderFields=attributeFieldsForPosition(p.position),primaryId=primaryAttributeForPosition(p.position);$('#player-attributes').innerHTML=renderFields.map(f=>`<div class="player-attribute ${f.id===primaryId?'role-primary':''}"><span><em>${ATTRIBUTE_ICONS[f.id]||'•'}</em>${f.short}${f.id===primaryId?' ★':''}</span><strong>${attributeDisplayValue(f.id,attrs[f.id])}</strong><small>${origins[f.id]?.legend?`DNA ${attributeDisplayValue(f.id,dna[f.id])} · ${origins[f.id].legend}`:f.label}</small></div>`).join('');
   $('#retire-career').classList.toggle('hidden',p.retired||p.age<=30);$('#edit-appearance')?.classList.toggle('hidden',p.retired);
-  hydrateBadge($('#p-club-badge'),p.club,$('#p-club-fallback'));
+  hydrateBadge($('#p-club-badge'),p.club,$('#p-club-fallback'),p.clubCountry);
   $('#retired-banner').classList.toggle('hidden',!p.retired);if(p.retired)$('#retired-text').textContent=` ${p.name} se aposentou aos ${p.age} anos.`;
   if(s){
     $('#season-year').textContent=s.year;$('#s-games').textContent=s.totalGames;$('#s-goals').textContent=s.goals;$('#s-assists').textContent=s.assists;$('#s-rating').textContent=s.totalGames?(s.ratingSum/s.totalGames).toFixed(1):'-';
@@ -3704,7 +3745,9 @@ function render(){
   }else{
     $('#season-year').textContent='—';$('#s-games').textContent='0';$('#s-goals').textContent='0';$('#s-assists').textContent='0';$('#s-rating').textContent='—';$('#league-round-label').textContent='Carreira encerrada';$('#league-points').textContent='';$('#league-progress-bar').style.width='100%';$('#season-progress').textContent='Aposentado';$('#finish-season').disabled=true;$('#finish-season').textContent='Carreira encerrada';$('#competitions-list').innerHTML='<div class="competition-item"><strong>👟 Carreira concluída</strong><small>Veja o histórico completo na aba Estatísticas.</small></div>';$('#match-title').textContent='Carreira encerrada';$('#home-team').textContent='';$('#away-team').textContent='';$('#match-competition').textContent='';$('#match-context').textContent='';$('#favorite-line').textContent='';$('#favorite-percent').textContent='';$('#favorite-meter-fill').style.width='0%';$('#strength-line').textContent='';$('#simulate-btn').disabled=true;$('#simulate-btn').textContent='Aposentado';
   }
-  applyCompetitionExperienceTheme(themedCompetitionContext());
+  applyClubTheme(p.club);
+  if(!$('#match-decision-modal')?.classList.contains('hidden')&&state.pendingMatchDecision)applyCompetitionExperienceTheme(state.pendingMatchDecision.event);
+  if(!$('#match-decision-modal')?.classList.contains('hidden')&&state.pendingPenaltyShootout)applyCompetitionExperienceTheme(state.pendingPenaltyShootout);
   $('#national-country').textContent=`Seleção de ${p.nationality}`;$('#national-flag').innerHTML=nationalFlagImage(p.nationalityCode,p.nationality);
   const wcStatus=s&&isWorldCupYear(s.year)?ensureWorldCupState(s,p):null;
   const calendarStatus=s?nationalCalendarStatusText(s,p):'';
@@ -5126,6 +5169,13 @@ function processSeasonEnd(){
   p.age++;p.value=rebalanceMarketValue(p,.58,avg);state.news.push(`${p.name} encerra ${s.year} com média ${avg.toFixed(1)}. GER ${p.overall} (${delta>=0?'+':''}${delta}) e POT ${p.potential}.`);generateOffers(avg);s.endProcessed=true;s.closed=true;s.endAverage=avg;s.developmentDelta=delta;s.finalCupStatus=cupStatus;s.finalContinentalStatus=continentalStatus;
   retireAtCareerSeasonLimit(p);
 }
+function isDecisiveFinal(event={}){
+  if(!event||event.type==='league')return false;
+  // Strictly the final match, not semifinals or third-place matches.
+  const stage=String(event.stage||'').trim();
+  return Boolean(event.final===true||(/^final(?:\s|$|\s*[·:-])/i.test(stage)&&!(/ida/i.test(stage)&&Number(event.leg||1)===1))||
+    (event.superCupName&&/final|decisão/i.test(stage)));
+}
 function continueSeasonSimulation(){
   const p=state.player,s=state.season;if(!s||s.closed||p.retired||state.pendingMatchDecision||state.pendingPenaltyShootout||pausedCareerOverlay||state.journeyPaused)return;
   if(maybePresentWorldCupOutcome())return;
@@ -5143,6 +5193,9 @@ function continueSeasonSimulation(){
     const healthy=(p.injuryGames||0)<=0;
     const appearanceRole=event.type==='national'?'start':healthy?clubAppearanceRole(event,p):'unused';
     const wc=isWorldCupYear(s.year),nationalLimit=wc?99:2;
+    // Final de competição: decisão obrigatória, independente dos eventos aleatórios.
+    // Mantemos a oportunidade mesmo em caso de lesão, para nunca simular uma final sem participação do jogador.
+    if(isDecisiveFinal(event)){openMatchDecision(event);save();render();return;}
     // Copa do Mundo: toda partida do jogador recebe uma situação de decisão.
     const nationalDecision=event.type==='national'&&healthy&&(event.worldCup||((s.nationalDecisionCount||0)<nationalLimit&&Math.random()<(.58*INTERACTION_FREQUENCY)));
     if(nationalDecision){openMatchDecision(event);save();render();return;}
@@ -5165,6 +5218,7 @@ function simulateWholeSeason(){
   const s=state.season,p=state.player;if(!s||s.closed||p.retired)return;ensureDecisionPlan();continueSeasonSimulation();
 }
 function showSeasonSummary(){
+  applyClubTheme(state.player?.club);
   const s=state.season,p=state.player;if(!s||!s.closed)return;$('#summary-year').textContent=`TEMPORADA ${s.year}`;$('#summary-title').textContent=`${s.league.position}º lugar em ${s.league.name}`;$('#summary-subtitle').textContent=`${s.league.points} pontos · ${s.league.wins}V ${s.league.draws}E ${s.league.losses}D · ${state.offers.length} proposta(s) recebida(s)`;
   const seasonTitles=(p.trophies||[]).slice(s.startTrophyCount||0).map(t=>t.name);const seasonAwards=(p.awards||[]).slice(s.startAwardCount||0).map(a=>a.name);
   const seasonHonours=[...seasonTitles.map(name=>({name,type:'Título'})),...seasonAwards.map(name=>({name,type:'Prêmio'}))];

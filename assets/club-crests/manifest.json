@@ -2685,11 +2685,22 @@
       "country": "IT",
       "club": "Südtirol",
       "reason": "no unambiguous source file"
-    },
+    }
+  ],
+  "externalVerified": [
     {
       "country": "RO",
       "club": "FCSB",
-      "reason": "no unambiguous source file"
+      "url": "https://commons.wikimedia.org/wiki/Special:FilePath/Fcsb-logo.svg",
+      "source": "Wikimedia Commons",
+      "licensing": "PD-textlogo; trademark restrictions may apply"
     }
-  ]
+  ],
+  "counts": {
+    "staticGitHub": 444,
+    "externalVerified": 1,
+    "totalCovered": 445,
+    "unresolved": 3,
+    "total": 448
+  }
 }
