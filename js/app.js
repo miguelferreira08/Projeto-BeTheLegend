@@ -7,7 +7,7 @@ const HALL_RESET_V104_KEY = 'beTheLegendV104HallReset';
 const LEGACY_STORAGE_KEY = 'careerSimV7';
 const LEGACY_V103_CLAIM_KEY = 'beTheLegendV103LegacyClaimed';
 const LEGACY_V95_FOR_MIGRATION = window.BTLAuth?.getCurrentAccount?.() && !localStorage.getItem(LEGACY_V103_CLAIM_KEY) ? localStorage.getItem('beTheLegendV95') : null;
-const BADGE_KEY = 'beTheLegendBadgeCacheV21Verified';
+const BADGE_KEY = 'beTheLegendBadgeCacheV22Static';
 const DRAFT_KEY = 'beTheLegendV92AttributeDraft';
 const PREVIOUS_DRAFT_KEY = 'beTheLegendV91AttributeDraft';
 
@@ -63,14 +63,11 @@ function dropBadgeUrl(url){
 }
 
 function badgeCacheKeys(name,countryCode=''){ const code=countryCode||canonicalClubCountryCode(name,''); return [code?`${code}:${name}`:name]; }
-function getCachedBadge(name,countryCode=''){ for(const key of badgeCacheKeys(name,countryCode)){ const hit=safeBadgeImage(badgeCache?.[key]||''); if(hit&&!badBadgeUrls.has(hit))return hit; } return ''; }
-function setCachedBadge(name,countryCode='',url=''){ const safe=safeBadgeImage(url); if(!safe)return ''; for(const key of badgeCacheKeys(name,countryCode)) badgeCache[key]=safe; saveBadges(); return safe; }
+function getCachedBadge(name,countryCode=''){ const url=safeBadgeImage(window.BTLStaticCrests?.resolve(name,countryCode||canonicalClubCountryCode(name,''))||''); return url&&!badBadgeUrls.has(url)?url:''; }
+function setCachedBadge(name,countryCode='',url=''){ const expected=getCachedBadge(name,countryCode); if(!expected||safeBadgeImage(url)!==expected)return ''; for(const key of badgeCacheKeys(name,countryCode))badgeCache[key]=expected; saveBadges();return expected; }
 // V16: FIFA/ESPN/API-Sports never supply visible club crests.
 // Only Wikimedia Commons file CDN images may enter the badge cache.
-window.BTLRegisterVerifiedCrest=function(club,url,source){
-  if(source!=='Wikimedia Commons'||typeof club!=='string'||club.length>90||!safeCommonsImage(url))return false;
-  badgeCache[club]=url;saveBadges();return true;
-};
+window.BTLRegisterVerifiedCrest=()=>false; // External badge registration disabled in static-only mode
 function rnd(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 function sample(array,count){ return [...array].sort(()=>Math.random()-.5).slice(0,count); }
 function shuffle(array){ return [...array].sort(()=>Math.random()-.5); }
@@ -1097,157 +1094,28 @@ function commonsScore(title,club){
  return tokens.every(x=>parts.includes(x))?82-Math.max(0,parts.length-tokens.length)*4:-1;
 }
 function safeCommonsImage(url){try{const u=new URL(url);return u.protocol==='https:'&&u.hostname==='upload.wikimedia.org'&&/\.(svg|png|webp)(?:$|\?)/i.test(u.pathname)?u.href:''}catch{return ''}}
-function safeBadgeImage(url){
- try{
-  const u=new URL(String(url||''));
-  if(u.protocol!=='https:')return '';
-  const host=u.hostname.toLowerCase();
-  const validExt=/\.(svg|png|webp|jpg|jpeg)(?:$|\?)/i.test(u.pathname);
-  if(!validExt)return '';
-  if(host==='upload.wikimedia.org')return u.href;
-  if(host==='thesportsdb.com'||host.endsWith('.thesportsdb.com'))return u.href;
-  if(host==='api-sports.io'||host.endsWith('.api-sports.io'))return u.href;
-  return '';
- }catch{return ''}
-}
-// Clear all legacy providers on startup. Old saves stay untouched.
-for(const [team,url] of Object.entries(badgeCache))if(!safeBadgeImage(url))delete badgeCache[team];
+// V22: Static-only crest catalog: no API-Football, Wikidata, Commons or TheSportsDB requests.
+// V22: Static-only crest catalog: no API-Football, Wikidata, Commons or TheSportsDB requests.
+function safeBadgeImage(url){return window.BTLStaticCrests?.isCatalogUrl?.(url)?String(url):'';}
+for(const [club,url] of Object.entries(badgeCache))if(!safeBadgeImage(url))delete badgeCache[club];
 saveBadges();
-function recordCommonsAttribution(club,result){
- try{const records=JSON.parse(localStorage.getItem(commonsMetaKey)||'{}');records[club]={filePage:result.filePage||result.page||'',license:result.license||'Consultar a página do arquivo',credit:result.credit||'',matchedFile:result.matchedFile||''};localStorage.setItem(commonsMetaKey,JSON.stringify(records))}catch(_){}
-}
-async function commonsCrest(name){
- if(!name||(commonsMisses.get(name)||0)>Date.now())return '';
- if(commonsInFlight.has(name))return commonsInFlight.get(name);
- const promise=(async()=>{
-  try{
-   let result=null;
-   // Prefer own proxy when deployed to Cloudflare Pages, but also work on static hosts.
-   try{const r=await fetch(`/api/commons-crest?name=${encodeURIComponent(name)}`,{signal:AbortSignal.timeout(4200)});if(r.ok)result=await r.json()}catch(_){}
-   if(!safeCommonsImage(result?.logo||'')){
-    const q=COMMONS_CLUB_ALIASES[name]||CLUB_BADGE_ALIASES[name]?.[1]||CURRENT_EUROPE_LOGO_NAMES[name]||name,url=new URL(COMMONS_ENDPOINT);
-    for(const [k,v] of Object.entries({action:'query',format:'json',generator:'search',gsrsearch:`${q} football club logo`,gsrnamespace:'6',gsrlimit:'15',prop:'imageinfo',iiprop:'url|extmetadata',iiurlwidth:'220',origin:'*'}))url.searchParams.set(k,v);
-    const r=await fetch(url.href,{signal:AbortSignal.timeout(5500)});if(!r.ok)throw Error('Wikimedia indisponível');
-    const pages=Object.values((await r.json()).query?.pages||{});
-    const found=pages.map(p=>({rank:commonsScore(p.title,q),matchedFile:p.title,logo:p.imageinfo?.[0]?.thumburl||p.imageinfo?.[0]?.url||'',filePage:p.imageinfo?.[0]?.descriptionurl||'',license:p.imageinfo?.[0]?.extmetadata?.LicenseShortName?.value||'',credit:p.imageinfo?.[0]?.extmetadata?.Artist?.value||''})).filter(p=>p.rank>=55&&safeCommonsImage(p.logo)).sort((a,b)=>b.rank-a.rank);
-    result=found[0]||null;
-   }
-   const url=safeCommonsImage(result?.logo||'');if(url){recordCommonsAttribution(name,result);return url;}
-  }catch(_){}
-  commonsMisses.set(name,Date.now()+900000);return '';
- })();commonsInFlight.set(name,promise);
- try{return await promise}finally{commonsInFlight.delete(name)}
-}
-async function sportsDbBadgeByCountry(name,countryCode=''){
-  const country=countryByCode(countryCode)?.apiName||countryByCode(countryCode)?.name||'';
-  if(!country)return '';
-  try{
-    const url=`https://www.thesportsdb.com/api/v1/json/123/search_all_teams.php?s=Soccer&c=${encodeURIComponent(country)}`;
-    const r=await fetch(url,{signal:AbortSignal.timeout(5200)});if(!r.ok)return '';
-    const data=await r.json();
-    const aliases=[name,...(CLUB_BADGE_ALIASES[name]||[]),COMMONS_CLUB_ALIASES[name],CURRENT_EUROPE_LOGO_NAMES[name]].filter(Boolean);
-    const wanted=new Set(aliases.map(normalizeKey));
-    const teams=(data.teams||[]).filter(t=>t?.idTeam&&t?.strTeam&&t?.strSport==='Soccer');
-    const scoreTeam=t=>{
-      const fields=[t.strTeam,t.strTeamShort,t.strAlternate,t.strLeague].filter(Boolean).map(normalizeKey);
-      if(fields.some(f=>wanted.has(f)))return 100;
-      const joined=fields.join(' '),tokens=normalizeKey(name).match(/[a-z0-9]{3,}/g)||[];
-      return tokens.filter(tok=>joined.includes(tok)).length;
-    };
-    const ranked=teams.map(team=>({team,score:scoreTeam(team)})).filter(x=>x.score>=100).sort((a,b)=>b.score-a.score);
-    const exact=ranked[0]?.team;
-    const badge=safeBadgeImage(exact?.strBadge||'');
-    if(badge){rememberClubColors(exact,{name});return badge;}
-  }catch(_){/* próximo fallback */}
-  return '';
-}
-async function sportsDbBadge(name,countryCode=''){
-  const aliases=[name,...(CLUB_BADGE_ALIASES[name]||[]),COMMONS_CLUB_ALIASES[name],CURRENT_EUROPE_LOGO_NAMES[name]].filter(Boolean);
-  const seen=new Set();
-  for(const query of aliases){
-    const key=normalizeKey(query);if(seen.has(key))continue;seen.add(key);
-    try{
-      const url=`https://www.thesportsdb.com/api/v1/json/123/searchteams.php?t=${encodeURIComponent(query)}`;
-      const r=await fetch(url,{signal:AbortSignal.timeout(5000)});if(!r.ok)continue;
-      const data=await r.json();
-      const country=countryByCode(countryCode)?.apiName||countryByCode(countryCode)?.name||'';
-      const teams=(data.teams||[]).filter(t=>t?.idTeam&&t?.strTeam&&t?.strSport==='Soccer'&&(!country||t.strCountry&&normalizeKey(t.strCountry)===normalizeKey(country)));
-      const exact=teams.find(t=>normalizeKey(t.strTeam)===normalizeKey(query)||normalizeKey(t.strTeam)===normalizeKey(name)||normalizeKey(t.strAlternate||'')===normalizeKey(name));
-      const badge=safeBadgeImage(exact?.strBadge||'');
-      if(badge){rememberClubColors(exact,{name});return badge;}
-    }catch(_){/* tentar próximo alias */}
-  }
-  return await sportsDbBadgeByCountry(name,countryCode);
-}
-async function apiSportsBadge(name){
- try{
-  const code=canonicalClubCountryCode(name,'');const country=countryByCode(code)?.apiName||countryByCode(code)?.name||'';
-  const apiId=Number(findClubData(name,code)?.apiId||findClubDataAny(name)?.apiId||0);
-  const idQuery=Number.isInteger(apiId)&&apiId>0?`&id=${apiId}`:'';
-  const r=await fetch(`/api/club-badge?name=${encodeURIComponent(name)}${country?`&country=${encodeURIComponent(country)}`:''}${idQuery}`,{signal:AbortSignal.timeout(4500)});
-  if(!r.ok)return '';
-  const data=await r.json();
-  return safeBadgeImage(data?.logo||'');
- }catch(_){return ''}
-}
-const missingOfficialCrests=new Set();
-const badgeAttemptStatus=new Map();
-window.BTLCrestDiagnostics=()=>({unresolved:[...missingOfficialCrests].sort((a,b)=>a.localeCompare(b,'pt-BR')),verifiedCacheCount:Object.keys(badgeCache).filter(x=>safeBadgeImage(badgeCache[x])).length,brokenUrlCount:badBadgeUrls.size,source:'API-Sports / Wikidata / Wikimedia Commons / TheSportsDB',tried:[...badgeAttemptStatus.entries()]});
-async function wikidataCrest(name,countryCode=''){
-  const aliases=[name,...(CLUB_BADGE_ALIASES[name]||[]),COMMONS_CLUB_ALIASES[name],CURRENT_EUROPE_LOGO_NAMES[name]].filter(Boolean);
-  for(const alias of [...new Set(aliases)].slice(0,2)){
-    try{
-      const url=new URL('https://www.wikidata.org/w/api.php');
-      Object.entries({action:'wbsearchentities',format:'json',search:alias,language:'en',type:'item',limit:'5',origin:'*'}).forEach(([key,val])=>url.searchParams.set(key,val));
-      const result=await fetch(url.href,{signal:AbortSignal.timeout(4100)});if(!result.ok)continue;
-      const body=await result.json();
-      const q=(body.search||[]).find(item=>{
-        const label=normalizeKey(item.label||''),aliasKey=normalizeKey(alias),nameKey=normalizeKey(name);
-        const kind=String(item.description||'').toLowerCase();
-        return (label===aliasKey||label===nameKey)&&/football|soccer|futebol|fútbol/i.test(kind);
-      });
-      if(!q?.id)continue;
-      const entityURL=new URL('https://www.wikidata.org/w/api.php');
-      Object.entries({action:'wbgetentities',format:'json',ids:q.id,props:'claims',origin:'*'}).forEach(([key,val])=>entityURL.searchParams.set(key,val));
-      const entityRequest=await fetch(entityURL.href,{signal:AbortSignal.timeout(4300)});if(!entityRequest.ok)continue;
-      const entity=(await entityRequest.json()).entities?.[q.id];
-      const filename=entity?.claims?.P154?.[0]?.mainsnak?.datavalue?.value;
-      if(typeof filename!=='string'||!/\.(png|svg|webp)$/i.test(filename))continue;
-      const commonsURL=new URL('https://commons.wikimedia.org/w/api.php');
-      Object.entries({action:'query',format:'json',titles:'File:'+filename,prop:'imageinfo',iiprop:'url',iiurlwidth:'220',origin:'*'}).forEach(([key,val])=>commonsURL.searchParams.set(key,val));
-      const fileRequest=await fetch(commonsURL.href,{signal:AbortSignal.timeout(4500)});if(!fileRequest.ok)continue;
-      const pages=Object.values((await fileRequest.json()).query?.pages||{});
-      const logo=safeCommonsImage(pages[0]?.imageinfo?.[0]?.thumburl||pages[0]?.imageinfo?.[0]?.url||'');
-      if(logo&&!badBadgeUrls.has(logo))return logo;
-    }catch(_){/* Wikidata unavailable */}
-  }
-  return '';
-}
+const missingOfficialCrests=new Set(),badgeAttemptStatus=new Map();
+window.BTLCrestDiagnostics=()=>({
+  source:'GitHub static SVG catalog (JoseArroyave/football-logos)',
+  configured:true,apiCalls:0,inventory:448,
+  catalogCoverage:window.BTLStaticCrests?.count||0,
+  unmatched:window.BTLStaticCrests ? [] : ['Static crest catalog missing'],
+  unresolved:[...missingOfficialCrests].sort((a,b)=>a.localeCompare(b,'pt-BR')),
+  brokenUrlCount:badBadgeUrls.size,tried:[...badgeAttemptStatus.entries()]
+});
 async function exactClubBadge(name,countryCode='',excludeUrls=new Set()){
  if(!name)return '';
  const code=countryCode||canonicalClubCountryCode(name,'');
- const cached=getCachedBadge(name,code);
- if(cached&&!excludeUrls.has(cached))return cached;
- const flightKey=`${code}:${name}:${excludeUrls.size}`;
- if(badgeRequestsInFlight.has(flightKey))return badgeRequestsInFlight.get(flightKey);
- const job=(async()=>{
-   // Query trusted providers in parallel to avoid the cumulative latency of multiple unavailable services.
-   const validate=async loader=>{
-     const url=safeBadgeImage(await loader());
-     if(url&&!badBadgeUrls.has(url)&&!excludeUrls.has(url))return url;
-     throw Error('No verified candidate');
-   };
-   // API-Sports, when configured, is preferred because the team identifier is stable.
-   try{return await validate(()=>apiSportsBadge(name))}catch(_){}
-   // Parallel free sources avoid a long series of timeouts when one is unavailable.
-   // Both must first pass strict entity / filename validation.
-   try{return await Promise.any([validate(()=>wikidataCrest(name,code)),validate(()=>commonsCrest(name))])}catch(_){}
-   // TheSportsDB free tier limits general team-name searches; use as last fallback.
-   try{return await validate(()=>sportsDbBadge(name,code))}catch(_){}
-   missingOfficialCrests.add(`${code}:${name}`);badgeAttemptStatus.set(`${code}:${name}`,{status:'unresolved',checkedAt:new Date().toISOString()});
-   return '';
- })();badgeRequestsInFlight.set(flightKey,job);
- try{return await job}finally{badgeRequestsInFlight.delete(flightKey)}
+ const url=safeBadgeImage(window.BTLStaticCrests?.resolve(name,code)||'');
+ if(url && !badBadgeUrls.has(url) && !excludeUrls.has(url))return url;
+ missingOfficialCrests.add(`${code}:${name}`);
+ badgeAttemptStatus.set(`${code}:${name}`,{status:url?'image-unavailable':'not-in-static-catalog',checkedAt:new Date().toISOString()});
+ return '';
 }
 
 function clubBadgeSources(name,exact=''){

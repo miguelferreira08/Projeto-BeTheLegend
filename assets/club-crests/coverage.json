@@ -1,0 +1,27 @@
+{
+  "source": "JoseArroyave/football-logos",
+  "bySource": "GitHub tree snapshot",
+  "verifiedPathsFromTree": 444,
+  "unresolved": [
+    {
+      "country": "AE",
+      "club": "Al-Ain",
+      "reason": "no unambiguous source file"
+    },
+    {
+      "country": "AE",
+      "club": "Shabab Al-Ahli",
+      "reason": "no unambiguous source file"
+    },
+    {
+      "country": "IT",
+      "club": "Südtirol",
+      "reason": "no unambiguous source file"
+    },
+    {
+      "country": "RO",
+      "club": "FCSB",
+      "reason": "no unambiguous source file"
+    }
+  ]
+}

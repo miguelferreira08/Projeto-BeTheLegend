@@ -11614,7 +11614,7 @@ main{width:100%!important;max-width:1900px!important;padding:0 clamp(16px,2.5vw,
             <div class="potential"><strong id="p-potential">85</strong><small>POT</small></div>
           </div>
           <div class="club-line">
-            <div class="crest-shell"><img id="p-club-badge" class="club-badge-img hidden" alt=""><span id="p-club-fallback" title="Escudo ainda não localizado no Wikimedia Commons">S/D</span></div>
+            <div class="crest-shell"><img id="p-club-badge" class="club-badge-img hidden" alt=""><span id="p-club-fallback" title="Escudo não disponível no catálogo estático">S/D</span></div>
             <div><strong id="p-club"></strong><small id="p-league"></small></div>
           </div>
           <div class="value-line"><span>Valor de mercado</span><strong id="p-value"></strong></div>
@@ -12094,8 +12094,8 @@ main{width:100%!important;max-width:1900px!important;padding:0 clamp(16px,2.5vw,
   </div>
 
 
-  <div id="commons-attribution-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Créditos de escudos Wikimedia Commons">
-    <div class="modal-card commons-attribution-card"><button id="commons-attribution-close" type="button" class="secondary">Fechar ✕</button><p class="eyebrow">TRANSPARÊNCIA</p><h2>Créditos dos escudos</h2><p>Imagens pesquisadas no Wikimedia Commons, sujeitas às licenças e direitos de marca de cada arquivo. A página original informa a autoria e as condições de reutilização.</p><div id="commons-attribution-list"></div></div>
+  <div id="commons-attribution-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Créditos dos escudos de clubes">
+    <div class="modal-card commons-attribution-card"><button id="commons-attribution-close" type="button" class="secondary">Fechar ✕</button><p class="eyebrow">TRANSPARÊNCIA</p><h2>Créditos dos escudos</h2><p>Escudos carregados de um repositório público no GitHub. As marcas e símbolos pertencem a seus titulares e podem mudar com o tempo.</p><div id="commons-attribution-list"></div></div>
   </div>
   <div id="new-career-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="new-career-title">
     <section class="modal-card game-confirm-card">
@@ -12128,8 +12128,7 @@ window.BTL_GOOGLE_CLIENT_ID =
   '838899157664-b383tnocqjcimk6f5vo34l5dgf2tdqhd.apps.googleusercontent.com';
 </script>
   <script>
-/* V16: club crests resolve solely from Wikimedia Commons. */
-window.BTL_CREST_PROXY_URL = "";
+// V22: escudos estáticos do GitHub. Não é necessária chave ou endpoint de escudos.
 
 </script>
   <script>
@@ -15218,6 +15217,40 @@ window.BTLCompetitionPalettes={palettes,get,theme,normalize};
 
 </script>
   <script>
+/* BE THE LEGEND V22 — static, no-key club crest catalog (GitHub source snapshot).
+ * All paths in this catalog are tied to a specific country and club identity.
+ * Static image URLs only — no commercial football API, scraping, or runtime lookup.
+ * Club crests remain intellectual property / trademarks of their owners.
+ */
+(()=>{
+'use strict';
+const REPO='JoseArroyave/football-logos';
+const COMMIT='5ab11fed47427b3003f4b276554491fe683387b1';
+const BASE=`https://raw.githubusercontent.com/${REPO}/${COMMIT}/`;
+const rows=[["AR","Argentinos Juniors","logos/argentina/Argeninos_Juniors.svg"],["AR","Boca Juniors","logos/argentina/Boca_Juniors.svg"],["AR","Estudiantes","logos/argentina/Estudiantes_de_La_Plata.svg"],["AR","Independiente","logos/argentina/Independiente.svg"],["AR","Racing Club","logos/argentina/Racing_Club.svg"],["AR","River Plate","logos/argentina/River_Plate.svg"],["AR","Rosario Central","logos/argentina/Rosario_Central.svg"],["AR","San Lorenzo","logos/argentina/San_Lorenzo_de_Almagro.svg"],["AR","Talleres","logos/argentina/Talleres.svg"],["AR","Vélez Sarsfield","logos/argentina/Vélez_Sarsfield.svg"],["AT","Austria Wien","logos/austria/Austria_Wien.svg"],["AT","Rapid Wien","logos/austria/Rapid_Vienna.svg"],["AT","Sturm Graz","logos/austria/Sturm_Graz.svg"],["BE","Anderlecht","logos/belgium/RSC_Anderlecht.svg"],["BE","Club Brugge","logos/belgium/Club_Brugge.svg"],["BE","Genk","logos/belgium/KRC_Genk.svg"],["BE","Gent","logos/belgium/KAA_Gent.svg"],["BE","Union Saint-Gilloise","logos/belgium/Union_Saint-Gilloise.svg"],["BR","América Mineiro","logos/brazil/América_Mineiro.svg"],["BR","Athletic Club","logos/brazil/Athletic.svg"],["BR","Athletico Paranaense","logos/brazil/Athletico_Paranaense.svg"],["BR","Atlético Goianiense","logos/brazil/Atlético_Goianiense.svg"],["BR","Atlético Mineiro","logos/brazil/Atlético_Mineiro.svg"],["BR","Avaí","logos/brazil/Avai.svg"],["BR","Bahia","logos/brazil/Bahia.svg"],["BR","Botafogo","logos/brazil/Botafogo_FR.svg"],["BR","Botafogo-SP","logos/brazil/Botafogo_SP.svg"],["BR","Ceará","logos/brazil/Ceará.svg"],["BR","Chapecoense","logos/brazil/Chapecoense.svg"],["BR","Corinthians","logos/brazil/Corinthians.svg"],["BR","Coritiba","logos/brazil/Coritiba.svg"],["BR","Criciúma","logos/brazil/Criciúma.svg"],["BR","Cruzeiro","logos/brazil/Cruzeiro.svg"],["BR","Cuiabá","logos/brazil/Cuiabá.svg"],["BR","Flamengo","logos/brazil/Flamengo.svg"],["BR","Fluminense","logos/brazil/Fluminense.svg"],["BR","Fortaleza","logos/brazil/Fortaleza.svg"],["BR","Goiás","logos/brazil/Goiás.svg"],["BR","Grêmio","logos/brazil/Grêmio.svg"],["BR","Internacional","logos/brazil/Internacional.svg"],["BR","Juventude","logos/brazil/Juventude.svg"],["BR","Londrina","logos/brazil/Londrina.svg"],["BR","Mirassol","logos/brazil/Mirassol.svg"],["BR","Náutico","logos/brazil/Náutico.svg"],["BR","Novorizontino","logos/brazil/Grêmio_Novorizontino.svg"],["BR","Operário-PR","logos/brazil/Operário_Ferroviário.svg"],["BR","Palmeiras","logos/brazil/Palmeiras.svg"],["BR","Ponte Preta","logos/brazil/Ponte_Preta.svg"],["BR","Remo","logos/brazil/Clube_do_Remo.svg"],["BR","Santos","logos/brazil/Santos_FC.svg"],["BR","São Bernardo","logos/brazil/São_Bernardo.svg"],["BR","São Paulo","logos/brazil/São_Paulo.svg"],["BR","Sport","logos/brazil/Sport_Recife.svg"],["BR","Vasco da Gama","logos/brazil/Vasco_da_Gama.svg"],["BR","Vila Nova","logos/brazil/Vila_Nova.svg"],["BR","Vitória","logos/brazil/Vitória.svg"],["CH","Basel","logos/switzerland/Basel.svg"],["CH","FC Zürich","logos/switzerland/Zürich.svg"],["CH","Servette","logos/switzerland/Servette.svg"],["CH","Young Boys","logos/switzerland/Young_Boys.svg"],["CL","Colo-Colo","logos/chile/Colo_Colo.svg"],["CL","Huachipato","logos/chile/Huachipato.svg"],["CL","Palestino","logos/chile/Palestino.svg"],["CL","Universidad Católica","logos/chile/Universidad_Católica.svg"],["CL","Universidad de Chile","logos/chile/Universidad_de_Chile.svg"],["CO","América de Cali","logos/colombia/América_de_Cali.svg"],["CO","Atlético Nacional","logos/colombia/Atlético_Nacional.svg"],["CO","Independiente Medellín","logos/colombia/Independiente_Medellín.svg"],["CO","Junior","logos/colombia/Atlético_Junior.svg"],["CO","Millonarios","logos/colombia/Millonarios.svg"],["CZ","Slavia Praha","logos/czech-republic/SK_Slavia_Praha.svg"],["CZ","Sparta Praha","logos/czech-republic/AC_Sparta_Praha.svg"],["CZ","Viktoria Plzeň","logos/czech-republic/Viktoria_Plzeň.svg"],["DE","Arminia Bielefeld","logos/germany/Arminia_Bielefeld.svg"],["DE","Augsburg","logos/germany/Augsburg.svg"],["DE","Bayer Leverkusen","logos/germany/Bayer_Leverkusen.svg"],["DE","Bayern de Munique","logos/germany/Bayern_Munich.svg"],["DE","Bochum","logos/germany/VfL_Bochum.svg"],["DE","Borussia Dortmund","logos/germany/Borussia_Dortmund.svg"],["DE","Borussia Mönchengladbach","logos/germany/Borussia_Mönchengladbach.svg"],["DE","Darmstadt 98","logos/germany/SV_Darmstadt_98.svg"],["DE","Dynamo Dresden","logos/germany/Dynamo_Dresden.svg"],["DE","Eintracht Braunschweig","logos/germany/Eintracht_Braunschweig.svg"],["DE","Eintracht Frankfurt","logos/germany/Eintracht_Frankfurt.svg"],["DE","Elversberg","logos/germany/SV_Elversberg.svg"],["DE","Energie Cottbus","logos/germany/Energie_Cottbus.svg"],["DE","Freiburg","logos/germany/Freiburg.svg"],["DE","Greuther Fürth","logos/germany/SpVgg_Greuther_Fürth.svg"],["DE","Hannover 96","logos/germany/Hannover_96.svg"],["DE","Heidenheim","logos/germany/FC_Heidenheim.svg"],["DE","Hertha Berlin","logos/germany/Hertha_BSC.svg"],["DE","Hoffenheim","logos/germany/Hoffenheim.svg"],["DE","Holstein Kiel","logos/germany/Holstein_Kiel.svg"],["DE","Kaiserslautern","logos/germany/FC_Kaiserslautern.svg"],["DE","Magdeburg","logos/germany/1._FC_Magdeburg.svg"],["DE","Mainz","logos/germany/Mainz_05.svg"],["DE","Nürnberg","logos/germany/FC_Nürnberg.svg"],["DE","Paderborn","logos/germany/SC_Paderborn.svg"],["DE","RB Leipzig","logos/germany/RB_Leipzig.svg"],["DE","Schalke 04","logos/germany/Schalke_04.svg"],["DE","St. Pauli","logos/germany/St_Pauli.svg"],["DE","Stuttgart","logos/germany/VfB_Stuttgart.svg"],["DE","Union Berlin","logos/germany/Union_Berlin.svg"],["DE","VfL Osnabrück","logos/germany/Osnabrück.svg"],["DE","Werder Bremen","logos/germany/Werder_Bremen.svg"],["DE","Wolfsburg","logos/germany/Wolfsburg.svg"],["DK","Brøndby","logos/denmark/Brøndby_IF.svg"],["DK","Copenhagen","logos/denmark/F.C._Copenhagen.svg"],["DK","Midtjylland","logos/denmark/FC_Midtjylland.svg"],["DK","Nordsjælland","logos/denmark/FC_Nordsjælland.svg"],["ENG","AFC Wimbledon","logos/england/AFC_Wimbledon.svg"],["ENG","Arsenal","logos/england/Arsenal.svg"],["ENG","Aston Villa","logos/england/Aston_Villa.svg"],["ENG","Barnsley","logos/england/Barnsley.svg"],["ENG","Birmingham City","logos/england/Birmingham_City.svg"],["ENG","Blackburn Rovers","logos/england/Blackburn_Rovers.svg"],["ENG","Blackpool","logos/england/Blackpool.svg"],["ENG","Bolton Wanderers","logos/england/Bolton_Wanderers.svg"],["ENG","Bournemouth","logos/england/Bournemouth.svg"],["ENG","Bradford City","logos/england/Bradford_City.svg"],["ENG","Brentford","logos/england/Brentford.svg"],["ENG","Brighton","logos/england/Brighton.svg"],["ENG","Bristol City","logos/england/Bristol_City.svg"],["ENG","Bromley","logos/england/Bromley.svg"],["ENG","Burnley","logos/england/Burnley.svg"],["ENG","Burton Albion","logos/england/Burton_Albion.svg"],["ENG","Cambridge United","logos/england/Cambridge_United.svg"],["ENG","Cardiff City","logos/england/Cardiff_City.svg"],["ENG","Charlton Athletic","logos/england/Charlton_Athletic.svg"],["ENG","Chelsea","logos/england/Chelsea.svg"],["ENG","Coventry City","logos/england/Coventry_City.svg"],["ENG","Crystal Palace","logos/england/Crystal_Palace.svg"],["ENG","Derby County","logos/england/Derby_County.svg"],["ENG","Doncaster Rovers","logos/england/Doncaster_Rovers.svg"],["ENG","Everton","logos/england/Everton.svg"],["ENG","Fulham","logos/england/Fulham.svg"],["ENG","Huddersfield Town","logos/england/Huddersfield_Town.svg"],["ENG","Hull City","logos/england/Hull_City.svg"],["ENG","Leeds United","logos/england/Leeds_United.svg"],["ENG","Leyton Orient","logos/england/Leyton_Orient.svg"],["ENG","Lincoln City","logos/england/Lincoln_City.svg"],["ENG","Liverpool","logos/england/Liverpool_FC.svg"],["ENG","Luton Town","logos/england/Luton_Town.svg"],["ENG","Manchester City","logos/england/Manchester_City.svg"],["ENG","Manchester United","logos/england/Manchester_United.svg"],["ENG","Mansfield Town","logos/england/Mansfield_Town.svg"],["ENG","Middlesbrough","logos/england/Middlesbrough.svg"],["ENG","Millwall","logos/england/Millwall.svg"],["ENG","Milton Keynes Dons","logos/england/Milton_Keynes_Dons.svg"],["ENG","Newcastle United","logos/england/Newcastle_United.svg"],["ENG","Norwich City","logos/england/Norwich_City.svg"],["ENG","Nottingham Forest","logos/england/Nottingham_Forest.svg"],["ENG","Notts County","logos/england/Notts_County.svg"],["ENG","Oxford United","logos/england/Oxford_United.svg"],["ENG","Peterborough United","logos/england/Peterborough_United.svg"],["ENG","Plymouth Argyle","logos/england/Plymouth_Argyle.svg"],["ENG","Portsmouth","logos/england/Portsmouth.svg"],["ENG","Preston North End","logos/england/Preston_North_End.svg"],["ENG","Queens Park Rangers","logos/england/Queens_Park_Rangers.svg"],["ENG","Reading","logos/england/Reading.svg"],["ENG","Sheffield United","logos/england/Sheffield_United.svg"],["ENG","Sheffield Wednesday","logos/england/Sheffield_Wednesday.svg"],["ENG","Southampton","logos/england/Southampton.svg"],["ENG","Stevenage","logos/england/Stevenage.svg"],["ENG","Stockport County","logos/england/Stockport_County.svg"],["ENG","Stoke City","logos/england/Stoke_City.svg"],["ENG","Sunderland","logos/england/Sunderland.svg"],["ENG","Swansea City","logos/england/Swansea_City.svg"],["ENG","Tottenham","logos/england/Tottenham.svg"],["ENG","Watford","logos/england/Watford.svg"],["ENG","West Bromwich Albion","logos/england/West_Bromwich_Albion.svg"],["ENG","West Ham","logos/england/West_Ham.svg"],["ENG","West Ham United","logos/england/West_Ham.svg"],["ENG","Wigan Athletic","logos/england/Wigan_Athletic.svg"],["ENG","Wolverhampton Wanderers","logos/england/Wolverhampton_Wanderers.svg"],["ENG","Wrexham","logos/england/Wrexham_AFC.svg"],["ENG","Wycombe Wanderers","logos/england/Wycombe_Wanderers.svg"],["ES","AD Ceuta","logos/spain/Ceuta.svg"],["ES","Alavés","logos/spain/Deportivo_Alavés.svg"],["ES","Albacete","logos/spain/Albacete.svg"],["ES","Almería","logos/spain/Almería.svg"],["ES","Athletic Club","logos/spain/Athletic_Club_Bilbao.svg"],["ES","Atlético de Madrid","logos/spain/Atletico_Madrid.svg"],["ES","Barcelona","logos/spain/Barcelona.svg"],["ES","Betis","logos/spain/Real_Betis.svg"],["ES","Burgos","logos/spain/Burgos_CF.svg"],["ES","Cádiz","logos/spain/Cádiz_CF.svg"],["ES","Castellón","logos/spain/Castellón.svg"],["ES","Celta de Vigo","logos/spain/Celta.svg"],["ES","Córdoba","logos/spain/Córdoba.svg"],["ES","Deportivo La Coruña","logos/spain/Deportivo_La_Coruña.svg"],["ES","Eibar","logos/spain/Eibar.svg"],["ES","Elche","logos/spain/Elche.svg"],["ES","Eldense","logos/spain/CD_Eldense.svg"],["ES","Espanyol","logos/spain/Espanyol.svg"],["ES","FC Andorra","logos/spain/FC_Andorra.svg"],["ES","Getafe","logos/spain/Getafe.svg"],["ES","Girona","logos/spain/Girona.svg"],["ES","Granada","logos/spain/Granada.svg"],["ES","Las Palmas","logos/spain/Las_Palmas.svg"],["ES","Leganés","logos/spain/Leganés.svg"],["ES","Levante","logos/spain/Levante.svg"],["ES","Málaga","logos/spain/Málaga.svg"],["ES","Mallorca","logos/spain/Mallorca.svg"],["ES","Osasuna","logos/spain/Osasuna.svg"],["ES","Racing Santander","logos/spain/Racing_Santander.svg"],["ES","Rayo Vallecano","logos/spain/Rayo_Vallecano.svg"],["ES","Real Madrid","logos/spain/Real_Madrid.svg"],["ES","Real Oviedo","logos/spain/Oviedo.svg"],["ES","Real Sociedad","logos/spain/Real_Sociedad.svg"],["ES","Real Valladolid","logos/spain/Real_Valladolid.svg"],["ES","Sabadell","logos/spain/Sabadell.svg"],["ES","Sevilla","logos/spain/Sevilla.svg"],["ES","Sporting Gijón","logos/spain/Sporting_Gijón.svg"],["ES","Tenerife","logos/spain/Tenerife.svg"],["ES","Valencia","logos/spain/Valencia.svg"],["ES","Villarreal","logos/spain/Villarreal.svg"],["FR","Angers","logos/france/Angers.svg"],["FR","Annecy","logos/france/Annecy.svg"],["FR","Auxerre","logos/france/Auxerre.svg"],["FR","Boulogne","logos/france/Boulogne.svg"],["FR","Brest","logos/france/Brest.svg"],["FR","Clermont Foot","logos/france/Clermont_Foot.svg"],["FR","Dijon","logos/france/Dijon_FCO.svg"],["FR","Dunkerque","logos/france/Dunkerque.svg"],["FR","Grenoble","logos/france/Grenoble_Foot_38.svg"],["FR","Guingamp","logos/france/EA_Guingamp.svg"],["FR","Laval","logos/france/FA_Laval.svg"],["FR","Le Havre","logos/france/Le_Havre_AC.svg"],["FR","Le Mans","logos/france/Le_Mans_FC.svg"],["FR","Lens","logos/france/RC_Lens.svg"],["FR","Lille","logos/france/Lille.svg"],["FR","Lorient","logos/france/Lorient_FC.svg"],["FR","Marseille","logos/france/Marseille.svg"],["FR","Metz","logos/france/FC_Metz.svg"],["FR","Monaco","logos/france/AS_Monaco.svg"],["FR","Montpellier","logos/france/Montpellier.svg"],["FR","Nancy","logos/france/Nancy_Lorraine.svg"],["FR","Nantes","logos/france/Nantes.svg"],["FR","Nice","logos/france/Nice.svg"],["FR","Paris FC","logos/france/Paris_FC.svg"],["FR","Paris Saint-Germain","logos/france/Paris_Saint-Germain_(PSG).svg"],["FR","Pau","logos/france/Pau_FC.svg"],["FR","Red Star","logos/france/Red_Star_FC.svg"],["FR","Reims","logos/france/Stade_de_Reims.svg"],["FR","Rennes","logos/france/Rennes.svg"],["FR","Rodez","logos/france/Rodez_AF.svg"],["FR","Saint-Étienne","logos/france/AS_Saint-Étienne.svg"],["FR","Sochaux","logos/france/FC_Sochaux-Montbéliard.svg"],["FR","Strasbourg","logos/france/RC_Strasbourg_Alsace.svg"],["FR","Toulouse","logos/france/Toulouse.svg"],["FR","Troyes","logos/france/Troyes.svg"],["GR","AEK Athens","logos/greece/AEK_Athens.svg"],["GR","Olympiacos","logos/greece/Olympiacos.svg"],["GR","Panathinaikos","logos/greece/Panathinaikos.svg"],["GR","PAOK","logos/greece/PAOK.svg"],["HR","Dinamo Zagreb","logos/croatia/GNK_Dinamo_Zagreb.svg"],["HR","Hajduk Split","logos/croatia/Hajduk_Split.svg"],["HR","Rijeka","logos/croatia/Rijeka.svg"],["IT","Arezzo","logos/italy/Arezzo.svg"],["IT","Ascoli","logos/italy/Ascoli.svg"],["IT","Atalanta","logos/italy/Atalanta.svg"],["IT","Avellino","logos/italy/US_Avellino_1912.svg"],["IT","Benevento","logos/italy/Benevento.svg"],["IT","Bologna","logos/italy/Bologna.svg"],["IT","Cagliari","logos/italy/Cagliari.svg"],["IT","Carrarese","logos/italy/Carrarese_Calcio.svg"],["IT","Catanzaro","logos/italy/Catanzaro.svg"],["IT","Cesena","logos/italy/Cesena_FC.svg"],["IT","Como","logos/italy/Como_1907.svg"],["IT","Cremonese","logos/italy/Cremonese.svg"],["IT","Empoli","logos/italy/Empoli.svg"],["IT","Fiorentina","logos/italy/Fiorentina.svg"],["IT","Frosinone","logos/italy/Frosinone_Calcio.svg"],["IT","Genoa","logos/italy/Genoa.svg"],["IT","Hellas Verona","logos/italy/Hellas_Verona.svg"],["IT","Inter de Milão","logos/italy/Inter.svg"],["IT","Juve Stabia","logos/italy/Juve_Stabia.svg"],["IT","Juventus","logos/italy/Juventus.svg"],["IT","L.R. Vicenza","logos/italy/Vicenza.svg"],["IT","Lazio","logos/italy/Lazio.svg"],["IT","Lecce","logos/italy/Lecce.svg"],["IT","Mantova","logos/italy/Mantova_1911.svg"],["IT","Milan","logos/italy/Milan.svg"],["IT","Modena","logos/italy/Modena.svg"],["IT","Monza","logos/italy/Monza.svg"],["IT","Napoli","logos/italy/Napoli.svg"],["IT","Padova","logos/italy/Padova.svg"],["IT","Palermo","logos/italy/Palermo.svg"],["IT","Parma","logos/italy/Parma.svg"],["IT","Pisa","logos/italy/Pisa.svg"],["IT","Roma","logos/italy/Roma.svg"],["IT","Sampdoria","logos/italy/Sampdoria.svg"],["IT","Sassuolo","logos/italy/Sassuolo.svg"],["IT","Torino","logos/italy/Torino.svg"],["IT","Udinese","logos/italy/Udinese.svg"],["IT","Venezia","logos/italy/Venezia.svg"],["IT","Virtus Entella","logos/italy/Virtus_Entella.svg"],["JP","Kashima Antlers","logos/japan/Kashima_Antlers.svg"],["JP","Kawasaki Frontale","logos/japan/Kawasaki_Frontale.svg"],["JP","Vissel Kobe","logos/japan/Vissel_Kobe.svg"],["JP","Yokohama F. Marinos","logos/japan/Yokohama_F._Marinos.svg"],["KR","FC Seoul","logos/south-korea/FC_Seoul.svg"],["KR","Ulsan HD","logos/south-korea/Ulsan_HD_FC.svg"],["MX","América","logos/mexico/Club_America.svg"],["MX","Club América","logos/mexico/Club_America.svg"],["MX","Cruz Azul","logos/mexico/Cruz_Azul.svg"],["MX","Guadalajara","logos/mexico/CD_Guadalajara.svg"],["MX","Monterrey","logos/mexico/Monterrey.svg"],["MX","Pachuca","logos/mexico/Pachuca.svg"],["MX","Tigres UANL","logos/mexico/Tigres_UANL.svg"],["MX","Toluca","logos/mexico/Toluca.svg"],["NL","Ajax","logos/netherlands/Ajax.svg"],["NL","AZ Alkmaar","logos/netherlands/AZ_Alkmaar.svg"],["NL","Excelsior","logos/netherlands/Excelsior_Rotterdam.svg"],["NL","Feyenoord","logos/netherlands/Feyenoord.svg"],["NL","Fortuna Sittard","logos/netherlands/Fortuna_Sittard.svg"],["NL","Go Ahead Eagles","logos/netherlands/Go_Ahead_Eagles.svg"],["NL","Groningen","logos/netherlands/FC_Groningen.svg"],["NL","Heerenveen","logos/netherlands/sc_Heerenveen.svg"],["NL","Heracles","logos/netherlands/Heracles_Almelo.svg"],["NL","NAC Breda","logos/netherlands/NAC_Breda.svg"],["NL","PEC Zwolle","logos/netherlands/PEC_Zwolle.svg"],["NL","PSV","logos/netherlands/PSV_Eindhoven.svg"],["NL","Sparta Rotterdam","logos/netherlands/Sparta_Rotterdam.svg"],["NL","Telstar","logos/netherlands/Telstar.svg"],["NL","Twente","logos/netherlands/Twente.svg"],["NL","Utrecht","logos/netherlands/FC_Utrecht.svg"],["NL","Volendam","logos/netherlands/Volendam.svg"],["NO","Bodø/Glimt","logos/norway/BodøGlimt.svg"],["NO","Molde","logos/norway/Molde.svg"],["NO","Rosenborg","logos/norway/Rosenborg.svg"],["PL","Lech Poznań","logos/poland/Lech_Poznań.svg"],["PL","Legia Warszawa","logos/poland/Legia_Warszawa.svg"],["PL","Raków Częstochowa","logos/poland/Raków_Częstochowa.svg"],["PT","Académica","logos/portugal/Académica_de_Coimbra.svg"],["PT","Académico de Viseu","logos/portugal/Académico_de_Viseu.svg"],["PT","Alverca","logos/portugal/Alverca.svg"],["PT","Amarante","logos/portugal/Amarante.svg"],["PT","Arouca","logos/portugal/Arouca.svg"],["PT","AVS","logos/portugal/AVS_Futebol_SAD.svg"],["PT","Benfica","logos/portugal/Benfica.svg"],["PT","Braga","logos/portugal/SC_Braga.svg"],["PT","Casa Pia","logos/portugal/Casa_Pia_AC.svg"],["PT","Chaves","logos/portugal/Grupo_Desportivo_de_Chaves.svg"],["PT","Estoril","logos/portugal/Estoril.svg"],["PT","Estrela da Amadora","logos/portugal/Estrela_da_Amadora.svg"],["PT","Famalicão","logos/portugal/Famalicao.svg"],["PT","Farense","logos/portugal/Farense.svg"],["PT","Feirense","logos/portugal/Feirense.svg"],["PT","Felgueiras 1932","logos/portugal/Felgueiras.svg"],["PT","Gil Vicente","logos/portugal/Gil_Vicente.svg"],["PT","Leixões","logos/portugal/Leixões.svg"],["PT","Lusitânia de Lourosa","logos/portugal/Lusitânia_de_Lourosa.svg"],["PT","Marítimo","logos/portugal/Marítimo.svg"],["PT","Moreirense","logos/portugal/Moreirense.svg"],["PT","Nacional da Madeira","logos/portugal/Nacional_da_Madeira.svg"],["PT","Penafiel","logos/portugal/Penafiel.svg"],["PT","Portimonense","logos/portugal/Portimonense.svg"],["PT","Porto","logos/portugal/FC_Porto.svg"],["PT","Rio Ave","logos/portugal/Rio_Ave.svg"],["PT","Santa Clara","logos/portugal/Santa_Clara.svg"],["PT","Sporting CP","logos/portugal/Sporting_CP.svg"],["PT","Tondela","logos/portugal/Tondela.svg"],["PT","Torreense","logos/portugal/S.C.U._Torreense.svg"],["PT","União de Leiria","logos/portugal/União_de_Leiria.svg"],["PT","Vitória de Guimarães","logos/portugal/Vitória_de_Guimarães.svg"],["PT","Vizela","logos/portugal/Vizela.svg"],["QA","Al-Duhail","logos/qatar/Al_Duhail.svg"],["QA","Al-Sadd","logos/qatar/Al_Sadd.svg"],["RO","CFR Cluj","logos/romania/CFR_Cluj.svg"],["RS","Partizan","logos/serbia/FK_Partizan.svg"],["SA","Al-Ahli","logos/saudi-arabia/Al_Ahli.svg"],["SA","Al-Ettifaq","logos/saudi-arabia/Al_Ettifaq.svg"],["SA","Al-Fateh","logos/saudi-arabia/Al_Fateh.svg"],["SA","Al-Fayha","logos/saudi-arabia/Al_Fayha.svg"],["SA","Al-Hilal","logos/saudi-arabia/Al_Hilal.svg"],["SA","Al-Ittihad","logos/saudi-arabia/Al_Ittihad.svg"],["SA","Al-Khaleej","logos/saudi-arabia/Al_Khaleej.svg"],["SA","Al-Kholood","logos/saudi-arabia/Al-Kholood.svg"],["SA","Al-Nassr","logos/saudi-arabia/Al_Nassr.svg"],["SA","Al-Okhdood","logos/saudi-arabia/Al_Okhdood.svg"],["SA","Al-Qadsiah","logos/saudi-arabia/Al_Qadsiah.svg"],["SA","Al-Raed","logos/saudi-arabia/Al_Raed.svg"],["SA","Al-Riyadh","logos/saudi-arabia/Al_Riyadh.svg"],["SA","Al-Shabab","logos/saudi-arabia/Al_Shabab.svg"],["SA","Al-Taawoun","logos/saudi-arabia/Al_Taawoun.svg"],["SA","Al-Wehda","logos/saudi-arabia/Al_Wehda.svg"],["SA","Damac","logos/saudi-arabia/Damac.svg"],["SA","Neom SC","logos/saudi-arabia/Neom_SC.svg"],["SCO","Aberdeen","logos/scotland/Aberdeen.svg"],["SCO","Celtic","logos/scotland/Celtic.svg"],["SCO","Dundee","logos/scotland/Dundee.svg"],["SCO","Dundee United","logos/scotland/Dundee_United.svg"],["SCO","Falkirk","logos/scotland/Falkirk.svg"],["SCO","Hearts","logos/scotland/Hearts.svg"],["SCO","Hibernian","logos/scotland/Hibernian.svg"],["SCO","Kilmarnock","logos/scotland/Kilmarnock.svg"],["SCO","Livingston","logos/scotland/Livingston.svg"],["SCO","Motherwell","logos/scotland/Motherwell.svg"],["SCO","Rangers","logos/scotland/Rangers.svg"],["SCO","St Mirren","logos/scotland/St._Mirren.svg"],["SE","AIK","logos/sweden/AIK.svg"],["SE","Malmö FF","logos/sweden/Malmö.svg"],["TR","Beşiktaş","logos/turkey/Beşiktaş.svg"],["TR","Fenerbahçe","logos/turkey/Fenerbahçe.svg"],["TR","Galatasaray","logos/turkey/Galatasaray.svg"],["TR","İstanbul Başakşehir","logos/turkey/Başakşehir.svg"],["TR","Trabzonspor","logos/turkey/Trabzonspor.svg"],["UA","Dynamo Kyiv","logos/ukraine/Dynamo_Kyiv.svg"],["UA","Shakhtar Donetsk","logos/ukraine/Shakhtar.svg"],["US","Atlanta United","logos/usa/Atlanta_United.svg"],["US","Columbus Crew","logos/usa/Columbus_Crew.svg"],["US","FC Cincinnati","logos/usa/FC_Cincinnati.svg"],["US","Inter Miami","logos/usa/Inter_Miami_CF.svg"],["US","LA Galaxy","logos/usa/Los_Angeles_Galaxy.svg"],["US","Los Angeles FC","logos/usa/Los_Angeles_Football_Club.svg"],["US","New York City FC","logos/usa/New_York_City_Football_Club.svg"],["US","Orlando City","logos/usa/Orlando_City.svg"],["US","Seattle Sounders","logos/usa/Seattle_Sounders_FC.svg"],["UY","Danubio","logos/uruguay/Danubio.svg"],["UY","Defensor Sporting","logos/uruguay/Defensor_Sporting.svg"],["UY","Liverpool Montevideo","logos/uruguay/Liverpool.svg"],["UY","Nacional","logos/uruguay/Nacional.svg"],["UY","Peñarol","logos/uruguay/Peñarol.svg"],["AT","Red Bull Salzburg","logos/austria/Salzburg.svg"],["BR","CRB","logos/brazil/Clube_de_Regatas_Brasil.svg"],["BR","Red Bull Bragantino","logos/brazil/RB_Bragantino.svg"],["DE","Hamburgo","logos/germany/Hamburger_SV.svg"],["DE","Karlsruhe","logos/germany/Karlsruher_SC.svg"],["DE","Köln","logos/germany/Cologne.svg"],["ENG","Ipswich Town","logos/england/Ipswich.svg"],["ENG","Leicester City","logos/england/Leicester.svg"],["ES","Celta Fortuna","logos/spain/Celta.svg"],["ES","Real Sociedad B","logos/spain/Real_Sociedad.svg"],["FR","Lyon","logos/france/Olympique_Lyonnais.svg"],["JP","Urawa Red Diamonds","logos/japan/Urawa_Reds.svg"],["KR","Jeonbuk Hyundai Motors","logos/south-korea/Jeonbuk.svg"],["NL","NEC","logos/netherlands/N.E.C._Nijmegen.svg"],["PT","Benfica B","logos/portugal/Benfica.svg"],["PT","Porto B","logos/portugal/FC_Porto.svg"],["PT","Sporting B","logos/portugal/Sporting_CP.svg"],["RS","Red Star Belgrade","logos/serbia/Crvena_Zvezda.svg"],["SE","Djurgårdens IF","logos/sweden/Djurgården.svg"]];
+const normalize=text=>String(text||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]+/g,' ').trim();
+const byId=new Map(),byName=new Map();
+for(const [country,name,path] of rows){
+ const item={country,name,path};byId.set(`${country}|${normalize(name)}`,item);
+ const k=normalize(name),arr=byName.get(k)||[];arr.push(item);byName.set(k,arr);
+}
+function find(name,countryCode=''){
+ const key=normalize(name);if(!key)return null;
+ const country=String(countryCode||'').toUpperCase();
+ if(country)return byId.get(`${country}|${key}`)||null;
+ // For unspecified countries, never guess between namesakes from different leagues.
+ const candidates=byName.get(key)||[];return candidates.length===1?candidates[0]:null;
+}
+function urlForPath(path){return BASE+String(path||'').split('/').map(encodeURIComponent).join('/');}
+const api=Object.freeze({repository:REPO,commit:COMMIT,base:BASE,count:rows.length,
+ find, resolve:(name,country='')=>{const item=find(name,country);return item?urlForPath(item.path):'';},
+ isCatalogUrl:url=>{try{const u=new URL(String(url||''));return u.protocol==='https:'&&u.hostname==='raw.githubusercontent.com'&&u.pathname.startsWith(`/${REPO}/${COMMIT}/logos/`)&&u.pathname.endsWith('.svg');}catch{return false;}},
+ list:()=>rows.map(([country,name,path])=>({country,name,path}))});
+window.BTLStaticCrests=api;
+})();
+
+</script>
+  <script>
 const $ = selector => document.querySelector(selector);
 const $$ = selector => document.querySelectorAll(selector);
 const STORAGE_KEY = window.BTLAuth?.getGameStorageKey?.() || 'beTheLegendV95';
@@ -15227,7 +15260,7 @@ const HALL_RESET_V104_KEY = 'beTheLegendV104HallReset';
 const LEGACY_STORAGE_KEY = 'careerSimV7';
 const LEGACY_V103_CLAIM_KEY = 'beTheLegendV103LegacyClaimed';
 const LEGACY_V95_FOR_MIGRATION = window.BTLAuth?.getCurrentAccount?.() && !localStorage.getItem(LEGACY_V103_CLAIM_KEY) ? localStorage.getItem('beTheLegendV95') : null;
-const BADGE_KEY = 'beTheLegendBadgeCacheV21Verified';
+const BADGE_KEY = 'beTheLegendBadgeCacheV22Static';
 const DRAFT_KEY = 'beTheLegendV92AttributeDraft';
 const PREVIOUS_DRAFT_KEY = 'beTheLegendV91AttributeDraft';
 
@@ -15283,14 +15316,11 @@ function dropBadgeUrl(url){
 }
 
 function badgeCacheKeys(name,countryCode=''){ const code=countryCode||canonicalClubCountryCode(name,''); return [code?`${code}:${name}`:name]; }
-function getCachedBadge(name,countryCode=''){ for(const key of badgeCacheKeys(name,countryCode)){ const hit=safeBadgeImage(badgeCache?.[key]||''); if(hit&&!badBadgeUrls.has(hit))return hit; } return ''; }
-function setCachedBadge(name,countryCode='',url=''){ const safe=safeBadgeImage(url); if(!safe)return ''; for(const key of badgeCacheKeys(name,countryCode)) badgeCache[key]=safe; saveBadges(); return safe; }
+function getCachedBadge(name,countryCode=''){ const url=safeBadgeImage(window.BTLStaticCrests?.resolve(name,countryCode||canonicalClubCountryCode(name,''))||''); return url&&!badBadgeUrls.has(url)?url:''; }
+function setCachedBadge(name,countryCode='',url=''){ const expected=getCachedBadge(name,countryCode); if(!expected||safeBadgeImage(url)!==expected)return ''; for(const key of badgeCacheKeys(name,countryCode))badgeCache[key]=expected; saveBadges();return expected; }
 // V16: FIFA/ESPN/API-Sports never supply visible club crests.
 // Only Wikimedia Commons file CDN images may enter the badge cache.
-window.BTLRegisterVerifiedCrest=function(club,url,source){
-  if(source!=='Wikimedia Commons'||typeof club!=='string'||club.length>90||!safeCommonsImage(url))return false;
-  badgeCache[club]=url;saveBadges();return true;
-};
+window.BTLRegisterVerifiedCrest=()=>false; // External badge registration disabled in static-only mode
 function rnd(min,max){ return Math.floor(Math.random()*(max-min+1))+min; }
 function sample(array,count){ return [...array].sort(()=>Math.random()-.5).slice(0,count); }
 function shuffle(array){ return [...array].sort(()=>Math.random()-.5); }
@@ -16317,157 +16347,28 @@ function commonsScore(title,club){
  return tokens.every(x=>parts.includes(x))?82-Math.max(0,parts.length-tokens.length)*4:-1;
 }
 function safeCommonsImage(url){try{const u=new URL(url);return u.protocol==='https:'&&u.hostname==='upload.wikimedia.org'&&/\.(svg|png|webp)(?:$|\?)/i.test(u.pathname)?u.href:''}catch{return ''}}
-function safeBadgeImage(url){
- try{
-  const u=new URL(String(url||''));
-  if(u.protocol!=='https:')return '';
-  const host=u.hostname.toLowerCase();
-  const validExt=/\.(svg|png|webp|jpg|jpeg)(?:$|\?)/i.test(u.pathname);
-  if(!validExt)return '';
-  if(host==='upload.wikimedia.org')return u.href;
-  if(host==='thesportsdb.com'||host.endsWith('.thesportsdb.com'))return u.href;
-  if(host==='api-sports.io'||host.endsWith('.api-sports.io'))return u.href;
-  return '';
- }catch{return ''}
-}
-// Clear all legacy providers on startup. Old saves stay untouched.
-for(const [team,url] of Object.entries(badgeCache))if(!safeBadgeImage(url))delete badgeCache[team];
+// V22: Static-only crest catalog: no API-Football, Wikidata, Commons or TheSportsDB requests.
+// V22: Static-only crest catalog: no API-Football, Wikidata, Commons or TheSportsDB requests.
+function safeBadgeImage(url){return window.BTLStaticCrests?.isCatalogUrl?.(url)?String(url):'';}
+for(const [club,url] of Object.entries(badgeCache))if(!safeBadgeImage(url))delete badgeCache[club];
 saveBadges();
-function recordCommonsAttribution(club,result){
- try{const records=JSON.parse(localStorage.getItem(commonsMetaKey)||'{}');records[club]={filePage:result.filePage||result.page||'',license:result.license||'Consultar a página do arquivo',credit:result.credit||'',matchedFile:result.matchedFile||''};localStorage.setItem(commonsMetaKey,JSON.stringify(records))}catch(_){}
-}
-async function commonsCrest(name){
- if(!name||(commonsMisses.get(name)||0)>Date.now())return '';
- if(commonsInFlight.has(name))return commonsInFlight.get(name);
- const promise=(async()=>{
-  try{
-   let result=null;
-   // Prefer own proxy when deployed to Cloudflare Pages, but also work on static hosts.
-   try{const r=await fetch(`/api/commons-crest?name=${encodeURIComponent(name)}`,{signal:AbortSignal.timeout(4200)});if(r.ok)result=await r.json()}catch(_){}
-   if(!safeCommonsImage(result?.logo||'')){
-    const q=COMMONS_CLUB_ALIASES[name]||CLUB_BADGE_ALIASES[name]?.[1]||CURRENT_EUROPE_LOGO_NAMES[name]||name,url=new URL(COMMONS_ENDPOINT);
-    for(const [k,v] of Object.entries({action:'query',format:'json',generator:'search',gsrsearch:`${q} football club logo`,gsrnamespace:'6',gsrlimit:'15',prop:'imageinfo',iiprop:'url|extmetadata',iiurlwidth:'220',origin:'*'}))url.searchParams.set(k,v);
-    const r=await fetch(url.href,{signal:AbortSignal.timeout(5500)});if(!r.ok)throw Error('Wikimedia indisponível');
-    const pages=Object.values((await r.json()).query?.pages||{});
-    const found=pages.map(p=>({rank:commonsScore(p.title,q),matchedFile:p.title,logo:p.imageinfo?.[0]?.thumburl||p.imageinfo?.[0]?.url||'',filePage:p.imageinfo?.[0]?.descriptionurl||'',license:p.imageinfo?.[0]?.extmetadata?.LicenseShortName?.value||'',credit:p.imageinfo?.[0]?.extmetadata?.Artist?.value||''})).filter(p=>p.rank>=55&&safeCommonsImage(p.logo)).sort((a,b)=>b.rank-a.rank);
-    result=found[0]||null;
-   }
-   const url=safeCommonsImage(result?.logo||'');if(url){recordCommonsAttribution(name,result);return url;}
-  }catch(_){}
-  commonsMisses.set(name,Date.now()+900000);return '';
- })();commonsInFlight.set(name,promise);
- try{return await promise}finally{commonsInFlight.delete(name)}
-}
-async function sportsDbBadgeByCountry(name,countryCode=''){
-  const country=countryByCode(countryCode)?.apiName||countryByCode(countryCode)?.name||'';
-  if(!country)return '';
-  try{
-    const url=`https://www.thesportsdb.com/api/v1/json/123/search_all_teams.php?s=Soccer&c=${encodeURIComponent(country)}`;
-    const r=await fetch(url,{signal:AbortSignal.timeout(5200)});if(!r.ok)return '';
-    const data=await r.json();
-    const aliases=[name,...(CLUB_BADGE_ALIASES[name]||[]),COMMONS_CLUB_ALIASES[name],CURRENT_EUROPE_LOGO_NAMES[name]].filter(Boolean);
-    const wanted=new Set(aliases.map(normalizeKey));
-    const teams=(data.teams||[]).filter(t=>t?.idTeam&&t?.strTeam&&t?.strSport==='Soccer');
-    const scoreTeam=t=>{
-      const fields=[t.strTeam,t.strTeamShort,t.strAlternate,t.strLeague].filter(Boolean).map(normalizeKey);
-      if(fields.some(f=>wanted.has(f)))return 100;
-      const joined=fields.join(' '),tokens=normalizeKey(name).match(/[a-z0-9]{3,}/g)||[];
-      return tokens.filter(tok=>joined.includes(tok)).length;
-    };
-    const ranked=teams.map(team=>({team,score:scoreTeam(team)})).filter(x=>x.score>=100).sort((a,b)=>b.score-a.score);
-    const exact=ranked[0]?.team;
-    const badge=safeBadgeImage(exact?.strBadge||'');
-    if(badge){rememberClubColors(exact,{name});return badge;}
-  }catch(_){/* próximo fallback */}
-  return '';
-}
-async function sportsDbBadge(name,countryCode=''){
-  const aliases=[name,...(CLUB_BADGE_ALIASES[name]||[]),COMMONS_CLUB_ALIASES[name],CURRENT_EUROPE_LOGO_NAMES[name]].filter(Boolean);
-  const seen=new Set();
-  for(const query of aliases){
-    const key=normalizeKey(query);if(seen.has(key))continue;seen.add(key);
-    try{
-      const url=`https://www.thesportsdb.com/api/v1/json/123/searchteams.php?t=${encodeURIComponent(query)}`;
-      const r=await fetch(url,{signal:AbortSignal.timeout(5000)});if(!r.ok)continue;
-      const data=await r.json();
-      const country=countryByCode(countryCode)?.apiName||countryByCode(countryCode)?.name||'';
-      const teams=(data.teams||[]).filter(t=>t?.idTeam&&t?.strTeam&&t?.strSport==='Soccer'&&(!country||t.strCountry&&normalizeKey(t.strCountry)===normalizeKey(country)));
-      const exact=teams.find(t=>normalizeKey(t.strTeam)===normalizeKey(query)||normalizeKey(t.strTeam)===normalizeKey(name)||normalizeKey(t.strAlternate||'')===normalizeKey(name));
-      const badge=safeBadgeImage(exact?.strBadge||'');
-      if(badge){rememberClubColors(exact,{name});return badge;}
-    }catch(_){/* tentar próximo alias */}
-  }
-  return await sportsDbBadgeByCountry(name,countryCode);
-}
-async function apiSportsBadge(name){
- try{
-  const code=canonicalClubCountryCode(name,'');const country=countryByCode(code)?.apiName||countryByCode(code)?.name||'';
-  const apiId=Number(findClubData(name,code)?.apiId||findClubDataAny(name)?.apiId||0);
-  const idQuery=Number.isInteger(apiId)&&apiId>0?`&id=${apiId}`:'';
-  const r=await fetch(`/api/club-badge?name=${encodeURIComponent(name)}${country?`&country=${encodeURIComponent(country)}`:''}${idQuery}`,{signal:AbortSignal.timeout(4500)});
-  if(!r.ok)return '';
-  const data=await r.json();
-  return safeBadgeImage(data?.logo||'');
- }catch(_){return ''}
-}
-const missingOfficialCrests=new Set();
-const badgeAttemptStatus=new Map();
-window.BTLCrestDiagnostics=()=>({unresolved:[...missingOfficialCrests].sort((a,b)=>a.localeCompare(b,'pt-BR')),verifiedCacheCount:Object.keys(badgeCache).filter(x=>safeBadgeImage(badgeCache[x])).length,brokenUrlCount:badBadgeUrls.size,source:'API-Sports / Wikidata / Wikimedia Commons / TheSportsDB',tried:[...badgeAttemptStatus.entries()]});
-async function wikidataCrest(name,countryCode=''){
-  const aliases=[name,...(CLUB_BADGE_ALIASES[name]||[]),COMMONS_CLUB_ALIASES[name],CURRENT_EUROPE_LOGO_NAMES[name]].filter(Boolean);
-  for(const alias of [...new Set(aliases)].slice(0,2)){
-    try{
-      const url=new URL('https://www.wikidata.org/w/api.php');
-      Object.entries({action:'wbsearchentities',format:'json',search:alias,language:'en',type:'item',limit:'5',origin:'*'}).forEach(([key,val])=>url.searchParams.set(key,val));
-      const result=await fetch(url.href,{signal:AbortSignal.timeout(4100)});if(!result.ok)continue;
-      const body=await result.json();
-      const q=(body.search||[]).find(item=>{
-        const label=normalizeKey(item.label||''),aliasKey=normalizeKey(alias),nameKey=normalizeKey(name);
-        const kind=String(item.description||'').toLowerCase();
-        return (label===aliasKey||label===nameKey)&&/football|soccer|futebol|fútbol/i.test(kind);
-      });
-      if(!q?.id)continue;
-      const entityURL=new URL('https://www.wikidata.org/w/api.php');
-      Object.entries({action:'wbgetentities',format:'json',ids:q.id,props:'claims',origin:'*'}).forEach(([key,val])=>entityURL.searchParams.set(key,val));
-      const entityRequest=await fetch(entityURL.href,{signal:AbortSignal.timeout(4300)});if(!entityRequest.ok)continue;
-      const entity=(await entityRequest.json()).entities?.[q.id];
-      const filename=entity?.claims?.P154?.[0]?.mainsnak?.datavalue?.value;
-      if(typeof filename!=='string'||!/\.(png|svg|webp)$/i.test(filename))continue;
-      const commonsURL=new URL('https://commons.wikimedia.org/w/api.php');
-      Object.entries({action:'query',format:'json',titles:'File:'+filename,prop:'imageinfo',iiprop:'url',iiurlwidth:'220',origin:'*'}).forEach(([key,val])=>commonsURL.searchParams.set(key,val));
-      const fileRequest=await fetch(commonsURL.href,{signal:AbortSignal.timeout(4500)});if(!fileRequest.ok)continue;
-      const pages=Object.values((await fileRequest.json()).query?.pages||{});
-      const logo=safeCommonsImage(pages[0]?.imageinfo?.[0]?.thumburl||pages[0]?.imageinfo?.[0]?.url||'');
-      if(logo&&!badBadgeUrls.has(logo))return logo;
-    }catch(_){/* Wikidata unavailable */}
-  }
-  return '';
-}
+const missingOfficialCrests=new Set(),badgeAttemptStatus=new Map();
+window.BTLCrestDiagnostics=()=>({
+  source:'GitHub static SVG catalog (JoseArroyave/football-logos)',
+  configured:true,apiCalls:0,inventory:448,
+  catalogCoverage:window.BTLStaticCrests?.count||0,
+  unmatched:window.BTLStaticCrests ? [] : ['Static crest catalog missing'],
+  unresolved:[...missingOfficialCrests].sort((a,b)=>a.localeCompare(b,'pt-BR')),
+  brokenUrlCount:badBadgeUrls.size,tried:[...badgeAttemptStatus.entries()]
+});
 async function exactClubBadge(name,countryCode='',excludeUrls=new Set()){
  if(!name)return '';
  const code=countryCode||canonicalClubCountryCode(name,'');
- const cached=getCachedBadge(name,code);
- if(cached&&!excludeUrls.has(cached))return cached;
- const flightKey=`${code}:${name}:${excludeUrls.size}`;
- if(badgeRequestsInFlight.has(flightKey))return badgeRequestsInFlight.get(flightKey);
- const job=(async()=>{
-   // Query trusted providers in parallel to avoid the cumulative latency of multiple unavailable services.
-   const validate=async loader=>{
-     const url=safeBadgeImage(await loader());
-     if(url&&!badBadgeUrls.has(url)&&!excludeUrls.has(url))return url;
-     throw Error('No verified candidate');
-   };
-   // API-Sports, when configured, is preferred because the team identifier is stable.
-   try{return await validate(()=>apiSportsBadge(name))}catch(_){}
-   // Parallel free sources avoid a long series of timeouts when one is unavailable.
-   // Both must first pass strict entity / filename validation.
-   try{return await Promise.any([validate(()=>wikidataCrest(name,code)),validate(()=>commonsCrest(name))])}catch(_){}
-   // TheSportsDB free tier limits general team-name searches; use as last fallback.
-   try{return await validate(()=>sportsDbBadge(name,code))}catch(_){}
-   missingOfficialCrests.add(`${code}:${name}`);badgeAttemptStatus.set(`${code}:${name}`,{status:'unresolved',checkedAt:new Date().toISOString()});
-   return '';
- })();badgeRequestsInFlight.set(flightKey,job);
- try{return await job}finally{badgeRequestsInFlight.delete(flightKey)}
+ const url=safeBadgeImage(window.BTLStaticCrests?.resolve(name,code)||'');
+ if(url && !badBadgeUrls.has(url) && !excludeUrls.has(url))return url;
+ missingOfficialCrests.add(`${code}:${name}`);
+ badgeAttemptStatus.set(`${code}:${name}`,{status:url?'image-unavailable':'not-in-static-catalog',checkedAt:new Date().toISOString()});
+ return '';
 }
 
 function clubBadgeSources(name,exact=''){
@@ -20959,21 +20860,18 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 
 </script>
   <script>
-/* Wikimedia attribution notice for crests returned by the live lookup.
-   Preserves file page, author and license text; untrusted data is textContent. */
-(()=>{'use strict';
-const key='btl-wikimedia-credits-v15';
-const $=s=>document.querySelector(s);
-const btn=$('#commons-attribution-open'),modal=$('#commons-attribution-modal'),list=$('#commons-attribution-list');
-if(!btn||!modal||!list)return;
-function safeFilePage(value){try{const u=new URL(value);return u.protocol==='https:'&&u.hostname==='commons.wikimedia.org'?u.href:null}catch{return null}}
-function open(){let entries=[];try{entries=Object.entries(JSON.parse(localStorage.getItem(key)||'{}'))}catch(_){}
- list.replaceChildren();if(!entries.length){const p=document.createElement('p');p.textContent='Nenhum escudo do Wikimedia Commons foi carregado neste navegador ainda. Consulte os escudos ao jogar e volte aqui para verificar os créditos.';list.appendChild(p)}
- for(const [club,c] of entries){const row=document.createElement('div');row.className='commons-credit-row';const strong=document.createElement('strong');strong.textContent=club;row.appendChild(strong);const small=document.createElement('small');small.textContent='Licença: '+String(c.license||'consultar página do arquivo');row.appendChild(small);const file=safeFilePage(c.filePage);if(file){const a=document.createElement('a');a.href=file;a.target='_blank';a.rel='noopener noreferrer';a.textContent='Abrir arquivo e atribuição no Commons ↗';row.appendChild(a)}list.appendChild(row)}
- modal.classList.remove('hidden');$('#commons-attribution-close')?.focus()}
-btn.addEventListener('click',open);$('#commons-attribution-close')?.addEventListener('click',()=>modal.classList.add('hidden'));
-modal.addEventListener('click',e=>{if(e.target===modal)modal.classList.add('hidden')});
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!modal.classList.contains('hidden'))modal.classList.add('hidden')});
+/* Attribution and provenance for community-sourced static club crests. */
+(()=>{
+const trigger=document.querySelector('[data-commons-credits]')||document.getElementById('commons-attribution-open');
+const modal=document.getElementById('commons-attribution-modal');
+const close=document.getElementById('commons-attribution-close');
+const list=document.getElementById('commons-attribution-list');
+function show(){
+ if(!modal)return;modal.classList.remove('hidden');
+ if(list)list.innerHTML='<p><strong>Fonte:</strong> <a href="https://github.com/JoseArroyave/football-logos" target="_blank" rel="noopener noreferrer">JoseArroyave/football-logos (GitHub)</a></p><p>Imagem SVG por clube e país; catálogo associado a um commit específico. Escudos e marcas pertencem aos clubes. A versão pode ficar desatualizada quando uma equipe muda de símbolo.</p>'
+}
+trigger?.addEventListener('click',show);
+close?.addEventListener('click',()=>modal?.classList.add('hidden'));
 })();
 
 </script>

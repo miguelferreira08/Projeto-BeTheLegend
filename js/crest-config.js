@@ -1,2 +1,1 @@
-/* V16: club crests resolve solely from Wikimedia Commons. */
-window.BTL_CREST_PROXY_URL = "";
+// V22: escudos estáticos do GitHub. Não é necessária chave ou endpoint de escudos.
