@@ -1,0 +1,29 @@
+/* V25: confirmação nativa do jogo, ranking com notas normalizadas e bandeiras reais. */
+.btl-retire-confirm{width:min(590px,calc(100vw - 28px))!important;max-width:590px!important;text-align:center;display:grid;justify-items:center;gap:14px;padding:clamp(24px,4vw,44px)!important;border-radius:24px!important;border:1px solid color-mix(in srgb,var(--arena-accent,#42e88d) 50%,#465366)!important;background:radial-gradient(circle at 50% 0%,color-mix(in srgb,var(--arena-accent,#42e88d) 20%,#152334),#09121d 74%)!important;box-shadow:0 40px 120px #000c!important}
+.btl-retire-confirm h2{margin:0!important;font-size:clamp(25px,3.4vw,40px)!important;line-height:1.1!important}
+.btl-retire-icon{display:grid;place-items:center;width:72px;height:72px;border:1px solid var(--arena-accent,#42e88d);border-radius:50%;color:var(--arena-accent,#42e88d);font-size:38px;background:color-mix(in srgb,var(--arena-accent,#42e88d) 14%,transparent)}
+.btl-retire-name{font-size:clamp(18px,2vw,24px);line-height:1.15}
+.btl-retire-age{font-size:11px;letter-spacing:.2em;color:var(--muted,#c1ccda)}
+.btl-retire-confirm .game-confirm-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;width:100%;margin-top:15px}
+.btl-retire-confirm .game-confirm-actions button{min-height:54px;font-size:12px;white-space:normal}
+#historical-ranking-modal .historical-ranking-head>div>p:not(.eyebrow),#historical-ranking-modal .historical-current-rank span,#historical-ranking-modal .historical-ranking-gap small,#legacy-rank-detail{display:none!important}
+#historical-ranking-modal .historical-current-rank{min-height:100px}
+#historical-ranking-modal .historical-current-rank strong{font-size:clamp(28px,3vw,38px)!important}
+#historical-ranking-modal .historical-criteria span{min-height:60px;padding:10px 6px!important}
+#historical-ranking-modal .historical-criteria strong{font-size:clamp(14px,1.5vw,21px)!important}
+.historical-ranking-row .ranking-flag{display:flex!important;align-items:center;justify-content:center!important;font-size:0!important}
+.historical-flag-images{display:flex;align-items:center;justify-content:center;gap:3px;max-width:100%}
+.historical-flag-images img{display:block;width:25px;height:18px;object-fit:cover;border-radius:3px;box-shadow:0 1px 5px rgba(0,0,0,.35)}
+.historical-flag-images img:nth-of-type(2){width:19px}
+.historical-flag-fallback{font-family:'Segoe UI Emoji','Apple Color Emoji',sans-serif!important;font-size:18px!important}
+/* Retirar textos de apoio, mas preservar decisões, avisos de acesso e status essenciais. */
+#home .hero-subtitle,#home .home-career-player p,#home .game-menu-option small,
+#event-modal .event-description,#event-modal .visual-caption,#event-modal .event-copy,
+#saved-career-modal #saved-career-subtitle,#saved-career-modal .saved-career-old-save,
+#career-legacy-modal #legacy-rank-detail,#home .home-career-progress-label,
+#historical-ranking-modal .historical-ranking-head p:not(.eyebrow){display:none!important}
+@media(max-width:540px){
+ .btl-retire-confirm .game-confirm-actions{grid-template-columns:1fr}
+ .historical-flag-images img{width:20px;height:14px}
+ #historical-ranking-modal .historical-criteria span{min-height:46px}
+}

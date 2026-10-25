@@ -3,6 +3,10 @@
 'use strict';
 const KEY='btl-ui-language-v20';
 const MAP={
+'ÚLTIMO CAPÍTULO':['FINAL CHAPTER','ÚLTIMO CAPÍTULO','DERNIER CHAPITRE'],
+'Encerrar carreira?':['Retire now?','¿Retirarse ahora?','Prendre sa retraite ?'],
+'CONTINUAR JOGANDO':['KEEP PLAYING','SEGUIR JUGANDO','CONTINUER À JOUER'],
+'CONFIRMAR APOSENTADORIA':['CONFIRM RETIREMENT','CONFIRMAR RETIRO','CONFIRMER LA RETRAITE'],
 'Continuar carreira':['Continue career','Continuar carrera','Continuer la carrière'],
 'Nova carreira':['New career','Nueva carrera','Nouvelle carrière'],
 'Meu Legado':['My Legacy','Mi legado','Mon héritage'],
