@@ -1,0 +1,210 @@
+[
+  {
+    "name": "uefa-champions-league",
+    "source": "i2685_-_uefa_champions_league_trophy_replica_100mm_-_icons_1.webp",
+    "size": [
+      870,
+      890
+    ],
+    "method": "original alpha",
+    "transparent_pct": 73.4,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "brasileirao-serie-a",
+    "source": "CAPA-BLOG-1.jpg",
+    "size": [
+      980,
+      600
+    ],
+    "method": "grabcut",
+    "transparent_pct": 86.5,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "copa-do-mundo",
+    "source": "image_123daea3-7eed-4488-adde-ae691d08b8bf.webp",
+    "size": [
+      1500,
+      1500
+    ],
+    "method": "grabcut",
+    "transparent_pct": 83.7,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "copa-america",
+    "source": "610-6101549_copa-america-2020-trophy-png-transparent-png.png",
+    "size": [
+      860,
+      1015
+    ],
+    "method": "grabcut",
+    "transparent_pct": 70.0,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "libertadores",
+    "source": "328-3287452_copa-libertadores-primer-trofeo-hd-png-download.png",
+    "size": [
+      500,
+      1202
+    ],
+    "method": "original alpha",
+    "transparent_pct": 56.6,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "serie-a-italia",
+    "source": "d0807a8a8d51cb6efd2e93bf5d2c86a2.jpg",
+    "size": [
+      300,
+      300
+    ],
+    "method": "grabcut",
+    "transparent_pct": 75.3,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "uefa-europa-league",
+    "source": "images.jpg",
+    "size": [
+      447,
+      447
+    ],
+    "method": "grabcut",
+    "transparent_pct": 85.9,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "bola-de-ouro",
+    "source": "D_NQ_NP_859520-CBT113787596207_062026-O.webp",
+    "size": [
+      357,
+      500
+    ],
+    "method": "grabcut",
+    "transparent_pct": 41.9,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "dfb-pokal",
+    "source": "am-ball-dfb-pokal-magnet-gold.webp",
+    "size": [
+      1024,
+      1024
+    ],
+    "method": "grabcut",
+    "transparent_pct": 87.5,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "bundesliga",
+    "source": "FD-DFL-MS-150-24_1000px_1_47222588-dad7-403d-a8ec-4df8af3e9309.webp",
+    "size": [
+      1000,
+      1000
+    ],
+    "method": "circular mask",
+    "transparent_pct": 33.2,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "belgian-pro-league",
+    "source": "1.webp",
+    "size": [
+      300,
+      300
+    ],
+    "method": "original alpha",
+    "transparent_pct": 71.6,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "chuteira-de-ouro",
+    "source": "51gCYK9sMDL._AC_UF1000,1000_QL80_.jpg",
+    "size": [
+      1000,
+      884
+    ],
+    "method": "grabcut",
+    "transparent_pct": 57.2,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "name": "fa-cup",
+    "source": "L556B.jpg",
+    "size": [
+      1983,
+      1983
+    ],
+    "method": "grabcut",
+    "transparent_pct": 76.5,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+]

@@ -23,3 +23,69 @@
   .football-menu-option .football-menu-copy{flex:1;min-width:0}
   .competition-inline-copy small{white-space:normal}
 }
+
+
+/* Ajustes pedidos pelo usuário — descrições ocultas e cards mais limpos */
+#club-status,
+.hero .hero-lead,
+#event-description,
+#decision-description,
+.game-confirm-info,
+.leaderboard-integrity-note,
+.club-option small,
+.decision-option small,
+.visual-choice small,
+.saved-career-card small,
+.saved-career-meta small,
+.hall-empty small,
+.summary-status span,
+.saved-title-trophy-card span,
+.achievement-card small,
+.achievement-card p,
+.competition-inline-copy small{display:none!important}
+
+.club-option{display:flex!important;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px;min-height:108px}
+.club-option .crest-shell.small{width:56px;height:56px;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.club-option strong{display:block;text-align:center;max-width:100%}
+.club-option .check{position:absolute;top:10px;right:10px}
+
+.decision-card #decision-competition .honour-art,
+.decision-card .decision-competition-theme-badge + #decision-competition .honour-art,
+#decision-competition .honour-art{width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important}
+#decision-competition .competition-inline{align-items:center}
+
+.decision-score-team strong,
+.penalty-team-meta strong,
+#decision-match{display:none!important}
+.penalty-team-meta{min-width:72px;justify-content:center}
+.penalty-dot-row{flex-wrap:wrap}
+.penalty-dot.sudden-dot{border-style:solid}
+
+.game-confirm-shell,.saved-career-modal .saved-career-modal-card,.decision-card,.competition-highlight,.competition-leaderboard-panel{box-shadow:0 20px 50px rgba(0,0,0,.26)!important}
+.game-confirm-info,.club-status,.leaderboard-integrity-note{background:transparent!important;border:none!important;padding:0!important;margin:0!important}
+
+.award-ceremony-stage{padding:28px 26px 34px!important}
+.award-announcement{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:min(100%,620px);margin:0 auto;text-align:center}
+.award-announcement h2{font-size:clamp(34px,7vw,68px)!important;line-height:1.04!important;margin:0!important;max-width:100%;overflow-wrap:anywhere}
+.award-ceremony-trophy{margin:4px auto 0!important;max-width:min(240px,54vw)!important;min-height:120px!important}
+.award-ceremony-trophy img{max-height:220px!important}
+.award-ceremony-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 10px;max-width:100%}
+#award-ceremony-copy{max-width:680px;margin:0 auto!important;line-height:1.35!important}
+.award-presenter{display:none!important}
+
+.decision-suspense{display:flex;align-items:center;justify-content:center;gap:12px;padding:24px 14px;font-size:1rem}
+.decision-suspense-spinner{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.25);border-top-color:var(--competition-secondary,#fff);display:inline-block;animation:btl-suspense-spin .8s linear infinite}
+@keyframes btl-suspense-spin{to{transform:rotate(360deg)}}
+.club-option{padding:16px!important}
+.club-option{flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+.club-option .crest-shell,.club-option .crest-shell.small{position:static!important;inset:auto!important;transform:none!important;margin:0 auto 4px!important}
+/* Descrições secundárias: preservar títulos, botões e informação estatística. */
+.game-confirm-card>p:not(.eyebrow),
+.field-help,
+.auth-feature-bottom>p,
+.auth-guest small,
+#award-ceremony-copy,
+.event-choice-content small,
+.event-copy,
+.club-status,
+#hero-intro-description{display:none!important}

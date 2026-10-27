@@ -23,8 +23,11 @@ function approvedUrl(name,countryCode=''){
   return verifiedExternal[`${country}|${key}`]||'';
 }
 function find(name,countryCode=''){
- const key=normalize(name);if(!key)return null;
  const country=String(countryCode||'').toUpperCase();
+ // Athletic (São João del-Rei/MG) e Athletic Bilbao são clubes distintos.
+ const key=normalize(name);if(!key)return null;
+ if(country==='BR'&&['athletic','athletic mg','athletic club mg'].includes(key))return byId.get('BR|athletic club')||null;
+ if(country==='ES'&&['athletic bilbao','athletic club bilbao','athletic de bilbao'].includes(key))return byId.get('ES|athletic club')||null;
  if(country)return byId.get(`${country}|${key}`)||null;
  // For unspecified countries, never guess between namesakes from different leagues.
  const candidates=byName.get(key)||[];return candidates.length===1?candidates[0]:null;

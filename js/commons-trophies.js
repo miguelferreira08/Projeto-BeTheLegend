@@ -6,6 +6,20 @@
 (()=>{
   const rows = [
     // Overrides enviados pelo usuário para fechar os troféus faltantes.
+    // Pacote local transparente priorizado pelo usuário (substitui fundos indesejados).
+    ["UEFA Champions League", "assets/trophies/from-rar/uefa-champions-league.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Brasileir[aã]o|Campeonato Brasileiro S[eé]rie A", "assets/trophies/from-rar/brasileirao-serie-a.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["FIFA World Cup|(?<!Club )World Cup|Copa do Mundo", "assets/trophies/from-rar/copa-do-mundo.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["CONMEBOL Libertadores|Copa Libertadores", "assets/trophies/from-rar/libertadores.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Serie A(?!\\w)", "assets/trophies/from-rar/serie-a-italia.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["UEFA Europa League", "assets/trophies/from-rar/uefa-europa-league.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Bola de Ouro|Ballon d[’']Or", "assets/trophies/from-rar/bola-de-ouro.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["DFB-Pokal", "assets/trophies/from-rar/dfb-pokal.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Bundesliga", "assets/trophies/from-rar/bundesliga.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Belgian Pro League|Jupiler Pro League", "assets/trophies/from-rar/belgian-pro-league.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Chuteira de Ouro|European Golden Shoe", "assets/trophies/from-rar/chuteira-de-ouro.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["FA Cup", "assets/trophies/from-rar/fa-cup.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["CONMEBOL Copa América|Copa América", "assets/trophies/from-rar/copa-america.png", "Usuário", "Imagem fornecida", "Troféu com transparência de fundo"],
     ["AFC Champions League Elite|AFCCLE", "assets/trophies/user/afc-champions-league-elite.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a taça da AFC Champions League Elite"],
     ["AFC Champions League Two|AFCCLT", "assets/trophies/user/afc-champions-league-two.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a taça da AFC Champions League Two"],
     ["CONCACAF Champions Cup|CONCACAFCC", "assets/trophies/user/concacaf-champions-cup.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a taça da CONCACAF Champions Cup"],
@@ -54,7 +68,7 @@
     ["Copa AUF Uruguay", "Silueta trofeo Copa AUF Uruguay.png", "Juanchocarbonero", "CC0 1.0", "Desenho fiel à taça do torneio uruguaio"],
     ["Belgian Pro League|Jupiler Pro League", "Jupiler Pro League throphy.jpg", "SonoGrazy", "CC BY-SA 4.0", "Foto da taça belga referente à temporada 2014–15 (modelo histórico)"],
     ["Primeira Liga", "Primeira Liga Trophy.svg", "VitorEmanuelCarvalhoPeixoto", "CC BY-SA 4.0", "Ilustração fiel do troféu português"],
-    ["Serie A(?!\w)", "Coppa Campioni d’Italia.jpg", "RichiWarrior05", "CC BY-SA 4.0", "Foto do troféu de campeão italiano"],
+    ["Serie A(?!\\w)", "Coppa Campioni d’Italia.jpg", "RichiWarrior05", "CC BY-SA 4.0", "Foto do troféu de campeão italiano"],
     ["KNVB Beker", "KNVB Beker.svg", "Mess", "CC BY-SA 3.0", "Ilustração fiel do troféu holandês"],
     ["Premier League", "Premier League trophy at museum.JPG", "", "Domínio público", "Foto do troféu"],
     ["Brasileir[aã]o|Campeonato Brasileiro S[eé]rie A", "Troféu Campeonato Brasileiro 2024.jpg", "Phill ad", "CC BY 4.0", "Foto do troféu de 2024"],

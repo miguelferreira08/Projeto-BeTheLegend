@@ -11326,6 +11326,100 @@ body[data-visual-scope="club"] #season-summary-modal .modal-card {
 }
 
 </style>
+  <style>
+/* QA Geral (2026-10-25) — correções de legibilidade, alinhamento e recortes. */
+#home.game-home .game-brand-lockup h1 strong {
+  color:#f6cd72 !important; /* arena-alt podia ficar praticamente preto no fundo escuro */
+  text-shadow:0 3px 20px rgba(246,205,114,.18);
+}
+.game-brand-lockup h1,
+.football-menu-option .football-menu-copy,
+.competition-inline-copy,
+.saved-title-trophy-card > div {min-width:0;overflow-wrap:anywhere}
+.honour-art,
+.honour-art img,
+.competition-inline .honour-art,
+.competition-inline .honour-art img,
+.award-ceremony-trophy img {background:transparent!important}
+.honour-art img {object-fit:contain!important;object-position:center!important;max-width:100%;max-height:100%;}
+.competition-inline{gap:clamp(6px,1.3vw,12px)!important;min-width:0;max-width:100%}
+.competition-inline-copy{min-width:0;max-width:100%}
+@media(max-width:430px){
+  #home .game-brand-lockup{gap:12px!important;min-width:0}
+  #home .game-brand-lockup h1{font-size:clamp(26px,7vw,36px)!important;line-height:1.08!important}
+  .game-home-shell,.game-home-main{min-width:0;max-width:100%}
+  .football-menu-option{min-width:0;gap:10px}
+  .football-menu-option .football-menu-copy{flex:1;min-width:0}
+  .competition-inline-copy small{white-space:normal}
+}
+
+
+/* Ajustes pedidos pelo usuário — descrições ocultas e cards mais limpos */
+#club-status,
+.hero .hero-lead,
+#event-description,
+#decision-description,
+.game-confirm-info,
+.leaderboard-integrity-note,
+.club-option small,
+.decision-option small,
+.visual-choice small,
+.saved-career-card small,
+.saved-career-meta small,
+.hall-empty small,
+.summary-status span,
+.saved-title-trophy-card span,
+.achievement-card small,
+.achievement-card p,
+.competition-inline-copy small{display:none!important}
+
+.club-option{display:flex!important;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:10px;min-height:108px}
+.club-option .crest-shell.small{width:56px;height:56px;display:flex;align-items:center;justify-content:center;margin:0 auto}
+.club-option strong{display:block;text-align:center;max-width:100%}
+.club-option .check{position:absolute;top:10px;right:10px}
+
+.decision-card #decision-competition .honour-art,
+.decision-card .decision-competition-theme-badge + #decision-competition .honour-art,
+#decision-competition .honour-art{width:52px!important;height:52px!important;min-width:52px!important;min-height:52px!important}
+#decision-competition .competition-inline{align-items:center}
+
+.decision-score-team strong,
+.penalty-team-meta strong,
+#decision-match{display:none!important}
+.penalty-team-meta{min-width:72px;justify-content:center}
+.penalty-dot-row{flex-wrap:wrap}
+.penalty-dot.sudden-dot{border-style:solid}
+
+.game-confirm-shell,.saved-career-modal .saved-career-modal-card,.decision-card,.competition-highlight,.competition-leaderboard-panel{box-shadow:0 20px 50px rgba(0,0,0,.26)!important}
+.game-confirm-info,.club-status,.leaderboard-integrity-note{background:transparent!important;border:none!important;padding:0!important;margin:0!important}
+
+.award-ceremony-stage{padding:28px 26px 34px!important}
+.award-announcement{display:flex;flex-direction:column;align-items:center;gap:14px;max-width:min(100%,620px);margin:0 auto;text-align:center}
+.award-announcement h2{font-size:clamp(34px,7vw,68px)!important;line-height:1.04!important;margin:0!important;max-width:100%;overflow-wrap:anywhere}
+.award-ceremony-trophy{margin:4px auto 0!important;max-width:min(240px,54vw)!important;min-height:120px!important}
+.award-ceremony-trophy img{max-height:220px!important}
+.award-ceremony-stats{display:flex;flex-wrap:wrap;justify-content:center;gap:8px 10px;max-width:100%}
+#award-ceremony-copy{max-width:680px;margin:0 auto!important;line-height:1.35!important}
+.award-presenter{display:none!important}
+
+.decision-suspense{display:flex;align-items:center;justify-content:center;gap:12px;padding:24px 14px;font-size:1rem}
+.decision-suspense-spinner{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.25);border-top-color:var(--competition-secondary,#fff);display:inline-block;animation:btl-suspense-spin .8s linear infinite}
+@keyframes btl-suspense-spin{to{transform:rotate(360deg)}}
+.club-option{padding:16px!important}
+.club-option{flex-direction:column!important;align-items:center!important;justify-content:center!important;text-align:center!important}
+.club-option .crest-shell,.club-option .crest-shell.small{position:static!important;inset:auto!important;transform:none!important;margin:0 auto 4px!important}
+/* Descrições secundárias: preservar títulos, botões e informação estatística. */
+.game-confirm-card>p:not(.eyebrow),
+.field-help,
+.auth-feature-bottom>p,
+.auth-guest small,
+#award-ceremony-copy,
+.event-choice-content small,
+.event-copy,
+.club-status,
+#hero-intro-description{display:none!important}
+
+</style>
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" role="dialog" aria-modal="true" aria-labelledby="auth-title">
@@ -11611,7 +11705,7 @@ body[data-visual-scope="club"] #season-summary-modal .modal-card {
         </section>
 
         <label>Nome
-          <input id="name" required maxlength="24" placeholder="João Silva" autocomplete="off">
+          <input id="name" required maxlength="24" placeholder="" autocomplete="off">
         </label>
 
         <label>Data de nascimento
@@ -15352,8 +15446,11 @@ function approvedUrl(name,countryCode=''){
   return verifiedExternal[`${country}|${key}`]||'';
 }
 function find(name,countryCode=''){
- const key=normalize(name);if(!key)return null;
  const country=String(countryCode||'').toUpperCase();
+ // Athletic (São João del-Rei/MG) e Athletic Bilbao são clubes distintos.
+ const key=normalize(name);if(!key)return null;
+ if(country==='BR'&&['athletic','athletic mg','athletic club mg'].includes(key))return byId.get('BR|athletic club')||null;
+ if(country==='ES'&&['athletic bilbao','athletic club bilbao','athletic de bilbao'].includes(key))return byId.get('ES|athletic club')||null;
  if(country)return byId.get(`${country}|${key}`)||null;
  // For unspecified countries, never guess between namesakes from different leagues.
  const candidates=byName.get(key)||[];return candidates.length===1?candidates[0]:null;
@@ -15376,23 +15473,37 @@ window.BTLStaticCrests=api;
 (()=>{
   const rows = [
     // Overrides enviados pelo usuário para fechar os troféus faltantes.
+    // Pacote local transparente priorizado pelo usuário (substitui fundos indesejados).
+    ["UEFA Champions League", "assets/trophies/from-rar/uefa-champions-league.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Brasileir[aã]o|Campeonato Brasileiro S[eé]rie A", "assets/trophies/from-rar/brasileirao-serie-a.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["FIFA World Cup|(?<!Club )World Cup|Copa do Mundo", "assets/trophies/from-rar/copa-do-mundo.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["CONMEBOL Libertadores|Copa Libertadores", "assets/trophies/from-rar/libertadores.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Serie A(?!\\w)", "assets/trophies/from-rar/serie-a-italia.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["UEFA Europa League", "assets/trophies/from-rar/uefa-europa-league.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Bola de Ouro|Ballon d[’']Or", "assets/trophies/from-rar/bola-de-ouro.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["DFB-Pokal", "assets/trophies/from-rar/dfb-pokal.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Bundesliga", "assets/trophies/from-rar/bundesliga.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Belgian Pro League|Jupiler Pro League", "assets/trophies/from-rar/belgian-pro-league.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["Chuteira de Ouro|European Golden Shoe", "assets/trophies/from-rar/chuteira-de-ouro.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["FA Cup", "assets/trophies/from-rar/fa-cup.png", "Pacote local", "Anexo local", "Arte local transparente priorizada pelo usuário"],
+    ["CONMEBOL Copa América|Copa América", "assets/trophies/from-rar/copa-america.png", "Usuário", "Imagem fornecida", "Troféu com transparência de fundo"],
     ["AFC Champions League Elite|AFCCLE", "assets/trophies/user/afc-champions-league-elite.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a taça da AFC Champions League Elite"],
     ["AFC Champions League Two|AFCCLT", "assets/trophies/user/afc-champions-league-two.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a taça da AFC Champions League Two"],
     ["CONCACAF Champions Cup|CONCACAFCC", "assets/trophies/user/concacaf-champions-cup.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a taça da CONCACAF Champions Cup"],
     ["^Copa Nacional$", "assets/trophies/user/copa-nacional.png", "Usuário", "Anexo do usuário — licença de redistribuição não verificada", "Taça da Copa Nacional indicada pelo usuário"],
-    ["Copa do Brasil|CDB", "assets/trophies/user/copa-do-brasil-user.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Copa do Brasil"],
-    ["Copa da B[eé]lgica|CDBEL", "assets/trophies/user/copa-da-belgica.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Copa da Bélgica"],
+    ["Copa do Brasil|^CDB$", "assets/trophies/user/copa-do-brasil-user.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Copa do Brasil"],
+    ["Copa da B[eé]lgica|^CDBEL$", "assets/trophies/user/copa-da-belgica.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Copa da Bélgica"],
     ["Eliminat[oó]rias da Copa do Mundo|World Cup Qualifiers", null, "", "", "Sem taça física para as eliminatórias"],
-    ["J1 League|J1L", "assets/trophies/user/j1-league.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a J1 League"],
-    ["King Cup|KC", "assets/trophies/user/king-cup.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a King Cup"],
-    ["Liga Profesional Argentina|LPA", "assets/trophies/user/liga-profesional-argentina.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Liga Profesional Argentina"],
-    ["Melhor Jogador Jovem|Kopa|MJJ", "assets/trophies/user/kopa-trophy.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para o Troféu Kopa"],
+    ["J1 League|^J1L$", "assets/trophies/user/j1-league.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a J1 League"],
+    ["King Cup|^KC$", "assets/trophies/user/king-cup.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a King Cup"],
+    ["Liga Profesional Argentina|^LPA$", "assets/trophies/user/liga-profesional-argentina.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Liga Profesional Argentina"],
+    ["Melhor Jogador Jovem|Kopa|^MJJ$", "assets/trophies/user/kopa-trophy.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para o Troféu Kopa"],
     ["OFC Champions League|OFCCL", "assets/trophies/user/ofc-champions-league.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a OFC Champions League"],
     ["Premier League(?! / Premiership)|^PL$", "assets/trophies/user/premier-league.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Premier League"],
     ["Scottish Premiership|Premier League / Premiership|Premiership", "assets/trophies/user/scottish-premiership.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Scottish Premiership"],
-    ["Saudi Pro League|SPL", "assets/trophies/user/saudi-pro-league.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Saudi Pro League"],
-    ["Time da Temporada|TOTS|Team of the Year|TT", "assets/trophies/user/team-of-the-season.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para Time da Temporada / TOTS"],
-    ["U[.]?S[.]? Open Cup|USOC", "assets/trophies/user/us-open-cup.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a U.S. Open Cup"],
+    ["Saudi Pro League|^SPL$", "assets/trophies/user/saudi-pro-league.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Saudi Pro League"],
+    ["Time da Temporada|TOTS|Team of the Year|^TT$", "assets/trophies/user/team-of-the-season.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para Time da Temporada / TOTS"],
+    ["U[.]?S[.]? Open Cup|^USOC$", "assets/trophies/user/us-open-cup.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a U.S. Open Cup"],
     ["FIFA Club World Cup|Mundial de Clubes", "CWC Trophy 2025.png", "User34790", "CC0 / CC BY-SA 4.0", "Ilustração fiel do novo troféu de 2025"],
     ["FIFA World Cup|(?<!Club )World Cup|Copa do Mundo", "FIFA World Cup Trophy photo by Djuradj Vujcic.jpg", "Djuradj Vujcic", "CC BY 2.0", "Fotografia da taça original"],
     ["UEFA Super Cup", "UEFA - Super Cup.png", "", "Ver arquivo", "Ícone específico do troféu"],
@@ -15424,7 +15535,7 @@ window.BTLStaticCrests=api;
     ["Copa AUF Uruguay", "Silueta trofeo Copa AUF Uruguay.png", "Juanchocarbonero", "CC0 1.0", "Desenho fiel à taça do torneio uruguaio"],
     ["Belgian Pro League|Jupiler Pro League", "Jupiler Pro League throphy.jpg", "SonoGrazy", "CC BY-SA 4.0", "Foto da taça belga referente à temporada 2014–15 (modelo histórico)"],
     ["Primeira Liga", "Primeira Liga Trophy.svg", "VitorEmanuelCarvalhoPeixoto", "CC BY-SA 4.0", "Ilustração fiel do troféu português"],
-    ["Serie A(?!\w)", "Coppa Campioni d’Italia.jpg", "RichiWarrior05", "CC BY-SA 4.0", "Foto do troféu de campeão italiano"],
+    ["Serie A(?!\\w)", "Coppa Campioni d’Italia.jpg", "RichiWarrior05", "CC BY-SA 4.0", "Foto do troféu de campeão italiano"],
     ["KNVB Beker", "KNVB Beker.svg", "Mess", "CC BY-SA 3.0", "Ilustração fiel do troféu holandês"],
     ["Premier League", "Premier League trophy at museum.JPG", "", "Domínio público", "Foto do troféu"],
     ["Brasileir[aã]o|Campeonato Brasileiro S[eé]rie A", "Troféu Campeonato Brasileiro 2024.jpg", "Phill ad", "CC BY 4.0", "Foto do troféu de 2024"],
@@ -15487,6 +15598,8 @@ let leaderboardMode = 'goals';
 let leaderboardCompetition = null;
 let nextEventCache = null;
 const INTERACTION_FREQUENCY = 0.765; // 10% menos interrupções em relação ao balanceamento anterior (0,85)
+const MATCH_DECISION_FREQUENCY_MULT = 1.2;
+const CAREER_EVENT_FREQUENCY_MULT = 0.8;
 let pausedCareerOverlay = null;
 let pendingSeasonCelebration = null;
 let pendingPlayerProfile = null;
@@ -16531,11 +16644,7 @@ function stripDiacritics(str=''){ return str.normalize('NFD').replace(/[̀-ͯ]/g
 function normalizeKey(str=''){ return stripDiacritics(str).toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,''); }
 function slugifyClub(name=''){ return stripDiacritics(name).toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
 function fallbackClubDataUri(){return '';}// Sem escudos artificiais: revelar estado indisponível até a imagem real do Commons.
-function fallbackTrophyDataUri(name='Título'){
-  const label=(name.length>22?name.slice(0,22)+'…':name).replace(/&/g,'&amp;');
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" rx="18" fill="#0e171d"/><path d="M33 20h30v8c0 11-6 21-15 27-9-6-15-16-15-27v-8zm-8 6h8v7c0 4-3 8-8 8-4 0-7-4-7-8 0-4 3-7 7-7zm46 0h8c4 0 7 3 7 7 0 4-3 8-7 8-5 0-8-4-8-8v-7zM42 55h12v10h10v7H32v-7h10V55z" fill="#f2c94c"/><text x="48" y="84" text-anchor="middle" fill="#eef3f5" font-size="8" font-family="Orbitron, Arial, sans-serif">${label}</text></svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
+// Sem imagens de taças artificiais: falha de rede mostra a sigla da competição.
 const commonsMisses=new Map();
 const commonsInFlight=new Map();
 const COMMONS_ENDPOINT='https://commons.wikimedia.org/w/api.php';
@@ -16625,7 +16734,7 @@ function applyImageSources(img,sources,fallback){if(!img)return;const list=sourc
 // Catálogo validado de troféus: prioriza Wikimedia Commons e completa lacunas com anexos locais enviados pelo usuário.
 // O antigo mapa FM estava vazio e todos os títulos exibiam no-file.svg.
 const TROPHY_ART=window.BTL_COMMONS_TROPHIES||[];
-function trophyEntryFor(name){return TROPHY_ART.find(x=>x.test.test(String(name||'')))||null;}
+function trophyEntryFor(name){const label=String(name||'');if(/Qualifiers|Eliminat[oó]rias/i.test(label))return null;return TROPHY_ART.find(x=>x.test.test(label))||null;}
 function trophySourcesFor(name){const item=trophyEntryFor(name);return item?.src?[item.src]:[];}
 function trophyArtFor(name){return trophySourcesFor(name)[0]||'';}
 function honourInitials(name){return (name||'BTL').split(/\s+/).filter(Boolean).slice(0,3).map(x=>x[0]).join('').toUpperCase();}
@@ -16713,6 +16822,8 @@ function clubCompetitionProfile(name,code){
 }
 function canonicalClubCountryCode(name,fallback=''){
   if(!name)return fallback||'';
+  if(/^Athletic Bilbao$/i.test(name))return 'ES';
+  if(/^Athletic(?: Club)?$/i.test(name))return fallback||'BR';
   const localHits=Object.entries(LOCAL_CLUBS).filter(([,clubs])=>clubs.some(c=>c.name===name)).map(([code])=>code);
   const poolHits=Object.entries(LEAGUE_CLUB_POOLS||{}).filter(([,clubs])=>clubs.includes(name)).map(([code])=>code);
   const transferHits=(TRANSFER_TARGETS||[]).filter(c=>c.name===name).map(c=>c.countryCode);
@@ -16720,7 +16831,9 @@ function canonicalClubCountryCode(name,fallback=''){
   const hits=[...new Set([...localHits,...poolHits,...transferHits,...marketHits])];
   if(hits.length===1)return hits[0];
   if(fallback&&hits.includes(fallback))return fallback;
-  return hits.length===1?hits[0]:(fallback||''); // Country ambiguous: do not select Bilbao over Athletic-MG.
+  if(hits.includes('BR')&&/^Athletic Club$/i.test(name))return 'BR';
+  if(hits.includes('ES')&&/^Athletic Bilbao$/i.test(name))return 'ES';
+  return hits.length===1?hits[0]:(fallback||'');
 }
 function leagueForClub(name,fallbackCode=''){
   const code=canonicalClubCountryCode(name,fallbackCode);
@@ -17387,10 +17500,10 @@ async function loadClubChoices(){
 function drawThreeClubs(){
   const source=$('#club-status').dataset.source||'base de clubes';let pool=creationClubPool.filter(c=>!creationSeenClubs.has(c.name));if(pool.length<3)pool=creationClubPool;
   creationChoices=sample(pool,Math.min(3,pool.length));creationChoices.forEach(c=>creationSeenClubs.add(c.name));
-  $('#club-status').innerHTML=creationChoices.length?`Escolha um clube da lista confirmada. <div class="club-source">${esc(source)} · novos sorteios restantes: ${creationClubRerollsRemaining}</div>`:`Nenhum clube real pôde ser confirmado para este país. Verifique sua conexão ou escolha outra nacionalidade. Não serão criados clubes fictícios.`;
+  $('#club-status').innerHTML='';
   $('#club-options').innerHTML=creationChoices.map((c,i)=>{
     const profile={...clubCompetitionProfile(c.name,c.countryCode),...c};const division=profile.divisionLevel>1?` · ${profile.divisionLevel}ª divisão`:'';
-    return `<button type="button" class="club-option" data-club-index="${i}" data-club-name="${c.name.replace(/"/g,'&quot;')}"><span class="check"></span><span class="crest-shell small"><img class="club-badge-img hidden" alt=""><span class="crest-fallback" title="Escudo real ainda não localizado">S/D</span></span><strong>${c.name}</strong><small>${profile.league||getCompetitionRule(c.countryCode,countryByCode(c.countryCode)?.name||'').league}${division}</small><small>Força estimada: ${c.strength}</small></button>`;
+    return `<button type="button" class="club-option" data-club-index="${i}" data-club-name="${c.name.replace(/"/g,'&quot;')}" data-club-country="${c.countryCode||''}"><span class="check"></span><span class="crest-shell small"><img class="club-badge-img hidden" alt=""><span class="crest-fallback" title="Escudo real ainda não localizado">S/D</span></span><strong>${c.name}</strong></button>`;
   }).join('');
   $$('.club-option').forEach(btn=>btn.addEventListener('click',()=>selectCreationClub(+btn.dataset.clubIndex)));hydrateRenderedBadges();updateClubRerollButton();
 }
@@ -18144,8 +18257,9 @@ function penaltyTeamVisualMarkup(pending,team){
 }
 function penaltyProgressMarkup(pending){
   const shoot=pending.shootoutLive||{kicks:[],score:{home:0,away:0}},clubs=[{name:pending.home,side:'home'},{name:pending.away,side:'away'}];
-  const dots=club=>Array.from({length:5},(_,i)=>{const round=i+1,k=shoot.kicks.find(x=>x.team===club.name&&x.round===round),chosen=club.name===pending.team&&pending.playerKickRound===round;let cls=k?(k.scored?'made':'missed'):(chosen?'chosen':'pending'),icon=k?(k.scored?'✓':'✕'):(chosen?'★':'');return `<span class="penalty-dot ${cls}${k?.isPlayer?' player-slot':''}" data-penalty-team="${esc(club.name)}" data-penalty-round="${round}">${icon}</span>`;}).join('');
-  return `<div class="penalty-shootout-shell"><div class="penalty-shootout-head"><span>${shoot.phase==='sudden'?'Cobranças alternadas':'Série inicial de 5 cobranças'}</span><span><b>${shoot.score.home||0} × ${shoot.score.away||0}</b></span></div>${clubs.map(club=>`<div class="penalty-team-row"><div class="penalty-team-meta">${penaltyTeamVisualMarkup(pending,club.name)}<strong>${esc(club.name)}</strong></div><div class="penalty-dot-row">${dots(club)}</div><b class="penalty-row-score">${shoot.score[club.side]||0}</b></div>`).join('')}${shoot.phase==='sudden'?`<div class="penalty-sudden-list">${(shoot.kicks||[]).filter(k=>k.round>5).map(k=>`<span class="${k.scored?'made':'missed'}">${esc(k.team)} · ${k.round}º ${k.scored?'✓':'✕'}</span>`).join('')}</div>`:''}</div>`;
+  const maxRound=Math.max(5,...(shoot.kicks||[]).map(k=>k.round||0),pending.playerKickRound||0);
+  const dots=club=>Array.from({length:maxRound},(_,i)=>{const round=i+1,k=shoot.kicks.find(x=>x.team===club.name&&x.round===round),chosen=club.name===pending.team&&pending.playerKickRound===round&&!k&&shoot.waitingForPlayer;let cls=k?(k.scored?'made':'missed'):(chosen?'chosen':'pending'),icon=k?(k.scored?'✓':'✕'):(chosen?'★':'');return `<span class="penalty-dot ${cls}${round>5?' sudden-dot':''}${k?.isPlayer?' player-slot':''}" data-penalty-team="${esc(club.name)}" data-penalty-round="${round}">${icon}</span>`;}).join('');
+  return `<div class="penalty-shootout-shell"><div class="penalty-shootout-head"><span>${shoot.phase==='sudden'?'Cobranças alternadas':'Série inicial de 5 cobranças'}</span><span><b>${shoot.score.home||0} × ${shoot.score.away||0}</b></span></div>${clubs.map(club=>`<div class="penalty-team-row"><div class="penalty-team-meta">${penaltyTeamVisualMarkup(pending,club.name)}</div><div class="penalty-dot-row">${dots(club)}</div><b class="penalty-row-score">${shoot.score[club.side]||0}</b></div>`).join('')}</div>`;
 }
 function initPenaltyLive(pending){
   if(pending.shootoutLive)return pending.shootoutLive;
@@ -18173,7 +18287,7 @@ function continuePenaltySimulation(pending){
     if(live.phase==='standard'&&shootoutMathematicallyFinished(pending,live)){finalizePenaltyShootout(pending);return;}
     if(live.phase==='standard'&&live.round>5){if(live.score.home!==live.score.away){finalizePenaltyShootout(pending);return;}live.phase='sudden';live.round=6;live.nextTeam=live.first;}
     const isPlayerTurn=live.phase==='standard'&&live.nextTeam===pending.team&&live.round===pending.playerKickRound;
-    if(isPlayerTurn){live.waitingForPlayer=true;renderPenaltyLive(pending);const scenario=buildShootoutScenario(pending);$('#decision-title').textContent=`Sua vez · ${pending.playerKickRound}º pênalti`;$('#decision-description').textContent='Escolha o chute.';$('#decision-choices').classList.remove('hidden');$('#decision-choices').innerHTML=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><span class="decision-choice-index">${String(i+1).padStart(2,'0')}</span><span><strong>${o.label}</strong></span><b class="decision-choice-arrow">↗</b></button>`).join('');$('#decision-choices').querySelectorAll('[data-decision-option]').forEach(b=>b.addEventListener('click',()=>resolvePenaltyShootout(+b.dataset.decisionOption)));return;}
+    if(isPlayerTurn){live.waitingForPlayer=true;renderPenaltyLive(pending);const scenario=buildShootoutScenario(pending);$('#decision-title').textContent=`Sua vez · ${pending.playerKickRound}º pênalti`;$('#decision-description').textContent='';$('#decision-choices').classList.remove('hidden');$('#decision-choices').innerHTML=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><span class="decision-choice-index">${String(i+1).padStart(2,'0')}</span><span><strong>${o.label}</strong></span><b class="decision-choice-arrow">↗</b></button>`).join('');$('#decision-choices').querySelectorAll('[data-decision-option]').forEach(b=>b.addEventListener('click',()=>resolvePenaltyShootout(+b.dataset.decisionOption)));return;}
     const team=live.nextTeam,round=live.round,scored=Math.random()<simulatedPenaltyChance(pending,team);appendPenaltyKick(pending,team,round,scored,false);advancePenaltyCursor(pending);renderPenaltyLive(pending);playMatchVisualFX('penalty',scored?'success':'miss','shootout');
     if(live.phase==='sudden'&&live.nextTeam===live.first&&live.kicks.filter(k=>k.round===round).length===2&&live.score.home!==live.score.away){setTimeout(()=>finalizePenaltyShootout(pending),500);return;}
     setTimeout(tick,560);
@@ -18183,8 +18297,8 @@ function continuePenaltySimulation(pending){
 function openPenaltyShootoutDecision(){
   const pending=state.pendingPenaltyShootout;if(!pending)return;
   applyCompetitionExperienceTheme(pending);
-  const card=$('#match-decision-modal .decision-card');card.classList.add('scene-finale');applyDecisionCompetitionTheme(card,pending);$('#decision-competition').innerHTML=competitionHeaderMarkup(pending.competition,[pending.stage,'PÊNALTIS'].filter(Boolean).join(' · '));$('#decision-match').textContent=`${pending.home} x ${pending.away}`;$('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');$('#decision-visual').className='decision-visual penalty-shootout-preview';
-  if(!pending.playerKickRound){$('#decision-title').textContent="120' · Escolha qual pênalti você vai bater";$('#decision-description').textContent='Quando você vai bater?';$('#decision-visual').innerHTML=penaltyProgressMarkup(pending);hydratePenaltyBadges($('#decision-visual'));const box=$('#decision-choices');box.className='event-choices penalty-order-choices';box.innerHTML=buildPenaltyOrderOptions().map(o=>`<button class="event-choice decision-option" data-penalty-order="${o.slot}"><strong>${o.label}</strong></button>`).join('');box.querySelectorAll('[data-penalty-order]').forEach(b=>b.addEventListener('click',()=>{pending.playerKickRound=Number(b.dataset.penaltyOrder);initPenaltyLive(pending);save();continuePenaltySimulation(pending);}));$('#match-decision-modal').classList.remove('hidden');return;}
+  const card=$('#match-decision-modal .decision-card');card.classList.add('scene-finale');applyDecisionCompetitionTheme(card,pending);$('#decision-competition').innerHTML=competitionHeaderMarkup(pending.competition,[pending.stage,'PÊNALTIS'].filter(Boolean).join(' · '));$('#decision-match').textContent='';$('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');$('#decision-visual').className='decision-visual penalty-shootout-preview';
+  if(!pending.playerKickRound){$('#decision-title').textContent="120' · Escolha qual pênalti você vai bater";$('#decision-description').textContent='';$('#decision-visual').innerHTML=penaltyProgressMarkup(pending);hydratePenaltyBadges($('#decision-visual'));const box=$('#decision-choices');box.className='event-choices penalty-order-choices';box.innerHTML=buildPenaltyOrderOptions().map(o=>`<button class="event-choice decision-option" data-penalty-order="${o.slot}"><strong>${o.label}</strong></button>`).join('');box.querySelectorAll('[data-penalty-order]').forEach(b=>b.addEventListener('click',()=>{pending.playerKickRound=Number(b.dataset.penaltyOrder);initPenaltyLive(pending);save();continuePenaltySimulation(pending);}));$('#match-decision-modal').classList.remove('hidden');return;}
   continuePenaltySimulation(pending);$('#match-decision-modal').classList.remove('hidden');
 }
 function resolvePenaltyShootout(index){
@@ -18535,7 +18649,7 @@ function maybeTriggerIdolInteraction(){
 }
 function maybeTriggerCareerEvent(){
   const s=state.season;
-  if(!s||state.pendingEvent||worldCupTournamentLockActive(s,state.player)||s.totalGames-(s.lastCareerEventAt||0)<5||Math.random()>(.19*INTERACTION_FREQUENCY))return false;
+  if(!s||state.pendingEvent||worldCupTournamentLockActive(s,state.player)||s.totalGames-(s.lastCareerEventAt||0)<5||Math.random()>(.19*INTERACTION_FREQUENCY*CAREER_EVENT_FREQUENCY_MULT))return false;
   const incidentPool=[...(typeof INCIDENT_EVENTS!=='undefined'?INCIDENT_EVENTS:[]),...BTL_PREMIUM_RANDOM_EVENTS];
   const iconEligible=(state.player?.overall||0)>=90||(state.player?.reputation||0)>=70;
   const chance=Math.random();
@@ -18756,8 +18870,8 @@ function resolveCareerEvent(index){
 function showCelebration(icon,title,subtitle){
   const iconBox=$('#celebration-icon');iconBox.className='celebration-icon';
   if(/^https?:/i.test(icon||'')){
-    const sources=[icon,fallbackTrophyDataUri(title),'assets/fallback-trophy.svg'],encoded=sources.map(encodeURIComponent).join('|');
-    iconBox.innerHTML=`<img src="${sources[0]}" data-sources="${encoded}" data-index="0" alt="${title}" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" onload="polishSiteImage(this)" onerror="cycleHonourImage(this)">`;
+    const safeIcon=esc(icon),label=esc(title),initials=esc(honourInitials(title));
+    iconBox.innerHTML=`<span class="honour-art"><img src="${safeIcon}" data-sources="${encodeURIComponent(icon)}" data-index="0" alt="${label}" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" onload="polishSiteImage(this)" onerror="cycleHonourImage(this)"><b>${initials}</b></span>`;
   }else iconBox.textContent=icon;
   $('#celebration-title').textContent=title;$('#celebration-subtitle').textContent=subtitle;
   $('#confetti').innerHTML=Array.from({length:38},(_,i)=>`<i style="--x:${rnd(-46,46)}vw;--r:${rnd(90,720)}deg;--d:${(Math.random()*1.4+.8).toFixed(2)}s;--delay:${(Math.random()*.5).toFixed(2)}s"></i>`).join('');
@@ -18855,12 +18969,12 @@ const EXTRA_ACTIVE_PLAYERS=[
 {name:'Pedro',rating:84,position:'ATA',club:'Flamengo',countryCode:'BR',nationalCode:'BR'},
 {name:'Memphis Depay',rating:84,position:'ATA',club:'Corinthians',countryCode:'BR',nationalCode:'NL'},
 {name:'Yuri Alberto',rating:82,position:'ATA',club:'Corinthians',countryCode:'BR',nationalCode:'BR'},
-{name:'Hulk',rating:83,position:'ATA',club:'Atlético Mineiro',countryCode:'BR',nationalCode:'BR'},
+{name:'Hulk',rating:83,position:'ATA',club:'Fluminense',countryCode:'BR',nationalCode:'BR'},
 {name:'Raphael Veiga',rating:83,position:'MEI',club:'Palmeiras',countryCode:'BR',nationalCode:'BR'},
 {name:'Vitor Roque',rating:84,position:'ATA',club:'Palmeiras',countryCode:'BR',nationalCode:'BR'},
 {name:'Alan Patrick',rating:82,position:'MEI',club:'Internacional',countryCode:'BR',nationalCode:'BR'},
 {name:'Luciano',rating:81,position:'ATA',club:'São Paulo',countryCode:'BR',nationalCode:'BR'},
-{name:'Jhon Arias',rating:83,position:'PD',club:'Fluminense',countryCode:'BR',nationalCode:'CO'},
+{name:'Jhon Arias',rating:83,position:'PD',club:'Palmeiras',countryCode:'BR',nationalCode:'CO'},
 {name:'Arias',rating:80,position:'MEI',club:'Bahia',countryCode:'BR',nationalCode:'BR'},
 {name:'Ángel Romero',rating:80,position:'ATA',club:'Corinthians',countryCode:'BR',nationalCode:'PY'},
 {name:'Edinson Cavani',rating:82,position:'ATA',club:'Boca Juniors',countryCode:'AR',nationalCode:'UY'},
@@ -19005,28 +19119,48 @@ function leaderboardCandidates(title){
   const normalizeClub=n=>normalizeKey(String(n||''));
   const allowed=clubsForLeaderboardCompetition(title);
   const country=String(s.countryAtStart||p.clubCountry||'');
-  // League tables are EXCLUSIVE to clubs enrolled in this specific league;
-  // never 'pad' the list with unrelated stars (e.g. Messi in 2.Bundesliga).
+  const fromClubSet=(clubSet,max=80)=>players.filter(wp=>clubSet.has(normalizeClub(wp.club))).slice(0,max);
   if(title===s.league?.name){
     const leagueClubs=new Set((s.league?.teams||s.league?.clubs||[]).map(t=>normalizeClub(typeof t==='string'?t:t.name)).filter(Boolean));
     for(const club of (allowed||[]))leagueClubs.add(normalizeClub(club));
     return players.filter(wp=>wp.countryCode===country&&leagueClubs.has(normalizeClub(wp.club))).slice(0,80);
   }
-  // Domestic cups use clubs of this country; participant pool when known.
   if(title===s.cup?.name){
-    return players.filter(wp=>wp.countryCode===country&&(!allowed?.size||allowed.has(wp.club))).slice(0,80);
+    const countryClubs=new Set((leaguePoolForCountry(country,p.club,s.league?.name)||[]).map(normalizeClub));
+    if(!countryClubs.size && allowed?.size) for(const club of allowed) countryClubs.add(normalizeClub(club));
+    return players.filter(wp=>wp.countryCode===country&&countryClubs.has(normalizeClub(wp.club))).slice(0,80);
   }
   const supercup=(s.superCups||[]).find(sc=>sc.name===title);
-  if(supercup){return players.filter(wp=>allowed?.has(wp.club)).slice(0,60);}
+  if(supercup){
+    if(!supercup.opponent)supercup.opponent=superCupOpponent(supercup);
+    if(/Finalissima/i.test(title)){
+      const codes=new Set([p.nationalityCode,supercup.opponent?.code].filter(Boolean));
+      return players.filter(wp=>codes.has(wp.nationalCode||wp.countryCode)).slice(0,50);
+    }
+    if(supercup.scope==='national'){
+      const codes=new Set([p.nationalityCode,supercup.opponent?.code].filter(Boolean));
+      return players.filter(wp=>codes.has(wp.nationalCode||wp.countryCode)).slice(0,60);
+    }
+    const clubSet=new Set([normalizeClub(p.club),normalizeClub(supercup.opponent?.name||supercup.opponent)]);
+    return fromClubSet(clubSet,60);
+  }
   if(title===s.continental?.name){
-    // Only clubs actually scheduled for the tournament; no cross-league fillers.
-    return players.filter(wp=>allowed?.has(wp.club)).slice(0,80);
+    const clubSet=new Set([...(allowed||[])].map(normalizeClub));
+    const conf=confederation(p.clubCountry);
+    const threshold=/UEFA Champions League/i.test(title)?82:/UEFA Europa League/i.test(title)?77:/UEFA Conference League/i.test(title)?73:/Libertadores/i.test(title)?74:/AFC Champions/i.test(title)?72:/CAF Champions/i.test(title)?72:/CONCACAF Champions/i.test(title)?72:70;
+    allTransferClubs().filter(c=>confederation(c.countryCode)===conf&&(c.strength||0)>=threshold).sort((a,b)=>(b.strength||0)-(a.strength||0)).slice(0,18).forEach(c=>clubSet.add(normalizeClub(c.name)));
+    clubSet.add(normalizeClub(p.club));
+    return fromClubSet(clubSet,90);
   }
-  if(/World Cup|Copa do Mundo|EURO|Copa América|Nations|Finalissima/i.test(title)){
-    const conf=/EURO|Nations/i.test(title)?'UEFA':/Copa América/i.test(title)?'CONMEBOL':null;
-    return players.filter(wp=>wp.nationalCode&&(!conf||confederation(wp.nationalCode)===conf)).slice(0,80);
+  if(/World Cup|Copa do Mundo/i.test(title)){
+    return players.filter(wp=>!!(wp.nationalCode||wp.countryCode)).slice(0,80);
   }
-  // Unknown competition => show tracked user stats, not fabricated outsiders.
+  if(/EURO|Nations/i.test(title)){
+    return players.filter(wp=>confederation(wp.nationalCode||wp.countryCode)==='UEFA').slice(0,80);
+  }
+  if(/Copa América/i.test(title)){
+    return players.filter(wp=>confederation(wp.nationalCode||wp.countryCode)==='CONMEBOL').slice(0,80);
+  }
   return [];
 }
 
@@ -19072,8 +19206,8 @@ function renderCompetitionLeaderboards(){
     const userClub=playedAtPreviousClub?(s.clubAtStart||p.club):p.club;
     rows.push({id:'user',name:p.name,rating:p.overall,position:rankingPositionLabel(p.position),club:userClub,team:countryCup?p.nationality:userClub,games:userStat.games||0,goals:userStat.goals||0,assists:userStat.assists||0,isUser:true});
   }
-  rows.sort((a,b)=>(b[leaderboardMode]||0)-(a[leaderboardMode]||0)||(b.goals||0)-(a.goals||0)||(b.rating||0)-(a.rating||0));const top=rows.slice(0,8),userIndex=rows.findIndex(x=>x.isUser);if(userIndex>=8)top.push({...rows[userIndex],shownRank:userIndex+1});
-  box.innerHTML=`<p class="leaderboard-integrity-note">Somente clubes participantes da competição · estatísticas dos rivais simuladas</p><div class="leaderboard-head"><span>#</span><span>Jogador</span><span>Equipe</span><span>${leaderboardMode==='goals'?'Gols':'Assist.'}</span></div>${top.map((r,i)=>`<div class="leaderboard-row ${r.isUser?'is-user':''}"><b>${r.shownRank||i+1}</b><span><strong>${esc(r.name)}</strong><small>${esc(r.position||'')}</small></span>${leaderboardTeamVisual(r,leaderboardCompetition)}<strong>${r[leaderboardMode]||0}</strong></div>`).join('')}`;hydratePenaltyBadges(box);
+  let ordered=rows.sort((a,b)=>(b[leaderboardMode]||0)-(a[leaderboardMode]||0)||(b.goals||0)-(a.goals||0)||(b.rating||0)-(a.rating||0));if(leaderboardMode==='goals')ordered=ordered.filter(r=>Number(r.goals||0)>0);const top=ordered.slice(0,8),userIndex=ordered.findIndex(x=>x.isUser);if(userIndex>=8)top.push({...ordered[userIndex],shownRank:userIndex+1});
+  box.innerHTML=`<div class="leaderboard-head"><span>#</span><span>Jogador</span><span>Equipe</span><span>${leaderboardMode==='goals'?'Gols':'Assist.'}</span></div>${top.map((r,i)=>`<div class="leaderboard-row ${r.isUser?'is-user':''}"><b>${r.shownRank||i+1}</b><span><strong>${esc(r.name)}</strong></span>${leaderboardTeamVisual(r,leaderboardCompetition)}<strong>${r[leaderboardMode]||0}</strong></div>`).join('')}`;hydratePenaltyBadges(box);
   tabs.querySelectorAll('[data-leader-competition]').forEach(btn=>btn.addEventListener('click',()=>{leaderboardCompetition=btn.dataset.leaderCompetition;renderCompetitionLeaderboards();}));
   $$('.leaderboard-mode-tabs [data-leader-mode]').forEach(btn=>btn.onclick=()=>{leaderboardMode=btn.dataset.leaderMode;renderCompetitionLeaderboards();});
 }
@@ -19111,7 +19245,7 @@ function nextMatchTeamMarkup(name,event){
 function hydrateNextMatchBadges(){document.querySelectorAll('[data-next-club]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.nextClub,el.querySelector('.crest-fallback')));}
 function decisionScoreboardMarkup(log){
   const compMarkup=competitionHeaderMarkup(log.event.competition||'Partida',log.event.stage||'');
-  return `<div class="decision-scoreboard"><div class="decision-score-meta">${compMarkup}</div><div class="decision-score-main"><div class="decision-score-team">${nextMatchTeamMarkup(log.event.home,log.event)}<strong>${esc(log.event.home)}</strong></div><div class="decision-score-numbers"><small>PLACAR</small><b>${log.homeGoals}<i>×</i>${log.awayGoals}</b></div><div class="decision-score-team">${nextMatchTeamMarkup(log.event.away,log.event)}<strong>${esc(log.event.away)}</strong></div></div></div>`;
+  return `<div class="decision-scoreboard"><div class="decision-score-meta">${compMarkup}</div><div class="decision-score-main"><div class="decision-score-team">${nextMatchTeamMarkup(log.event.home,log.event)}</div><div class="decision-score-numbers"><small>PLACAR</small><b>${log.homeGoals}<i>×</i>${log.awayGoals}</b></div><div class="decision-score-team">${nextMatchTeamMarkup(log.event.away,log.event)}</div></div></div>`;
 }
 function syncViewportMetrics(){const topbar=document.querySelector('.topbar');document.documentElement.style.setProperty('--app-topbar-height',`${topbar?.offsetHeight||72}px`);}
 function render(){
@@ -20359,7 +20493,7 @@ function renderDecisionChoices(scenario){
   visual.className='decision-visual hidden';
   choiceBox.innerHTML='';
   choiceBox.classList.remove('hidden');
-  const buttons=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><span class="decision-choice-index">${String(i+1).padStart(2,'0')}</span><span><strong>${o.label}</strong>${scenario.visual==='penalty'?'':`<small>${o.effect}</small>`}</span><b class="decision-choice-arrow">↗</b></button>`).join('');
+  const buttons=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><span class="decision-choice-index">${String(i+1).padStart(2,'0')}</span><span><strong>${o.label}</strong></span><b class="decision-choice-arrow">↗</b></button>`).join('');
   if(['goal','penalty','chance','goalkeeper','defense','build'].includes(scenario.visual)){
     const slotClasses=(scenario.visual==='goal'||scenario.visual==='penalty')?
       ['slot-left','slot-center','slot-right']:
@@ -20373,7 +20507,7 @@ function renderDecisionChoices(scenario){
     const typeClass=scenario.visual==='goal'||scenario.visual==='penalty'?'goal-mouth':scenario.visual==='chance'?'chance-board':scenario.visual==='goalkeeper'?'goalkeeper-board':scenario.visual==='defense'?'defense-board':'build-board';
     visual.className=`decision-visual ${typeClass}`;
     const label=scenario.prompt|| (scenario.visual==='penalty'?'Escolha o tipo de cobrança':scenario.visual==='goal'?'Escolha a finalização':scenario.visual==='chance'?'Escolha como atacar o lance':'Escolha sua leitura no lance');
-    const inner=scenario.options.map((o,i)=>`<button class="visual-choice ${slotClasses[i]||''}" data-decision-option="${i}"><span>${o.type==='assist'?'🤝':o.type==='defense'?'🛡️':o.type==='control'?'⏱️':'⚽'}</span><strong>${o.label}</strong>${scenario.visual==='penalty'?'':`<small>${o.effect}</small>`}</button>`).join('');
+    const inner=scenario.options.map((o,i)=>`<button class="visual-choice ${slotClasses[i]||''}" data-decision-option="${i}"><span>${o.type==='assist'?'🤝':o.type==='defense'?'🛡️':o.type==='control'?'⏱️':'⚽'}</span><strong>${o.label}</strong></button>`).join('');
     const sceneHash=[...(scenario.id||scenario.title||scenario.visual)].reduce((n,ch,i)=>n+ch.charCodeAt(0)*(i+5),29);const variant=sceneHash%12;visual.style.setProperty('--decision-shift',`${(sceneHash%23)-11}px`);visual.style.setProperty('--decision-tilt',`${(sceneHash%15)-7}deg`);visual.style.setProperty('--decision-scale',`${(90+(sceneHash%19))/100}`);
     visual.classList.add(`decision-layout-${variant}`,`decision-scenario-${String(scenario.id||'generic').replace(/[^a-z0-9-]/gi,'-').toLowerCase()}`);
     visual.innerHTML=`<div class="decision-visual-label">${label}</div><div class="btl-tactics-header"><span>◉ CENTRAL TÁTICA</span><span>${scenario.visual==='penalty'?'12 PASSOS, UMA DECISÃO':'SUA JOGADA'}</span></div><div class="btl-pitch-graphic" aria-hidden="true"><i></i><i></i><i></i><span>—</span></div><div class="visual-stage">${inner}</div>`;
@@ -20530,6 +20664,15 @@ function playMatchVisualFX(kind='build',outcome='intro',scenarioId=''){
   card.querySelector('.match-cinematic')?.remove();const fx=document.createElement('div');fx.className=`match-cinematic cinematic-${kind} cinematic-${outcome} variant-${hash}`;
   fx.innerHTML='<i></i><i></i><i></i><i></i><span class="speed-line l1"></span><span class="speed-line l2"></span><span class="speed-line l3"></span><span class="crowd-flash"></span><span class="camera-pan"></span><span class="score-pulse"></span><span class="match-ball"></span><span class="match-flash"></span>';card.appendChild(fx);setTimeout(()=>fx.remove(),1650);
 }
+function showDecisionSuspense(message='Aguarde...'){
+  const visual=$('#decision-visual'),choices=$('#decision-choices'),result=$('#decision-result'),cont=$('#decision-continue');
+  choices.classList.add('hidden');
+  result.classList.remove('hidden');
+  result.innerHTML=`<div class="decision-suspense"><span class="decision-suspense-spinner"></span><strong>${esc(message)}</strong></div>`;
+  cont.classList.add('hidden');
+  visual.classList.add('hidden');
+}
+
 function animateSeasonDashboard(){
   const s=state.season,seasonCard=$('.season-card'),competitionCard=$('.competitions-card'),nationalCard=$('.national-card');
   seasonCard?.classList.toggle('season-live',!!s&&!s.closed);competitionCard?.classList.toggle('season-live',!!s&&!s.closed);nationalCard?.classList.toggle('world-cup-year',!!s&&isWorldCupYear(s.year));
@@ -20539,7 +20682,7 @@ function openMatchDecision(event){
   applyCompetitionExperienceTheme(event);
   const scenario=buildDecisionScenario(event);state.pendingMatchDecision={event,scenario,isNationalDecision:event.type==='national'};if(event.type==='national')state.season.nationalDecisionCount=(state.season.nationalDecisionCount||0)+1;save();
   const card=$('#match-decision-modal .decision-card');card.classList.remove('scene-night','scene-rain','scene-sunset','scene-derby','scene-fog','scene-floodlights','scene-finale','scene-storm','scene-snow','scene-heat','scene-away','scene-hostile','scene-cup-night','scene-extra-time','scene-morning','scene-national-night','scene-afternoon','scene-wind','scene-neon','scene-tunnel');card.classList.add(`scene-${scenario.scene||'night'}`);applyDecisionCompetitionTheme(card,event);
-  $('#decision-competition').innerHTML=competitionHeaderMarkup(event.competition,event.stage||'');$('#decision-title').textContent=`${scenario.minute}' · ${scenario.title}`;$('#decision-match').textContent=`${event.home} × ${event.away}`;$('#decision-description').textContent='';
+  $('#decision-competition').innerHTML=competitionHeaderMarkup(event.competition,event.stage||'');$('#decision-title').textContent=`${scenario.minute}' · ${scenario.title}`;$('#decision-match').textContent='';$('#decision-description').textContent='';
   $('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');renderDecisionChoices(scenario);$('#match-decision-modal').classList.remove('hidden');playMatchVisualFX(scenario.visual||'build','intro',scenario.id||'');
 }
 function simulateInteractiveMatch(event,option){
@@ -20562,7 +20705,7 @@ function simulateInteractiveMatch(event,option){
   return {event,playerIsHome,teamGoals,oppGoals,homeGoals,awayGoals,perf,model:score.model,outcome,success,competitionResolution,injury,playerRole:appearanceRole};
 }
 function resolveMatchDecision(index){
-  const pending=state.pendingMatchDecision;if(!pending)return;const option=pending.scenario.options[index];const log=simulateInteractiveMatch(pending.event,option);const s=state.season;s.decisionLogs=s.decisionLogs||[];s.decisionLogs.push({competition:log.event.competition,match:`${log.event.home} ${log.homeGoals} x ${log.awayGoals} ${log.event.away}`,choice:option.label,outcome:log.outcome,rating:log.perf.rating.toFixed(1)});if(!pending.isNationalDecision){s.decisionIndex=(s.decisionIndex||0)+1;adjustClubRoleTrust(log.success?6:-1,log.success?'correct':'wrong');}else state.player.nationalTrust=clamp((state.player.nationalTrust||0)+(log.success?3:-1),0,100);state.pendingMatchDecision=null;playMatchVisualFX(pending.scenario.visual||'build',log.success?'success':'miss',pending.scenario.id||'');save();render();
+  const pending=state.pendingMatchDecision;if(!pending)return;const option=pending.scenario.options[index];const log=simulateInteractiveMatch(pending.event,option);const s=state.season;s.decisionLogs=s.decisionLogs||[];s.decisionLogs.push({competition:log.event.competition,match:`${log.event.home} ${log.homeGoals} x ${log.awayGoals} ${log.event.away}`,choice:option.label,outcome:log.outcome,rating:log.perf.rating.toFixed(1)});if(!pending.isNationalDecision){s.decisionIndex=(s.decisionIndex||0)+1;adjustClubRoleTrust(log.success?6:-1,log.success?'correct':'wrong');}else state.player.nationalTrust=clamp((state.player.nationalTrust||0)+(log.success?3:-1),0,100);state.pendingMatchDecision=null;playMatchVisualFX(pending.scenario.visual||'build',log.success?'success':'miss',pending.scenario.id||'');save();render();showDecisionSuspense('Momento decisivo...');
   let cupProgress='';
   if(log.event.worldCup&&log.competitionResolution){
     const wc=s?.worldCup,res=log.competitionResolution;
@@ -20579,7 +20722,7 @@ function resolveMatchDecision(index){
     else if(res.stage!=='group'&&typeof res.advanced==='boolean')label=`${res.advanced?'✓ Seleção classificada':'✕ Seleção eliminada'}${res.nextStage?` · próxima fase: ${esc(res.nextStage)}`:''}`;
     if(label)cupProgress=`<span class="decision-team-result ${res.pendingPenalties?'pending-penalties':''}">${label}</span>`;
   }
-  $('#decision-visual').classList.add('hidden');$('#decision-choices').classList.add('hidden');$('#decision-result').classList.remove('hidden');$('#decision-result').innerHTML=`${decisionScoreboardMarkup(log)}<div class="decision-result-copy"><strong>${esc(log.outcome)}</strong>${cupProgress}<div class="decision-performance-strip"><span><b>${log.perf.rating.toFixed(1)}</b> nota</span><span><b>${log.perf.goals}</b> gols</span><span><b>${log.perf.assists}</b> assist.</span></div>${log.injury?`<span class="decision-injury-result">✚ ${esc(log.injury.label)} · previsão de ${log.injury.games} jogo(s) fora</span>`:''}${state.pendingPenaltyShootout&&!log.competitionResolution?.pendingPenalties?'<span class="decision-team-result pending-penalties">A partida segue para os pênaltis.</span>':''}</div>`;setTimeout(hydrateNextMatchBadges,0);$('#decision-continue').classList.remove('hidden');
+  setTimeout(()=>{$('#decision-visual').classList.add('hidden');$('#decision-choices').classList.add('hidden');$('#decision-result').classList.remove('hidden');$('#decision-result').innerHTML=`${decisionScoreboardMarkup(log)}<div class="decision-result-copy"><strong>${esc(log.outcome)}</strong>${cupProgress}<div class="decision-performance-strip"><span><b>${log.perf.rating.toFixed(1)}</b> nota</span><span><b>${log.perf.goals}</b> gols</span><span><b>${log.perf.assists}</b> assist.</span></div>${log.injury?`<span class="decision-injury-result">✚ ${esc(log.injury.label)} · previsão de ${log.injury.games} jogo(s) fora</span>`:''}${state.pendingPenaltyShootout&&!log.competitionResolution?.pendingPenalties?'<span class="decision-team-result pending-penalties">A partida segue para os pênaltis.</span>':''}</div>`;setTimeout(hydrateNextMatchBadges,0);$('#decision-continue').classList.remove('hidden');},850);
 }
 function checkIdolMilestones(avg){
   const p=state.player,s=state.season; if(!p||!s) return;
@@ -20631,10 +20774,10 @@ function continueSeasonSimulation(){
     // Mantemos a oportunidade mesmo em caso de lesão, para nunca simular uma final sem participação do jogador.
     if(isDecisiveFinal(event)){openMatchDecision(event);save();render();return;}
     // Copa do Mundo: toda partida do jogador recebe uma situação de decisão.
-    const nationalDecision=event.type==='national'&&healthy&&(event.worldCup||((s.nationalDecisionCount||0)<nationalLimit&&Math.random()<(.58*INTERACTION_FREQUENCY)));
+    const nationalDecision=event.type==='national'&&healthy&&(event.worldCup||((s.nationalDecisionCount||0)<nationalLimit&&Math.random()<(.58*INTERACTION_FREQUENCY*MATCH_DECISION_FREQUENCY_MULT)));
     if(nationalDecision){openMatchDecision(event);save();render();return;}
     if(event.type!=='national'&&healthy&&appearanceRole!=='unused'&&target!==undefined&&s.clubGames+1>=target){
-      if(Math.random()<=INTERACTION_FREQUENCY){openMatchDecision(event);save();render();return;}
+      if(Math.random()<=Math.min(.98,INTERACTION_FREQUENCY*MATCH_DECISION_FREQUENCY_MULT)){openMatchDecision(event);save();render();return;}
       s.decisionIndex=(s.decisionIndex||0)+1; // cerca de 15% das situações são puladas para dar ritmo à temporada
     }
     simulateMatchCore(event);safety++;

@@ -27,6 +27,8 @@ let leaderboardMode = 'goals';
 let leaderboardCompetition = null;
 let nextEventCache = null;
 const INTERACTION_FREQUENCY = 0.765; // 10% menos interrupções em relação ao balanceamento anterior (0,85)
+const MATCH_DECISION_FREQUENCY_MULT = 1.2;
+const CAREER_EVENT_FREQUENCY_MULT = 0.8;
 let pausedCareerOverlay = null;
 let pendingSeasonCelebration = null;
 let pendingPlayerProfile = null;
@@ -1161,7 +1163,7 @@ function applyImageSources(img,sources,fallback){if(!img)return;const list=sourc
 // Catálogo validado de troféus: prioriza Wikimedia Commons e completa lacunas com anexos locais enviados pelo usuário.
 // O antigo mapa FM estava vazio e todos os títulos exibiam no-file.svg.
 const TROPHY_ART=window.BTL_COMMONS_TROPHIES||[];
-function trophyEntryFor(name){return TROPHY_ART.find(x=>x.test.test(String(name||'')))||null;}
+function trophyEntryFor(name){const label=String(name||'');if(/Qualifiers|Eliminat[oó]rias/i.test(label))return null;return TROPHY_ART.find(x=>x.test.test(label))||null;}
 function trophySourcesFor(name){const item=trophyEntryFor(name);return item?.src?[item.src]:[];}
 function trophyArtFor(name){return trophySourcesFor(name)[0]||'';}
 function honourInitials(name){return (name||'BTL').split(/\s+/).filter(Boolean).slice(0,3).map(x=>x[0]).join('').toUpperCase();}
@@ -1249,6 +1251,8 @@ function clubCompetitionProfile(name,code){
 }
 function canonicalClubCountryCode(name,fallback=''){
   if(!name)return fallback||'';
+  if(/^Athletic Bilbao$/i.test(name))return 'ES';
+  if(/^Athletic(?: Club)?$/i.test(name))return fallback||'BR';
   const localHits=Object.entries(LOCAL_CLUBS).filter(([,clubs])=>clubs.some(c=>c.name===name)).map(([code])=>code);
   const poolHits=Object.entries(LEAGUE_CLUB_POOLS||{}).filter(([,clubs])=>clubs.includes(name)).map(([code])=>code);
   const transferHits=(TRANSFER_TARGETS||[]).filter(c=>c.name===name).map(c=>c.countryCode);
@@ -1256,7 +1260,9 @@ function canonicalClubCountryCode(name,fallback=''){
   const hits=[...new Set([...localHits,...poolHits,...transferHits,...marketHits])];
   if(hits.length===1)return hits[0];
   if(fallback&&hits.includes(fallback))return fallback;
-  return hits.length===1?hits[0]:(fallback||''); // Country ambiguous: do not select Bilbao over Athletic-MG.
+  if(hits.includes('BR')&&/^Athletic Club$/i.test(name))return 'BR';
+  if(hits.includes('ES')&&/^Athletic Bilbao$/i.test(name))return 'ES';
+  return hits.length===1?hits[0]:(fallback||'');
 }
 function leagueForClub(name,fallbackCode=''){
   const code=canonicalClubCountryCode(name,fallbackCode);
@@ -1923,10 +1929,10 @@ async function loadClubChoices(){
 function drawThreeClubs(){
   const source=$('#club-status').dataset.source||'base de clubes';let pool=creationClubPool.filter(c=>!creationSeenClubs.has(c.name));if(pool.length<3)pool=creationClubPool;
   creationChoices=sample(pool,Math.min(3,pool.length));creationChoices.forEach(c=>creationSeenClubs.add(c.name));
-  $('#club-status').innerHTML=creationChoices.length?`Escolha um clube da lista confirmada. <div class="club-source">${esc(source)} · novos sorteios restantes: ${creationClubRerollsRemaining}</div>`:`Nenhum clube real pôde ser confirmado para este país. Verifique sua conexão ou escolha outra nacionalidade. Não serão criados clubes fictícios.`;
+  $('#club-status').innerHTML='';
   $('#club-options').innerHTML=creationChoices.map((c,i)=>{
     const profile={...clubCompetitionProfile(c.name,c.countryCode),...c};const division=profile.divisionLevel>1?` · ${profile.divisionLevel}ª divisão`:'';
-    return `<button type="button" class="club-option" data-club-index="${i}" data-club-name="${c.name.replace(/"/g,'&quot;')}"><span class="check"></span><span class="crest-shell small"><img class="club-badge-img hidden" alt=""><span class="crest-fallback" title="Escudo real ainda não localizado">S/D</span></span><strong>${c.name}</strong><small>${profile.league||getCompetitionRule(c.countryCode,countryByCode(c.countryCode)?.name||'').league}${division}</small><small>Força estimada: ${c.strength}</small></button>`;
+    return `<button type="button" class="club-option" data-club-index="${i}" data-club-name="${c.name.replace(/"/g,'&quot;')}" data-club-country="${c.countryCode||''}"><span class="check"></span><span class="crest-shell small"><img class="club-badge-img hidden" alt=""><span class="crest-fallback" title="Escudo real ainda não localizado">S/D</span></span><strong>${c.name}</strong></button>`;
   }).join('');
   $$('.club-option').forEach(btn=>btn.addEventListener('click',()=>selectCreationClub(+btn.dataset.clubIndex)));hydrateRenderedBadges();updateClubRerollButton();
 }
@@ -2680,8 +2686,9 @@ function penaltyTeamVisualMarkup(pending,team){
 }
 function penaltyProgressMarkup(pending){
   const shoot=pending.shootoutLive||{kicks:[],score:{home:0,away:0}},clubs=[{name:pending.home,side:'home'},{name:pending.away,side:'away'}];
-  const dots=club=>Array.from({length:5},(_,i)=>{const round=i+1,k=shoot.kicks.find(x=>x.team===club.name&&x.round===round),chosen=club.name===pending.team&&pending.playerKickRound===round;let cls=k?(k.scored?'made':'missed'):(chosen?'chosen':'pending'),icon=k?(k.scored?'✓':'✕'):(chosen?'★':'');return `<span class="penalty-dot ${cls}${k?.isPlayer?' player-slot':''}" data-penalty-team="${esc(club.name)}" data-penalty-round="${round}">${icon}</span>`;}).join('');
-  return `<div class="penalty-shootout-shell"><div class="penalty-shootout-head"><span>${shoot.phase==='sudden'?'Cobranças alternadas':'Série inicial de 5 cobranças'}</span><span><b>${shoot.score.home||0} × ${shoot.score.away||0}</b></span></div>${clubs.map(club=>`<div class="penalty-team-row"><div class="penalty-team-meta">${penaltyTeamVisualMarkup(pending,club.name)}<strong>${esc(club.name)}</strong></div><div class="penalty-dot-row">${dots(club)}</div><b class="penalty-row-score">${shoot.score[club.side]||0}</b></div>`).join('')}${shoot.phase==='sudden'?`<div class="penalty-sudden-list">${(shoot.kicks||[]).filter(k=>k.round>5).map(k=>`<span class="${k.scored?'made':'missed'}">${esc(k.team)} · ${k.round}º ${k.scored?'✓':'✕'}</span>`).join('')}</div>`:''}</div>`;
+  const maxRound=Math.max(5,...(shoot.kicks||[]).map(k=>k.round||0),pending.playerKickRound||0);
+  const dots=club=>Array.from({length:maxRound},(_,i)=>{const round=i+1,k=shoot.kicks.find(x=>x.team===club.name&&x.round===round),chosen=club.name===pending.team&&pending.playerKickRound===round&&!k&&shoot.waitingForPlayer;let cls=k?(k.scored?'made':'missed'):(chosen?'chosen':'pending'),icon=k?(k.scored?'✓':'✕'):(chosen?'★':'');return `<span class="penalty-dot ${cls}${round>5?' sudden-dot':''}${k?.isPlayer?' player-slot':''}" data-penalty-team="${esc(club.name)}" data-penalty-round="${round}">${icon}</span>`;}).join('');
+  return `<div class="penalty-shootout-shell"><div class="penalty-shootout-head"><span>${shoot.phase==='sudden'?'Cobranças alternadas':'Série inicial de 5 cobranças'}</span><span><b>${shoot.score.home||0} × ${shoot.score.away||0}</b></span></div>${clubs.map(club=>`<div class="penalty-team-row"><div class="penalty-team-meta">${penaltyTeamVisualMarkup(pending,club.name)}</div><div class="penalty-dot-row">${dots(club)}</div><b class="penalty-row-score">${shoot.score[club.side]||0}</b></div>`).join('')}</div>`;
 }
 function initPenaltyLive(pending){
   if(pending.shootoutLive)return pending.shootoutLive;
@@ -2709,7 +2716,7 @@ function continuePenaltySimulation(pending){
     if(live.phase==='standard'&&shootoutMathematicallyFinished(pending,live)){finalizePenaltyShootout(pending);return;}
     if(live.phase==='standard'&&live.round>5){if(live.score.home!==live.score.away){finalizePenaltyShootout(pending);return;}live.phase='sudden';live.round=6;live.nextTeam=live.first;}
     const isPlayerTurn=live.phase==='standard'&&live.nextTeam===pending.team&&live.round===pending.playerKickRound;
-    if(isPlayerTurn){live.waitingForPlayer=true;renderPenaltyLive(pending);const scenario=buildShootoutScenario(pending);$('#decision-title').textContent=`Sua vez · ${pending.playerKickRound}º pênalti`;$('#decision-description').textContent='Escolha o chute.';$('#decision-choices').classList.remove('hidden');$('#decision-choices').innerHTML=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><span class="decision-choice-index">${String(i+1).padStart(2,'0')}</span><span><strong>${o.label}</strong></span><b class="decision-choice-arrow">↗</b></button>`).join('');$('#decision-choices').querySelectorAll('[data-decision-option]').forEach(b=>b.addEventListener('click',()=>resolvePenaltyShootout(+b.dataset.decisionOption)));return;}
+    if(isPlayerTurn){live.waitingForPlayer=true;renderPenaltyLive(pending);const scenario=buildShootoutScenario(pending);$('#decision-title').textContent=`Sua vez · ${pending.playerKickRound}º pênalti`;$('#decision-description').textContent='';$('#decision-choices').classList.remove('hidden');$('#decision-choices').innerHTML=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><span class="decision-choice-index">${String(i+1).padStart(2,'0')}</span><span><strong>${o.label}</strong></span><b class="decision-choice-arrow">↗</b></button>`).join('');$('#decision-choices').querySelectorAll('[data-decision-option]').forEach(b=>b.addEventListener('click',()=>resolvePenaltyShootout(+b.dataset.decisionOption)));return;}
     const team=live.nextTeam,round=live.round,scored=Math.random()<simulatedPenaltyChance(pending,team);appendPenaltyKick(pending,team,round,scored,false);advancePenaltyCursor(pending);renderPenaltyLive(pending);playMatchVisualFX('penalty',scored?'success':'miss','shootout');
     if(live.phase==='sudden'&&live.nextTeam===live.first&&live.kicks.filter(k=>k.round===round).length===2&&live.score.home!==live.score.away){setTimeout(()=>finalizePenaltyShootout(pending),500);return;}
     setTimeout(tick,560);
@@ -2719,8 +2726,8 @@ function continuePenaltySimulation(pending){
 function openPenaltyShootoutDecision(){
   const pending=state.pendingPenaltyShootout;if(!pending)return;
   applyCompetitionExperienceTheme(pending);
-  const card=$('#match-decision-modal .decision-card');card.classList.add('scene-finale');applyDecisionCompetitionTheme(card,pending);$('#decision-competition').innerHTML=competitionHeaderMarkup(pending.competition,[pending.stage,'PÊNALTIS'].filter(Boolean).join(' · '));$('#decision-match').textContent=`${pending.home} x ${pending.away}`;$('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');$('#decision-visual').className='decision-visual penalty-shootout-preview';
-  if(!pending.playerKickRound){$('#decision-title').textContent="120' · Escolha qual pênalti você vai bater";$('#decision-description').textContent='Quando você vai bater?';$('#decision-visual').innerHTML=penaltyProgressMarkup(pending);hydratePenaltyBadges($('#decision-visual'));const box=$('#decision-choices');box.className='event-choices penalty-order-choices';box.innerHTML=buildPenaltyOrderOptions().map(o=>`<button class="event-choice decision-option" data-penalty-order="${o.slot}"><strong>${o.label}</strong></button>`).join('');box.querySelectorAll('[data-penalty-order]').forEach(b=>b.addEventListener('click',()=>{pending.playerKickRound=Number(b.dataset.penaltyOrder);initPenaltyLive(pending);save();continuePenaltySimulation(pending);}));$('#match-decision-modal').classList.remove('hidden');return;}
+  const card=$('#match-decision-modal .decision-card');card.classList.add('scene-finale');applyDecisionCompetitionTheme(card,pending);$('#decision-competition').innerHTML=competitionHeaderMarkup(pending.competition,[pending.stage,'PÊNALTIS'].filter(Boolean).join(' · '));$('#decision-match').textContent='';$('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');$('#decision-visual').className='decision-visual penalty-shootout-preview';
+  if(!pending.playerKickRound){$('#decision-title').textContent="120' · Escolha qual pênalti você vai bater";$('#decision-description').textContent='';$('#decision-visual').innerHTML=penaltyProgressMarkup(pending);hydratePenaltyBadges($('#decision-visual'));const box=$('#decision-choices');box.className='event-choices penalty-order-choices';box.innerHTML=buildPenaltyOrderOptions().map(o=>`<button class="event-choice decision-option" data-penalty-order="${o.slot}"><strong>${o.label}</strong></button>`).join('');box.querySelectorAll('[data-penalty-order]').forEach(b=>b.addEventListener('click',()=>{pending.playerKickRound=Number(b.dataset.penaltyOrder);initPenaltyLive(pending);save();continuePenaltySimulation(pending);}));$('#match-decision-modal').classList.remove('hidden');return;}
   continuePenaltySimulation(pending);$('#match-decision-modal').classList.remove('hidden');
 }
 function resolvePenaltyShootout(index){
@@ -3071,7 +3078,7 @@ function maybeTriggerIdolInteraction(){
 }
 function maybeTriggerCareerEvent(){
   const s=state.season;
-  if(!s||state.pendingEvent||worldCupTournamentLockActive(s,state.player)||s.totalGames-(s.lastCareerEventAt||0)<5||Math.random()>(.19*INTERACTION_FREQUENCY))return false;
+  if(!s||state.pendingEvent||worldCupTournamentLockActive(s,state.player)||s.totalGames-(s.lastCareerEventAt||0)<5||Math.random()>(.19*INTERACTION_FREQUENCY*CAREER_EVENT_FREQUENCY_MULT))return false;
   const incidentPool=[...(typeof INCIDENT_EVENTS!=='undefined'?INCIDENT_EVENTS:[]),...BTL_PREMIUM_RANDOM_EVENTS];
   const iconEligible=(state.player?.overall||0)>=90||(state.player?.reputation||0)>=70;
   const chance=Math.random();
@@ -3391,12 +3398,12 @@ const EXTRA_ACTIVE_PLAYERS=[
 {name:'Pedro',rating:84,position:'ATA',club:'Flamengo',countryCode:'BR',nationalCode:'BR'},
 {name:'Memphis Depay',rating:84,position:'ATA',club:'Corinthians',countryCode:'BR',nationalCode:'NL'},
 {name:'Yuri Alberto',rating:82,position:'ATA',club:'Corinthians',countryCode:'BR',nationalCode:'BR'},
-{name:'Hulk',rating:83,position:'ATA',club:'Atlético Mineiro',countryCode:'BR',nationalCode:'BR'},
+{name:'Hulk',rating:83,position:'ATA',club:'Fluminense',countryCode:'BR',nationalCode:'BR'},
 {name:'Raphael Veiga',rating:83,position:'MEI',club:'Palmeiras',countryCode:'BR',nationalCode:'BR'},
 {name:'Vitor Roque',rating:84,position:'ATA',club:'Palmeiras',countryCode:'BR',nationalCode:'BR'},
 {name:'Alan Patrick',rating:82,position:'MEI',club:'Internacional',countryCode:'BR',nationalCode:'BR'},
 {name:'Luciano',rating:81,position:'ATA',club:'São Paulo',countryCode:'BR',nationalCode:'BR'},
-{name:'Jhon Arias',rating:83,position:'PD',club:'Fluminense',countryCode:'BR',nationalCode:'CO'},
+{name:'Jhon Arias',rating:83,position:'PD',club:'Palmeiras',countryCode:'BR',nationalCode:'CO'},
 {name:'Arias',rating:80,position:'MEI',club:'Bahia',countryCode:'BR',nationalCode:'BR'},
 {name:'Ángel Romero',rating:80,position:'ATA',club:'Corinthians',countryCode:'BR',nationalCode:'PY'},
 {name:'Edinson Cavani',rating:82,position:'ATA',club:'Boca Juniors',countryCode:'AR',nationalCode:'UY'},
@@ -3541,28 +3548,48 @@ function leaderboardCandidates(title){
   const normalizeClub=n=>normalizeKey(String(n||''));
   const allowed=clubsForLeaderboardCompetition(title);
   const country=String(s.countryAtStart||p.clubCountry||'');
-  // League tables are EXCLUSIVE to clubs enrolled in this specific league;
-  // never 'pad' the list with unrelated stars (e.g. Messi in 2.Bundesliga).
+  const fromClubSet=(clubSet,max=80)=>players.filter(wp=>clubSet.has(normalizeClub(wp.club))).slice(0,max);
   if(title===s.league?.name){
     const leagueClubs=new Set((s.league?.teams||s.league?.clubs||[]).map(t=>normalizeClub(typeof t==='string'?t:t.name)).filter(Boolean));
     for(const club of (allowed||[]))leagueClubs.add(normalizeClub(club));
     return players.filter(wp=>wp.countryCode===country&&leagueClubs.has(normalizeClub(wp.club))).slice(0,80);
   }
-  // Domestic cups use clubs of this country; participant pool when known.
   if(title===s.cup?.name){
-    return players.filter(wp=>wp.countryCode===country&&(!allowed?.size||allowed.has(wp.club))).slice(0,80);
+    const countryClubs=new Set((leaguePoolForCountry(country,p.club,s.league?.name)||[]).map(normalizeClub));
+    if(!countryClubs.size && allowed?.size) for(const club of allowed) countryClubs.add(normalizeClub(club));
+    return players.filter(wp=>wp.countryCode===country&&countryClubs.has(normalizeClub(wp.club))).slice(0,80);
   }
   const supercup=(s.superCups||[]).find(sc=>sc.name===title);
-  if(supercup){return players.filter(wp=>allowed?.has(wp.club)).slice(0,60);}
+  if(supercup){
+    if(!supercup.opponent)supercup.opponent=superCupOpponent(supercup);
+    if(/Finalissima/i.test(title)){
+      const codes=new Set([p.nationalityCode,supercup.opponent?.code].filter(Boolean));
+      return players.filter(wp=>codes.has(wp.nationalCode||wp.countryCode)).slice(0,50);
+    }
+    if(supercup.scope==='national'){
+      const codes=new Set([p.nationalityCode,supercup.opponent?.code].filter(Boolean));
+      return players.filter(wp=>codes.has(wp.nationalCode||wp.countryCode)).slice(0,60);
+    }
+    const clubSet=new Set([normalizeClub(p.club),normalizeClub(supercup.opponent?.name||supercup.opponent)]);
+    return fromClubSet(clubSet,60);
+  }
   if(title===s.continental?.name){
-    // Only clubs actually scheduled for the tournament; no cross-league fillers.
-    return players.filter(wp=>allowed?.has(wp.club)).slice(0,80);
+    const clubSet=new Set([...(allowed||[])].map(normalizeClub));
+    const conf=confederation(p.clubCountry);
+    const threshold=/UEFA Champions League/i.test(title)?82:/UEFA Europa League/i.test(title)?77:/UEFA Conference League/i.test(title)?73:/Libertadores/i.test(title)?74:/AFC Champions/i.test(title)?72:/CAF Champions/i.test(title)?72:/CONCACAF Champions/i.test(title)?72:70;
+    allTransferClubs().filter(c=>confederation(c.countryCode)===conf&&(c.strength||0)>=threshold).sort((a,b)=>(b.strength||0)-(a.strength||0)).slice(0,18).forEach(c=>clubSet.add(normalizeClub(c.name)));
+    clubSet.add(normalizeClub(p.club));
+    return fromClubSet(clubSet,90);
   }
-  if(/World Cup|Copa do Mundo|EURO|Copa América|Nations|Finalissima/i.test(title)){
-    const conf=/EURO|Nations/i.test(title)?'UEFA':/Copa América/i.test(title)?'CONMEBOL':null;
-    return players.filter(wp=>wp.nationalCode&&(!conf||confederation(wp.nationalCode)===conf)).slice(0,80);
+  if(/World Cup|Copa do Mundo/i.test(title)){
+    return players.filter(wp=>!!(wp.nationalCode||wp.countryCode)).slice(0,80);
   }
-  // Unknown competition => show tracked user stats, not fabricated outsiders.
+  if(/EURO|Nations/i.test(title)){
+    return players.filter(wp=>confederation(wp.nationalCode||wp.countryCode)==='UEFA').slice(0,80);
+  }
+  if(/Copa América/i.test(title)){
+    return players.filter(wp=>confederation(wp.nationalCode||wp.countryCode)==='CONMEBOL').slice(0,80);
+  }
   return [];
 }
 
@@ -3608,8 +3635,8 @@ function renderCompetitionLeaderboards(){
     const userClub=playedAtPreviousClub?(s.clubAtStart||p.club):p.club;
     rows.push({id:'user',name:p.name,rating:p.overall,position:rankingPositionLabel(p.position),club:userClub,team:countryCup?p.nationality:userClub,games:userStat.games||0,goals:userStat.goals||0,assists:userStat.assists||0,isUser:true});
   }
-  rows.sort((a,b)=>(b[leaderboardMode]||0)-(a[leaderboardMode]||0)||(b.goals||0)-(a.goals||0)||(b.rating||0)-(a.rating||0));const top=rows.slice(0,8),userIndex=rows.findIndex(x=>x.isUser);if(userIndex>=8)top.push({...rows[userIndex],shownRank:userIndex+1});
-  box.innerHTML=`<p class="leaderboard-integrity-note">Somente clubes participantes da competição · estatísticas dos rivais simuladas</p><div class="leaderboard-head"><span>#</span><span>Jogador</span><span>Equipe</span><span>${leaderboardMode==='goals'?'Gols':'Assist.'}</span></div>${top.map((r,i)=>`<div class="leaderboard-row ${r.isUser?'is-user':''}"><b>${r.shownRank||i+1}</b><span><strong>${esc(r.name)}</strong><small>${esc(r.position||'')}</small></span>${leaderboardTeamVisual(r,leaderboardCompetition)}<strong>${r[leaderboardMode]||0}</strong></div>`).join('')}`;hydratePenaltyBadges(box);
+  let ordered=rows.sort((a,b)=>(b[leaderboardMode]||0)-(a[leaderboardMode]||0)||(b.goals||0)-(a.goals||0)||(b.rating||0)-(a.rating||0));if(leaderboardMode==='goals')ordered=ordered.filter(r=>Number(r.goals||0)>0);const top=ordered.slice(0,8),userIndex=ordered.findIndex(x=>x.isUser);if(userIndex>=8)top.push({...ordered[userIndex],shownRank:userIndex+1});
+  box.innerHTML=`<div class="leaderboard-head"><span>#</span><span>Jogador</span><span>Equipe</span><span>${leaderboardMode==='goals'?'Gols':'Assist.'}</span></div>${top.map((r,i)=>`<div class="leaderboard-row ${r.isUser?'is-user':''}"><b>${r.shownRank||i+1}</b><span><strong>${esc(r.name)}</strong></span>${leaderboardTeamVisual(r,leaderboardCompetition)}<strong>${r[leaderboardMode]||0}</strong></div>`).join('')}`;hydratePenaltyBadges(box);
   tabs.querySelectorAll('[data-leader-competition]').forEach(btn=>btn.addEventListener('click',()=>{leaderboardCompetition=btn.dataset.leaderCompetition;renderCompetitionLeaderboards();}));
   $$('.leaderboard-mode-tabs [data-leader-mode]').forEach(btn=>btn.onclick=()=>{leaderboardMode=btn.dataset.leaderMode;renderCompetitionLeaderboards();});
 }
@@ -3647,7 +3674,7 @@ function nextMatchTeamMarkup(name,event){
 function hydrateNextMatchBadges(){document.querySelectorAll('[data-next-club]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.nextClub,el.querySelector('.crest-fallback')));}
 function decisionScoreboardMarkup(log){
   const compMarkup=competitionHeaderMarkup(log.event.competition||'Partida',log.event.stage||'');
-  return `<div class="decision-scoreboard"><div class="decision-score-meta">${compMarkup}</div><div class="decision-score-main"><div class="decision-score-team">${nextMatchTeamMarkup(log.event.home,log.event)}<strong>${esc(log.event.home)}</strong></div><div class="decision-score-numbers"><small>PLACAR</small><b>${log.homeGoals}<i>×</i>${log.awayGoals}</b></div><div class="decision-score-team">${nextMatchTeamMarkup(log.event.away,log.event)}<strong>${esc(log.event.away)}</strong></div></div></div>`;
+  return `<div class="decision-scoreboard"><div class="decision-score-meta">${compMarkup}</div><div class="decision-score-main"><div class="decision-score-team">${nextMatchTeamMarkup(log.event.home,log.event)}</div><div class="decision-score-numbers"><small>PLACAR</small><b>${log.homeGoals}<i>×</i>${log.awayGoals}</b></div><div class="decision-score-team">${nextMatchTeamMarkup(log.event.away,log.event)}</div></div></div>`;
 }
 function syncViewportMetrics(){const topbar=document.querySelector('.topbar');document.documentElement.style.setProperty('--app-topbar-height',`${topbar?.offsetHeight||72}px`);}
 function render(){
@@ -4895,7 +4922,7 @@ function renderDecisionChoices(scenario){
   visual.className='decision-visual hidden';
   choiceBox.innerHTML='';
   choiceBox.classList.remove('hidden');
-  const buttons=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><span class="decision-choice-index">${String(i+1).padStart(2,'0')}</span><span><strong>${o.label}</strong>${scenario.visual==='penalty'?'':`<small>${o.effect}</small>`}</span><b class="decision-choice-arrow">↗</b></button>`).join('');
+  const buttons=scenario.options.map((o,i)=>`<button class="event-choice decision-option" data-decision-option="${i}"><span class="decision-choice-index">${String(i+1).padStart(2,'0')}</span><span><strong>${o.label}</strong></span><b class="decision-choice-arrow">↗</b></button>`).join('');
   if(['goal','penalty','chance','goalkeeper','defense','build'].includes(scenario.visual)){
     const slotClasses=(scenario.visual==='goal'||scenario.visual==='penalty')?
       ['slot-left','slot-center','slot-right']:
@@ -4909,7 +4936,7 @@ function renderDecisionChoices(scenario){
     const typeClass=scenario.visual==='goal'||scenario.visual==='penalty'?'goal-mouth':scenario.visual==='chance'?'chance-board':scenario.visual==='goalkeeper'?'goalkeeper-board':scenario.visual==='defense'?'defense-board':'build-board';
     visual.className=`decision-visual ${typeClass}`;
     const label=scenario.prompt|| (scenario.visual==='penalty'?'Escolha o tipo de cobrança':scenario.visual==='goal'?'Escolha a finalização':scenario.visual==='chance'?'Escolha como atacar o lance':'Escolha sua leitura no lance');
-    const inner=scenario.options.map((o,i)=>`<button class="visual-choice ${slotClasses[i]||''}" data-decision-option="${i}"><span>${o.type==='assist'?'🤝':o.type==='defense'?'🛡️':o.type==='control'?'⏱️':'⚽'}</span><strong>${o.label}</strong>${scenario.visual==='penalty'?'':`<small>${o.effect}</small>`}</button>`).join('');
+    const inner=scenario.options.map((o,i)=>`<button class="visual-choice ${slotClasses[i]||''}" data-decision-option="${i}"><span>${o.type==='assist'?'🤝':o.type==='defense'?'🛡️':o.type==='control'?'⏱️':'⚽'}</span><strong>${o.label}</strong></button>`).join('');
     const sceneHash=[...(scenario.id||scenario.title||scenario.visual)].reduce((n,ch,i)=>n+ch.charCodeAt(0)*(i+5),29);const variant=sceneHash%12;visual.style.setProperty('--decision-shift',`${(sceneHash%23)-11}px`);visual.style.setProperty('--decision-tilt',`${(sceneHash%15)-7}deg`);visual.style.setProperty('--decision-scale',`${(90+(sceneHash%19))/100}`);
     visual.classList.add(`decision-layout-${variant}`,`decision-scenario-${String(scenario.id||'generic').replace(/[^a-z0-9-]/gi,'-').toLowerCase()}`);
     visual.innerHTML=`<div class="decision-visual-label">${label}</div><div class="btl-tactics-header"><span>◉ CENTRAL TÁTICA</span><span>${scenario.visual==='penalty'?'12 PASSOS, UMA DECISÃO':'SUA JOGADA'}</span></div><div class="btl-pitch-graphic" aria-hidden="true"><i></i><i></i><i></i><span>—</span></div><div class="visual-stage">${inner}</div>`;
@@ -5066,6 +5093,15 @@ function playMatchVisualFX(kind='build',outcome='intro',scenarioId=''){
   card.querySelector('.match-cinematic')?.remove();const fx=document.createElement('div');fx.className=`match-cinematic cinematic-${kind} cinematic-${outcome} variant-${hash}`;
   fx.innerHTML='<i></i><i></i><i></i><i></i><span class="speed-line l1"></span><span class="speed-line l2"></span><span class="speed-line l3"></span><span class="crowd-flash"></span><span class="camera-pan"></span><span class="score-pulse"></span><span class="match-ball"></span><span class="match-flash"></span>';card.appendChild(fx);setTimeout(()=>fx.remove(),1650);
 }
+function showDecisionSuspense(message='Aguarde...'){
+  const visual=$('#decision-visual'),choices=$('#decision-choices'),result=$('#decision-result'),cont=$('#decision-continue');
+  choices.classList.add('hidden');
+  result.classList.remove('hidden');
+  result.innerHTML=`<div class="decision-suspense"><span class="decision-suspense-spinner"></span><strong>${esc(message)}</strong></div>`;
+  cont.classList.add('hidden');
+  visual.classList.add('hidden');
+}
+
 function animateSeasonDashboard(){
   const s=state.season,seasonCard=$('.season-card'),competitionCard=$('.competitions-card'),nationalCard=$('.national-card');
   seasonCard?.classList.toggle('season-live',!!s&&!s.closed);competitionCard?.classList.toggle('season-live',!!s&&!s.closed);nationalCard?.classList.toggle('world-cup-year',!!s&&isWorldCupYear(s.year));
@@ -5075,7 +5111,7 @@ function openMatchDecision(event){
   applyCompetitionExperienceTheme(event);
   const scenario=buildDecisionScenario(event);state.pendingMatchDecision={event,scenario,isNationalDecision:event.type==='national'};if(event.type==='national')state.season.nationalDecisionCount=(state.season.nationalDecisionCount||0)+1;save();
   const card=$('#match-decision-modal .decision-card');card.classList.remove('scene-night','scene-rain','scene-sunset','scene-derby','scene-fog','scene-floodlights','scene-finale','scene-storm','scene-snow','scene-heat','scene-away','scene-hostile','scene-cup-night','scene-extra-time','scene-morning','scene-national-night','scene-afternoon','scene-wind','scene-neon','scene-tunnel');card.classList.add(`scene-${scenario.scene||'night'}`);applyDecisionCompetitionTheme(card,event);
-  $('#decision-competition').innerHTML=competitionHeaderMarkup(event.competition,event.stage||'');$('#decision-title').textContent=`${scenario.minute}' · ${scenario.title}`;$('#decision-match').textContent=`${event.home} × ${event.away}`;$('#decision-description').textContent='';
+  $('#decision-competition').innerHTML=competitionHeaderMarkup(event.competition,event.stage||'');$('#decision-title').textContent=`${scenario.minute}' · ${scenario.title}`;$('#decision-match').textContent='';$('#decision-description').textContent='';
   $('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');renderDecisionChoices(scenario);$('#match-decision-modal').classList.remove('hidden');playMatchVisualFX(scenario.visual||'build','intro',scenario.id||'');
 }
 function simulateInteractiveMatch(event,option){
@@ -5098,7 +5134,7 @@ function simulateInteractiveMatch(event,option){
   return {event,playerIsHome,teamGoals,oppGoals,homeGoals,awayGoals,perf,model:score.model,outcome,success,competitionResolution,injury,playerRole:appearanceRole};
 }
 function resolveMatchDecision(index){
-  const pending=state.pendingMatchDecision;if(!pending)return;const option=pending.scenario.options[index];const log=simulateInteractiveMatch(pending.event,option);const s=state.season;s.decisionLogs=s.decisionLogs||[];s.decisionLogs.push({competition:log.event.competition,match:`${log.event.home} ${log.homeGoals} x ${log.awayGoals} ${log.event.away}`,choice:option.label,outcome:log.outcome,rating:log.perf.rating.toFixed(1)});if(!pending.isNationalDecision){s.decisionIndex=(s.decisionIndex||0)+1;adjustClubRoleTrust(log.success?6:-1,log.success?'correct':'wrong');}else state.player.nationalTrust=clamp((state.player.nationalTrust||0)+(log.success?3:-1),0,100);state.pendingMatchDecision=null;playMatchVisualFX(pending.scenario.visual||'build',log.success?'success':'miss',pending.scenario.id||'');save();render();
+  const pending=state.pendingMatchDecision;if(!pending)return;const option=pending.scenario.options[index];const log=simulateInteractiveMatch(pending.event,option);const s=state.season;s.decisionLogs=s.decisionLogs||[];s.decisionLogs.push({competition:log.event.competition,match:`${log.event.home} ${log.homeGoals} x ${log.awayGoals} ${log.event.away}`,choice:option.label,outcome:log.outcome,rating:log.perf.rating.toFixed(1)});if(!pending.isNationalDecision){s.decisionIndex=(s.decisionIndex||0)+1;adjustClubRoleTrust(log.success?6:-1,log.success?'correct':'wrong');}else state.player.nationalTrust=clamp((state.player.nationalTrust||0)+(log.success?3:-1),0,100);state.pendingMatchDecision=null;playMatchVisualFX(pending.scenario.visual||'build',log.success?'success':'miss',pending.scenario.id||'');save();render();showDecisionSuspense('Momento decisivo...');
   let cupProgress='';
   if(log.event.worldCup&&log.competitionResolution){
     const wc=s?.worldCup,res=log.competitionResolution;
@@ -5115,7 +5151,7 @@ function resolveMatchDecision(index){
     else if(res.stage!=='group'&&typeof res.advanced==='boolean')label=`${res.advanced?'✓ Seleção classificada':'✕ Seleção eliminada'}${res.nextStage?` · próxima fase: ${esc(res.nextStage)}`:''}`;
     if(label)cupProgress=`<span class="decision-team-result ${res.pendingPenalties?'pending-penalties':''}">${label}</span>`;
   }
-  $('#decision-visual').classList.add('hidden');$('#decision-choices').classList.add('hidden');$('#decision-result').classList.remove('hidden');$('#decision-result').innerHTML=`${decisionScoreboardMarkup(log)}<div class="decision-result-copy"><strong>${esc(log.outcome)}</strong>${cupProgress}<div class="decision-performance-strip"><span><b>${log.perf.rating.toFixed(1)}</b> nota</span><span><b>${log.perf.goals}</b> gols</span><span><b>${log.perf.assists}</b> assist.</span></div>${log.injury?`<span class="decision-injury-result">✚ ${esc(log.injury.label)} · previsão de ${log.injury.games} jogo(s) fora</span>`:''}${state.pendingPenaltyShootout&&!log.competitionResolution?.pendingPenalties?'<span class="decision-team-result pending-penalties">A partida segue para os pênaltis.</span>':''}</div>`;setTimeout(hydrateNextMatchBadges,0);$('#decision-continue').classList.remove('hidden');
+  setTimeout(()=>{$('#decision-visual').classList.add('hidden');$('#decision-choices').classList.add('hidden');$('#decision-result').classList.remove('hidden');$('#decision-result').innerHTML=`${decisionScoreboardMarkup(log)}<div class="decision-result-copy"><strong>${esc(log.outcome)}</strong>${cupProgress}<div class="decision-performance-strip"><span><b>${log.perf.rating.toFixed(1)}</b> nota</span><span><b>${log.perf.goals}</b> gols</span><span><b>${log.perf.assists}</b> assist.</span></div>${log.injury?`<span class="decision-injury-result">✚ ${esc(log.injury.label)} · previsão de ${log.injury.games} jogo(s) fora</span>`:''}${state.pendingPenaltyShootout&&!log.competitionResolution?.pendingPenalties?'<span class="decision-team-result pending-penalties">A partida segue para os pênaltis.</span>':''}</div>`;setTimeout(hydrateNextMatchBadges,0);$('#decision-continue').classList.remove('hidden');},850);
 }
 function checkIdolMilestones(avg){
   const p=state.player,s=state.season; if(!p||!s) return;
@@ -5167,10 +5203,10 @@ function continueSeasonSimulation(){
     // Mantemos a oportunidade mesmo em caso de lesão, para nunca simular uma final sem participação do jogador.
     if(isDecisiveFinal(event)){openMatchDecision(event);save();render();return;}
     // Copa do Mundo: toda partida do jogador recebe uma situação de decisão.
-    const nationalDecision=event.type==='national'&&healthy&&(event.worldCup||((s.nationalDecisionCount||0)<nationalLimit&&Math.random()<(.58*INTERACTION_FREQUENCY)));
+    const nationalDecision=event.type==='national'&&healthy&&(event.worldCup||((s.nationalDecisionCount||0)<nationalLimit&&Math.random()<(.58*INTERACTION_FREQUENCY*MATCH_DECISION_FREQUENCY_MULT)));
     if(nationalDecision){openMatchDecision(event);save();render();return;}
     if(event.type!=='national'&&healthy&&appearanceRole!=='unused'&&target!==undefined&&s.clubGames+1>=target){
-      if(Math.random()<=INTERACTION_FREQUENCY){openMatchDecision(event);save();render();return;}
+      if(Math.random()<=Math.min(.98,INTERACTION_FREQUENCY*MATCH_DECISION_FREQUENCY_MULT)){openMatchDecision(event);save();render();return;}
       s.decisionIndex=(s.decisionIndex||0)+1; // cerca de 15% das situações são puladas para dar ritmo à temporada
     }
     simulateMatchCore(event);safety++;
