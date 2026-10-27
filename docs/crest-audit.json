@@ -1,16 +1,16 @@
 {
-  "generatedAt": "2026-10-25T01:29:02.263Z",
+  "generatedAt": "2026-10-25T17:23:41.861Z",
   "source": "JoseArroyave/football-logos",
   "commit": "5ab11fed47427b3003f4b276554491fe683387b1",
   "inventoryTotal": 448,
-  "distinctClubs": 448,
+  "distinctClubs": 447,
   "catalogCoverage": 444,
-  "unmatched": 4,
+  "unmatched": 3,
   "probed": 0,
   "liveImageValidation": false,
   "statusCounts": {
     "tree-cataloged-not-http-tested": 444,
-    "not-in-static-catalog": 4
+    "not-in-static-catalog": 3
   },
   "records": [
     {
@@ -3136,12 +3136,6 @@
     {
       "name": "Südtirol",
       "country": "IT",
-      "status": "not-in-static-catalog",
-      "reason": "no unambiguous source file"
-    },
-    {
-      "name": "FCSB",
-      "country": "RO",
       "status": "not-in-static-catalog",
       "reason": "no unambiguous source file"
     }

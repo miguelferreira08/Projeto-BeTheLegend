@@ -1,0 +1,729 @@
+{
+  "checked": 180,
+  "passed": 180,
+  "failed": [],
+  "errors": [],
+  "checks": [
+    {
+      "name": "360: scripts executados",
+      "passed": true
+    },
+    {
+      "name": "360: catálogo de troféus",
+      "passed": true
+    },
+    {
+      "name": "360: Copa Nacional mapeada",
+      "passed": true
+    },
+    {
+      "name": "360: eliminatórias sem taça",
+      "passed": true
+    },
+    {
+      "name": "360: peça de Copa Nacional carrega",
+      "passed": true
+    },
+    {
+      "name": "360: inicial sem transbordo horizontal",
+      "passed": true
+    },
+    {
+      "name": "360: carrega paletas",
+      "passed": true
+    },
+    {
+      "name": "360: escudos estáticos",
+      "passed": true
+    },
+    {
+      "name": "360: menus da home",
+      "passed": true
+    },
+    {
+      "name": "360: seletor de idioma existe",
+      "passed": true
+    },
+    {
+      "name": "360: abre janela de idiomas",
+      "passed": true
+    },
+    {
+      "name": "360: troca para inglês",
+      "passed": true
+    },
+    {
+      "name": "360: volta ao português",
+      "passed": true
+    },
+    {
+      "name": "360: fecha janela",
+      "passed": true
+    },
+    {
+      "name": "360: cria estado de carreira",
+      "passed": true
+    },
+    {
+      "name": "360: salvamento registrado",
+      "passed": true
+    },
+    {
+      "name": "360: renderiza jogador",
+      "passed": true
+    },
+    {
+      "name": "360: home de carreira sem transbordo",
+      "passed": true
+    },
+    {
+      "name": "360: navegação para carreira",
+      "passed": true
+    },
+    {
+      "name": "360: volta à home",
+      "passed": true
+    },
+    {
+      "name": "360: homenagem Copa Nacional",
+      "passed": true
+    },
+    {
+      "name": "360: visão home ativa",
+      "passed": true
+    },
+    {
+      "name": "360: visão home sem overflow",
+      "passed": true
+    },
+    {
+      "name": "360: visão career ativa",
+      "passed": true
+    },
+    {
+      "name": "360: visão career sem overflow",
+      "passed": true
+    },
+    {
+      "name": "360: visão stats ativa",
+      "passed": true
+    },
+    {
+      "name": "360: visão stats sem overflow",
+      "passed": true
+    },
+    {
+      "name": "360: visão market ativa",
+      "passed": true
+    },
+    {
+      "name": "360: visão market sem overflow",
+      "passed": true
+    },
+    {
+      "name": "360: visão legacy ativa",
+      "passed": true
+    },
+    {
+      "name": "360: visão legacy sem overflow",
+      "passed": true
+    },
+    {
+      "name": "360: visão contact ativa",
+      "passed": true
+    },
+    {
+      "name": "360: visão contact sem overflow",
+      "passed": true
+    },
+    {
+      "name": "360: CDBEL não colide com CDB",
+      "passed": true
+    },
+    {
+      "name": "360: CDB mantém Copa do Brasil",
+      "passed": true
+    },
+    {
+      "name": "360: knockout sem taça",
+      "passed": true
+    },
+    {
+      "name": "390: scripts executados",
+      "passed": true
+    },
+    {
+      "name": "390: catálogo de troféus",
+      "passed": true
+    },
+    {
+      "name": "390: Copa Nacional mapeada",
+      "passed": true
+    },
+    {
+      "name": "390: eliminatórias sem taça",
+      "passed": true
+    },
+    {
+      "name": "390: peça de Copa Nacional carrega",
+      "passed": true
+    },
+    {
+      "name": "390: inicial sem transbordo horizontal",
+      "passed": true
+    },
+    {
+      "name": "390: carrega paletas",
+      "passed": true
+    },
+    {
+      "name": "390: escudos estáticos",
+      "passed": true
+    },
+    {
+      "name": "390: menus da home",
+      "passed": true
+    },
+    {
+      "name": "390: seletor de idioma existe",
+      "passed": true
+    },
+    {
+      "name": "390: abre janela de idiomas",
+      "passed": true
+    },
+    {
+      "name": "390: troca para inglês",
+      "passed": true
+    },
+    {
+      "name": "390: volta ao português",
+      "passed": true
+    },
+    {
+      "name": "390: fecha janela",
+      "passed": true
+    },
+    {
+      "name": "390: cria estado de carreira",
+      "passed": true
+    },
+    {
+      "name": "390: salvamento registrado",
+      "passed": true
+    },
+    {
+      "name": "390: renderiza jogador",
+      "passed": true
+    },
+    {
+      "name": "390: home de carreira sem transbordo",
+      "passed": true
+    },
+    {
+      "name": "390: navegação para carreira",
+      "passed": true
+    },
+    {
+      "name": "390: volta à home",
+      "passed": true
+    },
+    {
+      "name": "390: homenagem Copa Nacional",
+      "passed": true
+    },
+    {
+      "name": "390: visão home ativa",
+      "passed": true
+    },
+    {
+      "name": "390: visão home sem overflow",
+      "passed": true
+    },
+    {
+      "name": "390: visão career ativa",
+      "passed": true
+    },
+    {
+      "name": "390: visão career sem overflow",
+      "passed": true
+    },
+    {
+      "name": "390: visão stats ativa",
+      "passed": true
+    },
+    {
+      "name": "390: visão stats sem overflow",
+      "passed": true
+    },
+    {
+      "name": "390: visão market ativa",
+      "passed": true
+    },
+    {
+      "name": "390: visão market sem overflow",
+      "passed": true
+    },
+    {
+      "name": "390: visão legacy ativa",
+      "passed": true
+    },
+    {
+      "name": "390: visão legacy sem overflow",
+      "passed": true
+    },
+    {
+      "name": "390: visão contact ativa",
+      "passed": true
+    },
+    {
+      "name": "390: visão contact sem overflow",
+      "passed": true
+    },
+    {
+      "name": "390: CDBEL não colide com CDB",
+      "passed": true
+    },
+    {
+      "name": "390: CDB mantém Copa do Brasil",
+      "passed": true
+    },
+    {
+      "name": "390: knockout sem taça",
+      "passed": true
+    },
+    {
+      "name": "768: scripts executados",
+      "passed": true
+    },
+    {
+      "name": "768: catálogo de troféus",
+      "passed": true
+    },
+    {
+      "name": "768: Copa Nacional mapeada",
+      "passed": true
+    },
+    {
+      "name": "768: eliminatórias sem taça",
+      "passed": true
+    },
+    {
+      "name": "768: peça de Copa Nacional carrega",
+      "passed": true
+    },
+    {
+      "name": "768: inicial sem transbordo horizontal",
+      "passed": true
+    },
+    {
+      "name": "768: carrega paletas",
+      "passed": true
+    },
+    {
+      "name": "768: escudos estáticos",
+      "passed": true
+    },
+    {
+      "name": "768: menus da home",
+      "passed": true
+    },
+    {
+      "name": "768: seletor de idioma existe",
+      "passed": true
+    },
+    {
+      "name": "768: abre janela de idiomas",
+      "passed": true
+    },
+    {
+      "name": "768: troca para inglês",
+      "passed": true
+    },
+    {
+      "name": "768: volta ao português",
+      "passed": true
+    },
+    {
+      "name": "768: fecha janela",
+      "passed": true
+    },
+    {
+      "name": "768: cria estado de carreira",
+      "passed": true
+    },
+    {
+      "name": "768: salvamento registrado",
+      "passed": true
+    },
+    {
+      "name": "768: renderiza jogador",
+      "passed": true
+    },
+    {
+      "name": "768: home de carreira sem transbordo",
+      "passed": true
+    },
+    {
+      "name": "768: navegação para carreira",
+      "passed": true
+    },
+    {
+      "name": "768: volta à home",
+      "passed": true
+    },
+    {
+      "name": "768: homenagem Copa Nacional",
+      "passed": true
+    },
+    {
+      "name": "768: visão home ativa",
+      "passed": true
+    },
+    {
+      "name": "768: visão home sem overflow",
+      "passed": true
+    },
+    {
+      "name": "768: visão career ativa",
+      "passed": true
+    },
+    {
+      "name": "768: visão career sem overflow",
+      "passed": true
+    },
+    {
+      "name": "768: visão stats ativa",
+      "passed": true
+    },
+    {
+      "name": "768: visão stats sem overflow",
+      "passed": true
+    },
+    {
+      "name": "768: visão market ativa",
+      "passed": true
+    },
+    {
+      "name": "768: visão market sem overflow",
+      "passed": true
+    },
+    {
+      "name": "768: visão legacy ativa",
+      "passed": true
+    },
+    {
+      "name": "768: visão legacy sem overflow",
+      "passed": true
+    },
+    {
+      "name": "768: visão contact ativa",
+      "passed": true
+    },
+    {
+      "name": "768: visão contact sem overflow",
+      "passed": true
+    },
+    {
+      "name": "768: CDBEL não colide com CDB",
+      "passed": true
+    },
+    {
+      "name": "768: CDB mantém Copa do Brasil",
+      "passed": true
+    },
+    {
+      "name": "768: knockout sem taça",
+      "passed": true
+    },
+    {
+      "name": "1024: scripts executados",
+      "passed": true
+    },
+    {
+      "name": "1024: catálogo de troféus",
+      "passed": true
+    },
+    {
+      "name": "1024: Copa Nacional mapeada",
+      "passed": true
+    },
+    {
+      "name": "1024: eliminatórias sem taça",
+      "passed": true
+    },
+    {
+      "name": "1024: peça de Copa Nacional carrega",
+      "passed": true
+    },
+    {
+      "name": "1024: inicial sem transbordo horizontal",
+      "passed": true
+    },
+    {
+      "name": "1024: carrega paletas",
+      "passed": true
+    },
+    {
+      "name": "1024: escudos estáticos",
+      "passed": true
+    },
+    {
+      "name": "1024: menus da home",
+      "passed": true
+    },
+    {
+      "name": "1024: seletor de idioma existe",
+      "passed": true
+    },
+    {
+      "name": "1024: abre janela de idiomas",
+      "passed": true
+    },
+    {
+      "name": "1024: troca para inglês",
+      "passed": true
+    },
+    {
+      "name": "1024: volta ao português",
+      "passed": true
+    },
+    {
+      "name": "1024: fecha janela",
+      "passed": true
+    },
+    {
+      "name": "1024: cria estado de carreira",
+      "passed": true
+    },
+    {
+      "name": "1024: salvamento registrado",
+      "passed": true
+    },
+    {
+      "name": "1024: renderiza jogador",
+      "passed": true
+    },
+    {
+      "name": "1024: home de carreira sem transbordo",
+      "passed": true
+    },
+    {
+      "name": "1024: navegação para carreira",
+      "passed": true
+    },
+    {
+      "name": "1024: volta à home",
+      "passed": true
+    },
+    {
+      "name": "1024: homenagem Copa Nacional",
+      "passed": true
+    },
+    {
+      "name": "1024: visão home ativa",
+      "passed": true
+    },
+    {
+      "name": "1024: visão home sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1024: visão career ativa",
+      "passed": true
+    },
+    {
+      "name": "1024: visão career sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1024: visão stats ativa",
+      "passed": true
+    },
+    {
+      "name": "1024: visão stats sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1024: visão market ativa",
+      "passed": true
+    },
+    {
+      "name": "1024: visão market sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1024: visão legacy ativa",
+      "passed": true
+    },
+    {
+      "name": "1024: visão legacy sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1024: visão contact ativa",
+      "passed": true
+    },
+    {
+      "name": "1024: visão contact sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1024: CDBEL não colide com CDB",
+      "passed": true
+    },
+    {
+      "name": "1024: CDB mantém Copa do Brasil",
+      "passed": true
+    },
+    {
+      "name": "1024: knockout sem taça",
+      "passed": true
+    },
+    {
+      "name": "1440: scripts executados",
+      "passed": true
+    },
+    {
+      "name": "1440: catálogo de troféus",
+      "passed": true
+    },
+    {
+      "name": "1440: Copa Nacional mapeada",
+      "passed": true
+    },
+    {
+      "name": "1440: eliminatórias sem taça",
+      "passed": true
+    },
+    {
+      "name": "1440: peça de Copa Nacional carrega",
+      "passed": true
+    },
+    {
+      "name": "1440: inicial sem transbordo horizontal",
+      "passed": true
+    },
+    {
+      "name": "1440: carrega paletas",
+      "passed": true
+    },
+    {
+      "name": "1440: escudos estáticos",
+      "passed": true
+    },
+    {
+      "name": "1440: menus da home",
+      "passed": true
+    },
+    {
+      "name": "1440: seletor de idioma existe",
+      "passed": true
+    },
+    {
+      "name": "1440: abre janela de idiomas",
+      "passed": true
+    },
+    {
+      "name": "1440: troca para inglês",
+      "passed": true
+    },
+    {
+      "name": "1440: volta ao português",
+      "passed": true
+    },
+    {
+      "name": "1440: fecha janela",
+      "passed": true
+    },
+    {
+      "name": "1440: cria estado de carreira",
+      "passed": true
+    },
+    {
+      "name": "1440: salvamento registrado",
+      "passed": true
+    },
+    {
+      "name": "1440: renderiza jogador",
+      "passed": true
+    },
+    {
+      "name": "1440: home de carreira sem transbordo",
+      "passed": true
+    },
+    {
+      "name": "1440: navegação para carreira",
+      "passed": true
+    },
+    {
+      "name": "1440: volta à home",
+      "passed": true
+    },
+    {
+      "name": "1440: homenagem Copa Nacional",
+      "passed": true
+    },
+    {
+      "name": "1440: visão home ativa",
+      "passed": true
+    },
+    {
+      "name": "1440: visão home sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1440: visão career ativa",
+      "passed": true
+    },
+    {
+      "name": "1440: visão career sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1440: visão stats ativa",
+      "passed": true
+    },
+    {
+      "name": "1440: visão stats sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1440: visão market ativa",
+      "passed": true
+    },
+    {
+      "name": "1440: visão market sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1440: visão legacy ativa",
+      "passed": true
+    },
+    {
+      "name": "1440: visão legacy sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1440: visão contact ativa",
+      "passed": true
+    },
+    {
+      "name": "1440: visão contact sem overflow",
+      "passed": true
+    },
+    {
+      "name": "1440: CDBEL não colide com CDB",
+      "passed": true
+    },
+    {
+      "name": "1440: CDB mantém Copa do Brasil",
+      "passed": true
+    },
+    {
+      "name": "1440: knockout sem taça",
+      "passed": true
+    }
+  ],
+  "method": "Chromium set_content: código JS/CSS inline, autenticação convidado simulada; tamanhos 360,390,768,1024,1440; fontes externas indisponíveis; PNG Copa Nacional incorporado somente ao teste."
+}

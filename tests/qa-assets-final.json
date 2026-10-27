@@ -1,0 +1,863 @@
+{
+  "checked": 136,
+  "passed": 136,
+  "issues": [],
+  "checks": [
+    {
+      "name": "JS parse js/app.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/auth.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/commons-credits.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/commons-trophies.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/competition-palettes.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/competition-trophy-data.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/crest-config.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/data.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/fm-trophy-map.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/google-auth-config.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/i18n.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/roster-expansion-2026.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/roster-snapshot-2026.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/rosters.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/static-crest-credits.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse js/static-crests.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse functions/api/auth/google.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse functions/api/club-badge.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse functions/api/commons-crest.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse functions/api/roster.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse functions/api/translate.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "JS parse functions/api/verified-clubs.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource assets/favicon.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource assets/favicon-32.png",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource assets/favicon.ico",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource css/style.css",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource css/legend-atelier.css",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource css/v15-studio.css",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource css/v16-finish.css",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource css/v17-game-ui.css",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource css/v20-polish.css",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource css/v21-game-qa.css",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource css/v24-match-and-club.css",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource css/v25-legacy-and-modal.css",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource css/qa-fixes-2026.css",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource assets/favicon.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource assets/favicon.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource assets/flags/br.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource assets/flags/us.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource assets/flags/es.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource assets/flags/fr.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/google-auth-config.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/crest-config.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/auth.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/data.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/roster-snapshot-2026.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/roster-expansion-2026.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/rosters.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/competition-palettes.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/static-crests.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/commons-trophies.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/app.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/i18n.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "HTML resource js/static-crest-credits.js",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "RGBA afc-champions-league-elite.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA afc-champions-league-two.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA concacaf-champions-cup.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA copa-da-belgica.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA copa-do-brasil-user.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA copa-nacional.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA j1-league.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA king-cup.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA kopa-trophy.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA liga-profesional-argentina.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA ofc-champions-league.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA premier-league.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA saudi-pro-league.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA scottish-premiership.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA team-of-the-season.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "RGBA us-open-cup.png",
+      "passed": true,
+      "detail": {
+        "alpha_min_max": [
+          0,
+          255
+        ],
+        "corners": [
+          0,
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "name": "SVG read assets/fallback-club.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/fallback-trophy.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/favicon.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/flags/br.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/flags/es.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/flags/fr.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/flags/us.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/afc-champions-elite.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/afc-champions-two.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/ballon-dor.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/belgian-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/belgian-pro-league.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/brasileirao-transparent.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/brasileirao.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/bundesliga.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/caf-champions-league.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/campeonato-chileno.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/campeonato-uruguayo.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/champions-league.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/club-world-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/concacaf-champions-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/conference-league.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/copa-argentina.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/copa-auf-uruguay.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/copa-chile.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/copa-colombia.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/copa-del-rey.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/copa-do-brasil.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/copa-mx.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/coppa-italia.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/coupe-de-france.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/dfb-pokal.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/emperors-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/eredivisie.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/europa-league.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/fa-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/fifa-world-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/fm/no-file.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/golden-boy.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/golden-shoe.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/j1-league.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/king-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/knvb-beker.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/laliga.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/libertadores.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/liga-betplay.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/liga-mx.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/liga-profesional-argentina.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/ligue-1.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/mls.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/national-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/ofc-champions-league.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/premier-league.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/primeira-liga.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/saudi-pro-league.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/scottish-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/scottish-premiership.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/serie-a.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/sudamericana.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/super-lig.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/taca-de-portugal.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/tots.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/turkish-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/us-open-cup.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "SVG read assets/trophies/world-cup-qualifiers.svg",
+      "passed": true,
+      "detail": null
+    },
+    {
+      "name": "CSS resource style.css -> ../assets/fonts/UT Unisportion FC Demo.ttf",
+      "passed": true,
+      "detail": null
+    }
+  ]
+}

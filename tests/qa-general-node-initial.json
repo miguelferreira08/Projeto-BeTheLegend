@@ -1,0 +1,114 @@
+[
+  {
+    "test": "tests/v20-logic.mjs",
+    "ok": true,
+    "code": 0,
+    "stdout": "V20 logic: 184 / 184 checks passed\n",
+    "stderr": ""
+  },
+  {
+    "test": "tests/v21-integrations.mjs",
+    "ok": false,
+    "code": 1,
+    "stdout": "V21 integrations: 7 / 8\n",
+    "stderr": "FAIL Reject country mismatch\n"
+  },
+  {
+    "test": "tests/v22-logic.mjs",
+    "ok": false,
+    "code": 1,
+    "stdout": "",
+    "stderr": "nst ck=(condition,msg)=>{if(!condition)throw new Error(msg);checks++};\n                                                            ^\n\nError: all clubs accounted for\n    at ck (file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tests/v22-logic.mjs:7:61)\n    at file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tests/v22-logic.mjs:10:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tests/v24-logic.mjs",
+    "ok": false,
+    "code": 1,
+    "stdout": "",
+    "stderr": "throw Error(`QA V24 ${message}`)};\n                                                                         ^\n\nError: QA V24 historical Copa do Brasil trophy source\n    at ck (file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tests/v24-logic.mjs:7:74)\n    at file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tests/v24-logic.mjs:18:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tools/v1072-smoke.js",
+    "ok": false,
+    "code": 1,
+    "stdout": "PASS: removed football-logos.cc runtime source that caused CORS failures\nPASS: clubCrestMarkup exists for penalty/score crests\nPASS: Simular temporada button remains wired to simulateWholeSeason\n",
+    "stderr": "e_Legend_auditoria/Be_The_Legend/tools/v1072-smoke.js:28:1)\n    at Module._compile (node:internal/modules/cjs/loader:1730:14)\n    at Object..js (node:internal/modules/cjs/loader:1895:10)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tools/v1074-smoke.js",
+    "ok": false,
+    "code": 1,
+    "stdout": "PASS: removed undefined clubMeta reference\nPASS: world-transfer code resolves current club with existing helpers\nPASS: next-season flow cannot be blocked by transfer refresh errors\nPASS: next-season handler creates the following season after transfer refresh\nPASS: advance-to-next-season button remains wired\n",
+    "stderr": "e_Legend_auditoria/Be_The_Legend/tools/v1074-smoke.js:29:1)\n    at Module._compile (node:internal/modules/cjs/loader:1730:14)\n    at Object..js (node:internal/modules/cjs/loader:1895:10)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tools/v1075-smoke.js",
+    "ok": false,
+    "code": 1,
+    "stdout": "",
+    "stderr": "e_Legend_auditoria/Be_The_Legend/tools/v1075-smoke.js:22:1)\n    at Module._compile (node:internal/modules/cjs/loader:1730:14)\n    at Object..js (node:internal/modules/cjs/loader:1895:10)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tools/v1076-smoke.js",
+    "ok": false,
+    "code": 1,
+    "stdout": "",
+    "stderr": "e_Legend_auditoria/Be_The_Legend/tools/v1076-smoke.js:22:1)\n    at Module._compile (node:internal/modules/cjs/loader:1730:14)\n    at Object..js (node:internal/modules/cjs/loader:1895:10)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tools/v17-regression.mjs",
+    "ok": false,
+    "code": 1,
+    "stdout": "",
+    "stderr": "or(`FAIL: ${name}`)};\n                                                                                       ^\n\nError: FAIL: Legacy logo cache cleared\n    at check (file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tools/v17-regression.mjs:11:88)\n    at file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tools/v17-regression.mjs:17:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tools/v19-logic.mjs",
+    "ok": false,
+    "code": 1,
+    "stdout": "",
+    "stderr": "ss=0;const assert=(cond,title)=>{if(!cond)throw Error('FAIL '+title);pass++};\n                                                      ^\n\nError: FAIL 5 home actions\n    at assert (file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tools/v19-logic.mjs:3:55)\n    at file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tools/v19-logic.mjs:7:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tools/v14-audit.mjs",
+    "ok": false,
+    "code": 1,
+    "stdout": "Roster snapshots: 9 clubs, 240 players, no cross-team duplicates\nRoster UI: local snapshots, CSV with quotes, mixed-club import rejected\n",
+    "stderr": "node:fs:442\n    return binding.readFileUtf8(path, stringToFlags(options.flag));\n                   ^\n\nError: ENOENT: no such file or directory, open '/mnt/data/Be_The_Legend_auditoria/Be_The_Legend/js/font-loader.js'\n    at Object.readFileSync (node:fs:442:20)\n    at read (file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tools/v14-audit.mjs:2:60)\n    at file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tools/v14-audit.mjs:18:8 {\n  errno: -2,\n  code: 'ENOENT',\n  syscall: 'open',\n  path: '/mnt/data/Be_The_Legend_auditoria/Be_The_Legend/js/font-loader.js'\n}\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tools/crest-audit.mjs",
+    "ok": true,
+    "code": 0,
+    "stdout": "{\n  \"clubs\": 447,\n  \"staticMappings\": 444,\n  \"unmapped\": 3,\n  \"liveProbes\": 0,\n  \"statusCounts\": {\n    \"tree-cataloged-not-http-tested\": 444,\n    \"not-in-static-catalog\": 3\n  },\n  \"report\": \"/mnt/data/Be_The_Legend_auditoria/Be_The_Legend/docs/crest-audit.json\"\n}\n",
+    "stderr": ""
+  },
+  {
+    "test": "tools/v16-quality.mjs",
+    "ok": false,
+    "code": 1,
+    "stdout": "",
+    "stderr": "row Error(`FAIL: ${name}`)};\n                                                                                       ^\n\nError: FAIL: Jersey M54 final cascade\n    at check (file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tools/v16-quality.mjs:11:88)\n    at file:///mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tools/v16-quality.mjs:14:1\n    at ModuleJob.run (node:internal/modules/esm/module_job:274:25)\n    at async onImport.tracePromise.__proto__ (node:internal/modules/esm/loader:644:26)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:117:5)\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tools/trophy-commons-qa.mjs",
+    "ok": true,
+    "code": 0,
+    "stdout": "{\n  \"status\": \"PASS\",\n  \"checks\": 195,\n  \"totalSources\": 69,\n  \"commonsSources\": 53,\n  \"localUserSources\": 16,\n  \"manifestTotal\": 55,\n  \"mapped\": 54,\n  \"unmapped\": [\n    \"Eliminatórias da Copa do Mundo\"\n  ]\n}\n",
+    "stderr": ""
+  },
+  {
+    "test": "tools/qa-v25.js",
+    "ok": false,
+    "code": 1,
+    "stdout": "",
+    "stderr": "s/loader:1730:14)\n    at Object..js (node:internal/modules/cjs/loader:1895:10)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n    at TracingChannel.traceSync (node:diagnostics_channel:322:14)\n    at wrapModuleLoad (node:internal/modules/cjs/loader:235:24)\n    at Function.executeUserEntryPoint [as runMain] (node:internal/modules/run_main:171:5)\n    at node:internal/main/run_main_module:36:49 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: false,\n  expected: true,\n  operator: '=='\n}\n\nNode.js v22.16.0\n"
+  },
+  {
+    "test": "tools/historical-ranking-sim.js",
+    "ok": false,
+    "code": 1,
+    "stdout": "",
+    "stderr": "ject.historicalRankBreakdown (historical-ranking-production-block.js:127:100)\n    at evaluate (/mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tools/historical-ranking-sim.js:69:19)\n    at Array.map (<anonymous>)\n    at Object.<anonymous> (/mnt/data/Be_The_Legend_auditoria/Be_The_Legend/tools/historical-ranking-sim.js:109:25)\n    at Module._compile (node:internal/modules/cjs/loader:1730:14)\n    at Object..js (node:internal/modules/cjs/loader:1895:10)\n    at Module.load (node:internal/modules/cjs/loader:1465:32)\n    at Function._load (node:internal/modules/cjs/loader:1282:12)\n\nNode.js v22.16.0\n"
+  }
+]

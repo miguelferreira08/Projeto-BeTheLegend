@@ -10249,3 +10249,7 @@ html,body,body *,button,input,textarea,select,option,optgroup,label,a,p,span,str
    cortes sem alterar a identidade visual. */
 button,input,textarea,select,option,optgroup{letter-spacing:.005em}
 small,.eyebrow,.game-brand-kicker{letter-spacing:.045em}
+
+/* Wikimedia Commons trophy artwork in the title celebration; text fallback stays legible. */
+#celebration-icon .honour-art { width:96px; height:96px; max-width:100%; border-radius:14px; padding:6px; }
+#celebration-icon .honour-art.fallback b { font-size:18px; letter-spacing:.09em; }

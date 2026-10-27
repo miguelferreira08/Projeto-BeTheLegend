@@ -24,6 +24,7 @@
 <link rel="stylesheet" href="css/v21-game-qa.css">
 <link rel="stylesheet" href="css/v24-match-and-club.css">
   <link rel="stylesheet" href="css/v25-legacy-and-modal.css?v=25.0.0">
+  <link rel="stylesheet" href="css/qa-fixes-2026.css?v=26.10.25">
 </head>
 <body>
   <div id="auth-gate" class="auth-gate" role="dialog" aria-modal="true" aria-labelledby="auth-title">
@@ -545,7 +546,7 @@
           <div><small>CONTA CRIADA</small><strong id="legacy-account-created">—</strong></div>
           <div><small>PRÓXIMO LOGIN</small><strong id="legacy-account-session">—</strong></div>
         </div>
-        <div class="account-legacy-actions"><button type="button" class="secondary" data-legal-open="terms">Termos</button><button type="button" class="secondary" data-legal-open="privacy">Privacidade</button><button id="commons-attribution-open" type="button" class="secondary">Créditos dos escudos</button><button id="legacy-logout" type="button" class="danger secondary">Sair da conta</button></div>
+        <div class="account-legacy-actions"><button type="button" class="secondary" data-legal-open="terms">Termos</button><button type="button" class="secondary" data-legal-open="privacy">Privacidade</button><button id="commons-attribution-open" type="button" class="secondary">Créditos das imagens</button><button id="legacy-logout" type="button" class="danger secondary">Sair da conta</button></div>
       </article>
       <section class="home-hall game-hall" id="home-hall-section">
           <div class="section-title">
@@ -897,8 +898,8 @@
   </div>
 
 
-  <div id="commons-attribution-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Créditos dos escudos de clubes">
-    <div class="modal-card commons-attribution-card"><button id="commons-attribution-close" type="button" class="secondary">Fechar ✕</button><p class="eyebrow">TRANSPARÊNCIA</p><h2>Créditos dos escudos</h2><p>Escudos carregados de um repositório público no GitHub. As marcas e símbolos pertencem a seus titulares e podem mudar com o tempo.</p><div id="commons-attribution-list"></div></div>
+  <div id="commons-attribution-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-label="Créditos de imagens de clubes e troféus">
+    <div class="modal-card commons-attribution-card"><button id="commons-attribution-close" type="button" class="secondary">Fechar ✕</button><p class="eyebrow">TRANSPARÊNCIA</p><h2>Créditos das imagens</h2><p>Escudos: catálogo estático do projeto. Troféus: somente arquivos do Wikimedia Commons; cada licença e autoria estão disponíveis nos links abaixo. Não há imagens artificiais para troféus sem referência confirmada.</p><div id="commons-attribution-list"></div></div>
   </div>
   <div id="retirement-confirm-modal" class="modal-backdrop hidden" role="dialog" aria-modal="true" aria-labelledby="retirement-confirm-title">
     <section class="modal-card game-confirm-card btl-retire-confirm">
@@ -945,8 +946,8 @@
   <script src="js/rosters.js?v=14.0.0"></script>
   <script src="js/competition-palettes.js?v=20.0.0"></script>
   <script src="js/static-crests.js?v=22.0.0"></script>
-  <script src="js/fm-trophy-map.js?v=25.0.0"></script>
-  <script src="js/app.js?v=25.0.0"></script>
+  <script src="js/commons-trophies.js?v=25.1.0"></script>
+  <script src="js/app.js?v=25.1.0"></script>
   <script src="js/i18n.js?v=20.0.0"></script>
   <script src="js/static-crest-credits.js?v=22.0.0"></script>
 </body>

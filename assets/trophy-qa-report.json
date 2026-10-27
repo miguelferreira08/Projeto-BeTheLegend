@@ -1,0 +1,561 @@
+{
+  "status": "PASS",
+  "testedAt": "2026-10-25",
+  "checks": 195,
+  "manifestTotal": 55,
+  "totalSources": 69,
+  "commonsSources": 53,
+  "localUserSources": 16,
+  "knownUnavailableRules": 1,
+  "mappedCount": 54,
+  "unmappedCount": 1,
+  "mapped": [
+    "AFC Champions League Elite",
+    "AFC Champions League Two",
+    "Belgian Pro League",
+    "Bola de Ouro",
+    "Brasileirão Série A",
+    "Bundesliga",
+    "CAF Champions League",
+    "CONCACAF Champions Cup",
+    "CONMEBOL Libertadores",
+    "CONMEBOL Sul-Americana",
+    "Categoría Primera A",
+    "Chuteira de Ouro",
+    "Copa AUF Uruguay",
+    "Copa Argentina",
+    "Copa Chile",
+    "Copa Colombia",
+    "Copa Nacional",
+    "Copa da Bélgica",
+    "Copa da Turquia",
+    "Copa do Brasil",
+    "Copa do Imperador",
+    "Copa do Mundo",
+    "Copa do Rei",
+    "Coppa Italia",
+    "Coupe de France",
+    "DFB-Pokal",
+    "Eredivisie",
+    "FA Cup",
+    "FIFA Club World Cup",
+    "FIFA World Cup",
+    "J1 League",
+    "KNVB Beker",
+    "King Cup",
+    "LaLiga",
+    "Liga MX",
+    "Liga Profesional Argentina",
+    "Ligue 1",
+    "Major League Soccer",
+    "Melhor Jogador Jovem",
+    "OFC Champions League",
+    "Premier League",
+    "Premier League / Premiership",
+    "Primeira Liga",
+    "Primera División Uruguaia",
+    "Primera División do Chile",
+    "Saudi Pro League",
+    "Serie A",
+    "Süper Lig",
+    "Taça de Portugal",
+    "Time da Temporada",
+    "U.S. Open Cup",
+    "UEFA Champions League",
+    "UEFA Conference League",
+    "UEFA Europa League"
+  ],
+  "unmapped": [
+    "Eliminatórias da Copa do Mundo"
+  ],
+  "sourcePages": [
+    {
+      "filename": "assets/trophies/user/afc-champions-league-elite.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/afc-champions-league-two.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/concacaf-champions-cup.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/copa-nacional.png",
+      "page": "",
+      "license": "Anexo do usuário — licença de redistribuição não verificada",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/copa-do-brasil-user.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/copa-da-belgica.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/j1-league.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/king-cup.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/liga-profesional-argentina.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/kopa-trophy.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/ofc-champions-league.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/premier-league.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/scottish-premiership.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/saudi-pro-league.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/team-of-the-season.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "assets/trophies/user/us-open-cup.png",
+      "page": "",
+      "license": "Anexo do usuário",
+      "author": "Usuário",
+      "isLocal": true
+    },
+    {
+      "filename": "CWC Trophy 2025.png",
+      "page": "https://commons.wikimedia.org/wiki/File:CWC_Trophy_2025.png",
+      "license": "CC0 / CC BY-SA 4.0",
+      "author": "User34790",
+      "isLocal": false
+    },
+    {
+      "filename": "FIFA World Cup Trophy photo by Djuradj Vujcic.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:FIFA_World_Cup_Trophy_photo_by_Djuradj_Vujcic.jpg",
+      "license": "CC BY 2.0",
+      "author": "Djuradj Vujcic",
+      "isLocal": false
+    },
+    {
+      "filename": "UEFA - Super Cup.png",
+      "page": "https://commons.wikimedia.org/wiki/File:UEFA_-_Super_Cup.png",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "SupercopaRei2025-.png",
+      "page": "https://commons.wikimedia.org/wiki/File:SupercopaRei2025-.png",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "SupercopaEspaña.png",
+      "page": "https://commons.wikimedia.org/wiki/File:SupercopaEspa%C3%B1a.png",
+      "license": "CC BY-SA 4.0",
+      "author": "LIBRE CONOCIMIENTO",
+      "isLocal": false
+    },
+    {
+      "filename": "Supercoppa Italiana.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Supercoppa_Italiana.svg",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "CommunityShield.png",
+      "page": "https://commons.wikimedia.org/wiki/File:CommunityShield.png",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "DFLSupercupTrofeo.png",
+      "page": "https://commons.wikimedia.org/wiki/File:DFLSupercupTrofeo.png",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "Trophée des Champions.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Troph%C3%A9e_des_Champions.svg",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "Supertaça Cândido de Oliveira.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Superta%C3%A7a_C%C3%A2ndido_de_Oliveira.svg",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "Johan Cruijff Schaal.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Johan_Cruijff_Schaal.svg",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "Finalissima.png",
+      "page": "https://commons.wikimedia.org/wiki/File:Finalissima.png",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "Copa america trofeo.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Copa_america_trofeo.jpg",
+      "license": "CC BY-SA 3.0",
+      "author": "Hazaña17",
+      "isLocal": false
+    },
+    {
+      "filename": "2019 UEFA Nations League Trophy CR7Museum.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:2019_UEFA_Nations_League_Trophy_CR7Museum.jpg",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "2016 UEFA Euro Trophy CR7Museum.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:2016_UEFA_Euro_Trophy_CR7Museum.jpg",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "UEFA Champions LeagueTrophy7612.png",
+      "page": "https://commons.wikimedia.org/wiki/File:UEFA_Champions_LeagueTrophy7612.png",
+      "license": "CC BY 2.0",
+      "author": "David Flores",
+      "isLocal": false
+    },
+    {
+      "filename": "Europa league trophy.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Europa_league_trophy.jpg",
+      "license": "CC BY-SA 4.0",
+      "author": "Damine178",
+      "isLocal": false
+    },
+    {
+      "filename": "UEFA Europa Conference League Trophy.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:UEFA_Europa_Conference_League_Trophy.jpg",
+      "license": "CC BY-SA 4.0",
+      "author": "Totti",
+      "isLocal": false
+    },
+    {
+      "filename": "TaçaLibertadores2024.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Ta%C3%A7aLibertadores2024.jpg",
+      "license": "CC BY 4.0",
+      "author": "Phill ad",
+      "isLocal": false
+    },
+    {
+      "filename": "Taça Sulamericana 2018.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Ta%C3%A7a_Sulamericana_2018.jpg",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "PrimeraA2020-.png",
+      "page": "https://commons.wikimedia.org/wiki/File:PrimeraA2020-.png",
+      "license": "CC0 1.0",
+      "author": "LCont5",
+      "isLocal": false
+    },
+    {
+      "filename": "Copa primera division de chile.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Copa_primera_division_de_chile.jpg",
+      "license": "CC BY-SA 4.0",
+      "author": "ArielUCH",
+      "isLocal": false
+    },
+    {
+      "filename": "Fenerbahçe'nin kazandığı TFF 100. Yıl Ziraat Türkiye Kupası.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Fenerbah%C3%A7e'nin_kazand%C4%B1%C4%9F%C4%B1_TFF_100._Y%C4%B1l_Ziraat_T%C3%BCrkiye_Kupas%C4%B1.jpg",
+      "license": "CC0 1.0",
+      "author": "Beshogur",
+      "isLocal": false
+    },
+    {
+      "filename": "Silueta trofeo Campeonato Uruguayo.png",
+      "page": "https://commons.wikimedia.org/wiki/File:Silueta_trofeo_Campeonato_Uruguayo.png",
+      "license": "Domínio público",
+      "author": "Autor desconhecido",
+      "isLocal": false
+    },
+    {
+      "filename": "2024-2025 Trendyol Süper Lig Sezonunda Kullanılan Yeni Kupa.webp",
+      "page": "https://commons.wikimedia.org/wiki/File:2024-2025_Trendyol_S%C3%BCper_Lig_Sezonunda_Kullan%C4%B1lan_Yeni_Kupa.webp",
+      "license": "CC BY-SA 4.0",
+      "author": "Arslan, Egemen",
+      "isLocal": false
+    },
+    {
+      "filename": "CAF Champions League Trophy.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:CAF_Champions_League_Trophy.jpg",
+      "license": "CC BY-SA 4.0",
+      "author": "Bahbouhe",
+      "isLocal": false
+    },
+    {
+      "filename": "Trofeo copa chile.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Trofeo_copa_chile.jpg",
+      "license": "CC BY-SA 4.0",
+      "author": "ArielUCH",
+      "isLocal": false
+    },
+    {
+      "filename": "Emperors cup.JPG",
+      "page": "https://commons.wikimedia.org/wiki/File:Emperors_cup.JPG",
+      "license": "CC BY-SA 3.0",
+      "author": "Ohtani tanya",
+      "isLocal": false
+    },
+    {
+      "filename": "Silueta trofeo Copa AUF Uruguay.png",
+      "page": "https://commons.wikimedia.org/wiki/File:Silueta_trofeo_Copa_AUF_Uruguay.png",
+      "license": "CC0 1.0",
+      "author": "Juanchocarbonero",
+      "isLocal": false
+    },
+    {
+      "filename": "Jupiler Pro League throphy.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Jupiler_Pro_League_throphy.jpg",
+      "license": "CC BY-SA 4.0",
+      "author": "SonoGrazy",
+      "isLocal": false
+    },
+    {
+      "filename": "Primeira Liga Trophy.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Primeira_Liga_Trophy.svg",
+      "license": "CC BY-SA 4.0",
+      "author": "VitorEmanuelCarvalhoPeixoto",
+      "isLocal": false
+    },
+    {
+      "filename": "Coppa Campioni d’Italia.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Coppa_Campioni_d%E2%80%99Italia.jpg",
+      "license": "CC BY-SA 4.0",
+      "author": "RichiWarrior05",
+      "isLocal": false
+    },
+    {
+      "filename": "KNVB Beker.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:KNVB_Beker.svg",
+      "license": "CC BY-SA 3.0",
+      "author": "Mess",
+      "isLocal": false
+    },
+    {
+      "filename": "Premier League trophy at museum.JPG",
+      "page": "https://commons.wikimedia.org/wiki/File:Premier_League_trophy_at_museum.JPG",
+      "license": "Domínio público",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "Troféu Campeonato Brasileiro 2024.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Trof%C3%A9u_Campeonato_Brasileiro_2024.jpg",
+      "license": "CC BY 4.0",
+      "author": "Phill ad",
+      "isLocal": false
+    },
+    {
+      "filename": "Trophy of Fußball-Bundesliga in Singapore, 2023.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Trophy_of_Fu%C3%9Fball-Bundesliga_in_Singapore%2C_2023.jpg",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "LaLiga.png",
+      "page": "https://commons.wikimedia.org/wiki/File:LaLiga.png",
+      "license": "CC BY-SA 4.0",
+      "author": "LIBRE CONOCIMIENTO",
+      "isLocal": false
+    },
+    {
+      "filename": "Ligue1 trophy.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Ligue1_trophy.svg",
+      "license": "CC BY-SA 2.0",
+      "author": "Kanchelskis",
+      "isLocal": false
+    },
+    {
+      "filename": "Eredivisie Trophy.png",
+      "page": "https://commons.wikimedia.org/wiki/File:Eredivisie_Trophy.png",
+      "license": "CC BY-SA 4.0",
+      "author": "MacMoreno",
+      "isLocal": false
+    },
+    {
+      "filename": "Liga MX Trophy.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Liga_MX_Trophy.jpg",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "MLS Cup.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:MLS_Cup.svg",
+      "license": "CC BY-SA / GFDL",
+      "author": "Luigi Chiesa",
+      "isLocal": false
+    },
+    {
+      "filename": "CopadoBrasil2013-.png",
+      "page": "https://commons.wikimedia.org/wiki/File:CopadoBrasil2013-.png",
+      "license": "CC BY-SA 4.0",
+      "author": "Guigoma",
+      "isLocal": false
+    },
+    {
+      "filename": "Copa del Rey Trophy.png",
+      "page": "https://commons.wikimedia.org/wiki/File:Copa_del_Rey_Trophy.png",
+      "license": "CC BY-SA 4.0",
+      "author": "MacMoreno",
+      "isLocal": false
+    },
+    {
+      "filename": "CopaArgentina2022-.png",
+      "page": "https://commons.wikimedia.org/wiki/File:CopaArgentina2022-.png",
+      "license": "CC0",
+      "author": "LCont5",
+      "isLocal": false
+    },
+    {
+      "filename": "Coppa Italia (Italy Cup).svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Coppa_Italia_(Italy_Cup).svg",
+      "license": "PD shape / CC BY-SA 3.0",
+      "author": "0 Noctis 0",
+      "isLocal": false
+    },
+    {
+      "filename": "Coupe de France trophy.png",
+      "page": "https://commons.wikimedia.org/wiki/File:Coupe_de_France_trophy.png",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "DFB-Pokal trophy.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:DFB-Pokal_trophy.jpg",
+      "license": "CC BY-SA 3.0",
+      "author": "OAlexander",
+      "isLocal": false
+    },
+    {
+      "filename": "The FA Cup Trophy.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:The_FA_Cup_Trophy.jpg",
+      "license": "CC BY-SA 4.0",
+      "author": "Carlos yo",
+      "isLocal": false
+    },
+    {
+      "filename": "Scottish cup.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Scottish_cup.jpg",
+      "license": "CC BY-SA 3.0",
+      "author": "Isaac Freeman",
+      "isLocal": false
+    },
+    {
+      "filename": "Taça de Portugal Trophy.svg",
+      "page": "https://commons.wikimedia.org/wiki/File:Ta%C3%A7a_de_Portugal_Trophy.svg",
+      "license": "CC BY-SA 4.0",
+      "author": "VitorEmanuelCarvalhoPeixoto",
+      "isLocal": false
+    },
+    {
+      "filename": "Copa Betplay Trophy.png",
+      "page": "https://commons.wikimedia.org/wiki/File:Copa_Betplay_Trophy.png",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    },
+    {
+      "filename": "Zinedine Zidane's 1998 Ballon d'Or trophy, Real Madrid Museum, Santiago Bernabéu, Madrid, Spain (Ank Kumar, Infosys Limited) 01.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:Zinedine_Zidane's_1998_Ballon_d'Or_trophy%2C_Real_Madrid_Museum%2C_Santiago_Bernab%C3%A9u%2C_Madrid%2C_Spain_(Ank_Kumar%2C_Infosys_Limited)_01.jpg",
+      "license": "Ver arquivo",
+      "author": "Ank Kumar",
+      "isLocal": false
+    },
+    {
+      "filename": "2011 ESM European Golden Shoe Award CR7 Museum.jpg",
+      "page": "https://commons.wikimedia.org/wiki/File:2011_ESM_European_Golden_Shoe_Award_CR7_Museum.jpg",
+      "license": "Ver arquivo",
+      "author": "",
+      "isLocal": false
+    }
+  ],
+  "notes": [
+    "Os 16 anexos foram utilizados para mapear os 16 troféus específicos indicados pelo usuário.",
+    "Wikimedia Commons continua sendo a fonte principal; Eliminatórias não têm taça específica; Copa Nacional utiliza a fotografia indicada pelo usuário.",
+    "Falhas de carregamento agora caem para iniciais, sem usar taças genéricas."
+  ]
+}

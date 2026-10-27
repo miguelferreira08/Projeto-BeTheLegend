@@ -1,0 +1,87 @@
+/* Catálogo principal de troféus.
+ * Prioriza arquivos específicos do Wikimedia Commons e, para lacunas indicadas pelo usuário,
+ * utiliza anexos locais validados manualmente.
+ * Sem fonte confiável ou quando não existe troféu físico => exibir iniciais; NÃO inventar imagem.
+ */
+(()=>{
+  const rows = [
+    // Overrides enviados pelo usuário para fechar os troféus faltantes.
+    ["AFC Champions League Elite|AFCCLE", "assets/trophies/user/afc-champions-league-elite.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a taça da AFC Champions League Elite"],
+    ["AFC Champions League Two|AFCCLT", "assets/trophies/user/afc-champions-league-two.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a taça da AFC Champions League Two"],
+    ["CONCACAF Champions Cup|CONCACAFCC", "assets/trophies/user/concacaf-champions-cup.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a taça da CONCACAF Champions Cup"],
+    ["^Copa Nacional$", "assets/trophies/user/copa-nacional.png", "Usuário", "Anexo do usuário — licença de redistribuição não verificada", "Taça da Copa Nacional indicada pelo usuário"],
+    ["Copa do Brasil|^CDB$", "assets/trophies/user/copa-do-brasil-user.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Copa do Brasil"],
+    ["Copa da B[eé]lgica|^CDBEL$", "assets/trophies/user/copa-da-belgica.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Copa da Bélgica"],
+    ["Eliminat[oó]rias da Copa do Mundo|World Cup Qualifiers", null, "", "", "Sem taça física para as eliminatórias"],
+    ["J1 League|^J1L$", "assets/trophies/user/j1-league.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a J1 League"],
+    ["King Cup|^KC$", "assets/trophies/user/king-cup.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a King Cup"],
+    ["Liga Profesional Argentina|^LPA$", "assets/trophies/user/liga-profesional-argentina.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Liga Profesional Argentina"],
+    ["Melhor Jogador Jovem|Kopa|^MJJ$", "assets/trophies/user/kopa-trophy.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para o Troféu Kopa"],
+    ["OFC Champions League|OFCCL", "assets/trophies/user/ofc-champions-league.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a OFC Champions League"],
+    ["Premier League(?! / Premiership)|^PL$", "assets/trophies/user/premier-league.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Premier League"],
+    ["Scottish Premiership|Premier League / Premiership|Premiership", "assets/trophies/user/scottish-premiership.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Scottish Premiership"],
+    ["Saudi Pro League|^SPL$", "assets/trophies/user/saudi-pro-league.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a Saudi Pro League"],
+    ["Time da Temporada|TOTS|Team of the Year|^TT$", "assets/trophies/user/team-of-the-season.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para Time da Temporada / TOTS"],
+    ["U[.]?S[.]? Open Cup|^USOC$", "assets/trophies/user/us-open-cup.png", "Usuário", "Anexo do usuário", "Imagem fornecida pelo usuário para a U.S. Open Cup"],
+    ["FIFA Club World Cup|Mundial de Clubes", "CWC Trophy 2025.png", "User34790", "CC0 / CC BY-SA 4.0", "Ilustração fiel do novo troféu de 2025"],
+    ["FIFA World Cup|(?<!Club )World Cup|Copa do Mundo", "FIFA World Cup Trophy photo by Djuradj Vujcic.jpg", "Djuradj Vujcic", "CC BY 2.0", "Fotografia da taça original"],
+    ["UEFA Super Cup", "UEFA - Super Cup.png", "", "Ver arquivo", "Ícone específico do troféu"],
+    ["Supercopa do Brasil|Supercopa Rei", "SupercopaRei2025-.png", "", "Ver arquivo", "Imagem da taça"],
+    ["Supercopa da Espanha|Supercopa de Espa[nñ]a", "SupercopaEspaña.png", "LIBRE CONOCIMIENTO", "CC BY-SA 4.0", "Imagem da taça"],
+    ["Supercoppa Italiana", "Supercoppa Italiana.svg", "", "Ver arquivo", "Representação do troféu"],
+    ["FA Community Shield", "CommunityShield.png", "", "Ver arquivo", "Representação do escudo"],
+    ["DFL-Supercup", "DFLSupercupTrofeo.png", "", "Ver arquivo", "Imagem do troféu"],
+    ["Trophée des Champions", "Trophée des Champions.svg", "", "Ver arquivo", "Representação do troféu"],
+    ["Supertaça Cândido de Oliveira", "Supertaça Cândido de Oliveira.svg", "", "Ver arquivo", "Representação do troféu"],
+    ["Johan Cruyff Shield|Johan Cruijff Schaal", "Johan Cruijff Schaal.svg", "", "Ver arquivo", "Representação do troféu"],
+    ["Finalissima", "Finalissima.png", "", "Ver arquivo", "Imagem do troféu"],
+    ["CONMEBOL Copa América|Copa América", "Copa america trofeo.jpg", "Hazaña17", "CC BY-SA 3.0", "Fotografia da taça original no museu da CONMEBOL"],
+    ["UEFA Nations League", "2019 UEFA Nations League Trophy CR7Museum.jpg", "", "Ver arquivo", "Foto do troféu"],
+    ["UEFA EURO|UEFA European Championship", "2016 UEFA Euro Trophy CR7Museum.jpg", "", "Ver arquivo", "Foto do troféu"],
+    ["UEFA Champions League", "UEFA Champions LeagueTrophy7612.png", "David Flores", "CC BY 2.0", "Troféu fotografado"],
+    ["UEFA Europa League", "Europa league trophy.jpg", "Damine178", "CC BY-SA 4.0", "Troféu fotografado"],
+    ["UEFA Conference League|UEFA Europa Conference League", "UEFA Europa Conference League Trophy.jpg", "Totti", "CC BY-SA 4.0", "Troféu fotografado"],
+    ["CONMEBOL Libertadores|Copa Libertadores", "TaçaLibertadores2024.jpg", "Phill ad", "CC BY 4.0", "Foto da taça de 2024"],
+    ["CONMEBOL Sul-Americana|Copa Sudamericana", "Taça Sulamericana 2018.jpg", "", "Ver arquivo", "Foto da taça"],
+    ["Categor[ií]a Primera A", "PrimeraA2020-.png", "LCont5", "CC0 1.0", "Ilustração fiel do troféu colombiano de 2020 em diante"],
+    ["Primera Divisi[oó]n do Chile", "Copa primera division de chile.jpg", "ArielUCH", "CC BY-SA 4.0", "Fotografia do troféu chileno em 2013"],
+    ["Copa da Turquia|Turkish Cup", "Fenerbahçe'nin kazandığı TFF 100. Yıl Ziraat Türkiye Kupası.jpg", "Beshogur", "CC0 1.0", "Fotografia do troféu especial da edição 2022–23"],
+    ["Primera Divisi[oó]n Uruguaia", "Silueta trofeo Campeonato Uruguayo.png", "Autor desconhecido", "Domínio público", "Representação fiel do troféu uruguaio de 1937"],
+    ["Süper Lig", "2024-2025 Trendyol Süper Lig Sezonunda Kullanılan Yeni Kupa.webp", "Arslan, Egemen", "CC BY-SA 4.0", "Imagem da nova taça introduzida em 2024–25"],
+    ["CAF Champions League", "CAF Champions League Trophy.jpg", "Bahbouhe", "CC BY-SA 4.0", "Fotografia da taça oficial da competição africana"],
+    ["Copa Chile", "Trofeo copa chile.jpg", "ArielUCH", "CC BY-SA 4.0", "Foto da taça da copa nacional chilena (2013)"],
+    ["Copa do Imperador|Emperor.s Cup", "Emperors cup.JPG", "Ohtani tanya", "CC BY-SA 3.0", "Foto da taça da Copa do Imperador no Japão"],
+    ["Copa AUF Uruguay", "Silueta trofeo Copa AUF Uruguay.png", "Juanchocarbonero", "CC0 1.0", "Desenho fiel à taça do torneio uruguaio"],
+    ["Belgian Pro League|Jupiler Pro League", "Jupiler Pro League throphy.jpg", "SonoGrazy", "CC BY-SA 4.0", "Foto da taça belga referente à temporada 2014–15 (modelo histórico)"],
+    ["Primeira Liga", "Primeira Liga Trophy.svg", "VitorEmanuelCarvalhoPeixoto", "CC BY-SA 4.0", "Ilustração fiel do troféu português"],
+    ["Serie A(?!\w)", "Coppa Campioni d’Italia.jpg", "RichiWarrior05", "CC BY-SA 4.0", "Foto do troféu de campeão italiano"],
+    ["KNVB Beker", "KNVB Beker.svg", "Mess", "CC BY-SA 3.0", "Ilustração fiel do troféu holandês"],
+    ["Premier League", "Premier League trophy at museum.JPG", "", "Domínio público", "Foto do troféu"],
+    ["Brasileir[aã]o|Campeonato Brasileiro S[eé]rie A", "Troféu Campeonato Brasileiro 2024.jpg", "Phill ad", "CC BY 4.0", "Foto do troféu de 2024"],
+    ["Bundesliga", "Trophy of Fußball-Bundesliga in Singapore, 2023.jpg", "", "Ver arquivo", "Fotografia da Meisterschale"],
+    ["LaLiga", "LaLiga.png", "LIBRE CONOCIMIENTO", "CC BY-SA 4.0", "Desenho específico do troféu da Liga"],
+    ["Ligue 1", "Ligue1 trophy.svg", "Kanchelskis", "CC BY-SA 2.0", "Representação específica da taça"],
+    ["Eredivisie", "Eredivisie Trophy.png", "MacMoreno", "CC BY-SA 4.0", "Representação específica do troféu"],
+    ["Liga MX", "Liga MX Trophy.jpg", "", "Ver arquivo", "Foto do troféu"],
+    ["Major League Soccer|MLS Cup", "MLS Cup.svg", "Luigi Chiesa", "CC BY-SA / GFDL", "Representação específica do MLS Cup"],
+    ["Copa do Brasil", "CopadoBrasil2013-.png", "Guigoma", "CC BY-SA 4.0", "Representação específica do modelo desde 2013"],
+    ["Copa do Rei|Copa del Rey", "Copa del Rey Trophy.png", "MacMoreno", "CC BY-SA 4.0", "Representação específica da taça"],
+    ["Copa Argentina", "CopaArgentina2022-.png", "LCont5", "CC0", "Representação específica do modelo desde 2022"],
+    ["Coppa Italia", "Coppa Italia (Italy Cup).svg", "0 Noctis 0", "PD shape / CC BY-SA 3.0", "Representação específica do troféu"],
+    ["Coupe de France", "Coupe de France trophy.png", "", "Ver arquivo", "Imagem específica do troféu"],
+    ["DFB-Pokal", "DFB-Pokal trophy.jpg", "OAlexander", "CC BY-SA 3.0", "Fotografia do troféu"],
+    ["FA Cup", "The FA Cup Trophy.jpg", "Carlos yo", "CC BY-SA 4.0", "Fotografia da taça em Wembley"],
+    ["Scottish Cup", "Scottish cup.jpg", "Isaac Freeman", "CC BY-SA 3.0", "Fotografia da taça"],
+    ["Taça de Portugal", "Taça de Portugal Trophy.svg", "VitorEmanuelCarvalhoPeixoto", "CC BY-SA 4.0", "Representação específica do troféu"],
+    ["Copa Colombia", "Copa Betplay Trophy.png", "", "Ver arquivo", "Imagem específica do troféu"],
+    ["Bola de Ouro|Ballon d[’']Or", "Zinedine Zidane's 1998 Ballon d'Or trophy, Real Madrid Museum, Santiago Bernabéu, Madrid, Spain (Ank Kumar, Infosys Limited) 01.jpg", "Ank Kumar", "Ver arquivo", "Fotografia da Bola de Ouro"],
+    ["Chuteira de Ouro|European Golden Shoe", "2011 ESM European Golden Shoe Award CR7 Museum.jpg", "", "Ver arquivo", "Fotografia da Chuteira de Ouro"],
+  ];
+  window.BTL_COMMONS_TROPHIES = rows.map(([pattern,file,author,license,note])=>{
+    const isLocal = typeof file === "string" && /^(assets\/|\.\/|\.\.\/)/.test(file);
+    const isRemote = typeof file === "string" && /^https?:\/\//i.test(file);
+    const src = !file ? "" : (isLocal || isRemote) ? file : `https://commons.wikimedia.org/wiki/Special:FilePath/${encodeURIComponent(file.replaceAll(" ","_"))}`;
+    const page = !file ? "" : (isLocal || isRemote) ? "" : `https://commons.wikimedia.org/wiki/File:${encodeURIComponent(file.replaceAll(" ","_"))}`;
+    return {test:new RegExp(pattern,"i"),file,author,license,note,src,page,isLocal};
+  });
+})();

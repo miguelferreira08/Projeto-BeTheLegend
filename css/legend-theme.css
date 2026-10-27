@@ -1,7 +1,7 @@
 /* Be The Legend v11 — tema "Gramado & Giz". Carregado depois de style.css.
    Fonte: coloque os arquivos da Thursthipp em assets/fonts/ (veja README-Jersey-M54.txt). */
 
-@font-face{font-family:'Jersey M54';src:url('../assets/fonts/Jersey%20M54.ttf') format('truetype'),url('../assets/fonts/JerseyM54.ttf') format('truetype'),url('../assets/fonts/Jersey-M54.ttf') format('truetype'),local('Jersey M54'),local('JerseyM54');font-weight:100 900;font-style:normal;font-display:swap}
+@font-face{font-family:'Jersey M54';src:local('Jersey M54'),local('JerseyM54');font-weight:100 900;font-style:normal;font-display:swap}
 
 :root{
   --btl-display-font:'Jersey M54','BTL Unisportion','UT Unisportion FC Demo',system-ui,sans-serif!important;

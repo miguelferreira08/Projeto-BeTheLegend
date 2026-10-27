@@ -1,0 +1,25 @@
+/* QA Geral (2026-10-25) — correções de legibilidade, alinhamento e recortes. */
+#home.game-home .game-brand-lockup h1 strong {
+  color:#f6cd72 !important; /* arena-alt podia ficar praticamente preto no fundo escuro */
+  text-shadow:0 3px 20px rgba(246,205,114,.18);
+}
+.game-brand-lockup h1,
+.football-menu-option .football-menu-copy,
+.competition-inline-copy,
+.saved-title-trophy-card > div {min-width:0;overflow-wrap:anywhere}
+.honour-art,
+.honour-art img,
+.competition-inline .honour-art,
+.competition-inline .honour-art img,
+.award-ceremony-trophy img {background:transparent!important}
+.honour-art img {object-fit:contain!important;object-position:center!important;max-width:100%;max-height:100%;}
+.competition-inline{gap:clamp(6px,1.3vw,12px)!important;min-width:0;max-width:100%}
+.competition-inline-copy{min-width:0;max-width:100%}
+@media(max-width:430px){
+  #home .game-brand-lockup{gap:12px!important;min-width:0}
+  #home .game-brand-lockup h1{font-size:clamp(26px,7vw,36px)!important;line-height:1.08!important}
+  .game-home-shell,.game-home-main{min-width:0;max-width:100%}
+  .football-menu-option{min-width:0;gap:10px}
+  .football-menu-option .football-menu-copy{flex:1;min-width:0}
+  .competition-inline-copy small{white-space:normal}
+}

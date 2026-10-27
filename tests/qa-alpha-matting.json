@@ -1,0 +1,242 @@
+[
+  {
+    "file": "afc-champions-league-elite.png",
+    "source_size": [
+      1890,
+      1890
+    ],
+    "processing": "dark-backdrop-removal",
+    "transparent_fraction": 0.733,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "afc-champions-league-two.png",
+    "source_size": [
+      1110,
+      1600
+    ],
+    "processing": "dark-backdrop-removal",
+    "transparent_fraction": 0.782,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "concacaf-champions-cup.png",
+    "source_size": [
+      728,
+      880
+    ],
+    "processing": "checkerboard-removal",
+    "transparent_fraction": 0.815,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "copa-da-belgica.png",
+    "source_size": [
+      447,
+      447
+    ],
+    "processing": "illustration-background-removed",
+    "transparent_fraction": 0.514,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "copa-do-brasil-user.png",
+    "source_size": [
+      800,
+      1200
+    ],
+    "processing": "white-backdrop-removal",
+    "transparent_fraction": 0.631,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "copa-nacional.png",
+    "source_size": [
+      800,
+      1200
+    ],
+    "processing": "white-backdrop-removal",
+    "transparent_fraction": 0.631,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "j1-league.png",
+    "source_size": [
+      1261,
+      1065
+    ],
+    "processing": "circular-plate-cutout",
+    "transparent_fraction": 0.345,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "king-cup.png",
+    "source_size": [
+      1171,
+      1100
+    ],
+    "processing": "dark-backdrop-removal",
+    "transparent_fraction": 0.854,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "kopa-trophy.png",
+    "source_size": [
+      1200,
+      675
+    ],
+    "processing": "dark-backdrop-removal",
+    "transparent_fraction": 0.727,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "liga-profesional-argentina.png",
+    "source_size": [
+      300,
+      300
+    ],
+    "processing": "preserved-existing-alpha",
+    "transparent_fraction": 0.732,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "ofc-champions-league.png",
+    "source_size": [
+      487,
+      410
+    ],
+    "processing": "checkerboard-removal",
+    "transparent_fraction": 0.744,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "premier-league.png",
+    "source_size": [
+      554,
+      554
+    ],
+    "processing": "white-backdrop-removal",
+    "transparent_fraction": 0.735,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "saudi-pro-league.png",
+    "source_size": [
+      420,
+      420
+    ],
+    "processing": "white-backdrop-removal",
+    "transparent_fraction": 0.77,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "scottish-premiership.png",
+    "source_size": [
+      1177,
+      2048
+    ],
+    "processing": "white-backdrop-removal",
+    "transparent_fraction": 0.237,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "team-of-the-season.png",
+    "source_size": [
+      800,
+      1000
+    ],
+    "processing": "grabcut-foreground",
+    "transparent_fraction": 0.727,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  },
+  {
+    "file": "us-open-cup.png",
+    "source_size": [
+      597,
+      320
+    ],
+    "processing": "dark-backdrop-removal",
+    "transparent_fraction": 0.935,
+    "corner_alpha": [
+      0,
+      0,
+      0,
+      0
+    ]
+  }
+]

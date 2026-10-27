@@ -1,0 +1,28 @@
+{
+  "js": 16,
+  "functionsJs": 6,
+  "css": 10,
+  "svg": 65,
+  "bitmapAssets": 18,
+  "syntaxErrors": [],
+  "missingHtmlRefs": [],
+  "missingCssRefs": [
+    [
+      "css/legend-theme.css",
+      "../assets/fonts/Jersey%20M54.ttf"
+    ],
+    [
+      "css/legend-theme.css",
+      "../assets/fonts/JerseyM54.ttf"
+    ],
+    [
+      "css/legend-theme.css",
+      "../assets/fonts/Jersey-M54.ttf"
+    ],
+    [
+      "css/style.css",
+      "../assets/fonts/UT%20Unisportion%20FC%20Demo.ttf"
+    ]
+  ],
+  "corruptImages": []
+}

@@ -1071,11 +1071,7 @@ function stripDiacritics(str=''){ return str.normalize('NFD').replace(/[̀-ͯ]/g
 function normalizeKey(str=''){ return stripDiacritics(str).toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,''); }
 function slugifyClub(name=''){ return stripDiacritics(name).toLowerCase().replace(/&/g,'and').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,''); }
 function fallbackClubDataUri(){return '';}// Sem escudos artificiais: revelar estado indisponível até a imagem real do Commons.
-function fallbackTrophyDataUri(name='Título'){
-  const label=(name.length>22?name.slice(0,22)+'…':name).replace(/&/g,'&amp;');
-  const svg=`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 96 96"><rect width="96" height="96" rx="18" fill="#0e171d"/><path d="M33 20h30v8c0 11-6 21-15 27-9-6-15-16-15-27v-8zm-8 6h8v7c0 4-3 8-8 8-4 0-7-4-7-8 0-4 3-7 7-7zm46 0h8c4 0 7 3 7 7 0 4-3 8-7 8-5 0-8-4-8-8v-7zM42 55h12v10h10v7H32v-7h10V55z" fill="#f2c94c"/><text x="48" y="84" text-anchor="middle" fill="#eef3f5" font-size="8" font-family="Orbitron, Arial, sans-serif">${label}</text></svg>`;
-  return `data:image/svg+xml;charset=UTF-8,${encodeURIComponent(svg)}`;
-}
+// Sem imagens de taças artificiais: falha de rede mostra a sigla da competição.
 const commonsMisses=new Map();
 const commonsInFlight=new Map();
 const COMMONS_ENDPOINT='https://commons.wikimedia.org/w/api.php';
@@ -1162,25 +1158,37 @@ function observeSiteImages(){
   const observer=new MutationObserver(mutations=>mutations.forEach(m=>m.addedNodes.forEach(node=>{if(node?.nodeType!==1)return;if(node.tagName==='IMG')polishAllSiteImages(node.parentElement||document);else polishAllSiteImages(node);})));observer.observe(document.body,{childList:true,subtree:true});
 }
 function applyImageSources(img,sources,fallback){if(!img)return;const list=sources.filter(Boolean);let i=0;const next=()=>{if(i>=list.length){img.classList.add('hidden');fallback?.classList.remove('hidden');return;}img.onerror=next;img.onload=()=>{img.classList.remove('hidden');fallback?.classList.add('hidden');polishSiteImage(img);};img.src=list[i++];};next();}
-// Real-life trophy photography/renders are always first. Local artwork is terminal fallback only.
-// V25: acervo FM importado localmente. Não usamos links de bancos de imagens,
-// troféus desenhados ou URLs de packs sem autorização de uso.
-const TROPHY_ART=[];
-function trophyEntryFor(name){return null;}
-function trophySourcesFor(name){const source=window.BTL_FM_TROPHIES?.[name]||window.BTL_FM_TROPHIES?.[String(name||'').toLowerCase()]||null;return [source||'assets/trophies/fm/no-file.svg'];}
-function trophyArtFor(name){return trophySourcesFor(name)[0];}
+// Catálogo validado de troféus: prioriza Wikimedia Commons e completa lacunas com anexos locais enviados pelo usuário.
+// O antigo mapa FM estava vazio e todos os títulos exibiam no-file.svg.
+const TROPHY_ART=window.BTL_COMMONS_TROPHIES||[];
+function trophyEntryFor(name){return TROPHY_ART.find(x=>x.test.test(String(name||'')))||null;}
+function trophySourcesFor(name){const item=trophyEntryFor(name);return item?.src?[item.src]:[];}
+function trophyArtFor(name){return trophySourcesFor(name)[0]||'';}
 function honourInitials(name){return (name||'BTL').split(/\s+/).filter(Boolean).slice(0,3).map(x=>x[0]).join('').toUpperCase();}
-function honourVisual(name){const sources=trophySourcesFor(name),encoded=sources.map(encodeURIComponent).join('|');return `<span class="honour-art"><img src="${sources[0]}" data-sources="${encoded}" data-index="0" alt="${name}" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" onload="polishSiteImage(this)" onerror="cycleHonourImage(this)"><b>${honourInitials(name)}</b></span>`;}
+function honourVisual(name){
+ const sources=trophySourcesFor(name),safeName=esc(name),initials=esc(honourInitials(name));
+ if(!sources.length)return `<span class="honour-art fallback" title="Imagem específica não disponível para esta competição"><b>${initials}</b></span>`;
+ const encoded=sources.map(encodeURIComponent).join('|');
+ return `<span class="honour-art" title="Troféu: ${safeName}"><img src="${sources[0]}" data-sources="${encoded}" data-index="0" alt="${safeName}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="polishSiteImage(this)" onerror="cycleHonourImage(this)"><b>${initials}</b></span>`;
+}
 function competitionHeaderMarkup(name,sub=''){
  const main=String(name||'COMPETIÇÃO'),extra=String(sub||'').trim();
  const art=honourVisual(main);
  return `<span class="competition-inline">${art}<span class="competition-inline-copy"><b>${esc(main)}</b>${extra?`<small>${esc(extra)}</small>`:''}</span></span>`;
 }
-window.cycleHonourImage=function(img){const sources=(img.dataset.sources||'').split('|').map(decodeURIComponent).filter(Boolean),i=Number(img.dataset.index||0)+1;if(i<sources.length){img.dataset.index=String(i);delete img.dataset.bgCleaned;delete img.dataset.bgCleaning;img.src=sources[i];return;}const parent=img.parentElement;img.remove();parent?.classList.add('fallback');};
+window.cycleHonourImage=function(img){
+ const sources=(img.dataset.sources||'').split('|').map(decodeURIComponent).filter(Boolean),i=Number(img.dataset.index||0)+1;
+ if(i<sources.length){img.dataset.index=String(i);delete img.dataset.bgCleaned;delete img.dataset.bgCleaning;img.src=sources[i];return;}
+ const parent=img.parentElement;img.remove();parent?.classList.add('fallback');
+};
+window.BTLTrophyDiagnostics=()=>({
+ source:'Wikimedia Commons + anexos locais validados',count:TROPHY_ART.filter(x=>!!x.src).length,
+ mapped:TROPHY_ART.filter(x=>!!x.src).map(x=>({pattern:x.test.source,url:x.src,page:x.page,isLocal:!!x.isLocal})),
+ intentionallyUnavailable:TROPHY_ART.filter(x=>!x.src).map(x=>x.test.source)
+});
 const TROPHY_PRELOAD_CACHE=[];
 function preloadTrophyImages(){
-  const urls=[...new Set(Object.values(window.BTL_FM_TROPHIES||{}).filter(u=>/^assets\/trophies\/fm\//.test(u)))];
-  urls.forEach(url=>{const img=new Image();img.decoding='async';img.referrerPolicy='no-referrer';img.src=url;TROPHY_PRELOAD_CACHE.push(img);});
+ // A exibição é sob demanda: evita dezenas de downloads remotos em cada inicialização.
 }
 
 function countryFlag(code){
@@ -3284,8 +3292,8 @@ function resolveCareerEvent(index){
 function showCelebration(icon,title,subtitle){
   const iconBox=$('#celebration-icon');iconBox.className='celebration-icon';
   if(/^https?:/i.test(icon||'')){
-    const sources=[icon,fallbackTrophyDataUri(title),'assets/fallback-trophy.svg'],encoded=sources.map(encodeURIComponent).join('|');
-    iconBox.innerHTML=`<img src="${sources[0]}" data-sources="${encoded}" data-index="0" alt="${title}" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" onload="polishSiteImage(this)" onerror="cycleHonourImage(this)">`;
+    const safeIcon=esc(icon),label=esc(title),initials=esc(honourInitials(title));
+    iconBox.innerHTML=`<span class="honour-art"><img src="${safeIcon}" data-sources="${encodeURIComponent(icon)}" data-index="0" alt="${label}" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" onload="polishSiteImage(this)" onerror="cycleHonourImage(this)"><b>${initials}</b></span>`;
   }else iconBox.textContent=icon;
   $('#celebration-title').textContent=title;$('#celebration-subtitle').textContent=subtitle;
   $('#confetti').innerHTML=Array.from({length:38},(_,i)=>`<i style="--x:${rnd(-46,46)}vw;--r:${rnd(90,720)}deg;--d:${(Math.random()*1.4+.8).toFixed(2)}s;--delay:${(Math.random()*.5).toFixed(2)}s"></i>`).join('');
@@ -3293,8 +3301,8 @@ function showCelebration(icon,title,subtitle){
 }
 function showCelebrationForHonour(name,title,subtitle){
   const iconBox=$('#celebration-icon');iconBox.className='celebration-icon';
-  const sources=trophySourcesFor(name),encoded=sources.map(encodeURIComponent).join('|');
-  iconBox.innerHTML=`<img src="${sources[0]}" data-sources="${encoded}" data-index="0" alt="${title}" loading="eager" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" onload="polishSiteImage(this)" onerror="cycleHonourImage(this)">`;
+  // Nunca gerar <img src="undefined"> quando a competição não tem imagem real.
+  iconBox.innerHTML=honourVisual(name);
   $('#celebration-title').textContent=title;$('#celebration-subtitle').textContent=subtitle;
   $('#confetti').innerHTML=Array.from({length:38},(_,i)=>`<i style="--x:${rnd(-46,46)}vw;--r:${rnd(90,720)}deg;--d:${(Math.random()*1.4+.8).toFixed(2)}s;--delay:${(Math.random()*.5).toFixed(2)}s"></i>`).join('');
   $('#celebration').classList.remove('hidden');
