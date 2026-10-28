@@ -312,13 +312,16 @@ function appearanceMarkup(appearance=DEFAULT_APPEARANCE,compact=false,number='10
   const hair=colors.includes(a.hairColor)?a.hairColor:'#17120f';
   const eye=['#433021','#75a3ac','#528263','#ad8153'].includes(a.eyeColor)?a.eyeColor:'#433021';
   const shape={oval:'M66 74Q65 39 110 38Q155 39 154 74L151 122Q147 152 130 166Q110 180 90 166Q73 150 69 122Z',round:'M62 77Q60 39 110 39Q160 39 158 77L157 122Q148 170 110 174Q72 170 63 122Z',square:'M66 74Q64 41 110 39Q155 41 154 74L153 134Q150 150 133 165L87 165Q70 150 67 134Z',slim:'M72 76Q67 40 110 38Q153 40 148 76L143 122Q141 147 124 171L110 178L96 171Q79 147 77 122Z'}[a.faceShape]||'M66 74Q65 39 110 38Q155 39 154 74L151 122Q147 152 130 166Q110 180 90 166Q73 150 69 122Z';
+  // Camadas de volume/luz e mechas individualizadas (SVG escalável e sem imagens externas).
+  const strand=(d,w=2,alpha=.19)=>`<path d="${d}" stroke="url(#${id}hairLight)" stroke-width="${w}" opacity="${alpha}" fill="none" stroke-linecap="round"/>`;
+  const curl=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="url(#${id}hair)" stroke="${hair}" stroke-width="2"/>`;
   const hairShapes={
-    fade:`<path d="M63 90Q50 38 79 29Q119 11 151 34Q169 53 157 90L150 66Q139 45 112 51Q91 43 70 65Z" fill="${hair}"/><path d="M65 74Q76 52 95 51Q122 59 141 44" stroke="#fff" stroke-opacity=".11" stroke-width="5" fill="none"/>`,
-    short:`<path d="M62 91Q57 43 76 33Q99 18 131 27Q165 34 157 91L151 71Q132 57 116 60Q85 52 69 70Z" fill="${hair}"/><path d="M70 53Q110 30 146 54" stroke="#fff" stroke-opacity=".12" stroke-width="6" fill="none"/>`,
-    curly:`<path d="M60 88Q49 63 62 50Q56 31 77 32Q80 16 102 24Q123 9 138 29Q159 23 159 42Q174 58 157 88L150 73Q136 63 110 62Q84 59 69 76Z" fill="${hair}"/>${[67,84,102,121,140,155].map((x,i)=>`<circle cx="${x}" cy="${i%2?36:43}" r="14" fill="${hair}" stroke="#ffffff" stroke-opacity=".08"/>`).join('')}`,
-    afro:`<ellipse cx="110" cy="58" rx="65" ry="53" fill="${hair}"/>${[52,68,87,105,126,146,166].map((x,i)=>`<circle cx="${x}" cy="${[65,42,29,25,28,44,68][i]}" r="21" fill="${hair}" stroke="#ffffff" stroke-opacity=".05"/>`).join('')}`,
-    mohawk:`<path d="M95 58L86 20L101 29L105 6L115 24L132 10L125 61Q110 54 95 58Z" fill="${hair}"/><path d="M65 87Q57 49 88 52L95 62Q75 59 68 78Z M155 87Q163 49 131 52L126 62Q145 59 152 78Z" fill="${hair}" opacity=".75"/>`,
-    long:`<path d="M60 83Q55 25 110 26Q166 25 160 84L170 168L144 167L149 80Q130 53 110 57Q84 52 72 80L76 166L52 168Z" fill="${hair}"/><path d="M73 47Q110 30 148 53" stroke="#fff" stroke-opacity=".1" stroke-width="5" fill="none"/>`
+    fade:`<path d="M65 105Q49 65 61 43Q72 19 106 24Q145 17 159 44Q166 70 155 99L149 74Q142 52 115 51Q86 47 71 73Z" fill="url(#${id}hair)"/><path d="M68 76Q60 88 69 101M153 72Q162 85 151 104" stroke="${hair}" stroke-width="9" opacity=".48" fill="none"/>${strand('M73 47Q103 25 143 43',4,.34)}${strand('M70 57Q110 38 149 55',2,.27)}<path d="M73 75Q78 54 93 52" stroke="url(#${id}fade)" stroke-width="10" fill="none" opacity=".62"/>`,
+    short:`<path d="M63 92Q53 61 63 40Q79 17 110 22Q152 18 160 46L155 93L149 70Q131 55 111 62Q89 53 71 71Z" fill="url(#${id}hair)"/>${strand('M75 48Q95 32 116 34Q137 34 148 47',3,.43)}${strand('M76 55Q96 43 122 45',2,.33)}${strand('M100 32L112 42M119 30L130 40',1.5,.24)}`, 
+    curly:`<path d="M63 99Q49 68 63 44Q75 22 109 21Q149 17 159 49Q170 77 154 98L148 77Q131 62 109 65Q88 58 72 77Z" fill="url(#${id}hair)"/>${[[68,54,13],[83,38,13],[103,34,14],[121,30,13],[141,39,13],[153,55,12],[65,72,10],[91,54,12],[114,52,12],[137,57,11]].map(([x,y,r])=>curl(x,y,r)).join('')}${strand('M79 31Q89 27 97 36M115 28Q126 24 132 35M88 49Q97 40 107 46M133 51Q141 43 148 49',2.4,.30)}`,
+    afro:`<path d="M51 102Q36 84 45 64Q33 44 51 32Q53 13 77 17Q88 2 108 11Q135 0 148 19Q174 16 174 43Q189 61 173 79Q180 98 158 110L146 77Q130 69 112 72Q89 66 72 84L66 110Z" fill="url(#${id}hair)"/>${[[57,52,17],[77,34,18],[103,27,19],[131,31,19],[153,47,18],[165,69,15],[151,85,14],[65,82,16],[91,52,17],[119,50,18],[143,62,15]].map(([x,y,r])=>curl(x,y,r)).join('')}${strand('M65 35q8-10 16-4M108 15q8-4 15 4M150 43q10 6 4 16M89 59q7-7 15 0',2,.22)}`,
+    mohawk:`<path d="M92 66L82 29L96 37L104 7L116 32L135 14L130 66Q116 57 92 66Z" fill="url(#${id}hair)"/>${strand('M102 27L108 53M120 32L117 57',3,.33)}<path d="M65 99Q56 58 88 53L94 71Q75 65 71 92M156 99Q165 58 133 53L128 71Q145 65 150 92" fill="url(#${id}fade)" opacity=".85"/>`,
+    long:`<path d="M57 84Q52 30 85 22Q112 9 139 22Q172 32 165 90L175 184L146 176L149 82Q133 57 110 58Q87 52 73 79L74 176L48 185Z" fill="url(#${id}hair)"/>${strand('M73 46Q107 22 143 44',4,.36)}${strand('M57 89Q63 130 57 171M161 89Q155 127 163 172',3,.22)}${strand('M80 39Q106 30 131 38',2,.22)}`
   };
   const eyebrows=a.brows==='arched'?['M79 92Q91 82 101 89','M119 89Q132 82 142 92']:a.brows==='thick'?['M79 90Q91 84 101 89','M119 89Q132 84 142 90']:['M80 92Q90 87 101 91','M119 91Q132 87 141 92'];
   const bw=a.brows==='thick'?5:3.5;
@@ -331,7 +334,7 @@ function appearanceMarkup(appearance=DEFAULT_APPEARANCE,compact=false,number='10
    mustache:`<path d="M92 141Q101 132 110 140Q119 132 128 141Q118 149 110 145Q102 149 92 141" fill="${hair}"/>`,
    full:`<path d="M73 117Q74 154 90 166L99 184Q110 191 121 184L130 166Q147 151 147 117L137 142Q132 161 110 169Q88 161 83 142Z" fill="${hair}"/><path d="M92 140Q102 134 110 140Q119 134 128 140Q120 149 110 145Q100 149 92 140" fill="${hair}"/>`
   }[a.beardStyle]||''):'';
-  return `<div class="player-face-svg-wrap ${compact?'compact':''}"><svg class="player-face-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 250" role="img" aria-label="Avatar ilustrado personalizável do jogador"><defs><linearGradient id="${id}skin" x1=".15" y1=".08" x2=".95" y2=".85"><stop stop-color="${skin}"/><stop offset=".65" stop-color="${skin}"/><stop offset="1" stop-color="${shadow}"/></linearGradient><linearGradient id="${id}shirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e4ff79"/><stop offset="1" stop-color="#4bbc95"/></linearGradient><radialGradient id="${id}light"><stop stop-color="#68d5b8" stop-opacity=".17"/><stop offset="1" stop-color="#05161e" stop-opacity="0"/></radialGradient></defs>
+  return `<div class="player-face-svg-wrap ${compact?'compact':''}"><svg class="player-face-svg" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 250" role="img" aria-label="Avatar ilustrado personalizável do jogador"><defs><linearGradient id="${id}skin" x1=".15" y1=".08" x2=".95" y2=".85"><stop stop-color="${skin}"/><stop offset=".65" stop-color="${skin}"/><stop offset="1" stop-color="${shadow}"/></linearGradient><linearGradient id="${id}shirt" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#e4ff79"/><stop offset="1" stop-color="#4bbc95"/></linearGradient><linearGradient id="${id}hair" x1="0" y1="0" x2=".9" y2="1"><stop stop-color="${hair}"/><stop offset=".38" stop-color="${hair}"/><stop offset=".75" stop-color="#080e14" stop-opacity=".32"/><stop offset="1" stop-color="${hair}"/></linearGradient><linearGradient id="${id}hairLight" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#ffffff" stop-opacity=".6"/><stop offset="1" stop-color="${hair}" stop-opacity=".5"/></linearGradient><linearGradient id="${id}fade"><stop stop-color="${hair}" stop-opacity=".35"/><stop offset="1" stop-color="${hair}"/></linearGradient><radialGradient id="${id}light"><stop stop-color="#68d5b8" stop-opacity=".17"/><stop offset="1" stop-color="#05161e" stop-opacity="0"/></radialGradient></defs>
     <rect width="220" height="250" fill="#0c222c"/><circle cx="110" cy="115" r="116" fill="url(#${id}light)"/>
     <path d="M10 250Q23 195 82 190L139 190Q197 197 210 250Z" fill="url(#${id}shirt)"/><path d="M67 195L110 233L153 195" fill="none" stroke="#ffffff" stroke-opacity=".24" stroke-width="4"/><path d="M89 170V201Q109 216 131 201V170" fill="${shadow}"/><path d="M98 189Q110 193 122 189" fill="none" stroke="${deep}" stroke-opacity=".25" stroke-width="5"/>
     <ellipse cx="68" cy="113" rx="10" ry="18" fill="${shadow}"/><ellipse cx="152" cy="113" rx="10" ry="18" fill="${shadow}"/><path d="${shape}" fill="url(#${id}skin)" stroke="${deep}" stroke-opacity=".4" stroke-width="1.4"/>
@@ -359,7 +362,7 @@ function centerCropPhotoFile(file,size=384){
   return new Promise((resolve,reject)=>{if(!file||!/^image\/(jpeg|png|webp)$/i.test(file.type||''))return reject(new Error('Formato não suportado. Use JPG, PNG ou WebP.'));if(file.size>10*1024*1024)return reject(new Error('A imagem deve ter no máximo 10 MB.'));const reader=new FileReader();reader.onerror=()=>reject(new Error('Não foi possível ler a imagem.'));reader.onload=()=>{const img=new Image();img.onerror=()=>reject(new Error('Arquivo de imagem inválido.'));img.onload=async()=>{const {sx,sy,side}=await photoCropFrame(img);const canvas=document.createElement('canvas');canvas.width=size;canvas.height=size;const ctx=canvas.getContext('2d');ctx.imageSmoothingEnabled=true;ctx.imageSmoothingQuality='high';ctx.drawImage(img,sx,sy,side,side,0,0,size,size);resolve(canvas.toDataURL('image/webp',.86));};img.src=String(reader.result);};reader.readAsDataURL(file);});
 }
 function appearancePresetVisual(cfg,opt){
-  if(cfg.key==='appearance-hair-style') return `<span class="preset-visual hair-preset hair-${opt.value}"><i></i></span>`;
+  if(cfg.key==='appearance-hair-style') return `<span class="preset-visual btl-hair-mini">${appearanceMarkup({...DEFAULT_APPEARANCE,hairStyle:opt.value,hairColor:$('#appearance-hair-color')?.value||'#17120f'},true,'10')}</span>`;
   if(cfg.key==='appearance-beard-style') return `<span class="preset-visual beard-preset beard-${opt.value}"><i></i></span>`;
   if(cfg.key==='appearance-skin') return `<span class="preset-visual skin-preset" style="--preset-skin:${opt.tone||opt.value}"></span>`;
   if(cfg.key==='appearance-hair-color') return `<span class="preset-visual color-preset" style="--preset-color:${opt.value}"></span>`;
@@ -2723,14 +2726,14 @@ function animatePenaltyAimShot(option,keeperOption,scored,after){
   const goal=scene.querySelector('.btl-penalty-goal');
   goal.style.setProperty('--shot-x',`${option.x}%`);
   goal.style.setProperty('--shot-y',`${option.y}%`);
-  goal.style.setProperty('--keeper-shift-x',`${keeperOption.keeperX*clamp(window.innerWidth*.11,66,130)}px`);
-  goal.style.setProperty('--keeper-shift-y',`${keeperOption.keeperY*14}px`);
+  goal.style.setProperty('--keeper-shift-x',`${(keeperOption.x-50)/100*goal.clientWidth}px`);
+  goal.style.setProperty('--keeper-shift-y',`${keeperOption.keeperY<0?-38:keeperOption.keeperY>0?8:-10}px`);
   goal.style.setProperty('--keeper-rotation',`${keeperOption.keeperX*38}deg`);
   goal.classList.add('btl-kick-active');
   goal.classList.toggle('btl-kick-goal',scored);
   goal.classList.toggle('btl-kick-save',!scored);
   scene.querySelector('.btl-penalty-prompt').textContent='COBRANÇA EM ANDAMENTO';
-  setTimeout(()=>{const status=scene.querySelector('.btl-penalty-prompt');if(status)status.textContent=scored?'⚽ GOOOOL!':'DEFENDEU!';},1000);
+  setTimeout(()=>{const status=scene.querySelector('.btl-penalty-prompt');if(status)status.textContent=scored?'⚽ GOOOOL!':'🧤 DEFESA DO GOLEIRO!';},1000);
   setTimeout(after,1650);
 }
 
@@ -2802,11 +2805,14 @@ function resolvePenaltyShootout(index){
   const live=initPenaltyLive(pending),options=buildShootoutScenario(pending).options,option=options[index];
   if(!live.waitingForPlayer||!option)return;
   live.waitingForPlayer=false;
-  const keeperOption=options[Math.floor(Math.random()*options.length)];
+  const keeperRead=options[Math.floor(Math.random()*options.length)];
   const attrs=state.player?.attributes||{},skill=((attrs.finishing||state.player?.overall||70)+(attrs.dribbling||70)*.12+(attrs.passing||70)*.08)/100;
-  const keeperReadsShot=option.id===keeperOption.id;
+  const keeperReadsShot=option.id===keeperRead.id;
   const chance=clamp(option.chance+(skill-.78)*.18-(keeperReadsShot?.43:0),.22,.94);
   const scored=Math.random()<chance;
+  // A cobrança perdida é representada por uma defesa no canto escolhido.
+  // As probabilidades e o placar continuam os mesmos; muda apenas a coreografia visual.
+  const keeperOption=scored?keeperRead:option;
   // Animation completes before score changes or the next penalty starts.
   animatePenaltyAimShot(option,keeperOption,scored,()=>{
     appendPenaltyKick(pending,pending.team,live.round,scored,true);
@@ -3256,9 +3262,12 @@ function eventSceneMarkup(e){
   const title=esc(e.title||'Novo capítulo');
   const category=kind==='icon'?'LEGENDARY MOMENT':kind==='random'?'BREAKING / EXCLUSIVO':'BE THE LEGEND / BASTIDORES';
   const glyph=kind==='icon'?'★':kind==='random'?'⚡':'✦';
-  if(kind==='icon')return `<div class="career-event-scene btl-event-stage btl-icon-stage" data-event-kind="icon"><div class="btl-icon-sparks">✦ &nbsp; ★ &nbsp; ✦</div><div class="btl-icon-card"><span class="btl-icon-number">ICON ${number}</span><div class="btl-icon-medallion"><span>★</span></div><strong>${title}</strong><small>UM ENCONTRO QUE MARCA A HISTÓRIA</small></div><div class="btl-icon-caption">${category} <span>◆ ◆ ◆</span></div></div>`;
-  if(kind==='random')return `<div class="career-event-scene btl-event-stage btl-random-stage" data-event-kind="random"><div class="btl-random-marquee"><span>● AO VIVO</span><span>ÚLTIMA HORA</span><span>BTL / ${number}</span></div><div class="btl-random-screen"><div class="btl-random-glyph">${glyph}</div><div><small>FORA DO ROTEIRO</small><strong>${title}</strong><em>NEM TUDO ACONTECE DENTRO DE CAMPO.</em></div></div><div class="btl-random-ticker"><span>FLASH • DESTAQUE • FLASH • DESTAQUE • </span></div></div>`;
-  return `<div class="career-event-scene btl-event-stage btl-career-stage" data-event-kind="career"><div class="btl-career-film"><span>BTL // ${number}</span><span>● REC</span></div><div class="btl-career-story"><div class="btl-career-emblem">${glyph}</div><div><small>${category}</small><strong>${title}</strong><span>UM CAPÍTULO DA SUA TRAJETÓRIA</span></div></div><div class="btl-career-progress"><i></i><i></i><i></i><i></i><i></i><b>YOUR STORY / ${state.season?.year||2026}</b></div></div>`;
+  const motion=['dribble','celebrate','interview','warmup','signature'][n%5];
+  const gesture={dribble:'⚽',celebrate:'★',interview:'🎙',warmup:'⚡',signature:'✍'}[motion];
+  const playerScene=`<div class="btl-event-player btl-player-${motion}" aria-hidden="true"><span class="btl-event-glow"></span><div class="btl-event-player-portrait">${appearanceMarkup(state.player?.appearance||DEFAULT_APPEARANCE,true,state.player?.number||10)}</div><span class="btl-event-motion-prop">${gesture}</span><span class="btl-event-player-label">${esc((state.player?.name||'SUA LENDA').split(' ')[0])}</span></div>`;
+  if(kind==='icon')return `<div class="career-event-scene btl-event-stage btl-icon-stage" data-event-kind="icon"><div class="btl-icon-sparks">✦ &nbsp; ★ &nbsp; ✦</div><div class="btl-icon-card"><span class="btl-icon-number">ICON ${number}</span><div class="btl-icon-medallion"><span>★</span></div><strong>${title}</strong><small>UM ENCONTRO QUE MARCA A HISTÓRIA</small></div><div class="btl-icon-caption">${category} <span>◆ ◆ ◆</span></div>${playerScene}</div>`;
+  if(kind==='random')return `<div class="career-event-scene btl-event-stage btl-random-stage" data-event-kind="random"><div class="btl-random-marquee"><span>● AO VIVO</span><span>ÚLTIMA HORA</span><span>BTL / ${number}</span></div><div class="btl-random-screen"><div class="btl-random-glyph">${glyph}</div><div><small>FORA DO ROTEIRO</small><strong>${title}</strong><em>NEM TUDO ACONTECE DENTRO DE CAMPO.</em></div></div><div class="btl-random-ticker"><span>FLASH • DESTAQUE • FLASH • DESTAQUE • </span></div>${playerScene}</div>`;
+  return `<div class="career-event-scene btl-event-stage btl-career-stage" data-event-kind="career"><div class="btl-career-film"><span>BTL // ${number}</span><span>● REC</span></div><div class="btl-career-story"><div class="btl-career-emblem">${glyph}</div><div><small>${category}</small><strong>${title}</strong><span>UM CAPÍTULO DA SUA TRAJETÓRIA</span></div></div><div class="btl-career-progress"><i></i><i></i><i></i><i></i><i></i><b>YOUR STORY / ${state.season?.year||2026}</b></div>${playerScene}</div>`;
 }
 
 function playCareerEventResolution(e,message){

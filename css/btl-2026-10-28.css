@@ -1,0 +1,138 @@
+/* Be The Legend • melhoria visual não destrutiva • 28/10/2026 */
+/* Criador: aproveitar o espaço horizontal; só há rolagem quando realmente não cabe. */
+#create.create-page{max-width:1660px!important;width:100%!important;padding:clamp(12px,2vh,24px) clamp(12px,2vw,28px) 28px!important;margin-inline:auto}
+#create .page-head{margin:0 0 12px!important;padding:0 0 9px!important}
+#create .page-head h2{margin:0!important;font-size:clamp(25px,2.1vw,35px)!important}
+#create #player-form.form-grid{max-width:none!important;width:100%!important;display:grid!important;grid-template-columns:minmax(360px,.92fr) minmax(0,1.08fr)!important;gap:clamp(12px,1.6vw,24px)!important;align-items:start!important;padding:clamp(12px,1.45vw,20px)!important;box-sizing:border-box}
+#create #player-form>.appearance-builder{grid-column:1!important;grid-row:1!important;min-width:0!important;max-width:none!important;width:100%;display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:11px!important;align-content:start!important;align-items:start!important;padding:12px!important;box-sizing:border-box}
+#create #player-form>.creation-profile-panel{grid-column:2!important;grid-row:1!important;min-width:0;display:grid;gap:11px;align-content:start}
+#create .creation-profile-head{display:flex;justify-content:space-between;gap:12px;font-family:var(--btl-display-font,Orbitron,sans-serif);font-size:11px;color:var(--volt,#e6fa71);letter-spacing:.13em}
+#create .creation-profile-head strong{opacity:.7}
+#create .creation-identity-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px 12px;align-items:start}
+#create .creation-identity-grid>label{min-width:0;gap:4px!important}
+#create .creation-identity-grid>label>input,#create .creation-identity-grid>label>select{min-height:36px!important;height:39px!important;padding:8px 10px!important;font-size:12px!important}
+#create .creation-identity-grid>.idol-picker-field{grid-column:1}
+#create .creation-identity-grid>#idol-preview{grid-column:2!important;align-self:end;min-height:39px;padding:5px!important;margin:0!important;box-sizing:border-box}
+#create .creation-identity-grid .field-help{display:none!important}
+#create .club-picker{margin:0!important;padding:11px!important;border-radius:11px!important}
+#create .club-picker-head{align-items:center;gap:8px!important}
+#create .club-picker-head h3{font-size:clamp(11px,1vw,15px)!important;margin:1px 0!important}
+#create .club-picker #reroll-clubs{min-height:33px!important;padding:5px 9px!important;font-size:10px!important}
+#create .club-status{min-height:0;padding:4px!important;font-size:10px!important}
+#create #club-options{gap:7px!important}
+#create #create-submit{min-height:44px!important;margin:0!important}
+#create .appearance-preview-wrap{min-height:0!important;display:grid!important;grid-template-columns:155px minmax(0,1fr)!important;grid-template-rows:auto auto 1fr!important;gap:3px 10px!important;align-items:center!important;justify-items:start!important;padding:9px!important;text-align:left!important;box-sizing:border-box}
+#create .appearance-preview-wrap>.eyebrow{grid-column:2;grid-row:1;margin:0!important}
+#create .appearance-preview-wrap>h3{grid-column:2;grid-row:2;font-size:clamp(13px,1.4vw,19px)!important;margin:0!important}
+#create #appearance-preview{grid-column:1;grid-row:1 / span 4;width:150px!important;height:168px!important;min-height:0!important;margin:0!important;border-radius:12px!important}
+#create .photo-upload-row{grid-column:2;grid-row:3;display:flex;flex-wrap:wrap;gap:5px!important;align-self:center}
+#create .photo-upload-row button{min-height:28px!important;font-size:9px!important;padding:5px 8px!important}
+#create .appearance-preview-wrap>small{display:none!important}
+#create .appearance-controls{width:100%;grid-template-columns:1fr!important;gap:0!important}
+#create .appearance-studio{gap:7px!important}
+#create .appearance-tabs{gap:4px!important;padding:4px!important}
+#create .appearance-tabs button{font-size:10px!important;min-height:30px!important;padding:5px!important}
+#create .appearance-group{padding:8px!important;margin:0!important}
+#create .appearance-group-head{margin:0 0 6px!important}
+#create .appearance-group-options{gap:6px!important}
+#create .appearance-group-options.grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+#create .appearance-group-options.swatches{grid-template-columns:repeat(5,minmax(0,1fr))!important}
+#create .appearance-chip{min-height:50px!important;padding:5px 4px!important;gap:5px!important;border-radius:8px!important}
+#create .appearance-chip.preset-card{min-height:57px!important}
+#create .appearance-chip b{font-size:10px!important;line-height:1.12!important}
+#create .preset-visual{transform:scale(.87);transform-origin:center!important}
+/* Abertura: não induzir rolagem por mínimos fixos duplos. */
+body.home-screen #home.game-home{min-height:100svh!important}
+body.home-screen #home .game-home-shell{min-height:100svh!important;box-sizing:border-box;padding-block:clamp(10px,2vh,30px)!important;gap:clamp(9px,1.5vh,20px)!important}
+body.home-screen #home .game-brand-lockup{margin-bottom:0!important;padding-bottom:clamp(6px,1.4vh,14px)!important}
+body.home-screen #home .game-home-footer-strip{margin-top:clamp(6px,1vh,13px)!important}
+/* Pênalti: ponteiro normal; defesa sempre coreografada, inclusive falhas. */
+#match-decision-modal .btl-penalty-interactive .btl-aim-target{cursor:pointer!important;touch-action:manipulation}
+#match-decision-modal .btl-penalty-aim{cursor:default}
+#match-decision-modal .btl-penalty-goal{cursor:default}
+#match-decision-modal .btl-penalty-goal.btl-kick-save .btl-keeper{filter:drop-shadow(0 0 11px #fff47c)!important}
+#match-decision-modal .btl-penalty-goal.btl-kick-save .btl-keeper-arms{background:#fff1b5;box-shadow:0 0 9px #fff8a3}
+#match-decision-modal .btl-penalty-goal.btl-kick-save .btl-penalty-impact{border-color:#ffdb72;box-shadow:0 0 30px #ffd562}
+#match-decision-modal .btl-penalty-goal.btl-kick-save .btl-penalty-flight-ball{animation:btlPenaltySavedBall 1.35s cubic-bezier(.13,.32,.3,1) forwards}
+@keyframes btlPenaltySavedBall{
+  0%{left:50%;top:94%;opacity:1;transform:translate(-50%,-50%) scale(1.1) rotate(-30deg)}
+  68%{left:var(--shot-x,50%);top:var(--shot-y,55%);opacity:1;transform:translate(-50%,-50%) scale(.49) rotate(550deg)}
+  100%{left:calc(var(--shot-x,50%) + 7%);top:83%;opacity:.75;transform:translate(-50%,-50%) scale(.66) rotate(820deg)}
+}
+/* Histórias visuais: jogador do save, cinco coreografias determinísticas por evento. */
+#event-modal .btl-event-stage{isolation:isolate}
+#event-modal .btl-event-player{position:absolute;right:clamp(8px,2vw,24px);bottom:24px;width:clamp(98px,16vw,177px);height:clamp(120px,17vw,180px);z-index:3;display:flex;align-items:end;justify-content:center;pointer-events:none;filter:drop-shadow(0 14px 16px #0009);animation:btlPlayerEnter .5s ease-out both}
+#event-modal .btl-event-player-portrait{width:80%;height:87%;border:2px solid #d6f9d777;border-radius:30% 30% 16px 16px;overflow:hidden;background:#102836;transform-origin:50% 85%;animation:btlPlayerBreathe 3s ease-in-out infinite;box-shadow:0 4px 28px #0007}
+#event-modal .btl-event-player-portrait .player-face-svg-wrap{width:100%;height:100%}
+#event-modal .btl-event-glow{position:absolute;inset:15% 4% 4%;border-radius:50%;background:radial-gradient(ellipse,var(--story-accent,#88ffc0) 0%,transparent 68%);opacity:.23;filter:blur(19px);animation:btlPlayerAura 2.8s ease-in-out infinite}
+#event-modal .btl-event-motion-prop{position:absolute;top:-4px;right:-2px;font:30px Arial,sans-serif;filter:drop-shadow(0 4px 6px #000a);animation:btlPropFloat 2.3s ease-in-out infinite}
+#event-modal .btl-event-player-label{position:absolute;bottom:0;left:12%;right:12%;text-align:center;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1px solid #ffffff55;background:#071720df;color:#fff;letter-spacing:.08em;font-size:10px;padding:5px 2px;border-radius:20px}
+#event-modal .btl-player-celebrate .btl-event-player-portrait{animation:btlPlayerCelebrate 1.4s ease-in-out infinite}
+#event-modal .btl-player-dribble .btl-event-player-portrait{animation:btlPlayerDribble 1.65s ease-in-out infinite}
+#event-modal .btl-player-interview .btl-event-player-portrait{animation:btlPlayerInterview 2.4s ease-in-out infinite}
+#event-modal .btl-player-warmup .btl-event-player-portrait{animation:btlPlayerWarmup 1.2s ease-in-out infinite}
+#event-modal .btl-player-signature .btl-event-player-portrait{animation:btlPlayerSign 2.5s ease-in-out infinite}
+#event-modal .btl-player-dribble .btl-event-motion-prop{top:auto;bottom:7%;right:-3%;animation:btlBallJuggle 1.65s ease-in-out infinite}
+#event-modal .btl-player-celebrate .btl-event-motion-prop{animation:btlPlayerAura 1.4s infinite}
+#event-modal .btl-random-screen,#event-modal .btl-career-story{padding-right:clamp(110px,19vw,205px)!important}
+#event-modal .btl-icon-stage .btl-event-player{right:2%;bottom:27px;width:128px;height:139px}
+#event-modal .btl-icon-stage .btl-icon-card{transform:translateX(-28px)}
+@keyframes btlPlayerEnter{from{opacity:0;transform:translateX(34px) scale(.8)}to{opacity:1;transform:translateX(0) scale(1)}}
+@keyframes btlPlayerBreathe{50%{transform:translateY(-5px) rotate(1deg)}}
+@keyframes btlPlayerCelebrate{30%{transform:translateY(-15px) rotate(-5deg)}60%{transform:translateY(-8px) rotate(5deg)}}
+@keyframes btlPlayerDribble{35%{transform:translateX(6px) rotate(4deg)}70%{transform:translateX(-4px) rotate(-3deg)}}
+@keyframes btlPlayerInterview{40%{transform:rotate(-3deg)}80%{transform:rotate(2deg)}}
+@keyframes btlPlayerWarmup{50%{transform:translateY(-9px) scale(1.02)}}
+@keyframes btlPlayerSign{50%{transform:rotate(3deg) translateY(-4px)}}
+@keyframes btlPropFloat{50%{transform:translateY(-16px) rotate(12deg)}}
+@keyframes btlBallJuggle{45%{transform:translateY(-41px) rotate(180deg)}100%{transform:translateY(0) rotate(360deg)}}
+@keyframes btlPlayerAura{50%{opacity:.5;transform:scale(1.07)}}
+@media(max-width:1000px){
+ #create #player-form.form-grid{grid-template-columns:minmax(0,1fr)!important}
+ #create #player-form>.appearance-builder,#create #player-form>.creation-profile-panel{grid-column:1!important;grid-row:auto!important}
+ #create #player-form>.appearance-builder{grid-template-columns:minmax(0,1fr) minmax(0,1.2fr)!important;align-items:start!important}
+ #create .appearance-preview-wrap{grid-template-columns:minmax(90px,1fr)!important;grid-template-rows:auto!important;justify-items:center!important;gap:5px!important;text-align:center!important}
+ #create .appearance-preview-wrap>.eyebrow,#create .appearance-preview-wrap>h3,#create #appearance-preview,#create .photo-upload-row{grid-column:1;grid-row:auto}
+ #create #appearance-preview{width:min(100%,180px)!important;height:190px!important}
+}
+@media(max-width:620px){
+ #create.create-page{padding:12px 6px 20px!important}
+ #create #player-form.form-grid{padding:9px!important;gap:10px!important}
+ #create #player-form>.appearance-builder{grid-template-columns:minmax(0,1fr)!important}
+ #create .appearance-preview-wrap{grid-template-columns:128px 1fr!important;grid-template-rows:auto auto 1fr!important;justify-items:start!important;text-align:left!important}
+ #create #appearance-preview{grid-column:1;grid-row:1 / span 4;width:122px!important;height:145px!important}
+ #create .appearance-preview-wrap>.eyebrow{grid-column:2;grid-row:1}
+ #create .appearance-preview-wrap>h3{grid-column:2;grid-row:2}
+ #create .photo-upload-row{grid-column:2;grid-row:3}
+ #create .creation-identity-grid{gap:7px}
+ #create .creation-identity-grid>label{font-size:10px!important}
+ #create .club-picker{padding:8px!important}
+ #event-modal .btl-event-player{width:85px;height:108px;right:3px;bottom:24px}
+ #event-modal .btl-random-screen,#event-modal .btl-career-story{padding-right:83px!important}
+ #event-modal .btl-career-emblem,#event-modal .btl-random-glyph{width:57px!important;height:57px!important;font-size:32px!important}
+ #event-modal .btl-event-motion-prop{font-size:21px}
+ #event-modal .btl-icon-stage .btl-event-player{width:72px;height:98px;right:0}
+ #event-modal .btl-icon-stage .btl-icon-card{transform:translateX(-13px);width:min(245px,75%)}
+}
+@media(prefers-reduced-motion:reduce){#event-modal .btl-event-player *,#event-modal .btl-event-player{animation:none!important}}
+/* Em monitores largos o estúdio facial também distribui avatar e opções lado a lado:
+   reduz a altura da página sem esconder controles nem criar scroll interno. */
+@media(min-width:1001px){
+ #create #player-form>.appearance-builder{grid-template-columns:minmax(155px,.32fr) minmax(0,.68fr)!important;align-items:start!important;gap:10px!important}
+ #create .appearance-preview-wrap{grid-column:1;grid-row:1;display:flex!important;flex-direction:column;align-items:center!important;justify-content:start!important;gap:8px!important;padding:9px 4px!important;min-height:0!important;text-align:center!important}
+ #create .appearance-preview-wrap>h3{font-size:clamp(12px,1.2vw,16px)!important}
+ #create #appearance-preview{width:min(100%,165px)!important;height:180px!important;flex:none}
+ #create .photo-upload-row{display:grid;justify-items:center;gap:5px!important;align-items:center!important}
+ #create .appearance-controls{grid-column:2;grid-row:1;min-width:0}
+ #create .appearance-group-options.swatches{grid-template-columns:repeat(auto-fit,minmax(52px,1fr))!important}
+ #create .appearance-group-options.grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+}
+/* Miniaturas usam exatamente o mesmo SVG capilar detalhado do jogador. */
+.appearance-chip .btl-hair-mini{width:54px;height:43px;position:relative;overflow:hidden;border-radius:8px;background:#0c222c}
+.appearance-chip .btl-hair-mini>.player-face-svg-wrap{position:absolute;top:-12px;left:-2px;width:58px;height:66px;min-width:58px;min-height:66px;overflow:visible}
+.appearance-chip .btl-hair-mini .player-face-svg{max-width:none!important;max-height:none!important;width:58px!important;height:66px!important}
+/* A barra de status mede ~40 px: não somar 100vh + barra + rodapé de main. */
+body.home-screen main{min-height:0!important;padding-bottom:0!important}
+body.home-screen #home.game-home,
+body.home-screen #home .game-home-shell{min-height:calc(100svh - 40px)!important}
+body.home-screen #home.game-home{padding:0!important}

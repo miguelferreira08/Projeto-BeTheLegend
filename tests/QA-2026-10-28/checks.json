@@ -1,0 +1,336 @@
+{
+  "checks": [
+    [
+      "2048 app ready",
+      true,
+      null
+    ],
+    [
+      "2048 homepage no unnecessary vertical scroll on desktop",
+      true,
+      {
+        "height": 1042,
+        "window": 1041,
+        "homeHeight": 1001,
+        "homeWidth": 1797.625,
+        "scrollWidth": 2048,
+        "clientWidth": 2048
+      }
+    ],
+    [
+      "2048 homepage horizontal bounds",
+      true,
+      {
+        "height": 1042,
+        "window": 1041,
+        "homeHeight": 1001,
+        "homeWidth": 1797.625,
+        "scrollWidth": 2048,
+        "clientWidth": 2048
+      }
+    ],
+    [
+      "2048 creation visible",
+      true,
+      null
+    ],
+    [
+      "2048 creator no horizontal overflow",
+      true,
+      null
+    ],
+    [
+      "2048 creator desktop split / mobile stack",
+      true,
+      {
+        "form": [
+          224,
+          239,
+          1600,
+          572
+        ],
+        "appearance": [
+          245,
+          259,
+          706,
+          530
+        ],
+        "profile": [
+          975,
+          259,
+          828,
+          488
+        ],
+        "preview": [
+          283,
+          357,
+          165,
+          180
+        ],
+        "docH": 1041,
+        "viewportH": 1041,
+        "style": "707.469px 830.531px"
+      }
+    ],
+    [
+      "2048 portrait exists",
+      true,
+      null
+    ],
+    [
+      "2048 animated avatar scene",
+      true,
+      null
+    ],
+    [
+      "2048 event decisions retained",
+      true,
+      null
+    ],
+    [
+      "2048 five penalty targets",
+      true,
+      null
+    ],
+    [
+      "2048 pointer style",
+      true,
+      null
+    ],
+    [
+      "2048 save flight animation",
+      true,
+      null
+    ],
+    [
+      "2048 keeper travels toward corner",
+      true,
+      "-166.72px"
+    ],
+    [
+      "1440 app ready",
+      true,
+      null
+    ],
+    [
+      "1440 homepage no unnecessary vertical scroll on desktop",
+      true,
+      {
+        "height": 901,
+        "window": 900,
+        "homeHeight": 860,
+        "homeWidth": 1368,
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      }
+    ],
+    [
+      "1440 homepage horizontal bounds",
+      true,
+      {
+        "height": 901,
+        "window": 900,
+        "homeHeight": 860,
+        "homeWidth": 1368,
+        "scrollWidth": 1440,
+        "clientWidth": 1440
+      }
+    ],
+    [
+      "1440 creation visible",
+      true,
+      null
+    ],
+    [
+      "1440 creator no horizontal overflow",
+      true,
+      null
+    ],
+    [
+      "1440 creator desktop split / mobile stack",
+      true,
+      {
+        "form": [
+          66,
+          230,
+          1308,
+          572
+        ],
+        "appearance": [
+          87,
+          251,
+          572,
+          530
+        ],
+        "profile": [
+          682,
+          251,
+          672,
+          487
+        ],
+        "preview": [
+          105,
+          348,
+          162,
+          180
+        ],
+        "docH": 900,
+        "viewportH": 900,
+        "style": "573.594px 673.375px"
+      }
+    ],
+    [
+      "1440 portrait exists",
+      true,
+      null
+    ],
+    [
+      "1440 animated avatar scene",
+      true,
+      null
+    ],
+    [
+      "1440 event decisions retained",
+      true,
+      null
+    ],
+    [
+      "1440 five penalty targets",
+      true,
+      null
+    ],
+    [
+      "1440 pointer style",
+      true,
+      null
+    ],
+    [
+      "1440 save flight animation",
+      true,
+      null
+    ],
+    [
+      "1440 keeper travels toward corner",
+      true,
+      "-166.72px"
+    ],
+    [
+      "390 app ready",
+      true,
+      null
+    ],
+    [
+      "390 homepage no unnecessary vertical scroll on desktop",
+      true,
+      {
+        "height": 1226,
+        "window": 844,
+        "homeHeight": 1082.84375,
+        "homeWidth": 366,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    ],
+    [
+      "390 homepage horizontal bounds",
+      true,
+      {
+        "height": 1226,
+        "window": 844,
+        "homeHeight": 1082.84375,
+        "homeWidth": 366,
+        "scrollWidth": 390,
+        "clientWidth": 390
+      }
+    ],
+    [
+      "390 creation visible",
+      true,
+      null
+    ],
+    [
+      "390 creator no horizontal overflow",
+      true,
+      null
+    ],
+    [
+      "390 creator desktop split / mobile stack",
+      true,
+      {
+        "form": [
+          18,
+          285,
+          353,
+          1249
+        ],
+        "appearance": [
+          28,
+          294,
+          333,
+          712
+        ],
+        "profile": [
+          28,
+          1017,
+          333,
+          507
+        ],
+        "preview": [
+          51,
+          317,
+          122,
+          145
+        ],
+        "docH": 1602,
+        "viewportH": 844,
+        "style": "334px"
+      }
+    ],
+    [
+      "390 portrait exists",
+      true,
+      null
+    ],
+    [
+      "390 animated avatar scene",
+      true,
+      null
+    ],
+    [
+      "390 event decisions retained",
+      true,
+      null
+    ],
+    [
+      "390 five penalty targets",
+      true,
+      null
+    ],
+    [
+      "390 pointer style",
+      true,
+      null
+    ],
+    [
+      "390 save flight animation",
+      true,
+      null
+    ],
+    [
+      "390 keeper travels toward corner",
+      true,
+      "-90.56px"
+    ],
+    [
+      "asset matches uploaded assets/trophies/custom-2026/brasileirao.png",
+      true,
+      null
+    ],
+    [
+      "asset matches uploaded assets/club-crests/user/corinthians.png",
+      true,
+      null
+    ]
+  ],
+  "errors": []
+}
