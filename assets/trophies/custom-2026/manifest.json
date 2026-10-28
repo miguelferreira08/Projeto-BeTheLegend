@@ -1,0 +1,873 @@
+[
+  {
+    "name": "Premier League",
+    "test": "^Premier League$|^PL$",
+    "file": "premierleague.webp",
+    "url": "assets/trophies/custom-2026/premier-league.png",
+    "source": "premierleague.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Scottish Premiership",
+    "test": "Scottish Premiership|Premier League / Premiership|^Premiership$",
+    "file": "scottishpremiership.png",
+    "url": "assets/trophies/custom-2026/scottish-premiership.png",
+    "source": "scottishpremiership.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "LaLiga",
+    "test": "^LaLiga$",
+    "file": "laliga.webp",
+    "url": "assets/trophies/custom-2026/laliga.png",
+    "source": "laliga.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Bundesliga",
+    "test": "^Bundesliga$",
+    "file": "bundesliga.webp",
+    "url": "assets/trophies/custom-2026/bundesliga.png",
+    "source": "bundesliga.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Serie A",
+    "test": "^Serie A$|^Serie A \\\\(It[aá]lia\\\\)$",
+    "file": "serieaitalia.webp",
+    "url": "assets/trophies/custom-2026/serie-a.png",
+    "source": "serieaitalia.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Ligue 1",
+    "test": "^Ligue 1$",
+    "file": "ligue1.png",
+    "url": "assets/trophies/custom-2026/ligue-1.png",
+    "source": "ligue1.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Primeira Liga",
+    "test": "^Primeira Liga$",
+    "file": "ligaportugal.webp",
+    "url": "assets/trophies/custom-2026/primeira-liga.png",
+    "source": "ligaportugal.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Eredivisie",
+    "test": "^Eredivisie$",
+    "file": "eredivisie.png",
+    "url": "assets/trophies/custom-2026/eredivisie.png",
+    "source": "eredivisie.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Belgian Pro League",
+    "test": "Belgian Pro League|Jupiler Pro League",
+    "file": "belgianproleague.webp",
+    "url": "assets/trophies/custom-2026/belgian-pro-league.png",
+    "source": "belgianproleague.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Süper Lig",
+    "test": "Süper Lig|Super Lig",
+    "file": "superligturkey.png",
+    "url": "assets/trophies/custom-2026/super-lig.png",
+    "source": "superligturkey.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Brasileirão Série A",
+    "test": "Brasileir[aã]o|Campeonato Brasileiro S[eé]rie A",
+    "file": "brasileirao.webp",
+    "url": "assets/trophies/custom-2026/brasileirao.png",
+    "source": "brasileirao.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Liga Profesional Argentina",
+    "test": "Liga Profesional Argentina|^LPA$",
+    "file": "campeonatoargentino.png",
+    "url": "assets/trophies/custom-2026/argentina-league.png",
+    "source": "campeonatoargentino.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Primera División Uruguaia",
+    "test": "Primera Divisi[oó]n Uruguaia",
+    "file": "campeonatouruguai.png",
+    "url": "assets/trophies/custom-2026/uruguay-league.png",
+    "source": "campeonatouruguai.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Primera División do Chile",
+    "test": "Primera Divisi[oó]n do Chile",
+    "file": "ligachile.jpeg",
+    "url": "assets/trophies/custom-2026/chile-league.png",
+    "source": "ligachile.jpeg",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Categoría Primera A",
+    "test": "Categor[ií]a Primera A",
+    "file": "ligacolombia.jpeg",
+    "url": "assets/trophies/custom-2026/colombia-league.png",
+    "source": "ligacolombia.jpeg",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Liga MX",
+    "test": "^Liga MX$",
+    "file": "ligamx.webp",
+    "url": "assets/trophies/custom-2026/liga-mx.png",
+    "source": "ligamx.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Major League Soccer",
+    "test": "Major League Soccer|MLS Cup",
+    "file": "mls.jpg",
+    "url": "assets/trophies/custom-2026/mls.png",
+    "source": "mls.jpg",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "J1 League",
+    "test": "J1 League|^J1L$",
+    "file": "j1league.jpeg",
+    "url": "assets/trophies/custom-2026/j1-league.png",
+    "source": "j1league.jpeg",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Saudi Pro League",
+    "test": "Saudi Pro League|^SPL$",
+    "file": "saudiproleague.webp",
+    "url": "assets/trophies/custom-2026/saudi-pro-league.png",
+    "source": "saudiproleague.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Copa do Brasil",
+    "test": "Copa do Brasil|^CDB$",
+    "file": "copadobrasil.png",
+    "url": "assets/trophies/custom-2026/copa-do-brasil.png",
+    "source": "copadobrasil.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Copa Nacional",
+    "test": "^Copa Nacional(?: de .+)?$",
+    "file": "Anexo anterior (Copa Nacional)",
+    "url": "assets/trophies/custom-2026/copa-nacional.png",
+    "source": "Copa Nacional fornecida anteriormente",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Copa Argentina",
+    "test": "^Copa Argentina$",
+    "file": "copaargentina.webp",
+    "url": "assets/trophies/custom-2026/copa-argentina.png",
+    "source": "copaargentina.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Copa AUF Uruguay",
+    "test": "Copa AUF Uruguay",
+    "file": "copauruguai.jpeg",
+    "url": "assets/trophies/custom-2026/copa-auf.png",
+    "source": "copauruguai.jpeg",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Copa Chile",
+    "test": "Copa Chile",
+    "file": "copachile.jpeg",
+    "url": "assets/trophies/custom-2026/copa-chile.png",
+    "source": "copachile.jpeg",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Copa Colombia",
+    "test": "Copa Colombia",
+    "file": "copacolombia.jpeg",
+    "url": "assets/trophies/custom-2026/copa-colombia.png",
+    "source": "copacolombia.jpeg",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Copa da Bélgica",
+    "test": "Copa da B[eé]lgica|^CDBEL$",
+    "file": "copabelgica.jpeg",
+    "url": "assets/trophies/custom-2026/copa-belgica.png",
+    "source": "copabelgica.jpeg",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Copa da Turquia",
+    "test": "Copa da Turquia|Turkish Cup",
+    "file": "copaturquia.webp",
+    "url": "assets/trophies/custom-2026/copa-turquia.png",
+    "source": "copaturquia.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Copa do Imperador",
+    "test": "Copa do Imperador|Emperor.s Cup",
+    "file": "copajapao.webp",
+    "url": "assets/trophies/custom-2026/copa-imperador.png",
+    "source": "copajapao.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Copa do Rei",
+    "test": "Copa do Rei|Copa del Rey",
+    "file": "copadorei.webp",
+    "url": "assets/trophies/custom-2026/copa-rei.png",
+    "source": "copadorei.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Coppa Italia",
+    "test": "^Coppa Italia$",
+    "file": "coppaitalai.webp",
+    "url": "assets/trophies/custom-2026/coppa-italia.png",
+    "source": "coppaitalai.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Coupe de France",
+    "test": "^Coupe de France$",
+    "file": "copafranca.webp",
+    "url": "assets/trophies/custom-2026/coupe-de-france.png",
+    "source": "copafranca.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "DFB-Pokal",
+    "test": "DFB-Pokal",
+    "file": "dfbpokal.webp",
+    "url": "assets/trophies/custom-2026/dfb-pokal.png",
+    "source": "dfbpokal.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "FA Cup",
+    "test": "^FA Cup$",
+    "file": "facup.png",
+    "url": "assets/trophies/custom-2026/fa-cup.png",
+    "source": "facup.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "KNVB Beker",
+    "test": "KNVB Beker",
+    "file": "knvb beker.png",
+    "url": "assets/trophies/custom-2026/knvb-beker.png",
+    "source": "knvb beker.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "King Cup",
+    "test": "^King Cup$|^KC$",
+    "file": "king cup (copa saudita).png",
+    "url": "assets/trophies/custom-2026/king-cup.png",
+    "source": "king cup (copa saudita).png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Taça de Portugal",
+    "test": "Taça de Portugal",
+    "file": "taçaportugal.png",
+    "url": "assets/trophies/custom-2026/taca-portugal.png",
+    "source": "taçaportugal.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "U.S. Open Cup",
+    "test": "U[.]?S[.]? Open Cup|^USOC$",
+    "file": "usopencup.png",
+    "url": "assets/trophies/custom-2026/us-open-cup.png",
+    "source": "usopencup.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Scottish Cup",
+    "test": "Scottish Cup",
+    "file": "scottishcup.png",
+    "url": "assets/trophies/custom-2026/scottish-cup.png",
+    "source": "scottishcup.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "FIFA World Cup",
+    "test": "FIFA World Cup|(?<!Club )World Cup|Copa do Mundo",
+    "file": "fifaworldcup.webp",
+    "url": "assets/trophies/custom-2026/fifa-world-cup.png",
+    "source": "fifaworldcup.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "FIFA Club World Cup",
+    "test": "FIFA Club World Cup|Mundial de Clubes",
+    "file": "fifaclubworldcup.png",
+    "url": "assets/trophies/custom-2026/club-world-cup.png",
+    "source": "fifaclubworldcup.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "UEFA Champions League",
+    "test": "UEFA Champions League",
+    "file": "uefachampionsleague.png",
+    "url": "assets/trophies/custom-2026/uefa-champions-league.png",
+    "source": "uefachampionsleague.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "UEFA Europa League",
+    "test": "UEFA Europa League",
+    "file": "uefaeuropaleague.webp",
+    "url": "assets/trophies/custom-2026/uefa-europa-league.png",
+    "source": "uefaeuropaleague.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "UEFA Conference League",
+    "test": "UEFA Conference League|UEFA Europa Conference League",
+    "file": "uefaconferenceleague.webp",
+    "url": "assets/trophies/custom-2026/uefa-conference-league.png",
+    "source": "uefaconferenceleague.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "UEFA EURO",
+    "test": "UEFA EURO|UEFA European Championship",
+    "file": "uefaeuro.png",
+    "url": "assets/trophies/custom-2026/uefa-euro.png",
+    "source": "uefaeuro.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "UEFA Nations League",
+    "test": "UEFA Nations League",
+    "file": "uefanationsleague.png",
+    "url": "assets/trophies/custom-2026/uefa-nations-league.png",
+    "source": "uefanationsleague.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "CONMEBOL Libertadores",
+    "test": "CONMEBOL Libertadores|Copa Libertadores",
+    "file": "conmebollibertadores.webp",
+    "url": "assets/trophies/custom-2026/libertadores.png",
+    "source": "conmebollibertadores.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "CONMEBOL Sul-Americana",
+    "test": "CONMEBOL Sul-Americana|Copa Sudamericana",
+    "file": "copasulamericana.webp",
+    "url": "assets/trophies/custom-2026/sulamericana.png",
+    "source": "copasulamericana.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "CONMEBOL Copa América",
+    "test": "CONMEBOL Copa Am[eé]rica|Copa Am[eé]rica",
+    "file": "copaamerica.webp",
+    "url": "assets/trophies/custom-2026/copa-america.png",
+    "source": "copaamerica.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "CONCACAF Champions Cup",
+    "test": "CONCACAF Champions Cup|^CONCACAFCC$",
+    "file": "concacafchampionscup.webp",
+    "url": "assets/trophies/custom-2026/concacaf-champions-cup.png",
+    "source": "concacafchampionscup.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "AFC Champions League Elite",
+    "test": "AFC Champions League Elite|^AFCCLE$",
+    "file": "afcchampionsleagueelite.webp",
+    "url": "assets/trophies/custom-2026/afc-champions-elite.png",
+    "source": "afcchampionsleagueelite.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "AFC Champions League Two",
+    "test": "AFC Champions League Two|^AFCCLT$",
+    "file": "afcchampionsleaguetwo.png",
+    "url": "assets/trophies/custom-2026/afc-champions-two.png",
+    "source": "afcchampionsleaguetwo.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "CAF Champions League",
+    "test": "CAF Champions League",
+    "file": "cafchampionsleague.webp",
+    "url": "assets/trophies/custom-2026/caf-champions-league.png",
+    "source": "cafchampionsleague.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "OFC Champions League",
+    "test": "OFC Champions League|^OFCCL$",
+    "file": "ofcchampionsleague.png",
+    "url": "assets/trophies/custom-2026/ofc-champions-league.png",
+    "source": "ofcchampionsleague.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "UEFA Super Cup",
+    "test": "UEFA Super Cup",
+    "file": "uefasupercup.png",
+    "url": "assets/trophies/custom-2026/uefa-super-cup.png",
+    "source": "uefasupercup.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Supercopa do Brasil",
+    "test": "Supercopa do Brasil|Supercopa Rei",
+    "file": "supercopabrasil.png",
+    "url": "assets/trophies/custom-2026/supercopa-brasil.png",
+    "source": "supercopabrasil.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Supercopa da Espanha",
+    "test": "Supercopa da Espanha|Supercopa de Espa[nñ]a",
+    "file": "supercopaespanha.png",
+    "url": "assets/trophies/custom-2026/supercopa-espanha.png",
+    "source": "supercopaespanha.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Supercoppa Italiana",
+    "test": "Supercoppa Italiana",
+    "file": "supercopaitalia.png",
+    "url": "assets/trophies/custom-2026/supercoppa-italiana.png",
+    "source": "supercopaitalia.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "FA Community Shield",
+    "test": "FA Community Shield",
+    "file": "facommunittyshield.png",
+    "url": "assets/trophies/custom-2026/fa-community-shield.png",
+    "source": "facommunittyshield.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "DFL-Supercup",
+    "test": "DFL-Supercup",
+    "file": "supercopaalemanha.png",
+    "url": "assets/trophies/custom-2026/dfl-supercup.png",
+    "source": "supercopaalemanha.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Trophée des Champions",
+    "test": "Trophée des Champions",
+    "file": "supercopafranca.png",
+    "url": "assets/trophies/custom-2026/trophee-champions.png",
+    "source": "supercopafranca.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Supertaça Cândido de Oliveira",
+    "test": "Supertaça Cândido de Oliveira",
+    "file": "supercopaportugal.webp",
+    "url": "assets/trophies/custom-2026/supertaca-portugal.png",
+    "source": "supercopaportugal.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Johan Cruyff Shield",
+    "test": "Johan Cruyff Shield|Johan Cruijff Schaal",
+    "file": "supercopaholanda.png",
+    "url": "assets/trophies/custom-2026/johan-cruyff-shield.png",
+    "source": "supercopaholanda.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Finalissima",
+    "test": "Finalissima",
+    "file": "finalissima.webp",
+    "url": "assets/trophies/custom-2026/finalissima.png",
+    "source": "finalissima.webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Bola de Ouro",
+    "test": "Bola de Ouro|Ballon d[’\\x27]Or",
+    "file": "ballon'dor.png",
+    "url": "assets/trophies/custom-2026/ballon-dor.png",
+    "source": "ballon'dor.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Chuteira de Ouro",
+    "test": "Chuteira de Ouro|European Golden Shoe",
+    "file": "goldenshoe(chuteiradeouro).webp",
+    "url": "assets/trophies/custom-2026/golden-shoe.png",
+    "source": "goldenshoe(chuteiradeouro).webp",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Troféu Kopa",
+    "test": "Melhor Jogador Jovem|Kopa|^MJJ$",
+    "file": "trofeukopa.png",
+    "url": "assets/trophies/custom-2026/kopa.png",
+    "source": "trofeukopa.png",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  },
+  {
+    "name": "Time da Temporada",
+    "test": "Time da Temporada|TOTS|Team of the Year|^TT$",
+    "file": "tots.jpeg",
+    "url": "assets/trophies/custom-2026/tots.png",
+    "source": "tots.jpeg",
+    "alpha_min": 0,
+    "alpha_max": 255,
+    "size": [
+      512,
+      512
+    ]
+  }
+]

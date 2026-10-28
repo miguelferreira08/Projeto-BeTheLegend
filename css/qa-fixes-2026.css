@@ -89,3 +89,71 @@
 .event-copy,
 .club-status,
 #hero-intro-description{display:none!important}
+
+
+/* 28/10/2026 — edição de pênaltis/partida: apenas UM card, nenhum retângulo interno. */
+#match-decision-modal #decision-result,
+#match-decision-modal #decision-result.decision-result {
+  border:0!important;outline:0!important;border-radius:0!important;
+  box-shadow:none!important;background:transparent!important;
+  padding:0!important;overflow:visible!important;min-width:0;
+}
+#match-decision-modal .decision-scoreboard {
+  border:0!important;border-bottom:0!important;border-radius:0!important;
+  box-shadow:none!important;background:transparent!important;
+  padding:10px 0 12px!important;
+}
+#match-decision-modal .decision-result-copy {padding:12px 0 10px!important;gap:12px!important}
+#match-decision-modal .decision-score-meta {margin-bottom:12px!important}
+#match-decision-modal .decision-score-main {grid-template-columns:minmax(0,1fr) minmax(70px,100px) minmax(0,1fr)!important;gap:clamp(6px,1.7vw,18px)!important;justify-items:center}
+/* 50% a mais do que os tamanhos previamente usados: 62->93px e 52->78px. */
+#match-decision-modal .decision-score-team .crest-shell{width:93px!important;height:93px!important;padding:4px!important;max-width:none!important;border-radius:16px!important}
+#match-decision-modal .decision-score-team .next-team-visual{min-width:96px!important;max-width:96px!important;display:grid!important;place-items:center!important}
+#match-decision-modal .decision-score-team .national-flag-image{width:90px!important;height:60px!important;max-width:90px!important;max-height:60px!important}
+#match-decision-modal #decision-competition .honour-art{width:78px!important;height:78px!important;min-width:78px!important;min-height:78px!important;max-width:78px!important;max-height:78px!important}
+#match-decision-modal .decision-score-meta .honour-art{width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important}
+#match-decision-modal .decision-score-meta .competition-inline{gap:12px!important}
+#match-decision-modal .decision-performance-strip span{display:flex!important;flex-direction:column;align-items:center;gap:5px;justify-content:center;min-height:58px!important}
+#match-decision-modal .decision-performance-strip em{font-style:normal;font-size:20px!important;line-height:1.1;color:#fff!important;filter:drop-shadow(0 2px 5px rgba(0,0,0,.3))}
+#match-decision-modal .decision-performance-strip b{font-size:20px!important}
+/* Sem spinner: suspense encenado com deslocamento da bola, iluminação e pulso. */
+#match-decision-modal .btl-match-suspense{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;min-height:280px;padding:24px 18px;overflow:hidden;isolation:isolate;color:#fff}
+#match-decision-modal .btl-suspense-lights{position:absolute;inset:0;pointer-events:none;z-index:-1;overflow:hidden}
+#match-decision-modal .btl-suspense-lights i{position:absolute;top:-52%;left:12%;width:24%;height:180%;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent 72%);transform:rotate(28deg);opacity:.3;animation:btlSceneLights 1.8s ease-in-out both}
+#match-decision-modal .btl-suspense-lights i:nth-child(2){left:46%;transform:rotate(-18deg);animation-delay:.1s}
+#match-decision-modal .btl-suspense-lights i:nth-child(3){left:76%;transform:rotate(25deg);animation-delay:.2s}
+#match-decision-modal .btl-suspense-top{width:100%;display:flex;justify-content:space-between;align-items:center;gap:14px;font-size:10px;font-weight:900;letter-spacing:.19em;color:#eef6ff}
+#match-decision-modal .btl-suspense-time{color:#f7ef8a;animation:btlTimePulse .65s ease-in-out 2 alternate}
+#match-decision-modal .btl-suspense-pitch{position:relative;width:min(100%,490px);height:120px;overflow:hidden;border-radius:14px;background:repeating-linear-gradient(90deg,#16764d 0 52px,#1f8656 52px 104px);box-shadow:inset 0 0 30px rgba(0,0,0,.3);transform:perspective(420px) rotateX(9deg)}
+#match-decision-modal .btl-suspense-pitch-line{position:absolute;inset:10px 17px;border:2px solid rgba(255,255,255,.6);border-radius:2px}
+#match-decision-modal .btl-suspense-goalframe{position:absolute;top:20%;right:4%;width:24%;height:60%;border:3px solid #f2f8ff;border-right-width:6px;box-shadow:0 0 16px #d9f3ff55;transform:perspective(200px) rotateY(-8deg)}
+#match-decision-modal .btl-suspense-moving-ball{position:absolute;left:8%;top:68%;font-size:29px;line-height:1;filter:drop-shadow(0 4px 5px #0007);animation:btlBallSuspense 1.7s cubic-bezier(.35,.04,.65,.98) both}
+#match-decision-modal .btl-suspense-goal-flash{position:absolute;inset:0;background:radial-gradient(circle at 80% 48%,#fff8 0,transparent 48%);opacity:0;animation:btlGoalFlash 1.7s ease-out both}
+#match-decision-modal .btl-suspense-headline{font-family:var(--btl-display-font,sans-serif);font-size:clamp(22px,4.5vw,39px)!important;letter-spacing:.06em!important;text-align:center!important;line-height:1.15;color:#fff!important;animation:btlTitleReveal 1.4s ease both}
+#match-decision-modal .btl-suspense-pulse{display:flex;gap:5px;align-items:center;justify-content:center;height:16px}
+#match-decision-modal .btl-suspense-pulse i{display:block;width:24px;height:5px;border-radius:10px;background:rgba(255,255,255,.25);animation:btlPulseBar .32s ease-in forwards}
+#match-decision-modal .btl-suspense-pulse i:nth-child(2){animation-delay:.34s}#match-decision-modal .btl-suspense-pulse i:nth-child(3){animation-delay:.68s}#match-decision-modal .btl-suspense-pulse i:nth-child(4){animation-delay:1.02s}#match-decision-modal .btl-suspense-pulse i:nth-child(5){animation-delay:1.36s}
+@keyframes btlBallSuspense{0%{left:8%;top:68%;transform:scale(.92) rotate(-60deg)}30%{left:29%;top:57%;transform:scale(1.07) rotate(60deg)}61%{left:51%;top:32%;transform:scale(.97) rotate(180deg)}84%{left:68%;top:43%;transform:scale(1.1) rotate(290deg)}100%{left:84%;top:44%;transform:scale(.68) rotate(395deg)}}
+@keyframes btlGoalFlash{0%,77%{opacity:0}92%{opacity:.35}100%{opacity:0}}
+@keyframes btlTitleReveal{0%{opacity:0;transform:translateY(11px)}38%{opacity:1;transform:translateY(0)}72%{letter-spacing:.06em}100%{letter-spacing:.12em}}
+@keyframes btlSceneLights{0%{opacity:.1;filter:blur(4px)}60%{opacity:.55;filter:blur(0)}100%{opacity:.2;filter:blur(3px)}}
+@keyframes btlTimePulse{to{opacity:.3}}
+@keyframes btlPulseBar{from{background:rgba(255,255,255,.25)}to{background:var(--comp-accent,#f7e461)}}
+@media(max-width:620px){
+ #match-decision-modal .decision-score-main{grid-template-columns:minmax(0,1fr) 72px minmax(0,1fr)!important;gap:5px!important}
+ #match-decision-modal .decision-score-team .crest-shell{width:min(78px,22vw)!important;height:min(78px,22vw)!important;padding:3px!important}
+ #match-decision-modal .decision-score-team .next-team-visual{min-width:min(82px,23vw)!important;max-width:min(82px,23vw)!important}
+ #match-decision-modal .decision-score-team .national-flag-image{width:72px!important;height:48px!important;max-width:72px!important;max-height:48px!important}
+ #match-decision-modal #decision-competition .honour-art{width:72px!important;height:72px!important;min-width:72px!important;min-height:72px!important}
+ #match-decision-modal .btl-match-suspense{min-height:255px!important;padding:18px 8px!important}
+}
+@media(prefers-reduced-motion:reduce){#match-decision-modal .btl-match-suspense *,#match-decision-modal .btl-match-suspense *::before,#match-decision-modal .btl-match-suspense *::after{animation:none!important}}
+
+/* Remove a large pseudo-layer responsible for the rectangular wash inside the match card. */
+#match-decision-modal .decision-card::before,
+#match-decision-modal .decision-card::after{content:none!important;display:none!important}
+#match-decision-modal .decision-card{
+  background:linear-gradient(135deg,color-mix(in srgb,var(--v24-primary,#112b35) 35%,#101c2b) 0%,#101b2a 60%,#0b1725 100%)!important;
+}
+#match-decision-modal .decision-score-team .next-team-visual{opacity:1!important;visibility:visible!important}
+#match-decision-modal .decision-score-team .crest-shell{display:grid!important;visibility:visible!important;opacity:1!important}

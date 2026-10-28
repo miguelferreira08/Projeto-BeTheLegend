@@ -34,8 +34,8 @@ function find(name,countryCode=''){
 }
 function urlForPath(path){return BASE+String(path||'').split('/').map(encodeURIComponent).join('/');}
 const api=Object.freeze({repository:REPO,commit:COMMIT,base:BASE,count:rows.length,
- find, resolve:(name,country='')=>{const exact=approvedUrl(name,country);if(exact)return exact;const item=find(name,country);return item?urlForPath(item.path):'';},
- isCatalogUrl:url=>{try{const u=new URL(String(url||''));return (u.protocol==='https:'&&u.hostname==='raw.githubusercontent.com'&&u.pathname.startsWith(`/${REPO}/${COMMIT}/logos/`)&&u.pathname.endsWith('.svg'))||Object.values(verifiedExternal).includes(url);}catch{return false;}},
+ find, resolve:(name,country='')=>{if(normalize(name)==='corinthians'&&(!country||String(country).toUpperCase()==='BR'))return 'assets/club-crests/user/corinthians.png';const exact=approvedUrl(name,country);if(exact)return exact;const item=find(name,country);return item?urlForPath(item.path):'';},
+ isCatalogUrl:url=>{if(String(url||'')==='assets/club-crests/user/corinthians.png')return true;try{const u=new URL(String(url||''));return (u.protocol==='https:'&&u.hostname==='raw.githubusercontent.com'&&u.pathname.startsWith(`/${REPO}/${COMMIT}/logos/`)&&u.pathname.endsWith('.svg'))||Object.values(verifiedExternal).includes(url);}catch{return false;}},
  list:()=>rows.map(([country,name,path])=>({country,name,path}))});
 window.BTLStaticCrests=api;
 })();

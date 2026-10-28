@@ -1169,6 +1169,7 @@ function trophyArtFor(name){return trophySourcesFor(name)[0]||'';}
 function honourInitials(name){return (name||'BTL').split(/\s+/).filter(Boolean).slice(0,3).map(x=>x[0]).join('').toUpperCase();}
 function honourVisual(name){
  const sources=trophySourcesFor(name),safeName=esc(name),initials=esc(honourInitials(name));
+ if(!sources.length && /Eliminat[oó]rias|World Cup Qualifiers/i.test(String(name||'')))return '';
  if(!sources.length)return `<span class="honour-art fallback" title="Imagem específica não disponível para esta competição"><b>${initials}</b></span>`;
  const encoded=sources.map(encodeURIComponent).join('|');
  return `<span class="honour-art" title="Troféu: ${safeName}"><img src="${sources[0]}" data-sources="${encoded}" data-index="0" alt="${safeName}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onload="polishSiteImage(this)" onerror="cycleHonourImage(this)"><b>${initials}</b></span>`;
@@ -1184,7 +1185,7 @@ window.cycleHonourImage=function(img){
  const parent=img.parentElement;img.remove();parent?.classList.add('fallback');
 };
 window.BTLTrophyDiagnostics=()=>({
- source:'Wikimedia Commons + anexos locais validados',count:TROPHY_ART.filter(x=>!!x.src).length,
+ source:'Catálogo local: 67 imagens fornecidas pelo usuário',count:TROPHY_ART.filter(x=>!!x.src).length,
  mapped:TROPHY_ART.filter(x=>!!x.src).map(x=>({pattern:x.test.source,url:x.src,page:x.page,isLocal:!!x.isLocal})),
  intentionallyUnavailable:TROPHY_ART.filter(x=>!x.src).map(x=>x.test.source)
 });
@@ -5093,13 +5094,22 @@ function playMatchVisualFX(kind='build',outcome='intro',scenarioId=''){
   card.querySelector('.match-cinematic')?.remove();const fx=document.createElement('div');fx.className=`match-cinematic cinematic-${kind} cinematic-${outcome} variant-${hash}`;
   fx.innerHTML='<i></i><i></i><i></i><i></i><span class="speed-line l1"></span><span class="speed-line l2"></span><span class="speed-line l3"></span><span class="crowd-flash"></span><span class="camera-pan"></span><span class="score-pulse"></span><span class="match-ball"></span><span class="match-flash"></span>';card.appendChild(fx);setTimeout(()=>fx.remove(),1650);
 }
-function showDecisionSuspense(message='Aguarde...'){
+function showDecisionSuspense(){
+  const card=$('#match-decision-modal .decision-card');
   const visual=$('#decision-visual'),choices=$('#decision-choices'),result=$('#decision-result'),cont=$('#decision-continue');
-  choices.classList.add('hidden');
+  visual.classList.add('hidden');choices.classList.add('hidden');cont.classList.add('hidden');
   result.classList.remove('hidden');
-  result.innerHTML=`<div class="decision-suspense"><span class="decision-suspense-spinner"></span><strong>${esc(message)}</strong></div>`;
-  cont.classList.add('hidden');
-  visual.classList.add('hidden');
+  card?.classList.add('btl-suspense-active');
+  result.innerHTML=`<div class="btl-match-suspense" role="status" aria-live="polite" aria-label="Jogada em andamento">
+    <div class="btl-suspense-lights" aria-hidden="true"><i></i><i></i><i></i></div>
+    <div class="btl-suspense-top"><span>MINUTO DECISIVO</span><span class="btl-suspense-time">● AO VIVO</span></div>
+    <div class="btl-suspense-pitch" aria-hidden="true">
+      <div class="btl-suspense-pitch-line"></div><div class="btl-suspense-goalframe"></div>
+      <span class="btl-suspense-moving-ball">⚽</span><div class="btl-suspense-goal-flash"></div>
+    </div>
+    <strong class="btl-suspense-headline">O TEMPO PARA...</strong>
+    <div class="btl-suspense-pulse" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+  </div>`;
 }
 
 function animateSeasonDashboard(){
@@ -5134,7 +5144,7 @@ function simulateInteractiveMatch(event,option){
   return {event,playerIsHome,teamGoals,oppGoals,homeGoals,awayGoals,perf,model:score.model,outcome,success,competitionResolution,injury,playerRole:appearanceRole};
 }
 function resolveMatchDecision(index){
-  const pending=state.pendingMatchDecision;if(!pending)return;const option=pending.scenario.options[index];const log=simulateInteractiveMatch(pending.event,option);const s=state.season;s.decisionLogs=s.decisionLogs||[];s.decisionLogs.push({competition:log.event.competition,match:`${log.event.home} ${log.homeGoals} x ${log.awayGoals} ${log.event.away}`,choice:option.label,outcome:log.outcome,rating:log.perf.rating.toFixed(1)});if(!pending.isNationalDecision){s.decisionIndex=(s.decisionIndex||0)+1;adjustClubRoleTrust(log.success?6:-1,log.success?'correct':'wrong');}else state.player.nationalTrust=clamp((state.player.nationalTrust||0)+(log.success?3:-1),0,100);state.pendingMatchDecision=null;playMatchVisualFX(pending.scenario.visual||'build',log.success?'success':'miss',pending.scenario.id||'');save();render();showDecisionSuspense('Momento decisivo...');
+  const pending=state.pendingMatchDecision;if(!pending)return;const option=pending.scenario.options[index];const log=simulateInteractiveMatch(pending.event,option);const s=state.season;s.decisionLogs=s.decisionLogs||[];s.decisionLogs.push({competition:log.event.competition,match:`${log.event.home} ${log.homeGoals} x ${log.awayGoals} ${log.event.away}`,choice:option.label,outcome:log.outcome,rating:log.perf.rating.toFixed(1)});if(!pending.isNationalDecision){s.decisionIndex=(s.decisionIndex||0)+1;adjustClubRoleTrust(log.success?6:-1,log.success?'correct':'wrong');}else state.player.nationalTrust=clamp((state.player.nationalTrust||0)+(log.success?3:-1),0,100);state.pendingMatchDecision=null;save();render();showDecisionSuspense();
   let cupProgress='';
   if(log.event.worldCup&&log.competitionResolution){
     const wc=s?.worldCup,res=log.competitionResolution;
@@ -5151,7 +5161,7 @@ function resolveMatchDecision(index){
     else if(res.stage!=='group'&&typeof res.advanced==='boolean')label=`${res.advanced?'✓ Seleção classificada':'✕ Seleção eliminada'}${res.nextStage?` · próxima fase: ${esc(res.nextStage)}`:''}`;
     if(label)cupProgress=`<span class="decision-team-result ${res.pendingPenalties?'pending-penalties':''}">${label}</span>`;
   }
-  setTimeout(()=>{$('#decision-visual').classList.add('hidden');$('#decision-choices').classList.add('hidden');$('#decision-result').classList.remove('hidden');$('#decision-result').innerHTML=`${decisionScoreboardMarkup(log)}<div class="decision-result-copy"><strong>${esc(log.outcome)}</strong>${cupProgress}<div class="decision-performance-strip"><span><b>${log.perf.rating.toFixed(1)}</b> nota</span><span><b>${log.perf.goals}</b> gols</span><span><b>${log.perf.assists}</b> assist.</span></div>${log.injury?`<span class="decision-injury-result">✚ ${esc(log.injury.label)} · previsão de ${log.injury.games} jogo(s) fora</span>`:''}${state.pendingPenaltyShootout&&!log.competitionResolution?.pendingPenalties?'<span class="decision-team-result pending-penalties">A partida segue para os pênaltis.</span>':''}</div>`;setTimeout(hydrateNextMatchBadges,0);$('#decision-continue').classList.remove('hidden');},850);
+  setTimeout(()=>{$('#match-decision-modal .decision-card')?.classList.remove('btl-suspense-active');playMatchVisualFX(pending.scenario.visual||'build',log.success?'success':'miss',pending.scenario.id||'');$('#decision-visual').classList.add('hidden');$('#decision-choices').classList.add('hidden');$('#decision-result').classList.remove('hidden');$('#decision-result').innerHTML=`${decisionScoreboardMarkup(log)}<div class="decision-result-copy"><strong>${esc(log.outcome)}</strong>${cupProgress}<div class="decision-performance-strip"><span><b>${log.perf.rating.toFixed(1)}</b> nota</span><span><b>${log.perf.goals}</b><em role="img" aria-label="Gols">⚽</em></span><span><b>${log.perf.assists}</b><em role="img" aria-label="Assistências">🅰️</em></span></div>${log.injury?`<span class="decision-injury-result">✚ ${esc(log.injury.label)} · previsão de ${log.injury.games} jogo(s) fora</span>`:''}${state.pendingPenaltyShootout&&!log.competitionResolution?.pendingPenalties?'<span class="decision-team-result pending-penalties">A partida segue para os pênaltis.</span>':''}</div>`;setTimeout(hydrateNextMatchBadges,0);$('#decision-continue').classList.remove('hidden');},1800);
 }
 function checkIdolMilestones(avg){
   const p=state.player,s=state.season; if(!p||!s) return;
