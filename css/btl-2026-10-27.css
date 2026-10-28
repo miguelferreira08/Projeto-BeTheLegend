@@ -1,0 +1,123 @@
+/* Be The Legend — revisão do tema, navegação e pênaltis (27/10/2026). */
+:root { --btl-start-gold: #ffda36; }
+html,body {max-width:100%;overflow-x:clip}
+body.btl-start-theme {
+  --bg:#050505!important;--panel:#111111!important;--panel2:#181818!important;
+  --border:#574d2b!important;--green:#ffda36!important;--volt:#ffda36!important;
+  --competition-primary:#070707!important;--competition-secondary:#ffda36!important;
+  --competition-tertiary:#ffe781!important;--club-primary:#070707!important;
+  --club-secondary:#ffda36!important;--club-tertiary:#ffe781!important;
+  background:#050505!important;
+}
+body.btl-start-theme #home,
+body.btl-start-theme #home.game-home,
+body.btl-start-theme #home .game-home-shell,
+body.btl-start-theme #home .game-home-main {
+  --arena-accent:#ffda36;--arena-alt:#ffda36;--club-ambient:#ffda36;
+  --game-club-color:#ffda36;--game-club-rival:#ffda36;
+  color:#f6f6f6;
+}
+body.btl-start-theme #home.game-home {background:radial-gradient(ellipse at 50% 0%,#292511 0%,#0b0b0b 48%,#030303 94%)!important}
+body.btl-start-theme #home .game-home-bg {filter:grayscale(1) sepia(.2);opacity:.26}
+body.btl-start-theme #home .game-brand-lockup h1 strong {color:#ffda36!important;text-shadow:0 0 19px #ffda3633}
+body.btl-start-theme #home .football-menu-option:hover,
+body.btl-start-theme #home .football-menu-option:focus-visible {border-color:#ffda36!important;box-shadow:0 0 0 1px #ffda3655}
+body.btl-start-theme #home .game-brand-kicker {color:#ffda36!important}
+body.btl-start-theme .topbar {background:rgba(5,5,5,.92)!important}
+body.btl-start-theme .btl-game-hud {background:linear-gradient(90deg,#090909,#181509)!important}
+body.btl-start-theme .topbar button.active {color:#ffda36!important;border-bottom-color:#ffda36!important}
+/* A abertura aproveita a altura, mas páginas longas mantêm scroll por acessibilidade. */
+@media(min-width:880px) and (min-height:680px){
+ body.btl-start-theme #home.game-home{min-height:calc(100dvh - var(--app-topbar-height,76px) - 54px)!important;display:grid;align-content:center}
+ body.btl-start-theme #home .game-home-shell{max-width:min(1400px,97vw);margin:auto}
+}
+/* Voltar: histórico interno, não histórico externo do browser. */
+.btl-site-back {appearance:none;display:inline-flex;align-items:center;justify-content:center;gap:6px;white-space:nowrap;
+  background:#1b2330;color:#fff;border:1px solid #6e7889;border-radius:11px;padding:9px 13px;
+  font-size:12px;font-weight:850;cursor:pointer;min-height:38px;transition:background .18s,border-color .18s,transform .18s}
+.btl-site-back:hover:not(:disabled){background:#292f38;border-color:#ffda36;transform:translateX(-2px)}
+.btl-site-back:focus-visible {outline:2px solid #ffda36;outline-offset:3px}
+.btl-site-back:disabled {opacity:.42;cursor:default}
+@media(max-width:920px){.btl-site-back span{display:none}.btl-site-back{min-width:40px;padding:8px 11px}}
+/* A taça é o elemento principal da composição do card da decisão. */
+#match-decision-modal #decision-competition .honour-art{width:clamp(104px,13vw,152px)!important;height:clamp(104px,13vw,152px)!important;
+ min-width:clamp(104px,13vw,152px)!important;min-height:clamp(104px,13vw,152px)!important;max-width:clamp(104px,13vw,152px)!important;max-height:clamp(104px,13vw,152px)!important}
+#match-decision-modal #decision-competition .honour-art img{max-height:100%!important;max-width:100%!important;object-fit:contain!important}
+#match-decision-modal #decision-competition .competition-inline{display:flex;gap:clamp(10px,2vw,22px);align-items:center;min-height:104px}
+#match-decision-modal #decision-competition .competition-inline-copy{align-self:center}
+#match-decision-modal .decision-card{max-height:96dvh;overflow-y:auto;overscroll-behavior:contain}
+#match-decision-modal .decision-card .overlay-pause-btn{z-index:30}
+@media(max-width:650px){
+ #match-decision-modal #decision-competition .honour-art{width:88px!important;height:88px!important;min-width:88px!important;min-height:88px!important;max-width:88px!important;max-height:88px!important}
+ #match-decision-modal #decision-competition .competition-inline{min-height:88px}
+}
+/* Suspense com clímax contextual: GOL, ASSISTÊNCIA, DEFESA ou FALHA. */
+#match-decision-modal .btl-match-suspense{min-height:270px}
+#match-decision-modal .btl-suspense-verdict{font-family:var(--btl-display-font,Orbitron,sans-serif);font-weight:950;
+ text-align:center;line-height:1.06;font-size:clamp(26px,6vw,68px);letter-spacing:.03em;
+ color:#fff;filter:drop-shadow(0 0 12px #f9d54255);opacity:0;transform:translateY(18px) scale(.72);transition:opacity .22s,transform .5s cubic-bezier(.18,1.32,.27,1)}
+#match-decision-modal .btl-suspense-verdict.revealed{opacity:1;transform:translateY(0) scale(1)}
+#match-decision-modal .btl-match-suspense.btl-verdict-visible .btl-suspense-headline {opacity:.4;transform:scale(.82)}
+#match-decision-modal .btl-suspense-goal .btl-suspense-verdict {color:#ffeb5e;text-shadow:0 0 15px #fff5a644,0 0 43px #e6ce57aa}
+#match-decision-modal .btl-suspense-goal .btl-suspense-pitch {box-shadow:inset 0 0 26px #0005,0 0 55px #eada3866}
+/* Vista frontal de pênalti: nenhum botão em caixa de texto. */
+#match-decision-modal #decision-visual.btl-penalty-interactive{display:flex!important;flex-direction:column;gap:14px;background:transparent!important;border:0!important;box-shadow:none!important;padding:0!important;overflow:visible!important}
+#match-decision-modal .btl-penalty-interactive .penalty-shootout-shell{width:100%;max-width:100%;margin:0 auto}
+#match-decision-modal .btl-penalty-aim{width:100%;display:flex;flex-direction:column;gap:8px;align-items:center;padding:8px 0 2px}
+#match-decision-modal .btl-penalty-arena{position:relative;isolation:isolate;width:min(100%,720px);height:clamp(180px,29vw,265px);
+ background:linear-gradient(180deg,#112128 0%,#162c31 42%,#126440 43%,#19a45d 100%);border-radius:15px;overflow:hidden;
+ border:1px solid #74d2a477;box-shadow:inset 0 -8px 24px #04160a90,0 10px 30px #0003}
+#match-decision-modal .btl-penalty-arena::after{content:'';position:absolute;inset:44% 0 0;z-index:0;pointer-events:none;
+ background:repeating-linear-gradient(90deg,#ffffff09 0 60px,transparent 60px 120px)}
+#match-decision-modal .btl-penalty-stands{position:absolute;top:0;left:0;width:100%;height:42%;
+ background:repeating-linear-gradient(90deg,#0a1822 0 14px,#182b35 14px 27px,#1c313a 27px 39px);opacity:.75;z-index:-1}
+#match-decision-modal .btl-penalty-goal{position:absolute;left:13%;top:7%;width:74%;height:66%;border:5px solid #f5fcff;
+ border-bottom:6px solid #f5fcff;box-shadow:0 0 15px #8ee5ff5e,inset 0 0 20px #0005;
+ background:linear-gradient(180deg,#04162288,#08321d85);z-index:1;overflow:hidden;transform:perspective(500px) rotateX(3deg)}
+#match-decision-modal .btl-goal-net{position:absolute;inset:0;pointer-events:none;opacity:.48;
+ background:repeating-linear-gradient(90deg,transparent 0 23px,#e8fff9 23px 24px),repeating-linear-gradient(0deg,transparent 0 17px,#e8fff9 17px 18px)}
+#match-decision-modal .btl-aim-target{position:absolute;z-index:8;display:flex;align-items:center;justify-content:center;
+ width:clamp(40px,7vw,54px);height:clamp(36px,6.5vw,51px);background:rgba(13,45,45,.4);
+ border:2px solid #fff6aa;border-radius:50%;color:#fff8b0;font:900 15px Orbitron,sans-serif;
+ transform:translate(-50%,-50%);cursor:crosshair;box-shadow:0 0 12px #ffffff33,inset 0 0 14px #edffdb22;
+ transition:transform .18s,background .18s,box-shadow .18s}
+#match-decision-modal .btl-aim-target:hover:not(:disabled),#match-decision-modal .btl-aim-target:focus-visible{outline:2px solid #fff;outline-offset:3px;transform:translate(-50%,-50%) scale(1.16);
+ background:rgba(255,224,84,.23);box-shadow:0 0 30px #ffe95266}
+#match-decision-modal .btl-aim-target:disabled{opacity:.2;cursor:default}
+#match-decision-modal .btl-aim-top-left{left:18%;top:22%}
+#match-decision-modal .btl-aim-bottom-left{left:18%;top:79%}
+#match-decision-modal .btl-aim-center{left:50%;top:60%}
+#match-decision-modal .btl-aim-top-right{left:82%;top:22%}
+#match-decision-modal .btl-aim-bottom-right{left:82%;top:79%}
+#match-decision-modal .btl-keeper{position:absolute;z-index:3;left:50%;bottom:3%;width:76px;height:92px;
+ transform:translateX(-50%);transform-origin:50% 80%;pointer-events:none}
+#match-decision-modal .btl-keeper-head{position:absolute;left:29px;top:2px;width:18px;height:18px;border-radius:50%;background:#ffe6bb;border:2px solid #141c27}
+#match-decision-modal .btl-keeper-body{position:absolute;left:19px;top:22px;width:39px;height:43px;border-radius:9px 9px 5px 5px;background:linear-gradient(90deg,#ffbb16,#fff78b,#f2ab14);box-shadow:inset -4px 0 0 #d19016}
+#match-decision-modal .btl-keeper-arms{position:absolute;left:3px;top:26px;width:71px;height:13px;border-radius:12px;background:#f9d398;transform:rotate(-5deg)}
+#match-decision-modal .btl-keeper-legs{position:absolute;left:20px;bottom:1px;width:37px;height:33px;border-left:13px solid #171e35;border-right:13px solid #171e35;border-bottom:4px solid #e4f1fb}
+#match-decision-modal .btl-penalty-spot{position:absolute;bottom:0;left:50%;z-index:2;transform:translateX(-50%);font-size:clamp(25px,4.5vw,38px);line-height:1;filter:drop-shadow(0 4px 4px #0009)}
+#match-decision-modal .btl-penalty-flight-ball{position:absolute;z-index:12;left:50%;bottom:-6%;font-size:36px;transform:translate(-50%,0) scale(1.1);opacity:0;pointer-events:none;line-height:1}
+#match-decision-modal .btl-penalty-impact{position:absolute;z-index:6;left:var(--shot-x,50%);top:var(--shot-y,55%);width:22px;height:22px;border-radius:50%;opacity:0;pointer-events:none;
+ border:3px solid #ffffc4;box-shadow:0 0 18px #fff}
+#match-decision-modal .btl-penalty-prompt{padding:2px 6px 0;margin:0;text-align:center;color:#faffb7;font:800 clamp(10px,1.6vw,13px) Orbitron,sans-serif;letter-spacing:.11em}
+#match-decision-modal .btl-kick-active .btl-penalty-flight-ball{animation:btlPenaltyBall .95s cubic-bezier(.13,.32,.3,1) forwards}
+#match-decision-modal .btl-kick-active .btl-penalty-impact{animation:btlPenaltyImpact .6s .85s ease-out both}
+#match-decision-modal .btl-kick-active .btl-keeper{animation:btlKeeperDive .82s .17s cubic-bezier(.15,.65,.36,1) forwards}
+#match-decision-modal .btl-kick-active .btl-aim-target{opacity:0!important}
+@keyframes btlPenaltyBall{
+  0% {left:50%;top:94%;opacity:1;transform:translate(-50%,-50%) scale(1.1) rotate(-30deg)}
+  35%{opacity:1}
+  100%{left:var(--shot-x,50%);top:var(--shot-y,55%);opacity:1;transform:translate(-50%,-50%) scale(.49) rotate(650deg)}
+}
+@keyframes btlKeeperDive {0%{transform:translateX(-50%) rotate(0)}100%{transform:translateX(calc(-50% + var(--keeper-shift-x,0px))) translateY(var(--keeper-shift-y,0px)) rotate(var(--keeper-rotation,0deg))}}
+@keyframes btlPenaltyImpact {0%{opacity:0;transform:translate(-50%,-50%) scale(.25)}30%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(3)}}
+@media(max-width:650px){
+ #match-decision-modal .btl-penalty-arena{height:205px}
+ #match-decision-modal .btl-penalty-goal{left:7%;width:86%;height:65%}
+ #match-decision-modal .btl-aim-target{width:40px;height:40px;font-size:12px}
+ #match-decision-modal .btl-keeper{transform:translateX(-50%) scale(.76);transform-origin:50% 80%}
+ #match-decision-modal #decision-title{font-size:clamp(23px,6vw,36px)!important;line-height:1.07!important}
+}
+@media(prefers-reduced-motion:reduce){
+ #match-decision-modal .btl-kick-active .btl-keeper,#match-decision-modal .btl-kick-active .btl-penalty-flight-ball,#match-decision-modal .btl-kick-active .btl-penalty-impact {animation-duration:.08s!important}
+}
