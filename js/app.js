@@ -315,13 +315,18 @@ function appearanceMarkup(appearance=DEFAULT_APPEARANCE,compact=false,number='10
   // Camadas de volume/luz e mechas individualizadas (SVG escalável e sem imagens externas).
   const strand=(d,w=2,alpha=.19)=>`<path d="${d}" stroke="url(#${id}hairLight)" stroke-width="${w}" opacity="${alpha}" fill="none" stroke-linecap="round"/>`;
   const curl=(x,y,r)=>`<circle cx="${x}" cy="${y}" r="${r}" fill="url(#${id}hair)" stroke="${hair}" stroke-width="2"/>`;
+  // V26: contornos bilateralmente equilibrados para não parecer raspado de um lado.
+  // Todos os estilos compartilham a mesma linha central (x=110), sem esticar o rosto.
+  const templeLeft=`<path d="M62 66Q56 87 65 109L78 108Q71 85 76 71Z" fill="url(#${id}hair)"/>`;
+  const templeRight=`<path d="M158 66Q164 87 155 109L142 108Q149 85 144 71Z" fill="url(#${id}hair)"/>`;
+  const curlsSymmetric=[[65,62,13],[78,43,13],[97,33,13],[110,31,13],[123,33,13],[142,43,13],[155,62,13],[77,67,11],[97,59,11],[110,57,12],[123,59,11],[143,67,11]].map(([x,y,r])=>curl(x,y,r)).join('');
   const hairShapes={
-    fade:`<path d="M65 105Q49 65 61 43Q72 19 106 24Q145 17 159 44Q166 70 155 99L149 74Q142 52 115 51Q86 47 71 73Z" fill="url(#${id}hair)"/><path d="M68 76Q60 88 69 101M153 72Q162 85 151 104" stroke="${hair}" stroke-width="9" opacity=".48" fill="none"/>${strand('M73 47Q103 25 143 43',4,.34)}${strand('M70 57Q110 38 149 55',2,.27)}<path d="M73 75Q78 54 93 52" stroke="url(#${id}fade)" stroke-width="10" fill="none" opacity=".62"/>`,
-    short:`<path d="M63 92Q53 61 63 40Q79 17 110 22Q152 18 160 46L155 93L149 70Q131 55 111 62Q89 53 71 71Z" fill="url(#${id}hair)"/>${strand('M75 48Q95 32 116 34Q137 34 148 47',3,.43)}${strand('M76 55Q96 43 122 45',2,.33)}${strand('M100 32L112 42M119 30L130 40',1.5,.24)}`, 
-    curly:`<path d="M63 99Q49 68 63 44Q75 22 109 21Q149 17 159 49Q170 77 154 98L148 77Q131 62 109 65Q88 58 72 77Z" fill="url(#${id}hair)"/>${[[68,54,13],[83,38,13],[103,34,14],[121,30,13],[141,39,13],[153,55,12],[65,72,10],[91,54,12],[114,52,12],[137,57,11]].map(([x,y,r])=>curl(x,y,r)).join('')}${strand('M79 31Q89 27 97 36M115 28Q126 24 132 35M88 49Q97 40 107 46M133 51Q141 43 148 49',2.4,.30)}`,
-    afro:`<path d="M51 102Q36 84 45 64Q33 44 51 32Q53 13 77 17Q88 2 108 11Q135 0 148 19Q174 16 174 43Q189 61 173 79Q180 98 158 110L146 77Q130 69 112 72Q89 66 72 84L66 110Z" fill="url(#${id}hair)"/>${[[57,52,17],[77,34,18],[103,27,19],[131,31,19],[153,47,18],[165,69,15],[151,85,14],[65,82,16],[91,52,17],[119,50,18],[143,62,15]].map(([x,y,r])=>curl(x,y,r)).join('')}${strand('M65 35q8-10 16-4M108 15q8-4 15 4M150 43q10 6 4 16M89 59q7-7 15 0',2,.22)}`,
-    mohawk:`<path d="M92 66L82 29L96 37L104 7L116 32L135 14L130 66Q116 57 92 66Z" fill="url(#${id}hair)"/>${strand('M102 27L108 53M120 32L117 57',3,.33)}<path d="M65 99Q56 58 88 53L94 71Q75 65 71 92M156 99Q165 58 133 53L128 71Q145 65 150 92" fill="url(#${id}fade)" opacity=".85"/>`,
-    long:`<path d="M57 84Q52 30 85 22Q112 9 139 22Q172 32 165 90L175 184L146 176L149 82Q133 57 110 58Q87 52 73 79L74 176L48 185Z" fill="url(#${id}hair)"/>${strand('M73 46Q107 22 143 44',4,.36)}${strand('M57 89Q63 130 57 171M161 89Q155 127 163 172',3,.22)}${strand('M80 39Q106 30 131 38',2,.22)}`
+    fade:`<path d="M63 91Q52 65 63 44Q77 20 110 23Q143 20 157 44Q168 65 157 91L151 85Q151 63 133 54Q110 46 87 54Q69 63 69 85Z" fill="url(#${id}hair)"/>${templeLeft}${templeRight}<path d="M72 73Q77 53 92 51M148 73Q143 53 128 51" stroke="url(#${id}fade)" stroke-width="6" opacity=".62" fill="none"/>${strand('M76 46Q110 29 144 46',3,.28)}`,
+    short:`<path d="M63 88Q54 64 63 42Q76 20 110 21Q144 20 157 42Q166 64 157 88L150 77Q149 60 134 56Q111 48 86 56Q71 60 70 77Z" fill="url(#${id}hair)"/>${templeLeft}${templeRight}${strand('M73 44Q110 26 147 44',3,.3)}${strand('M79 53Q110 43 141 53',1.7,.23)}`,
+    curly:`<path d="M62 93Q48 65 62 44Q77 18 110 21Q143 18 158 44Q172 65 158 93L148 79Q133 67 110 68Q87 67 72 79Z" fill="url(#${id}hair)"/>${templeLeft}${templeRight}${curlsSymmetric}${strand('M81 39Q91 31 101 39M119 39Q129 31 139 39M94 54Q110 46 126 54',2,.26)}`,
+    afro:`<path d="M52 101Q35 77 45 55Q43 30 64 24Q77 5 97 14Q110 0 123 14Q143 5 156 24Q177 30 175 55Q185 77 168 101L151 86Q129 72 110 75Q91 72 69 86Z" fill="url(#${id}hair)"/>${templeLeft}${templeRight}${[[54,64,17],[66,40,17],[86,25,18],[110,22,19],[134,25,18],[154,40,17],[166,64,17],[68,78,16],[87,55,17],[110,49,18],[133,55,17],[152,78,16]].map(([x,y,r])=>curl(x,y,r)).join('')}${strand('M68 44q7-7 15-2M137 42q8-5 15 2',2,.23)}`,
+    mohawk:`<path d="M89 70L84 35L96 42L104 9L110 31L116 9L124 42L136 35L131 70Q110 60 89 70Z" fill="url(#${id}hair)"/>${strand('M100 31L105 55M120 31L115 55',2,.3)}<path d="M64 86Q59 65 83 57L91 72Q72 73 72 91Z" fill="url(#${id}fade)"/><path d="M156 86Q161 65 137 57L129 72Q148 73 148 91Z" fill="url(#${id}fade)"/>${templeLeft}${templeRight}`,
+    long:`<path d="M58 90Q47 44 75 26Q90 15 110 17Q130 15 145 26Q173 44 162 90L176 187L150 176L148 87Q141 61 110 57Q79 61 72 87L70 176L44 187Z" fill="url(#${id}hair)"/>${templeLeft}${templeRight}${strand('M73 44Q110 22 147 44',3,.3)}${strand('M57 88Q62 126 54 167M163 88Q158 126 166 167',2,.22)}`
   };
   const eyebrows=a.brows==='arched'?['M79 92Q91 82 101 89','M119 89Q132 82 142 92']:a.brows==='thick'?['M79 90Q91 84 101 89','M119 89Q132 84 142 90']:['M80 92Q90 87 101 91','M119 91Q132 87 141 92'];
   const bw=a.brows==='thick'?5:3.5;
@@ -1851,7 +1856,7 @@ function clubCrestMarkup(name,countryCode=''){
   const cached=getCachedBadge(name,countryCode);
   const safe=esc(name||'Clube');
   const src=cached;
-  return `<span class="crest-shell penalty-crest" data-penalty-club="${safe}" data-penalty-country="${esc(countryCode||'')}"><img class="club-badge-img ${src?'':'hidden'}" ${src?`src="${esc(src)}"`:''} alt="Escudo de ${safe}" loading="lazy"><span class="crest-fallback ${src?'hidden':''}" title="Escudo oficial indisponível no momento">S/D</span></span>`;
+  return `<span class="crest-shell penalty-crest" data-penalty-club="${safe}" data-penalty-country="${esc(countryCode||'')}"><img class="club-badge-img ${src?'':'hidden'}" ${src?`src="${esc(src)}"`:''} alt="Escudo de ${safe}" loading="lazy"><span class="crest-fallback ${src?'hidden':''}" title="Clube identificado pelo nome">${safe}</span></span>`;
 }
 function hydratePenaltyBadges(root=document){
   root?.querySelectorAll?.('[data-penalty-club]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.penaltyClub,el.querySelector('.crest-fallback'),el.dataset.penaltyCountry||''));
@@ -2790,6 +2795,10 @@ function continuePenaltySimulation(pending){
 }
 function openPenaltyShootoutDecision(){
   const pending=state.pendingPenaltyShootout;if(!pending)return;
+  if(pending.home&&pending.away&&!penaltyCrestGatePassed.has(pending)){
+    checkMatchCrestsBeforeDecision(pending,()=>{penaltyCrestGatePassed.add(pending);openPenaltyShootoutDecision();});
+    return;
+  }
   applyCompetitionExperienceTheme(pending);
   const card=$('#match-decision-modal .decision-card');card.classList.add('scene-finale');applyDecisionCompetitionTheme(card,pending);$('#decision-competition').innerHTML=competitionHeaderMarkup(pending.competition,[pending.stage,'PÊNALTIS'].filter(Boolean).join(' · '));$('#decision-match').textContent='';$('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');$('#decision-visual').className='decision-visual penalty-shootout-preview';
   if(pending.playerKickRound&&initPenaltyLive(pending).waitingForPlayer){
@@ -3774,14 +3783,80 @@ function renderAccountPanel(){
   const contactName=$('#contact-name'),contactEmail=$('#contact-email');if(contactName&&!contactName.value)contactName.value=account.nickname||'';if(contactEmail&&!contactEmail.value)contactEmail.value=account.email||account.contactEmail||'';
 }
 
+// V26: conferir os DOIS escudos antes de revelar uma decisão.
+// Promessas são compartilhadas entre o próximo jogo, a decisão e o placar.
+const decisionCrestLoaded=new Set();
+const decisionCrestInFlight=new Map();
+const decisionCrestRecentFailure=new Map();
+let decisionCrestGateSequence=0;
+const penaltyCrestGatePassed=new WeakSet();
+function preloadDecisionCrest(name){
+  const country=canonicalClubCountryCode(name,'');
+  const source=safeBadgeImage(window.BTLStaticCrests?.resolve(name,country)||'');
+  if(!source)return Promise.resolve({name,ok:false,reason:'not-in-catalog'});
+  if(decisionCrestLoaded.has(source))return Promise.resolve({name,ok:true,source});
+  if(decisionCrestInFlight.has(source))return decisionCrestInFlight.get(source).then(ok=>({name,ok,source}));
+  const promise=new Promise(resolve=>{
+    const picture=new Image();let finished=false;
+    const finish=ok=>{if(finished)return;finished=true;clearTimeout(timer);picture.onload=null;picture.onerror=null;if(ok){decisionCrestLoaded.add(source);decisionCrestRecentFailure.delete(source);}else decisionCrestRecentFailure.set(source,Date.now());resolve(ok);};
+    const timer=setTimeout(()=>finish(false),7000);
+    picture.onload=()=>finish(picture.naturalWidth>0&&picture.naturalHeight>0);
+    picture.onerror=()=>finish(false);
+    picture.src=source;
+    if(picture.complete&&picture.naturalWidth)finish(true);
+  }).finally(()=>decisionCrestInFlight.delete(source));
+  decisionCrestInFlight.set(source,promise);
+  return promise.then(ok=>({name,ok,source}));
+}
+function preloadUpcomingMatchCrests(event){
+  if(!event||event.type==='national')return;
+  for(const name of [...new Set([event.home,event.away].filter(Boolean))]){
+    const country=canonicalClubCountryCode(name,'');const src=safeBadgeImage(window.BTLStaticCrests?.resolve(name,country)||'');
+    if(src&&Date.now()-(decisionCrestRecentFailure.get(src)||0)<60000)continue;
+    void preloadDecisionCrest(name);
+  }
+}
+function checkMatchCrestsBeforeDecision(event,onReady){
+  if(!event||event.type==='national'){onReady(false);return;}
+  const gate=++decisionCrestGateSequence;
+  const modal=$('#match-decision-modal');
+  const names=[...new Set([event.home,event.away].filter(Boolean))];
+  if(names.length!==2){onReady(true);return;}
+  $('#decision-competition').innerHTML=competitionHeaderMarkup(event.competition||'Partida',event.stage||'');
+  $('#decision-title').textContent='Preparando o confronto';
+  $('#decision-match').textContent=names.join(' × ');
+  $('#decision-description').textContent='';
+  $('#decision-continue').classList.add('hidden');
+  $('#decision-result').classList.add('hidden');
+  const visual=$('#decision-visual');visual.className='decision-visual btl-crest-gate';
+  visual.innerHTML=`<div class="btl-crest-gate-content"><span class="btl-crest-gate-mark" aria-hidden="true">⚽</span><strong>Conferindo os escudos dos clubes</strong><span>${names.map(esc).join(' × ')}</span></div>`;
+  const choices=$('#decision-choices');choices.className='event-choices';choices.replaceChildren();
+  modal.classList.remove('hidden');
+  Promise.all(names.map(preloadDecisionCrest)).then(results=>{
+    if(gate!==decisionCrestGateSequence||modal.classList.contains('hidden'))return;
+    if(results.every(r=>r.ok)){onReady(false);return;}
+    const missing=results.filter(r=>!r.ok).map(r=>r.name);
+    $('#decision-title').textContent='Verificação de escudos';
+    visual.innerHTML=`<div class="btl-crest-gate-content"><span class="btl-crest-gate-mark" aria-hidden="true">⚽</span><strong>Escudo não carregado: ${missing.map(esc).join(', ')}</strong><span>Você pode tentar novamente ou identificar os times pelo nome.</span></div>`;
+    choices.innerHTML='<button type="button" class="primary" data-crest-retry>Tentar carregar escudos</button><button type="button" class="secondary" data-crest-names>Continuar com nomes dos clubes</button>';
+    choices.querySelector('[data-crest-retry]').addEventListener('click',()=>checkMatchCrestsBeforeDecision(event,onReady));
+    choices.querySelector('[data-crest-names]').addEventListener('click',()=>onReady(true));
+  }).catch(()=>{if(gate===decisionCrestGateSequence){visual.textContent='Não foi possível verificar os escudos. Os nomes dos clubes permanecem disponíveis.';choices.innerHTML='<button type="button" class="secondary" data-crest-names>Continuar com nomes dos clubes</button>';choices.querySelector('[data-crest-names]').addEventListener('click',()=>onReady(true));}});
+}
 function nextMatchTeamMarkup(name,event){
   if(event?.type==='national'){
     const code=name===state.player?.nationality?state.player?.nationalityCode:(event.opponent===name?event.opponentCode:codeForCountryName(name));
     return `<span class="next-team-visual national" title="${esc(name)}" aria-label="${esc(name)}">${nationalFlagImage(code,name)}</span>`;
   }
-  return `<span class="next-team-visual club" data-next-club="${esc(name)}" title="${esc(name)}" aria-label="${esc(name)}"><span class="crest-shell"><img class="club-badge-img hidden" alt="${esc(name)}"><span class="crest-fallback" title="Escudo real ainda não localizado">S/D</span></span></span>`;
+  const code=canonicalClubCountryCode(name,'');
+  const source=safeBadgeImage(window.BTLStaticCrests?.resolve(name,code)||'');
+  const ready=source&&decisionCrestLoaded.has(source);
+  const safeName=esc(name);
+  // A imagem só fica visível quando já foi carregada. Em caso de erro,
+  // o NOME do clube substitui o escudo, nunca um símbolo sem significado.
+  return `<span class="next-team-visual club" data-next-club="${safeName}" data-next-country="${esc(code)}" title="${safeName}" aria-label="${safeName}"><span class="crest-shell"><img class="club-badge-img ${ready?'':'hidden'}" ${ready?`src="${esc(source)}"`:''} alt="Escudo de ${safeName}"><span class="crest-fallback ${ready?'hidden':''}" title="Escudo indisponível; clube identificado pelo nome">${safeName}</span></span></span>`;
 }
-function hydrateNextMatchBadges(){document.querySelectorAll('[data-next-club]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.nextClub,el.querySelector('.crest-fallback')));}
+function hydrateNextMatchBadges(){document.querySelectorAll('[data-next-club]').forEach(el=>hydrateBadge(el.querySelector('img'),el.dataset.nextClub,el.querySelector('.crest-fallback'),el.dataset.nextCountry||''));}
 function decisionScoreboardMarkup(log){
   const compMarkup=competitionHeaderMarkup(log.event.competition||'Partida',log.event.stage||'');
   return `<div class="decision-scoreboard"><div class="decision-score-meta">${compMarkup}</div><div class="decision-score-main"><div class="decision-score-team">${nextMatchTeamMarkup(log.event.home,log.event)}</div><div class="decision-score-numbers"><small>PLACAR</small><b>${log.homeGoals}<i>×</i>${log.awayGoals}</b></div><div class="decision-score-team">${nextMatchTeamMarkup(log.event.away,log.event)}</div></div></div>`;
@@ -3808,7 +3883,7 @@ function render(){
     $('#finish-season').disabled=!s.closed||p.retired;$('#finish-season').textContent=s.closed?'Avançar para próxima temporada →':'Simule a temporada primeiro';
     nextEventCache=!s.closed?chooseNextEvent():null;
     if(nextEventCache){
-      $('#home-team').innerHTML=nextMatchTeamMarkup(nextEventCache.home,nextEventCache);$('#away-team').innerHTML=nextMatchTeamMarkup(nextEventCache.away,nextEventCache);$('#match-title').textContent=`${nextEventCache.competition}`;$('#match-competition').textContent=nextEventCache.competition;$('#match-context').textContent=nextEventCache.type==='league'?`Rodada ${nextEventCache.round} de ${s.league.schedule.length}`:nextEventCache.stage||`Temporada ${s.year}`;setTimeout(hydrateNextMatchBadges,0);
+      $('#home-team').innerHTML=nextMatchTeamMarkup(nextEventCache.home,nextEventCache);$('#away-team').innerHTML=nextMatchTeamMarkup(nextEventCache.away,nextEventCache);$('#match-title').textContent=`${nextEventCache.competition}`;$('#match-competition').textContent=nextEventCache.competition;$('#match-context').textContent=nextEventCache.type==='league'?`Rodada ${nextEventCache.round} de ${s.league.schedule.length}`:nextEventCache.stage||`Temporada ${s.year}`;setTimeout(hydrateNextMatchBadges,0);preloadUpcomingMatchCrests(nextEventCache);
       $('#favorite-line').textContent='';$('#favorite-percent').textContent='';$('#favorite-meter-fill').style.width='0%';$('#strength-line').textContent='';
       $('#simulate-btn').disabled=p.retired;$('#simulate-btn').textContent='Simular temporada →';
     }else{
@@ -5234,9 +5309,12 @@ function animateSeasonDashboard(){
 function openMatchDecision(event){
   applyCompetitionExperienceTheme(event);
   const scenario=buildDecisionScenario(event);state.pendingMatchDecision={event,scenario,isNationalDecision:event.type==='national'};if(event.type==='national')state.season.nationalDecisionCount=(state.season.nationalDecisionCount||0)+1;save();
+  const revealDecision=()=>{if(state.pendingMatchDecision?.event!==event)return;
   const card=$('#match-decision-modal .decision-card');card.classList.remove('btl-suspense-goal','scene-night','scene-rain','scene-sunset','scene-derby','scene-fog','scene-floodlights','scene-finale','scene-storm','scene-snow','scene-heat','scene-away','scene-hostile','scene-cup-night','scene-extra-time','scene-morning','scene-national-night','scene-afternoon','scene-wind','scene-neon','scene-tunnel');card.classList.add(`scene-${scenario.scene||'night'}`);applyDecisionCompetitionTheme(card,event);
   $('#decision-competition').innerHTML=competitionHeaderMarkup(event.competition,event.stage||'');$('#decision-title').textContent=`${scenario.minute}' · ${scenario.title}`;$('#decision-match').textContent='';$('#decision-description').textContent='';
   $('#decision-result').classList.add('hidden');$('#decision-continue').classList.add('hidden');renderDecisionChoices(scenario);$('#match-decision-modal').classList.remove('hidden');playMatchVisualFX(scenario.visual||'build','intro',scenario.id||'');
+  };
+  checkMatchCrestsBeforeDecision(event,revealDecision);
 }
 function simulateInteractiveMatch(event,option){
   const p=state.player,s=state.season,playerIsHome=event.type==='national'?event.home===p.nationality:event.home===p.club;const score=simulateScore(event);let teamGoals=playerIsHome?score.homeGoals:score.awayGoals,oppGoals=playerIsHome?score.awayGoals:score.homeGoals;

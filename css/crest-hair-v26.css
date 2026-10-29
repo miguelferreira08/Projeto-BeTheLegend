@@ -1,0 +1,17 @@
+/* V26 — escudos verificados antes de decisões e identificação sempre legível. */
+#match-decision-modal .btl-crest-gate{display:grid!important;place-items:center;min-height:138px;max-height:none;padding:18px;border:1px solid rgba(237,244,255,.16);border-radius:18px;background:linear-gradient(120deg,rgba(8,22,39,.92),rgba(17,48,52,.80));}
+#match-decision-modal .btl-crest-gate-content{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;text-align:center;max-width:100%;}
+#match-decision-modal .btl-crest-gate-content strong{font-size:clamp(13px,1.8vw,19px);color:#f2f6f7;overflow-wrap:anywhere;}
+#match-decision-modal .btl-crest-gate-content span:not(.btl-crest-gate-mark){font-size:12px;color:#d6e3e8;overflow-wrap:anywhere;}
+#match-decision-modal .btl-crest-gate-mark{font-size:27px;animation:btl-preflight-ball 1.25s ease-in-out infinite alternate;}
+@keyframes btl-preflight-ball{from{transform:translateX(-11px) rotate(-12deg);opacity:.55}to{transform:translateX(11px) rotate(12deg);opacity:1}}
+#match-decision-modal .event-choices:has([data-crest-retry]){display:flex;flex-wrap:wrap;justify-content:center;gap:12px}
+#match-decision-modal [data-crest-retry],#match-decision-modal [data-crest-names]{min-height:40px;cursor:pointer;}
+/* O tema não pode ocultar o fallback em texto quando a imagem falhar. */
+#match-decision-modal .next-team-visual .crest-shell>.crest-fallback:not(.hidden),
+#career .next-team-visual .crest-shell>.crest-fallback:not(.hidden),
+#match-decision-modal .penalty-crest>.crest-fallback:not(.hidden){display:flex!important;align-items:center;justify-content:center;flex-wrap:wrap;color:#f4f8ff!important;line-height:1.2!important;letter-spacing:0!important;font-size:clamp(9px,.88vw,12px)!important;font-weight:800;overflow-wrap:anywhere;text-align:center;padding:4px;max-width:100%;height:100%;}
+#match-decision-modal .next-team-visual .crest-shell>.crest-fallback.hidden,
+#career .next-team-visual .crest-shell>.crest-fallback.hidden,
+#match-decision-modal .penalty-crest>.crest-fallback.hidden{display:none!important;}
+@media(max-width:620px){#match-decision-modal .btl-crest-gate{padding:12px;min-height:110px}#match-decision-modal .next-team-visual .crest-shell>.crest-fallback:not(.hidden){font-size:9px!important}}
