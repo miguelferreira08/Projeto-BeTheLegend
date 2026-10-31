@@ -104,6 +104,11 @@
     "Copa do Brasil"
   ],
   [
+    "^Carabao Cup$|^EFL Cup$|^English League Cup$",
+    "assets/trophies/custom-2026/carabao-cup.png",
+    "Carabao Cup"
+  ],
+  [
     "^Copa Nacional(?: de .+)?$",
     "assets/trophies/custom-2026/copa-nacional.png",
     "Copa Nacional"
@@ -339,8 +344,37 @@
     "Time da Temporada"
   ]
 ];
+
+ // Artes de ligas secundárias e copas enviadas em btl-leagues.rar (outubro/2026).
+ const additionalRows = [
+   ["^EFL Championship$", "assets/trophies/leagues-2026/efl-championship.png", "EFL Championship"],
+   ["^EFL League One$", "assets/trophies/leagues-2026/efl-league-one.png", "EFL League One"],
+   ["^2\\. Bundesliga$", "assets/trophies/leagues-2026/2-bundesliga.png", "2. Bundesliga"],
+   ["^LALIGA HYPERMOTION$", "assets/trophies/leagues-2026/laliga-hypermotion.png", "LALIGA HYPERMOTION"],
+   ["^Liga Portugal 2$", "assets/trophies/leagues-2026/liga-portugal-2.png", "Liga Portugal 2"],
+   ["^(Série B|Brasileirão Série B|Campeonato Brasileiro Série B)$", "assets/trophies/leagues-2026/brasileirao-serie-b.png", "Série B (Brasil)"],
+   ["^Serie B$", "assets/trophies/leagues-2026/serie-b-italia.png", "Serie B (Itália)"],
+   ["^Ligue 2$", "assets/trophies/leagues-2026/ligue-2.png", "Ligue 2"],
+   ["^Austrian Bundesliga$", "assets/trophies/leagues-2026/austrian-bundesliga.png", "Austrian Bundesliga"],
+   ["^Swiss Super League$", "assets/trophies/leagues-2026/swiss-super-league.png", "Swiss Super League"],
+   ["^Danish Superliga$", "assets/trophies/leagues-2026/danish-superliga.png", "Danish Superliga"],
+   ["^Greek Super League$", "assets/trophies/leagues-2026/greek-super-league.png", "Greek Super League"],
+   ["^Czech First League$", "assets/trophies/leagues-2026/czech-first-league.png", "Czech First League"],
+   ["^Ekstraklasa$", "assets/trophies/leagues-2026/ekstraklasa.png", "Ekstraklasa"],
+   ["^(HNL|Croatian HNL)$", "assets/trophies/leagues-2026/hnl.png", "HNL"],
+   ["^Serbian SuperLiga$", "assets/trophies/leagues-2026/serbian-superliga.png", "Serbian SuperLiga"],
+   ["^Eliteserien$", "assets/trophies/leagues-2026/eliteserien.png", "Eliteserien"],
+   ["^Allsvenskan$", "assets/trophies/leagues-2026/allsvenskan.png", "Allsvenskan"],
+   ["^Romanian SuperLiga$", "assets/trophies/leagues-2026/romanian-superliga.png", "Romanian SuperLiga"],
+   ["^Ukrainian Premier League$", "assets/trophies/leagues-2026/ukrainian-premier-league.png", "Ukrainian Premier League"],
+   ["^K League 1$", "assets/trophies/leagues-2026/k-league-1.png", "K League 1"],
+   ["^Qatar Stars League$", "assets/trophies/leagues-2026/qatar-stars-league.png", "Qatar Stars League"],
+   ["^UAE Pro League$", "assets/trophies/leagues-2026/uae-pro-league.png", "UAE Pro League"],
+   ["^Copa MX$", "assets/trophies/leagues-2026/copa-mx.png", "Copa MX"],
+ ];
  window.BTL_COMMONS_TROPHIES = [
    {test:/Eliminat[oó]rias|World Cup Qualifiers/i,src:'',file:null,page:'',author:'',license:'',note:'Sem troféu',isLocal:false},
+   ...additionalRows.map(([pattern,src,name])=>({test:new RegExp(pattern,'i'),src,file:src,page:'',author:'Fornecido pelo usuário',license:'Não verificada',note:name,isLocal:true})),
    ...rows.map(([pattern,src,name])=>({test:new RegExp(pattern,'i'),src,file:src,page:'',author:'Fornecido pelo usuário',license:'Não verificada',note:name,isLocal:true}))
  ];
 })();

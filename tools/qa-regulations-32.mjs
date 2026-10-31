@@ -1,0 +1,45 @@
+import fs from 'node:fs';import vm from 'node:vm';import path from 'node:path';
+const root=path.resolve(import.meta.dirname,'..'),ctx={window:{},console};vm.createContext(ctx);
+for(const p of ['league-regulations-2026-27','continental-qualification','season-divisions-2026'])vm.runInContext(fs.readFileSync(path.join(root,'js',p+'.js'),'utf8'),ctx,{filename:p});
+const R=ctx.window.BTLLeagueRegulations,Q=ctx.window.BTLQualification,D=ctx.window.BTLSeasonDivisions;
+let checks=0;const t=(v,msg)=>{if(!v)throw Error('FAIL '+msg);checks++};
+t(R.count===32,'documento registra 32 países');t(D.rules.length===8,'8 fronteiras de divisões jogáveis');
+for(const code of Object.keys(R.byCountry))t(Q.hasCountry(code),'qualificação tem perfil '+code);
+const teams=n=>Array.from({length:n},(_,i)=>({team:'Clube '+String(i+1).padStart(2,'0'),points:(n-i)*3}));
+const assigned=(code,opt={})=>Q.assign(code,teams(30),{year:2028,...opt});
+const who=(code,name,phase,opt={})=>assigned(code,opt).filter(r=>r.qualification?.competition===name&&(!phase||r.qualification.phase===phase)).map(r=>r.position);
+const UCL='UEFA Champions League',UEL='UEFA Europa League',UECL='UEFA Conference League',LIB='CONMEBOL Libertadores',SULA='CONMEBOL Sul-Americana',ELITE='AFC Champions League Elite';
+t(who('BR',LIB,'league').join(',')==='1,2,3,4','BR libertadores 4 diretas');t(who('BR',LIB,'qualifier').join(',')==='5','BR quinta preliminar');t(who('BR',SULA).join(',')==='6,7,8,9,10,11','BR Sul-americana seis elegíveis');
+t(who('ENG',UCL).length===4,'ENG 4 UCL sem EPS');t(who('ENG',UCL,'league',{epsCountry:true}).length===5,'ENG extra somente com EPS');
+t(who('ENG',UEL).length===1,'ENG Europa League por posição');t(!who('ENG',UECL).length,'ENG Carabao sem campeão informado não inventa vaga');
+t(who('FR',UCL,'league').length===3&&who('FR',UCL,'qualifier')[0]===4,'França 3+1');
+t(who('PT',UCL,'league').join(',')==='1,2'&&who('PT',UCL,'qualifier')[0]===3,'Portugal 2+1');
+t(who('NL',UCL,'league').join(',')==='1','NL campeão direto');t(!who('NL',UECL).length,'NL não inventa vencedor playoff europeu');
+t(who('JP',ELITE,'league').length===3&&who('JP',ELITE,'qualifier').length===2,'Japão 3+2');
+for(const code of ['MX','US','SA','KR','AU','NZ','FJ'])t(assigned(code).every(r=>!r.qualification),'caminhos condicionais sem campeões não inventam ranking '+code);
+const champ=Q.assign('BR',teams(20),{year:2028,cupWinner:'Clube 01',cupRunnerUp:'Clube 08'});
+t(champ.find(x=>x.position===8).qualification.competition===LIB&&champ.find(x=>x.position===8).qualification.phase==='league','Copa Brasil vice 8º recebe vaga direta por repasse');
+t(champ.find(x=>x.position===6).qualification.competition===LIB,'Brasil preliminar repassada ao melhor elegível');
+t(champ.filter(x=>x.qualification?.competition===SULA).length===6,'Brasil mantém seis vagas Sula após copa');
+const fa=Q.assign('ENG',teams(20),{cupWinner:'Clube 10',leagueCupWinner:'Clube 15'});
+t(fa.find(x=>x.position===10).qualification.competition===UEL,'FA Cup dá Europa');t(fa.find(x=>x.position===15).qualification.competition===UECL&&fa.find(x=>x.position===15).qualification.phase==='playoff','Carabao dá Conference playoff');
+function pools(upper,lower,a=20,b=20){return {[D.key(upper==='Premier League'||upper==='EFL Championship'?'ENG':upper==='Brasileirão Série A'?'BR':upper==='LaLiga'?'ES':upper==='Bundesliga'?'DE':upper==='Serie A'?'IT':upper==='Ligue 1'?'FR':'PT',upper)]:[],[D.key(upper==='Premier League'||upper==='EFL Championship'?'ENG':upper==='Brasileirão Série A'?'BR':upper==='LaLiga'?'ES':upper==='Bundesliga'?'DE':upper==='Serie A'?'IT':upper==='Ligue 1'?'FR':'PT',lower)]:[]};}
+for(const rule of D.rules){
+ const n=rule.country==='DE'||rule.country==='FR'||rule.country==='PT'?18:rule.country==='ENG'&&rule.upper==='EFL Championship'?24:20;
+ const lowN=rule.country==='ENG'?24:rule.country==='ES'?22:20;
+ const upper=Array.from({length:n},(_,i)=>rule.country+'-'+rule.upper+'-'+i),lower=Array.from({length:lowN},(_,i)=>rule.country+'-'+rule.lower+'-'+i);
+ const inp={[D.key(rule.country,rule.upper)]:upper,[D.key(rule.country,rule.lower)]:lower};
+ const result=D.simulateTransitions(inp,2028,{},()=>74),m=result.changes[0];
+ t(m.promoted.length===m.relegated.length,rule.country+' vagas de acesso e descenso simétricas');
+ t(m.promoted.length>=rule.direct,rule.country+' pelo menos acessos diretos');
+ t(result.pools[D.key(rule.country,rule.upper)].length===n&&result.pools[D.key(rule.country,rule.lower)].length===lowN,rule.country+' mantém quantidade por divisão');
+ t(new Set(Object.values(result.pools).flat()).size===n+lowN,rule.country+' sem clubes duplicados');
+ if(rule.country==='BR')t(m.promoted.length===4&&m.playoffTies.length===2&&m.playoffTies.every(x=>x.matches.length===2),'BR 2 diretos +2 playoffs ida-volta');
+ if(rule.country==='ENG'&&rule.upper==='Premier League')t(m.promoted.length===3&&m.playoffTies.length===5,'Championship 3-8: cinco eliminatórias');
+ if(['DE','FR','PT'].includes(rule.country))t(m.promoted.length===2||m.promoted.length===3,'playoff de permanência não gera queda automática');
+}
+const pt=D.rules.find(x=>x.country==='PT');const ptUpper=Array.from({length:18},(_,i)=>'Elite'+i),ptLower=['Porto B','Benfica B','Sporting B',...Array.from({length:15},(_,i)=>'Outros'+i)];
+const ptP={[D.key('PT',pt.upper)]:ptUpper,[D.key('PT',pt.lower)]:ptLower};
+const ptRes=D.simulateTransitions(ptP,2028,{},()=>70).changes[0];t(ptRes.promoted.every(x=>!x.endsWith(' B')),'não promover clubes B em Portugal');
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');t(html.includes('js/league-regulations-2026-27.js'),'regulamentos carregados na página');
+console.log(JSON.stringify({status:'PASS',checks,countries:R.count,playoffBoundaries:D.rules.length},null,2));

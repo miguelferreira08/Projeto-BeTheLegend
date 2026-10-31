@@ -1,0 +1,1150 @@
+{
+  "source": "Escudos fornecidos pelo usuario em btl-clubs.rar (30/10/2026)",
+  "count": 140,
+  "newly_covered": 139,
+  "replaces_external_crest": 1,
+  "unresolved": [],
+  "external_crest_sources": [
+    {
+      "country": "TR",
+      "club": "Eyüpspor",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Ey%C3%BCpspor_Logosu.png",
+      "source": "https://commons.wikimedia.org/wiki/File:Ey%C3%BCpspor_Logosu.png",
+      "author": "Eyüpspor",
+      "license": "CC BY 4.0",
+      "licenseUrl": "https://creativecommons.org/licenses/by/4.0/"
+    },
+    {
+      "country": "TR",
+      "club": "Rizespor",
+      "url": "https://upload.wikimedia.org/wikipedia/commons/1/1b/Logo_Rizespor.png",
+      "source": "https://commons.wikimedia.org/wiki/File:Logo_Rizespor.png",
+      "author": "não informado na página",
+      "license": "PD-textlogo (marca registrada)",
+      "licenseUrl": "https://commons.wikimedia.org/wiki/File:Logo_Rizespor.png"
+    }
+  ],
+  "entries": [
+    {
+      "country": "AE",
+      "club": "Al-Ain",
+      "source_filename": "alain.png",
+      "path": "assets/club-crests/user-2026/ae-al-ain.png",
+      "bytes": 70355,
+      "sha256": "3eea758f662e288e5139d05bef98bd37a414b9e4333194c0eb2801750ab4768f"
+    },
+    {
+      "country": "AE",
+      "club": "Shabab Al-Ahli",
+      "source_filename": "shababalahli.webp",
+      "path": "assets/club-crests/user-2026/ae-shabab-al-ahli.png",
+      "bytes": 162621,
+      "sha256": "99f1b7b01195f2bc34b373929b72d01e0665e583e191e457eb94349d6d4d2b05"
+    },
+    {
+      "country": "AR",
+      "club": "Aldosivi",
+      "source_filename": "aldosivi.png",
+      "path": "assets/club-crests/user-2026/ar-aldosivi.png",
+      "bytes": 40116,
+      "sha256": "89a974bec911388c502ff242b845e14b054e1afbe11ed4f66b32d1538dfaf109"
+    },
+    {
+      "country": "AR",
+      "club": "Atlético Tucumán",
+      "source_filename": "atltucuman.svg",
+      "path": "assets/club-crests/user-2026/ar-atletico-tucuman.png",
+      "bytes": 56068,
+      "sha256": "e061bb69f702f00657966e22b1e32d88d68e9becc7f0aac0fe3f7d1c7da267f9"
+    },
+    {
+      "country": "AR",
+      "club": "Banfield",
+      "source_filename": "banfield.png",
+      "path": "assets/club-crests/user-2026/ar-banfield.png",
+      "bytes": 49108,
+      "sha256": "56b3aecc2f93f69734c342b3e54d667196ed69e3abb9ec2e6fa5defd51141d18"
+    },
+    {
+      "country": "AR",
+      "club": "Barracas Central",
+      "source_filename": "barracascentral.svg",
+      "path": "assets/club-crests/user-2026/ar-barracas-central.png",
+      "bytes": 43277,
+      "sha256": "f994a9df2754a09f346175d2f9bd315ee6e2aa0ec0e938e020d459b5fc5475e2"
+    },
+    {
+      "country": "AR",
+      "club": "Belgrano",
+      "source_filename": "belgrano.webp",
+      "path": "assets/club-crests/user-2026/ar-belgrano.png",
+      "bytes": 110607,
+      "sha256": "89bd98fd335139dbee3411980922556dbb44f3be18cbd725e4c22830b9b9e246"
+    },
+    {
+      "country": "AR",
+      "club": "Central Córdoba",
+      "source_filename": "centralcordoba.webp",
+      "path": "assets/club-crests/user-2026/ar-central-cordoba.png",
+      "bytes": 52430,
+      "sha256": "071a9b4005d08b81fb1806b7764bc011b3cea2aebd360d9c423b2716c14cdfbf"
+    },
+    {
+      "country": "AR",
+      "club": "Defensa y Justicia",
+      "source_filename": "defensa.png",
+      "path": "assets/club-crests/user-2026/ar-defensa-y-justicia.png",
+      "bytes": 74417,
+      "sha256": "3bfd2ae4a88b572ee86ba0c9298d5a87e3b0c2739731c6ffd5b8fd085f209c0e"
+    },
+    {
+      "country": "AR",
+      "club": "Deportivo Riestra",
+      "source_filename": "depriestra.svg",
+      "path": "assets/club-crests/user-2026/ar-deportivo-riestra.png",
+      "bytes": 79048,
+      "sha256": "f1850e75e7fcc10a8479ee9ac950ea85031a8ce1910ddb375fc6f1a22c364ca3"
+    },
+    {
+      "country": "AR",
+      "club": "Estudiantes Río Cuarto",
+      "source_filename": "estudiantesrioquartio.svg",
+      "path": "assets/club-crests/user-2026/ar-estudiantes-rio-cuarto.png",
+      "bytes": 60786,
+      "sha256": "35b41a0a397d029d35b7c58c4d33bc95404e2e9684c7dfcafafd90daa43cf5fd"
+    },
+    {
+      "country": "AR",
+      "club": "Gimnasia La Plata",
+      "source_filename": "gimnasialaplata.png",
+      "path": "assets/club-crests/user-2026/ar-gimnasia-la-plata.png",
+      "bytes": 139502,
+      "sha256": "9c7a0ff67fe6d40cdf476c61bd87791a704cd1126e60a55cdefac8354f0e203d"
+    },
+    {
+      "country": "AR",
+      "club": "Gimnasia Mendoza",
+      "source_filename": "gimnasiamendoza.png",
+      "path": "assets/club-crests/user-2026/ar-gimnasia-mendoza.png",
+      "bytes": 26832,
+      "sha256": "abf211f3390ec09826317ec341ec9a6795f10cc2cc899ba27900c1ae53d0eca9"
+    },
+    {
+      "country": "AR",
+      "club": "Huracán",
+      "source_filename": "huracan.png",
+      "path": "assets/club-crests/user-2026/ar-huracan.png",
+      "bytes": 35483,
+      "sha256": "55e1e70a2a4ba5ee4e143b2d4d1e07d27f3d5ab8e58a3e6079447155286dde93"
+    },
+    {
+      "country": "AR",
+      "club": "Independiente Rivadavia",
+      "source_filename": "indrivadavia.svg",
+      "path": "assets/club-crests/user-2026/ar-independiente-rivadavia.png",
+      "bytes": 170758,
+      "sha256": "4b495f0a90c480f17a058fcc99b4da4a7497c7e36d364c77c79b92c02c020705"
+    },
+    {
+      "country": "AR",
+      "club": "Instituto",
+      "source_filename": "instituto.png",
+      "path": "assets/club-crests/user-2026/ar-instituto.png",
+      "bytes": 69095,
+      "sha256": "13d62724f0c0356c72f143a15b21e6286fc1e9227a2babbb9e1138c7b41c522e"
+    },
+    {
+      "country": "AR",
+      "club": "Lanús",
+      "source_filename": "lanus.png",
+      "path": "assets/club-crests/user-2026/ar-lanus.png",
+      "bytes": 82858,
+      "sha256": "fa54efdc46f75692660e4a5e2aec425dd7242bbe6f99d6ebf877fe115e079721"
+    },
+    {
+      "country": "AR",
+      "club": "Newell's Old Boys",
+      "source_filename": "newells.svg",
+      "path": "assets/club-crests/user-2026/ar-newell-s-old-boys.png",
+      "bytes": 50675,
+      "sha256": "2b21d6ff76630d681cded7b1f00b303c83caeeb01333079b8cf85ae2348f0817"
+    },
+    {
+      "country": "AR",
+      "club": "Platense",
+      "source_filename": "platense.svg",
+      "path": "assets/club-crests/user-2026/ar-platense.png",
+      "bytes": 61613,
+      "sha256": "b27347131bc4c7ba453dcb473968db806942a5e68d344960ab97d9a73b15a1a0"
+    },
+    {
+      "country": "AR",
+      "club": "Sarmiento",
+      "source_filename": "sarmiento.webp",
+      "path": "assets/club-crests/user-2026/ar-sarmiento.png",
+      "bytes": 77470,
+      "sha256": "c340df554b1ec4d33c25af409561775f6ddf163c8dcf918259660a08de3d6929"
+    },
+    {
+      "country": "AR",
+      "club": "Tigre",
+      "source_filename": "tigre fc.svg",
+      "path": "assets/club-crests/user-2026/ar-tigre.png",
+      "bytes": 21550,
+      "sha256": "133fd7ce3ad1db38dea9743b5c12765bd8703f7755603e5b50295d8633a56b91"
+    },
+    {
+      "country": "AR",
+      "club": "Unión",
+      "source_filename": "unión.webp",
+      "path": "assets/club-crests/user-2026/ar-union.png",
+      "bytes": 64006,
+      "sha256": "2452cfff5831f3ffea285e96f825ba70c629449cf65379ec2762a48d217346aa"
+    },
+    {
+      "country": "BE",
+      "club": "Antwerp",
+      "source_filename": "antwerp.png",
+      "path": "assets/club-crests/user-2026/be-antwerp.png",
+      "bytes": 81785,
+      "sha256": "2ee3ec8b2afe97113182b0cba01c93eb8f79539cb7dc95c71c60afe470384298"
+    },
+    {
+      "country": "BE",
+      "club": "Beveren",
+      "source_filename": "beveren.svg",
+      "path": "assets/club-crests/user-2026/be-beveren.png",
+      "bytes": 134540,
+      "sha256": "f2f284a41a7d0c9c244745054bc480c77811ea23f4c6a54ec4c9f0bb74eae77f"
+    },
+    {
+      "country": "BE",
+      "club": "Cercle Brugge",
+      "source_filename": "cerclebrugge.png",
+      "path": "assets/club-crests/user-2026/be-cercle-brugge.png",
+      "bytes": 113806,
+      "sha256": "f2241a580a3306d1d42eb4a1c16d4fc1e3de52a586783508927244eb343551c4"
+    },
+    {
+      "country": "BE",
+      "club": "Charleroi",
+      "source_filename": "charleroi.png",
+      "path": "assets/club-crests/user-2026/be-charleroi.png",
+      "bytes": 32535,
+      "sha256": "2df8efdf98380c43424459358fa225b7ed2b3808d07797e91c5b389878ed1fe8"
+    },
+    {
+      "country": "BE",
+      "club": "Kortrijk",
+      "source_filename": "kortrijjk.png",
+      "path": "assets/club-crests/user-2026/be-kortrijk.png",
+      "bytes": 48290,
+      "sha256": "4dd7a0b4415cf3474b89eec3381195ef36a951030d8b449ebb04db7651909004"
+    },
+    {
+      "country": "BE",
+      "club": "La Louvière",
+      "source_filename": "lalouviere.png",
+      "path": "assets/club-crests/user-2026/be-la-louviere.png",
+      "bytes": 96608,
+      "sha256": "8e9de7872cea8bb3692726425173aacd16255836fdd17c3fbe602dd0b7933fc5"
+    },
+    {
+      "country": "BE",
+      "club": "Lommel",
+      "source_filename": "lommel.webp",
+      "path": "assets/club-crests/user-2026/be-lommel.png",
+      "bytes": 153955,
+      "sha256": "afdcebe3b7402bef311acd93a1cdb71220c343ae4edeb73babea94f6750d0e76"
+    },
+    {
+      "country": "BE",
+      "club": "Mechelen",
+      "source_filename": "mechelen.webp",
+      "path": "assets/club-crests/user-2026/be-mechelen.png",
+      "bytes": 119998,
+      "sha256": "6cdda8bc239e1e427b7559190fe3e15f347187b5ac3e13e98425d3fd16487a87"
+    },
+    {
+      "country": "BE",
+      "club": "OH Leuven",
+      "source_filename": "ohleuven.png",
+      "path": "assets/club-crests/user-2026/be-oh-leuven.png",
+      "bytes": 48891,
+      "sha256": "8ae93b40e24fa757caaafb224315513c3a21dbac9cad17231ad79fbadf72b821"
+    },
+    {
+      "country": "BE",
+      "club": "Sint-Truiden",
+      "source_filename": "sint-truiden.png",
+      "path": "assets/club-crests/user-2026/be-sint-truiden.png",
+      "bytes": 79531,
+      "sha256": "25774b2c0dccbeddf2167179ad18faf2088b5fcb1336013c2698aef9960e20ed"
+    },
+    {
+      "country": "BE",
+      "club": "Standard Liège",
+      "source_filename": "standardliege.png",
+      "path": "assets/club-crests/user-2026/be-standard-liege.png",
+      "bytes": 68304,
+      "sha256": "a55547b6d1dbfe6cd677081bc00a6d130f28570d937d39da9c0bec13891d6bfc"
+    },
+    {
+      "country": "BE",
+      "club": "Westerlo",
+      "source_filename": "westerlo.png",
+      "path": "assets/club-crests/user-2026/be-westerlo.png",
+      "bytes": 61659,
+      "sha256": "6dd8ce483e7d2e37c6b93aa4a366d53fefe25205f94e73d24b08b872b966d861"
+    },
+    {
+      "country": "BE",
+      "club": "Zulte Waregem",
+      "source_filename": "zultewaregem.webp",
+      "path": "assets/club-crests/user-2026/be-zulte-waregem.png",
+      "bytes": 111397,
+      "sha256": "753a5253b1401fa6e91950b070c84c59a6551ca9a0f01e06961157b61eb63629"
+    },
+    {
+      "country": "CL",
+      "club": "Audax Italiano",
+      "source_filename": "audaxitaliano.png",
+      "path": "assets/club-crests/user-2026/cl-audax-italiano.png",
+      "bytes": 48872,
+      "sha256": "f2f1a73d5f518a7a19a70c3669bfe468d32d8c633126c5e9f723db9729a3dd7b"
+    },
+    {
+      "country": "CL",
+      "club": "Cobresal",
+      "source_filename": "cobresal.png",
+      "path": "assets/club-crests/user-2026/cl-cobresal.png",
+      "bytes": 44359,
+      "sha256": "13b827eab086ffd2dba4bcd1cf639aeadf3fdd54cfe8f392c86b1263460f81ad"
+    },
+    {
+      "country": "CL",
+      "club": "Coquimbo Unido",
+      "source_filename": "coquimbounido.png",
+      "path": "assets/club-crests/user-2026/cl-coquimbo-unido.png",
+      "bytes": 42689,
+      "sha256": "1cd87766fae9acd5be427e51d87aa127e3c3519f926891c99214ce3aa29a4d7e"
+    },
+    {
+      "country": "CL",
+      "club": "Deportes Concepción",
+      "source_filename": "depconcepcion.png",
+      "path": "assets/club-crests/user-2026/cl-deportes-concepcion.png",
+      "bytes": 215486,
+      "sha256": "a8a01006aad75b9fa2319ca088fc34186a257ca6f40d4508a127dd8e6627eb74"
+    },
+    {
+      "country": "CL",
+      "club": "Deportes La Serena",
+      "source_filename": "deplaserena.png",
+      "path": "assets/club-crests/user-2026/cl-deportes-la-serena.png",
+      "bytes": 77827,
+      "sha256": "b73057e86744cc89b9f20463acaa22fcf8426ea07857b975aefe0461bea192c4"
+    },
+    {
+      "country": "CL",
+      "club": "Deportes Limache",
+      "source_filename": "deplimache.png",
+      "path": "assets/club-crests/user-2026/cl-deportes-limache.png",
+      "bytes": 87175,
+      "sha256": "15e4bad9913bcccb355f19f7b6a3c90fb49ffe2b9d6862d44649da89b0f5b1a5"
+    },
+    {
+      "country": "CL",
+      "club": "Everton de Viña del Mar",
+      "source_filename": "evertonvinadelmar.png",
+      "path": "assets/club-crests/user-2026/cl-everton-de-vina-del-mar.png",
+      "bytes": 31451,
+      "sha256": "cdf57a86a8e0be8b3751b4aa808732ea79955abe434ae4dd4ccbf2c91a5fad97"
+    },
+    {
+      "country": "CL",
+      "club": "Ñublense",
+      "source_filename": "nublense.png",
+      "path": "assets/club-crests/user-2026/cl-nublense.png",
+      "bytes": 86840,
+      "sha256": "36430c5c5029950a18fc72dab1c0e2d9b4230a8f0f3ef80479a78c0e1680f459"
+    },
+    {
+      "country": "CL",
+      "club": "O'Higgins",
+      "source_filename": "ohiggins.png",
+      "path": "assets/club-crests/user-2026/cl-o-higgins.png",
+      "bytes": 10687,
+      "sha256": "7da4ebbdd5e31fd691411135e27eb05697b95699219c48460747756f7e77e939"
+    },
+    {
+      "country": "CL",
+      "club": "Unión La Calera",
+      "source_filename": "unionlacalera.png",
+      "path": "assets/club-crests/user-2026/cl-union-la-calera.png",
+      "bytes": 86402,
+      "sha256": "80f99fd2f8148b371b2da638c23a81811032686219f9f216fcea95fc9739cfeb"
+    },
+    {
+      "country": "CL",
+      "club": "Universidad de Concepción",
+      "source_filename": "universidadeconcepcion.png",
+      "path": "assets/club-crests/user-2026/cl-universidad-de-concepcion.png",
+      "bytes": 31536,
+      "sha256": "5f23dac3203057b22661cc2d309dd17c1ebb05df19ccf2e3c14fe073991b9b84"
+    },
+    {
+      "country": "CO",
+      "club": "Alianza FC",
+      "source_filename": "alianzafc.png",
+      "path": "assets/club-crests/user-2026/co-alianza-fc.png",
+      "bytes": 118259,
+      "sha256": "ab08d9a94c2b378040e7fc7a7f8cdd0d411b0ae6016d89495f94e2d0f957bc2c"
+    },
+    {
+      "country": "CO",
+      "club": "Atlético Bucaramanga",
+      "source_filename": "bucaramanga.png",
+      "path": "assets/club-crests/user-2026/co-atletico-bucaramanga.png",
+      "bytes": 106937,
+      "sha256": "3e84b4e7d0acef2c4322cb3dd459340b3a0158e99b26fbb8a6af0dce17ee9f10"
+    },
+    {
+      "country": "CO",
+      "club": "Boyacá Chicó",
+      "source_filename": "buyacachico.avif",
+      "path": "assets/club-crests/user-2026/co-boyaca-chico.png",
+      "bytes": 205080,
+      "sha256": "c2609c795c8457609a2ac26a12e1e83851efc8d14ee1499355eebebf8c395811"
+    },
+    {
+      "country": "CO",
+      "club": "Cúcuta Deportivo",
+      "source_filename": "cucutadeportivo.png",
+      "path": "assets/club-crests/user-2026/co-cucuta-deportivo.png",
+      "bytes": 47735,
+      "sha256": "285bd560bc4c76db24996d5404294039dcf4f0e3b1542f42818892c8674f14aa"
+    },
+    {
+      "country": "CO",
+      "club": "Deportes Tolima",
+      "source_filename": "deportestolima.svg",
+      "path": "assets/club-crests/user-2026/co-deportes-tolima.png",
+      "bytes": 54928,
+      "sha256": "f8557e96dcc4460115b51c0e5c2df84a73c6d2b0ca98d249b251f3514a9231b0"
+    },
+    {
+      "country": "CO",
+      "club": "Deportivo Cali",
+      "source_filename": "deportivocali.webp",
+      "path": "assets/club-crests/user-2026/co-deportivo-cali.png",
+      "bytes": 89380,
+      "sha256": "4bf06803c708fb53bbf902d19832063bf0c23caddf0c6a4ae31c58a115a7290d"
+    },
+    {
+      "country": "CO",
+      "club": "Deportivo Pasto",
+      "source_filename": "deportivo pasto.png",
+      "path": "assets/club-crests/user-2026/co-deportivo-pasto.png",
+      "bytes": 186876,
+      "sha256": "af0b9af5d5d6990e149f7ac10c4f39b5127debcc2a588e335131ceefc3eed545"
+    },
+    {
+      "country": "CO",
+      "club": "Deportivo Pereira",
+      "source_filename": "deportivo pereira.svg",
+      "path": "assets/club-crests/user-2026/co-deportivo-pereira.png",
+      "bytes": 36200,
+      "sha256": "df5b808bf7c6e57c4dc02248db02a03a8f3748a859dfb08d8aec1b1bbf1c61f4"
+    },
+    {
+      "country": "CO",
+      "club": "Fortaleza CEIF",
+      "source_filename": "fortalezaceif.png",
+      "path": "assets/club-crests/user-2026/co-fortaleza-ceif.png",
+      "bytes": 120417,
+      "sha256": "6b2f23bc7ca34d1a494d8195206c1ae9aedf9a29aecd358aaace340064da40ff"
+    },
+    {
+      "country": "CO",
+      "club": "Internacional de Bogotá",
+      "source_filename": "internacionalbogota.png",
+      "path": "assets/club-crests/user-2026/co-internacional-de-bogota.png",
+      "bytes": 52183,
+      "sha256": "0d7bc8f71277579ab87fe3edf296dc2c24240856fccf711bfe9eee15dd6f3642"
+    },
+    {
+      "country": "CO",
+      "club": "Jaguares de Córdoba",
+      "source_filename": "jaguaresdecordoba.png",
+      "path": "assets/club-crests/user-2026/co-jaguares-de-cordoba.png",
+      "bytes": 108906,
+      "sha256": "ddbda3cd64513a5169b65c54e1ff323493623997b8f36e2f09826f646497da70"
+    },
+    {
+      "country": "CO",
+      "club": "Llaneros",
+      "source_filename": "llaneros.png",
+      "path": "assets/club-crests/user-2026/co-llaneros.png",
+      "bytes": 68720,
+      "sha256": "088403754705da378cd71b8d14761a8ba72b93c0c50980d461b1eb0cf11d5441"
+    },
+    {
+      "country": "CO",
+      "club": "Once Caldas",
+      "source_filename": "oncecaldas.svg",
+      "path": "assets/club-crests/user-2026/co-once-caldas.png",
+      "bytes": 45238,
+      "sha256": "fbebf0abca95a6bcdbab819ac63fdca73adab1cef96f690e41c0991409680285"
+    },
+    {
+      "country": "CO",
+      "club": "Rionegro Águilas",
+      "source_filename": "rionegroaguilas.png",
+      "path": "assets/club-crests/user-2026/co-rionegro-aguilas.png",
+      "bytes": 120202,
+      "sha256": "ba58bdda3ce06237b276524ac0e13b8b924996c4fcf442a742069016402ec5a3"
+    },
+    {
+      "country": "CO",
+      "club": "Santa Fe",
+      "source_filename": "santafe.webp",
+      "path": "assets/club-crests/user-2026/co-santa-fe.png",
+      "bytes": 41483,
+      "sha256": "2df0d1f01786daf4f00b75523bf0d9a1310dde1ea9e3bfb06b8d3eb5ca4d1b04"
+    },
+    {
+      "country": "IT",
+      "club": "Südtirol",
+      "source_filename": "sudtriol.png",
+      "path": "assets/club-crests/user-2026/it-sudtirol.png",
+      "bytes": 95824,
+      "sha256": "1d4748825e5b5bfd19374ce7c565db6e45dc3f85581d885c6da2cfecaec5ff5f"
+    },
+    {
+      "country": "JP",
+      "club": "Avispa Fukuoka",
+      "source_filename": "avispafukuoka.png",
+      "path": "assets/club-crests/user-2026/jp-avispa-fukuoka.png",
+      "bytes": 66346,
+      "sha256": "ab4772475aace9be86bce18d608bd7cb6e43b8296f490e2d39ebf9a974e6e88a"
+    },
+    {
+      "country": "JP",
+      "club": "Cerezo Osaka",
+      "source_filename": "cerezoosaka.png",
+      "path": "assets/club-crests/user-2026/jp-cerezo-osaka.png",
+      "bytes": 151663,
+      "sha256": "6cd9e09fe693c0b3b746ca3a452b8b2c7359522c6c6d00c53401268928babca3"
+    },
+    {
+      "country": "JP",
+      "club": "Fagiano Okayama",
+      "source_filename": "fagianookayama.png",
+      "path": "assets/club-crests/user-2026/jp-fagiano-okayama.png",
+      "bytes": 94621,
+      "sha256": "35a7b533d2f7127de76c4d962a0279765b93c0a6de4515d4cc73b44a13ce424b"
+    },
+    {
+      "country": "JP",
+      "club": "FC Tokyo",
+      "source_filename": "fctokyo.png",
+      "path": "assets/club-crests/user-2026/jp-fc-tokyo.png",
+      "bytes": 53103,
+      "sha256": "d002d5e6f4bd9c0098f233e5536d826df8b119c556c0c2dee43ce67165f95ee4"
+    },
+    {
+      "country": "JP",
+      "club": "Gamba Osaka",
+      "source_filename": "gambaosaka.webp",
+      "path": "assets/club-crests/user-2026/jp-gamba-osaka.png",
+      "bytes": 26745,
+      "sha256": "ea442a8a2c291bd2bf280b72da28c241b75251a8f999636b98814a39a6f775da"
+    },
+    {
+      "country": "JP",
+      "club": "JEF United Chiba",
+      "source_filename": "jefutdchiba.png",
+      "path": "assets/club-crests/user-2026/jp-jef-united-chiba.png",
+      "bytes": 118642,
+      "sha256": "de2fe8d933de7c97e4a760a34d6506083d4b9b0d4ef9ffb9d5ecacc178f251fc"
+    },
+    {
+      "country": "JP",
+      "club": "Kashiwa Reysol",
+      "source_filename": "kashiwareysol.png",
+      "path": "assets/club-crests/user-2026/jp-kashiwa-reysol.png",
+      "bytes": 69209,
+      "sha256": "a3d543954faf7263641bb011bb73de6ef8a48c5975e60b18d595cd8c0a3f57d8"
+    },
+    {
+      "country": "JP",
+      "club": "Kyoto Sanga",
+      "source_filename": "kyotosanga.png",
+      "path": "assets/club-crests/user-2026/jp-kyoto-sanga.png",
+      "bytes": 195330,
+      "sha256": "03f7319ac6e370735bb59b4cf377b57fca2f903c7d970d52aac83df43fa8fb7f"
+    },
+    {
+      "country": "JP",
+      "club": "Machida Zelvia",
+      "source_filename": "machidazelvia.png",
+      "path": "assets/club-crests/user-2026/jp-machida-zelvia.png",
+      "bytes": 108448,
+      "sha256": "67085736836e0449104fb46f6d0c9591759cae9ee77a542a498a24d99ae8bb7d"
+    },
+    {
+      "country": "JP",
+      "club": "Mito HollyHock",
+      "source_filename": "mitohollyhock.png",
+      "path": "assets/club-crests/user-2026/jp-mito-hollyhock.png",
+      "bytes": 168358,
+      "sha256": "7a49e05b4784044a630b0c027a97680188cd8688e3b17923481451e856d426b0"
+    },
+    {
+      "country": "JP",
+      "club": "Nagoya Grampus",
+      "source_filename": "nagoyagrampus.png",
+      "path": "assets/club-crests/user-2026/jp-nagoya-grampus.png",
+      "bytes": 83992,
+      "sha256": "dd476b9d1c929dc1cea1d96a789c3fadd41e83dffb7145d0ef82edba197bde61"
+    },
+    {
+      "country": "JP",
+      "club": "Sanfrecce Hiroshima",
+      "source_filename": "sanfrecce hiroshima.png",
+      "path": "assets/club-crests/user-2026/jp-sanfrecce-hiroshima.png",
+      "bytes": 240335,
+      "sha256": "30a4cea669e4288097254ef249bb0c4519a276dd205ab473d16cc40bf3af5280"
+    },
+    {
+      "country": "JP",
+      "club": "Shimizu S-Pulse",
+      "source_filename": "shimizu s-pulse.png",
+      "path": "assets/club-crests/user-2026/jp-shimizu-s-pulse.png",
+      "bytes": 94236,
+      "sha256": "f45ffe93ad9abbb38fd59405b7ff10a4cf0511614aec1c7ea84f31704489cf62"
+    },
+    {
+      "country": "JP",
+      "club": "Tokyo Verdy",
+      "source_filename": "tokyoverdy.png",
+      "path": "assets/club-crests/user-2026/jp-tokyo-verdy.png",
+      "bytes": 93592,
+      "sha256": "be3ccdbfea640e9dec58ffda63b4b31069344e6f6269bd5ecd3c9729ec5937b8"
+    },
+    {
+      "country": "JP",
+      "club": "V-Varen Nagasaki",
+      "source_filename": "v-varennagasaki.png",
+      "path": "assets/club-crests/user-2026/jp-v-varen-nagasaki.png",
+      "bytes": 161521,
+      "sha256": "6a840be573c08238154ca69cfc4353ff06bc9c76518767064b2dd558777ae4cf"
+    },
+    {
+      "country": "MX",
+      "club": "Atlante",
+      "source_filename": "atlantte.png",
+      "path": "assets/club-crests/user-2026/mx-atlante.png",
+      "bytes": 42194,
+      "sha256": "31eec37314728090c62e7783d1547fab2f4d245ac9d880bdfa358a5b6462222e"
+    },
+    {
+      "country": "MX",
+      "club": "Atlas",
+      "source_filename": "atlas.webp",
+      "path": "assets/club-crests/user-2026/mx-atlas.png",
+      "bytes": 33423,
+      "sha256": "d743038acf069852ba9eb7fbf21561967439e16745736df2ca6f0372638d1fa7"
+    },
+    {
+      "country": "MX",
+      "club": "Atlético de San Luis",
+      "source_filename": "atlsanluis.png",
+      "path": "assets/club-crests/user-2026/mx-atletico-de-san-luis.png",
+      "bytes": 150142,
+      "sha256": "646b4c7239b75d2d852a6025cd7ca3dd15b38e46bd40607a478bf531d9f105c5"
+    },
+    {
+      "country": "MX",
+      "club": "FC Juárez",
+      "source_filename": "fcjuarez.png",
+      "path": "assets/club-crests/user-2026/mx-fc-juarez.png",
+      "bytes": 61265,
+      "sha256": "b456d53dcac67779c0294429b73fac183f887e90d998d7ac0068a89f5b7415aa"
+    },
+    {
+      "country": "MX",
+      "club": "León",
+      "source_filename": "leon.png",
+      "path": "assets/club-crests/user-2026/mx-leon.png",
+      "bytes": 69019,
+      "sha256": "c679473268b443101c888da755abe359d083200bd2923ff7761a6305b2207fc6"
+    },
+    {
+      "country": "MX",
+      "club": "Necaxa",
+      "source_filename": "necaxa.png",
+      "path": "assets/club-crests/user-2026/mx-necaxa.png",
+      "bytes": 45013,
+      "sha256": "d5737d6627702489fe58571ba372a5f5856954a0b26e0d2ae9e0b505125bb4c7"
+    },
+    {
+      "country": "MX",
+      "club": "Puebla",
+      "source_filename": "pueblafc.png",
+      "path": "assets/club-crests/user-2026/mx-puebla.png",
+      "bytes": 186206,
+      "sha256": "aa19bd442ae174edb5b27bf034f73a848cf721c0abdf70b2c2fc95d37dcae255"
+    },
+    {
+      "country": "MX",
+      "club": "Pumas UNAM",
+      "source_filename": "pumasunam.png",
+      "path": "assets/club-crests/user-2026/mx-pumas-unam.png",
+      "bytes": 9965,
+      "sha256": "5d79b06ede47677d9bbe40df0d24be5256509440060efec5da82ab5a7c5b71cb"
+    },
+    {
+      "country": "MX",
+      "club": "Querétaro",
+      "source_filename": "queretaro.png",
+      "path": "assets/club-crests/user-2026/mx-queretaro.png",
+      "bytes": 46017,
+      "sha256": "3c7e2ed5a590ea2338bc0fafd954fcc0e4123e631dc750f74f98560c48082a36"
+    },
+    {
+      "country": "MX",
+      "club": "Santos Laguna",
+      "source_filename": "santoslaguna.png",
+      "path": "assets/club-crests/user-2026/mx-santos-laguna.png",
+      "bytes": 75297,
+      "sha256": "691784900830a58ad789be49e1c4dd63ff3e4bb63b6b6e28816579e5cfa79dff"
+    },
+    {
+      "country": "MX",
+      "club": "Tijuana",
+      "source_filename": "tijuana.png",
+      "path": "assets/club-crests/user-2026/mx-tijuana.png",
+      "bytes": 85200,
+      "sha256": "d9582c623ef6112113e9892395640be8bd5edb7a442705a3937966f916e146b4"
+    },
+    {
+      "country": "NL",
+      "club": "ADO Den Haag",
+      "source_filename": "adodeenhaag.png",
+      "path": "assets/club-crests/user-2026/nl-ado-den-haag.png",
+      "bytes": 47564,
+      "sha256": "641965fe45371d3bb423b18eda270d08766f2d4b19b823c940d657665bfefcaf"
+    },
+    {
+      "country": "NL",
+      "club": "SC Cambuur",
+      "source_filename": "cambuur.png",
+      "path": "assets/club-crests/user-2026/nl-sc-cambuur.png",
+      "bytes": 99615,
+      "sha256": "50d2e3feccb654103c14739cbf79561841bdd8ccb8db866d9c894334e49b6fb9"
+    },
+    {
+      "country": "NL",
+      "club": "Willem II",
+      "source_filename": "willem  2.png",
+      "path": "assets/club-crests/user-2026/nl-willem-ii.png",
+      "bytes": 45673,
+      "sha256": "e65f32b1ba4aa474f26adf182798bfbc081de2343cc45f982050e3317bb30ebe"
+    },
+    {
+      "country": "SA",
+      "club": "Abha",
+      "source_filename": "abha.svg",
+      "path": "assets/club-crests/user-2026/sa-abha.png",
+      "bytes": 39968,
+      "sha256": "c7852b0539e07e92b78fd891a9c086908266966ffa68b4a6689b07bb5ac30645"
+    },
+    {
+      "country": "SA",
+      "club": "Al-Diriyah",
+      "source_filename": "al-diriyah.png",
+      "path": "assets/club-crests/user-2026/sa-al-diriyah.png",
+      "bytes": 89073,
+      "sha256": "a83766f440b9e47b1770ca219cdf6db6e07f7e9195e5b7ad4ade66edfebe2342"
+    },
+    {
+      "country": "SA",
+      "club": "Al-Faisaly",
+      "source_filename": "alfaisaly.png",
+      "path": "assets/club-crests/user-2026/sa-al-faisaly.png",
+      "bytes": 19648,
+      "sha256": "b82c2b6a83adb7968ef31c76886da191598f00f88586bb29fa3663eef4e0e373"
+    },
+    {
+      "country": "SA",
+      "club": "Al-Hazm",
+      "source_filename": "alhazm.png",
+      "path": "assets/club-crests/user-2026/sa-al-hazm.png",
+      "bytes": 18491,
+      "sha256": "395c37b743b629c68d71a931339dd440b8fdd81e9ecb030cc2a5ad3084d7eea4"
+    },
+    {
+      "country": "SCO",
+      "club": "St Johnstone",
+      "source_filename": "stjohnstone.png",
+      "path": "assets/club-crests/user-2026/sco-st-johnstone.png",
+      "bytes": 92823,
+      "sha256": "5e0104a7a2838d04355055ba8e2c31d555abd5d7c3ebc4a0f538ea5a32bae3fb"
+    },
+    {
+      "country": "TR",
+      "club": "Alanyaspor",
+      "source_filename": "alanyaspor.webp",
+      "path": "assets/club-crests/user-2026/tr-alanyaspor.png",
+      "bytes": 160021,
+      "sha256": "7054478caa0a15b4adece645c5aa16f8f8f467aa41abfcab93ac73d58ffc13c0"
+    },
+    {
+      "country": "TR",
+      "club": "Amedspor",
+      "source_filename": "amedspor.webp",
+      "path": "assets/club-crests/user-2026/tr-amedspor.png",
+      "bytes": 36836,
+      "sha256": "2e17b841772cc276d5ca01ccadfdbebbc801aebdff03b3544a76ccb2f3519ed5"
+    },
+    {
+      "country": "TR",
+      "club": "Çorum FK",
+      "source_filename": "çorum.png",
+      "path": "assets/club-crests/user-2026/tr-corum-fk.png",
+      "bytes": 104707,
+      "sha256": "c1f1a64437af47edf3e5d4f5e2d895aeab12df4873f624b9342a869fc21dc5d2"
+    },
+    {
+      "country": "TR",
+      "club": "Erzurumspor",
+      "source_filename": "erzurumspor.png",
+      "path": "assets/club-crests/user-2026/tr-erzurumspor.png",
+      "bytes": 115988,
+      "sha256": "7c03f95b5dd7a4ddf8618a6161a0d019e1f2d0027ee33dd1adfbf81dbf58e75d"
+    },
+    {
+      "country": "TR",
+      "club": "Gaziantep",
+      "source_filename": "gaziantek.png",
+      "path": "assets/club-crests/user-2026/tr-gaziantep.png",
+      "bytes": 212241,
+      "sha256": "0d2203c6930112821b8473646b241ef3a53aa1895086fde9e4659f01013c3d3e"
+    },
+    {
+      "country": "TR",
+      "club": "Gençlerbirliği",
+      "source_filename": "gençlervirligi.png",
+      "path": "assets/club-crests/user-2026/tr-genclerbirligi.png",
+      "bytes": 136987,
+      "sha256": "1c55d897b5c0e361e3a8669aab2360c2138f22fe0296086ccce1d279a470b284"
+    },
+    {
+      "country": "TR",
+      "club": "Göztepe",
+      "source_filename": "goztepe.png",
+      "path": "assets/club-crests/user-2026/tr-goztepe.png",
+      "bytes": 136925,
+      "sha256": "92706e03da39b670ed3c3ea39a7866a783f2cf51b3664a10291a2550c736179e"
+    },
+    {
+      "country": "TR",
+      "club": "Kasımpaşa",
+      "source_filename": "kasimpasa.png",
+      "path": "assets/club-crests/user-2026/tr-kasmpasa.png",
+      "bytes": 109355,
+      "sha256": "30da4c6a2500614a2d8d581424441b06ac1c634a219f0b09b57eefe5230b57e0"
+    },
+    {
+      "country": "TR",
+      "club": "Kocaelispor",
+      "source_filename": "kocaelispor.png",
+      "path": "assets/club-crests/user-2026/tr-kocaelispor.png",
+      "bytes": 38378,
+      "sha256": "8c073dc58cae685cbe28548d9d23479a95124e202899ed200f5e69556819cf7c"
+    },
+    {
+      "country": "TR",
+      "club": "Konyaspor",
+      "source_filename": "konyaspor.png",
+      "path": "assets/club-crests/user-2026/tr-konyaspor.png",
+      "bytes": 138977,
+      "sha256": "5786508a8740e215a30ced4a43a5cb6138ee63e9897dbf37c0a4767f3647131c"
+    },
+    {
+      "country": "TR",
+      "club": "Samsunspor",
+      "source_filename": "samsunspor.png",
+      "path": "assets/club-crests/user-2026/tr-samsunspor.png",
+      "bytes": 44890,
+      "sha256": "c0ed6369275a0dc7a506f6b6e6e94ac3cca7d683481ce83efed6b6ae7359924c"
+    },
+    {
+      "country": "US",
+      "club": "Austin FC",
+      "source_filename": "austinfc.webp",
+      "path": "assets/club-crests/user-2026/us-austin-fc.png",
+      "bytes": 64409,
+      "sha256": "31f313eb1dc8910a85a9cef5ffbacae8d53f80561c62f66cb664abbcfb69ac19"
+    },
+    {
+      "country": "US",
+      "club": "Charlotte FC",
+      "source_filename": "charlottefc.png",
+      "path": "assets/club-crests/user-2026/us-charlotte-fc.png",
+      "bytes": 86125,
+      "sha256": "5b45b09eaf62e7b2aa7d37b5f68a0b796012999ea03b6ca2278342364c1f1cd2"
+    },
+    {
+      "country": "US",
+      "club": "Chicago Fire",
+      "source_filename": "chicagofire.webp",
+      "path": "assets/club-crests/user-2026/us-chicago-fire.png",
+      "bytes": 69157,
+      "sha256": "7c9907ec7354375ff3f36909c3506fd9b5a505de9d5a7e745566255cd7fb7ea1"
+    },
+    {
+      "country": "US",
+      "club": "Colorado Rapids",
+      "source_filename": "coloradorapids.svg",
+      "path": "assets/club-crests/user-2026/us-colorado-rapids.png",
+      "bytes": 137135,
+      "sha256": "304f184719f92e68c062b1d021f910dbe175a2a1a62aebb572dfd437dc0d5abd"
+    },
+    {
+      "country": "US",
+      "club": "D.C. United",
+      "source_filename": "dc united.png",
+      "path": "assets/club-crests/user-2026/us-d-c-united.png",
+      "bytes": 51616,
+      "sha256": "ef8604673c875175eed98b753ad447ab6f40ec50d629acfa440a39322dcf8b92"
+    },
+    {
+      "country": "US",
+      "club": "FC Dallas",
+      "source_filename": "fcdallas.png",
+      "path": "assets/club-crests/user-2026/us-fc-dallas.png",
+      "bytes": 70338,
+      "sha256": "fbd03208799858de6b7b5812e4552e928506ee6903a93dd5ba49fb403c001596"
+    },
+    {
+      "country": "US",
+      "club": "Houston Dynamo",
+      "source_filename": "houstondinamo.png",
+      "path": "assets/club-crests/user-2026/us-houston-dynamo.png",
+      "bytes": 37820,
+      "sha256": "64ec61a00f37303f87cab24d397060c9a71c1120f4ba8e5bc6e5b7312e18393c"
+    },
+    {
+      "country": "US",
+      "club": "Minnesota United FC",
+      "source_filename": "minessotaunited.png",
+      "path": "assets/club-crests/user-2026/us-minnesota-united-fc.png",
+      "bytes": 62464,
+      "sha256": "31af26765f9ad0828490cfb2e7992de7faf8d5cf30daaceab195f0f889afa42f"
+    },
+    {
+      "country": "US",
+      "club": "Montréal",
+      "source_filename": "fcmontreal.png",
+      "path": "assets/club-crests/user-2026/us-montreal.png",
+      "bytes": 80600,
+      "sha256": "6781216c170e3f514eec089a7deb95595dd3360e5e09b7f31e32e2ba0c8d1abb"
+    },
+    {
+      "country": "US",
+      "club": "Nashville SC",
+      "source_filename": "nashville.png",
+      "path": "assets/club-crests/user-2026/us-nashville-sc.png",
+      "bytes": 37081,
+      "sha256": "4c19b9cc0e9dadff04d1c74a7a9e02e320522a0e01c2fdf757d9612a049d7be1"
+    },
+    {
+      "country": "US",
+      "club": "New England Revolution",
+      "source_filename": "newenglandrevolution.png",
+      "path": "assets/club-crests/user-2026/us-new-england-revolution.png",
+      "bytes": 53893,
+      "sha256": "c003e94aed42a8006010adfb38a98638af5c14889092b71819a44e64d1ac4356"
+    },
+    {
+      "country": "US",
+      "club": "New York Red Bulls",
+      "source_filename": "ny redbulls.png",
+      "path": "assets/club-crests/user-2026/us-new-york-red-bulls.png",
+      "bytes": 91942,
+      "sha256": "4fff66b7bd0f55fa37117d07e65791b7dac11351c850e0b08a49f94821cea5ff"
+    },
+    {
+      "country": "US",
+      "club": "Philadelphia Union",
+      "source_filename": "phyladelphia union.png",
+      "path": "assets/club-crests/user-2026/us-philadelphia-union.png",
+      "bytes": 82300,
+      "sha256": "a64acb995f1fab8755bb53b1c5b87ed46f4d451128f6deb355462c961d120d35"
+    },
+    {
+      "country": "US",
+      "club": "Portland Timbers",
+      "source_filename": "portland timbers.webp",
+      "path": "assets/club-crests/user-2026/us-portland-timbers.png",
+      "bytes": 25136,
+      "sha256": "877ac4bb702cfa9c068444f89490fa0fbcd25665b8c9ca4d089632c70327370e"
+    },
+    {
+      "country": "US",
+      "club": "Real Salt Lake",
+      "source_filename": "realsaltlake.png",
+      "path": "assets/club-crests/user-2026/us-real-salt-lake.png",
+      "bytes": 85260,
+      "sha256": "1534ef6bffdc2cd16aa7611cd0d81f93dc23a4b49500dcbceff37cd5f78a7bc8"
+    },
+    {
+      "country": "US",
+      "club": "San Diego FC",
+      "source_filename": "sandiegofc.png",
+      "path": "assets/club-crests/user-2026/us-san-diego-fc.png",
+      "bytes": 60702,
+      "sha256": "9e5d39806f2ee678351305c2dd9e4bb1d4aebeea4581fe29f3b65c6d6ef8983a"
+    },
+    {
+      "country": "US",
+      "club": "San Jose Earthquakes",
+      "source_filename": "sanjoseearthquakes.png",
+      "path": "assets/club-crests/user-2026/us-san-jose-earthquakes.png",
+      "bytes": 52287,
+      "sha256": "453a8075814af23d065bf2077ad6296f97478015eaea2b102ec065aa7ee4fb21"
+    },
+    {
+      "country": "US",
+      "club": "Sporting Kansas City",
+      "source_filename": "sportingkansascity.png",
+      "path": "assets/club-crests/user-2026/us-sporting-kansas-city.png",
+      "bytes": 58132,
+      "sha256": "ba7e46a20fefff7c02fe0a4d61ee31789bf25ceeb206f101b67b46008e498b45"
+    },
+    {
+      "country": "US",
+      "club": "St. Louis CITY",
+      "source_filename": "stlouiscity.png",
+      "path": "assets/club-crests/user-2026/us-st-louis-city.png",
+      "bytes": 39512,
+      "sha256": "648e607ce1ea6a04b1dc422d23223193861ca2400cfd72d9a2daab4014a6e113"
+    },
+    {
+      "country": "US",
+      "club": "Toronto FC",
+      "source_filename": "torontofc.png",
+      "path": "assets/club-crests/user-2026/us-toronto-fc.png",
+      "bytes": 68373,
+      "sha256": "e91f86b80af1bea04deea1462c179439dfa800633425ec969457e2efd2d7d784"
+    },
+    {
+      "country": "US",
+      "club": "Vancouver Whitecaps",
+      "source_filename": "vancouverwhitecaps.png",
+      "path": "assets/club-crests/user-2026/us-vancouver-whitecaps.png",
+      "bytes": 52276,
+      "sha256": "36eb84c0a17549cb2488549ca60ec3e82f9018ea1b00e1dcaeb1bfd12593ad98"
+    },
+    {
+      "country": "UY",
+      "club": "Albion",
+      "source_filename": "albion-uru.svg",
+      "path": "assets/club-crests/user-2026/uy-albion.png",
+      "bytes": 106168,
+      "sha256": "a30072c679f0c82f6545ead1065a1d4431c7f6c6b7abfcea21af6c75c6435283"
+    },
+    {
+      "country": "UY",
+      "club": "Boston River",
+      "source_filename": "bostonriver.png",
+      "path": "assets/club-crests/user-2026/uy-boston-river.png",
+      "bytes": 44179,
+      "sha256": "48563930811a05c44b47e12f6eed79d0d5ef5fed6d6c531cd99f79f7d9a90525"
+    },
+    {
+      "country": "UY",
+      "club": "Central Español",
+      "source_filename": "centralespanhol.png",
+      "path": "assets/club-crests/user-2026/uy-central-espanol.png",
+      "bytes": 72317,
+      "sha256": "ecb1b1739fc485ceef734e02a2e4b1e2b8d7da22abf435dc043b575f983451ac"
+    },
+    {
+      "country": "UY",
+      "club": "Cerro",
+      "source_filename": "cerro.png",
+      "path": "assets/club-crests/user-2026/uy-cerro.png",
+      "bytes": 108667,
+      "sha256": "c503f5183e290c000f062571dde63d095d53f66832664dd2e929f740f808ccd0"
+    },
+    {
+      "country": "UY",
+      "club": "Cerro Largo",
+      "source_filename": "cerrolargo.png",
+      "path": "assets/club-crests/user-2026/uy-cerro-largo.png",
+      "bytes": 232260,
+      "sha256": "a04af9ec2410b06d529c7d9b998c558ece621da435ea4e5b7208203378c2f7cd"
+    },
+    {
+      "country": "UY",
+      "club": "Deportivo Maldonado",
+      "source_filename": "depmaldonado.png",
+      "path": "assets/club-crests/user-2026/uy-deportivo-maldonado.png",
+      "bytes": 59739,
+      "sha256": "2e0e6c796017e8e52b65e731d1b94e7232da8840009db2e9f0abd6422671f71c"
+    },
+    {
+      "country": "UY",
+      "club": "Juventud",
+      "source_filename": "juventud.png",
+      "path": "assets/club-crests/user-2026/uy-juventud.png",
+      "bytes": 54606,
+      "sha256": "3a72f7f5aa61b6e6dc2b2d368e53eadeb519619c5737091d9e53d90c090f10ea"
+    },
+    {
+      "country": "UY",
+      "club": "Montevideo City Torque",
+      "source_filename": "citytorque.png",
+      "path": "assets/club-crests/user-2026/uy-montevideo-city-torque.png",
+      "bytes": 233452,
+      "sha256": "78509a2f0a561740684799450010e77e44e1ed3c272c9bab33a144d86c7f766b"
+    },
+    {
+      "country": "UY",
+      "club": "Montevideo Wanderers",
+      "source_filename": "montevideowandererrs.png",
+      "path": "assets/club-crests/user-2026/uy-montevideo-wanderers.png",
+      "bytes": 89596,
+      "sha256": "592a220731d7ecc695c9560c1c285c7d1b4e32559540d6a039a8d7d0ea329376"
+    },
+    {
+      "country": "UY",
+      "club": "Progreso",
+      "source_filename": "progreso.png",
+      "path": "assets/club-crests/user-2026/uy-progreso.png",
+      "bytes": 88293,
+      "sha256": "7f4c92d3b6edf4bec91c1f1e327ee90e6362314fd294b826982a802327182278"
+    },
+    {
+      "country": "UY",
+      "club": "Racing Montevideo",
+      "source_filename": "racingmontevideo.png",
+      "path": "assets/club-crests/user-2026/uy-racing-montevideo.png",
+      "bytes": 36453,
+      "sha256": "b1c43d85aaae99deda0b09507755835b8fd931999df4a76590ed5ad972982735"
+    },
+    {
+      "country": "CL",
+      "club": "Huachipato",
+      "source_filename": "huachipato.png",
+      "previously_covered": true,
+      "path": "assets/club-crests/user-2026/cl-huachipato.png",
+      "bytes": 28599,
+      "sha256": "983bebab585f473362a0322750652a2bf468bc7dd2be6952f7f939e645628c5f"
+    }
+  ]
+}

@@ -1,0 +1,9 @@
+/* Sinalização de classificação entre temporadas */
+#summary-standings tr{box-shadow:inset 4px 0 0 var(--qualification-color,transparent)}
+.btl-qualif-position{display:inline-block;min-width:1.4em;font-weight:850}
+.btl-qualif-chip{display:block;font-size:.61rem;opacity:.88;line-height:1.4;margin-top:2px}
+.btl-qualification-legend{font-size:.68rem;color:var(--muted,#c5d2de);padding:9px 4px 4px;max-width:100%;line-height:1.6}
+#summary-standings td:nth-child(2){min-width:150px}
+@media (max-width:580px){.btl-qualif-chip{font-size:.58rem}#summary-standings td:nth-child(2){min-width:116px}}
+
+.btl-division-chip{display:block;color:var(--qualification-color,#8eda88);font-size:.68em;font-weight:800;line-height:1.5;margin-top:2px;}
