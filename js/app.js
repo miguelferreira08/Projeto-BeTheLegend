@@ -77,6 +77,7 @@ async function loadPersistedWorld(){
     if(state!==loadingState){worldStoreReady=true;if(worldDirty)save();return;}
     if(saved?.players?.length&&(!state.worldPlayers?.length||state.worldDbKey)){
       state.worldPlayers=saved.players;state.worldDataset=saved.meta||state.worldDataset||{};
+      if(upgradeFictionalPlayerNames(state.worldPlayers))worldDirty=true;
     }
     worldStoreReady=true;
     if(worldDirty)save();
@@ -4071,6 +4072,22 @@ const EXTRA_ACTIVE_PLAYERS=[
 {name:'Paolo Guerrero',rating:79,position:'ATA',club:'Alianza Lima',countryCode:'PE',nationalCode:'PE'},
 {name:'Hernán Barcos',rating:78,position:'ATA',club:'Universitario',countryCode:'PE',nationalCode:'AR'}
 ];
+const renamedRosterInstances=new WeakSet();
+function upgradeFictionalPlayerNames(players){
+  if(!Array.isArray(players)||!window.BTLPlayerNames||renamedRosterInstances.has(players))return 0;
+  renamedRosterInstances.add(players);
+  let count=0;
+  for(const wp of players){
+    if(!window.BTLPlayerNames.needsName(wp))continue;
+    // Regens already have names. Replace only generic placeholders or legacy roster labels.
+    if(!/^(?:atleta simulado|jogador simulado|simulated player)\s*\d+$/i.test(String(wp.name||'')))continue;
+    const country=wp.nationalCode||wp.countryCode||canonicalClubCountryCode(wp.club,'')||'';
+    const slot=Number(String(wp.id||'').split(':').pop())||0;
+    wp.name=window.BTLPlayerNames.generate(wp.id||`${wp.club}:${slot}`,country,slot);
+    count++;
+  }
+  return count;
+}
 function ensureWorldPlayers(){
   if(!Array.isArray(state.worldPlayers)||!state.worldPlayers.length){
     const seed=window.BTLTransfermarktSeed;
@@ -4101,6 +4118,8 @@ function ensureWorldPlayers(){
     }
     state.officialSquadImported2026=true;worldDirty=true;save();
   }
+  const renamed=upgradeFictionalPlayerNames(state.worldPlayers);
+  if(renamed)worldDirty=true;
   state.worldPlayers.forEach(wp=>{if(!wp.birthYear){wp.birthYear=inferredWorldPlayerBirthYear(wp.name);wp.birthEstimated=true;}wp.lastAgedYear=Number(wp.lastAgedYear)||Number(state.season?.year||START_YEAR);wp.retired=!!wp.retired;});
   return state.worldPlayers;
 }
@@ -4398,7 +4417,8 @@ function leaderboardSyntheticPlayer(club,country,slot,year){
   const pos=positions[(slot-1)%positions.length];
   const teamStrength=clubStrength(club,country)||findClubDataAny(club)?.strength||75;
   const rating=clamp(Math.round(teamStrength-9+hash%12),53,89);
-  return {id,name:`Atleta simulado ${String(slot).padStart(2,'0')}`,club,countryCode:country||'',nationalCode:'',position:pos,rating,
+  const name=window.BTLPlayerNames?.generate(id,country,slot)||`Jogador ${String(slot).padStart(2,'0')}`;
+  return {id,name,club,countryCode:country||'',nationalCode:'',position:pos,rating,
     birthYear:year-(19+hash%10),lastAgedYear:year,retired:false,generated:true,rosterPlaceholder:true,
     estimatedSimulationRating:true,source:'ELENCO FICTÍCIO · GERADO PELO JOGO'};
 }
@@ -4555,10 +4575,10 @@ function renderCompetitionLeaderboards(){
   const top=eligible.slice(0,leaderboardSelectedTeam?22:8),userIndex=eligible.findIndex(x=>x.isUser);
   if(!leaderboardSelectedTeam&&userIndex>=8)top.push({...eligible[userIndex],shownRank:userIndex+1});
   const header=leaderboardSelectedTeam?`<div class="leaderboard-team-header"><strong>${esc(teamNames.find(n=>normalizeKey(n)===leaderboardSelectedTeam)||'Equipe')}</strong><span>${eligible.length} atletas · ${eligible.filter(r=>r.generated).length} gerados</span></div>`:'';
-  const rowsMarkup=top.map((r,i)=>`<div class="leaderboard-row ${r.isUser?'is-user':''}"><b>${r.shownRank||i+1}</b><span><strong>${esc(r.name)}</strong>${r.rosterPlaceholder?'<small class="leaderboard-generated-label">SIMULADO</small>':''}</span>${leaderboardTeamVisual(r,leaderboardCompetition)}<strong>${r[leaderboardMode]||0}</strong></div>`).join('');
+  const rowsMarkup=top.map((r,i)=>`<div class="leaderboard-row ${r.isUser?'is-user':''}"><b>${r.shownRank||i+1}</b><span><strong>${esc(r.name)}</strong>${r.rosterPlaceholder?'<small class="leaderboard-generated-label">GERADO</small>':''}</span>${leaderboardTeamVisual(r,leaderboardCompetition)}<strong>${r[leaderboardMode]||0}</strong></div>`).join('');
   box.innerHTML=header+`<div class="leaderboard-head"><span>#</span><span>Jogador</span><span>Equipe</span><span>${leaderboardMode==='goals'?'Gols':'Assist.'}</span></div>`+
     (rowsMarkup||'<p class="muted leaderboard-no-stats">Nenhum gol ou assistência registrado nesta competição até agora. Selecione um clube para ver os atletas do elenco.</p>')+
-    '<small class="leaderboard-data-note">Estatísticas atribuídas somente a partidas registradas na carreira. Atletas marcados SIMULADO são fictícios e completam elencos sem dados suficientes.</small>';
+    '<small class="leaderboard-data-note">Estatísticas atribuídas somente a partidas registradas na carreira. Atletas marcados GERADO são fictícios e completam elencos sem dados suficientes.</small>';
   hydratePenaltyBadges(box);
   tabs.querySelectorAll('[data-leader-competition]').forEach(btn=>btn.addEventListener('click',()=>{
     leaderboardCompetition=btn.dataset.leaderCompetition;leaderboardSelectedTeam='';renderCompetitionLeaderboards();
@@ -4696,7 +4716,7 @@ function render(){
   $('#p-name').textContent=p.name;$('#p-pos').textContent=p.position;$('#p-age').textContent=p.age;$('#p-country').textContent=p.nationality;$('#p-birthdate').textContent=formatDateBR(p.birthdate);$('#p-overall').textContent=p.overall;$('#p-potential').textContent=p.potential;$('#p-club').textContent=p.club;$('#p-league').textContent=s?.league?.name||p.clubLeague||clubCompetitionProfile(p.club,p.clubCountry).league;$('#p-value').textContent=money(p.value);$('#avatar').innerHTML=appearanceMarkup(p.appearance,true,p.number||10);$('#avatar').classList.add('face-avatar');const sponsorChip=$('#p-sponsor-chip');sponsorChip?.classList.toggle('hidden',!p.sponsor?.brand);if($('#p-sponsor'))$('#p-sponsor').innerHTML=p.sponsor?.brand?`${sponsorWordmark(p.sponsor.brand)}<span>${esc(p.sponsor.brand)}</span>`:'';const idolChip=$('#p-idol-chip');idolChip?.classList.toggle('hidden',!p.idol?.name);if($('#p-idol'))$('#p-idol').textContent=p.idol?.name||'';const injuryChip=$('#p-injury-chip');injuryChip?.classList.toggle('hidden',!(p.injuryGames>0));if($('#p-injury-status'))$('#p-injury-status').textContent=p.injuryGames>0?`${p.injuryGames} jogo(s) fora`:'';
   const attrs=ensureAttributeOverallSync(p)||normalizePlayerAttributes(p),origins=p.attributeOrigins||{};
   const dna=p.dnaAttributes||attrs,renderFields=attributeFieldsForPosition(p.position),primaryId=primaryAttributeForPosition(p.position);$('#player-attributes').innerHTML=renderFields.map(f=>`<div class="player-attribute ${f.id===primaryId?'role-primary':''}"><span><em>${ATTRIBUTE_ICONS[f.id]||'•'}</em>${f.short}${f.id===primaryId?' ★':''}</span><strong>${attributeDisplayValue(f.id,attrs[f.id])}</strong><small>${origins[f.id]?.legend?`DNA ${attributeDisplayValue(f.id,dna[f.id])} · ${origins[f.id].legend}`:f.label}</small></div>`).join('');
-  $('#retire-career').classList.toggle('hidden',p.retired||p.age<=30);$('#edit-appearance')?.classList.toggle('hidden',p.retired);
+  $('#retire-career').classList.toggle('hidden',p.retired||p.age<=30||(state.history||[]).length===0);$('#edit-appearance')?.classList.toggle('hidden',p.retired);
   hydrateBadge($('#p-club-badge'),p.club,$('#p-club-fallback'),p.clubCountry);
   $('#retired-banner').classList.toggle('hidden',!p.retired);if(p.retired)$('#retired-text').textContent=` ${p.name} se aposentou aos ${p.age} anos.`;
   if(s){
@@ -5432,7 +5452,11 @@ function showSeasonSpotlight(log){
   $('#spotlight-stats').innerHTML=`<div><strong>${log.perf.rating.toFixed(1)}</strong><small>Nota</small></div><div><strong>${log.perf.goals}</strong><small>Gols</small></div><div><strong>${log.perf.assists}</strong><small>Assist.</small></div><div><strong>${log.perf.extraValue}</strong><small>${log.perf.extraLabel}</small></div>`;
   $('#season-spotlight').classList.remove('hidden');
 }
-function careerSeasonLimitReached(p=state.player){return !!p&&(p.age>=Number(p.retirementTarget||window.BTLWorldCareer?.retirementAge({id:'career:'+p.name+'|'+p.birthdate})||38)||(state.history||[]).length>=MAX_CAREER_SEASONS);}
+function careerSeasonLimitReached(p=state.player){
+  // Nunca aposentar automaticamente o protagonista no encerramento da temporada de estreia.
+  const completed=(state.history||[]).length;
+  return !!p&&completed>1&&(p.age>=Number(p.retirementTarget||window.BTLWorldCareer?.retirementAge({id:'career:'+p.name+'|'+p.birthdate})||38)||completed>=MAX_CAREER_SEASONS);
+}
 function retireAtCareerSeasonLimit(p=state.player){
   if(!p||p.retired||!careerSeasonLimitReached(p))return false;
   p.retired=true;p.retiredAge=p.age;p.legacyCardSeen=false;pendingCareerCard=true;state.offers=[];
@@ -5524,13 +5548,13 @@ $('#new-career-modal')?.addEventListener('click',e=>{if(e.target.id==='new-caree
 
 $('#retire-career').addEventListener('click',()=>{
   const p=state.player,s=state.season;if(!p||p.retired)return;
-  if(p.age<=30){toast('A aposentadoria voluntária fica disponível após os 30 anos.');return;}
+  if(p.age<=30||(state.history||[]).length===0){toast('A aposentadoria voluntária só fica disponível após a primeira temporada e os 30 anos.');return;}
   const dlg=$('#retirement-confirm-modal');
   if(dlg){$('#retirement-confirm-name').textContent=p.name;$('#retirement-confirm-age').textContent=`${p.age} ANOS`;dlg.classList.remove('hidden');return;}
   return;
 });
 function finalizeVoluntaryRetirement(){
-  const p=state.player,s=state.season;if(!p||p.retired||p.age<=30)return;
+  const p=state.player,s=state.season;if(!p||p.retired||p.age<=30||(state.history||[]).length===0)return;
   $('#retirement-confirm-modal')?.classList.add('hidden');
   if(s&&!s.closed&&s.clubGames>0){
     const avg=s.totalGames?s.ratingSum/s.totalGames:6.5;
@@ -6300,11 +6324,13 @@ function summaryClubBadge(team,countryCode=''){
   return `<span class="btl-summary-crest" title="${safe}" aria-label="${safe}">${clubCrestMarkup(team,countryCode)}</span>`;
 }
 function summaryCompetitionLogo(name){
-  const safe=esc(name||'Competição');
-  return `<span class="btl-summary-competition-logo" title="${safe}" aria-label="${safe}">${honourVisual(name)}</span>`;
+  const safe=esc(name||'Competição'),original=trophyArtFor(name);
+  // Logotipos locais consolidados, sem rótulo de texto duplicado.
+  const image=original?original.replace('assets/trophies/custom-2026/','assets/trophies/cup-logos-v109/'):'assets/fallback-trophy.svg';
+  return `<span class="btl-summary-competition-logo btl-cup-logo-only" title="${safe}" role="img" aria-label="${safe}"><img class="btl-cup-logo-image" src="${esc(image)}" alt="${safe}" loading="eager" decoding="async" onerror="this.onerror=null;this.src='assets/fallback-trophy.svg'"></span>`;
 }
 function summaryCompetitionCard(name,status=''){
-  return `<div class="summary-status with-art btl-summary-cup" title="${esc(name)}">${summaryCompetitionLogo(name)}<div class="btl-summary-cup-copy"><strong>${esc(name)}</strong><span class="btl-summary-cup-status">${esc(status)}</span></div></div>`;
+  return `<div class="summary-status with-art btl-summary-cup btl-cup-logo-card" title="${esc(name)}" aria-label="${esc(name)}: ${esc(status)}">${summaryCompetitionLogo(name)}<span class="btl-summary-cup-status">${esc(status)}</span></div>`;
 }
 function summaryDecisionMatch(d){
   // Carreiras novas armazenam as equipes/placares separados; carreiras antigas

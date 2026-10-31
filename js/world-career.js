@@ -10,6 +10,7 @@
 })(typeof window!=='undefined'?window:globalThis,function(){'use strict';
   const START_YEAR=2026;
   const RETIREMENT_WEIGHTS=[12,19,28,25,16]; // mean 38.14 years, 36–40 inclusive
+  const playerNames=(typeof globalThis!=='undefined'&&globalThis.BTLPlayerNames)||(typeof require==='function'?require('./player-name-generator.js'):null);
   const FIRST_NAMES=['Lucas','Gabriel','Mateo','Noah','Rafael','André','Daniel','Samuel','Nicolas','Thiago','Enzo','Hugo','Pedro','Yanis','Emir','Kenji','Luis','Diego','Adam','Omar','Victor','Leo','Marco','Arthur','Alex'];
   const LAST_NAMES=['Silva','Costa','Ferreira','Almeida','Moreira','Ramos','Santos','Lima','Pereira','Mendes','Torres','Oliveira','Fernández','Morales','Rodrigues','Martins','Souza','Dias','Carvalho','Gomes','Ribeiro','Nakamura','Alves','Sánchez'];
   const POSITION_GROUPS={Goalkeeper:'GOL',Defender:'ZAG',Midfield:'MC',Attack:'ATA',GOL:'GOL',GK:'GOL',CB:'ZAG',LB:'LE',RB:'LD',DM:'VOL',CDM:'VOL',CM:'MC',AM:'MEI',CAM:'MEI',LW:'PE',RW:'PD',ST:'ATA',CF:'ATA'};
@@ -79,7 +80,9 @@
     used.add(id);
     const offset=hash(id),age=16+offset%4,base=clamp(Math.round(53+(Number(retired.rating)||68)*.16+(offset%13)),52,76);
     const ceiling=clamp(base+11+hash(id+':potential')%17,base+4,94);
-    return {id,name:FIRST_NAMES[offset%FIRST_NAMES.length]+' '+LAST_NAMES[hash(id+':surname')%LAST_NAMES.length],club,countryCode:retired.countryCode||'',nationalCode:retired.nationalCode||retired.countryCode||'',position:retired.position||'MC',birthYear:year-age,rating:base,potential:ceiling,retired:false,generated:true,generationYear:year,source:'GERADO PELO JOGO',lastAgedYear:year,retirementTarget:retirementAge({id}),number:null};
+    const nationality=retired.nationalCode||retired.countryCode||'';
+    const name=playerNames?.generate(id,nationality,serial)||FIRST_NAMES[offset%FIRST_NAMES.length]+' '+LAST_NAMES[hash(id+':surname')%LAST_NAMES.length];
+    return {id,name,club,countryCode:retired.countryCode||'',nationalCode:nationality,position:retired.position||'MC',birthYear:year-age,rating:base,potential:ceiling,retired:false,generated:true,generationYear:year,source:'GERADO PELO JOGO',lastAgedYear:year,retirementTarget:retirementAge({id}),number:null};
   }
   function advance(players,year,{seedYear=START_YEAR}={}){
     if(!Array.isArray(players))throw new TypeError('Lista de jogadores inválida');
@@ -97,7 +100,8 @@
       evolveRating(p,year);
       changes.aged+=Math.max(0,year-before);
       const a=ageAt(p,year);
-      if(a!==null&&a>=retirementAge(p)){
+      // Ano inaugural protegido: nenhuma aposentadoria antes de a estreia ser concluída.
+      if(year>seedYear&&a!==null&&a>=retirementAge(p)){
         p.retired=true;p.retiredAge=a;p.retiredYear=year;p.lastClub=p.club;
         p.club='';p.retirementTarget=retirementAge(p);
         changes.retirements.push({id:p.id,name:p.name,club:p.lastClub,age:a,year,position:p.position});

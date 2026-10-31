@@ -1,7 +1,7 @@
 const fs=require('fs'),vm=require('vm'),assert=require('assert');
 const text=fs.readFileSync('js/app.js','utf8');
 const readBetween=(start,end)=>{const a=text.indexOf(start);const b=text.indexOf(end,a);assert(a>=0&&b>a,`block ${start}`);return text.slice(a,b)};
-const ctx={console,Math,Set,Map,state:{season:{year:2026,totalGames:0,goals:0,assists:0},player:{overall:95,position:'Centroavante'}},worldDirty:false,worldStoreReady:true,START_YEAR:2026,MAX_SEASON_GA:145,
+const ctx={console,Math,Set,Map,window:{BTLPlayerNames:require('../js/player-name-generator.js')},state:{season:{year:2026,totalGames:0,goals:0,assists:0},player:{overall:95,position:'Centroavante'}},worldDirty:false,worldStoreReady:true,START_YEAR:2026,MAX_SEASON_GA:145,
  clamp:(v,a,b)=>Math.max(a,Math.min(b,v)),stableHash(s){let h=2166136261;for(const c of String(s)){h^=c.charCodeAt(0);h=Math.imul(h,16777619);}return h>>>0;},
  normalizeKey:s=>String(s||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9]/g,''),
  canonicalClubCountryCode:()=> 'BR',findClubDataAny:()=>({countryCode:'BR',strength:82}),clubStrength:()=>82,

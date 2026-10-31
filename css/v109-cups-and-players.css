@@ -1,0 +1,49 @@
+/* V10.9 · Copas por logotipo, sem rótulo duplicado.
+   Não afeta liga, ranking, cards de títulos ou acessibilidade. */
+#season-summary-modal .summary-status.with-art.btl-summary-cup.btl-cup-logo-card {
+  display:flex!important;
+  flex-direction:column!important;
+  align-items:center!important;
+  justify-content:center!important;
+  gap:7px!important;
+  min-height:138px!important;
+  padding:12px!important;
+  text-align:center!important;
+  overflow:hidden;
+}
+#season-summary-modal .btl-cup-logo-card .btl-summary-competition-logo.btl-cup-logo-only {
+  display:flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  width:100%!important;
+  max-width:230px!important;
+  min-height:75px!important;
+  height:88px!important;
+  flex:0 0 88px!important;
+  margin:0 auto!important;
+  padding:0 6px!important;
+  background:transparent!important;
+}
+#season-summary-modal .btl-cup-logo-only .btl-cup-logo-image {
+  display:block!important;
+  width:100%!important;
+  max-width:215px!important;
+  height:100%!important;
+  max-height:88px!important;
+  object-fit:contain!important;
+  object-position:center!important;
+  background:transparent!important;
+  filter:drop-shadow(0 6px 9px rgba(0,0,0,.20));
+}
+#season-summary-modal .btl-cup-logo-card .btl-summary-cup-status {
+  display:block!important;
+  color:var(--muted)!important;
+  line-height:1.25!important;
+  font-size:12px!important;
+  text-align:center!important;
+}
+@media(max-width:620px){
+  #season-summary-modal .summary-status.with-art.btl-summary-cup.btl-cup-logo-card {min-height:132px!important;}
+  #season-summary-modal .btl-cup-logo-card .btl-summary-competition-logo.btl-cup-logo-only{height:80px!important;min-height:80px!important;flex-basis:80px!important;}
+  #season-summary-modal .btl-cup-logo-only .btl-cup-logo-image{max-height:80px!important;}
+}
