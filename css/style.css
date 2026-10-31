@@ -10268,3 +10268,560 @@ small,.eyebrow,.game-brand-kicker{letter-spacing:.045em}
 .world-row>span:first-child{min-width:0}.world-row strong{display:block;overflow-wrap:anywhere;font-size:.86rem}.world-row small{display:block;opacity:.75;font-size:.74rem}
 .world-row-status{font-size:.75rem;white-space:nowrap;opacity:.85}
 @media(max-width:550px){.world-row{align-items:flex-start}.world-row-status{white-space:normal;text-align:right}}
+
+/* ===== V10.8 · CARDS DE COPAS, CONTRATOS E EVENTOS EXCLUSIVOS ===== */
+.btl-summary-cup{
+  align-items:center!important;
+  gap:12px!important;
+  justify-content:flex-start!important;
+}
+.btl-summary-cup .btl-summary-competition-logo{
+  flex:0 0 66px;
+  width:66px;
+  min-width:66px;
+  height:66px;
+  display:grid;
+  place-items:center;
+}
+.btl-summary-cup-copy{
+  min-width:0;
+  display:grid;
+  gap:4px;
+}
+.btl-summary-cup-copy strong{
+  display:block;
+  font-size:12px;
+  line-height:1.18;
+  color:#fff;
+}
+.btl-summary-cup-copy .btl-summary-cup-status{
+  text-align:left!important;
+  color:var(--green)!important;
+  font-size:11px;
+}
+.btl-summary-offer{
+  grid-template-columns:54px minmax(0,1fr);
+  align-items:center;
+  gap:12px;
+}
+.btl-summary-offer .btl-summary-crest{
+  width:54px;
+  height:54px;
+  min-width:54px;
+}
+.btl-summary-offer-copy{
+  min-width:0;
+  display:grid;
+  gap:4px;
+}
+.btl-summary-offer-copy strong{
+  display:block;
+  color:#fff;
+  font-size:12px;
+  line-height:1.15;
+}
+.btl-summary-offer-copy span{
+  font-size:11px!important;
+  line-height:1.25;
+}
+
+/* Assinatura de contrato com clube novo */
+.contract-signing-celebration .celebration-card{
+  width:min(780px,94vw);
+  border-color:rgba(244,214,68,.42);
+  box-shadow:0 0 0 1px rgba(244,214,68,.1),0 30px 80px rgba(0,0,0,.52),0 0 90px rgba(244,214,68,.12);
+  background:linear-gradient(180deg,rgba(14,19,27,.98),rgba(7,11,17,.98));
+}
+.contract-signing-stage{
+  width:min(100%,620px)!important;
+  height:auto!important;
+  min-height:210px;
+  padding:0!important;
+  border:0!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+.contract-signing-scene{
+  position:relative;
+  display:grid;
+  grid-template-columns:1fr 1.15fr 1fr;
+  align-items:center;
+  gap:16px;
+  width:100%;
+  min-height:210px;
+  padding:20px 22px;
+  border-radius:24px;
+  overflow:hidden;
+  background:
+    radial-gradient(circle at 50% 0,rgba(244,214,68,.22),transparent 32%),
+    linear-gradient(145deg,#18232d,#0b1118 58%,#080d13);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.08),0 24px 60px rgba(0,0,0,.35);
+}
+.contract-signing-lights,
+.contract-signing-lights::before,
+.contract-signing-lights::after{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  border-radius:50%;
+  filter:blur(32px);
+  opacity:.22;
+  pointer-events:none;
+}
+.contract-signing-lights{left:-45px;top:-55px;background:rgba(77,166,255,.9);animation:contractPulse 5s ease-in-out infinite;}
+.contract-signing-lights::before{right:-520px;top:10px;background:rgba(66,232,141,.8);animation:contractPulse 4.3s ease-in-out infinite reverse;}
+.contract-signing-lights::after{left:210px;top:90px;background:rgba(244,214,68,.92);animation:contractPulse 3.8s ease-in-out infinite;}
+.contract-signing-club{
+  position:relative;
+  z-index:2;
+  display:grid;
+  justify-items:center;
+  gap:8px;
+  text-align:center;
+  padding:14px 12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+  min-height:146px;
+}
+.contract-signing-club .btl-summary-crest{width:76px;height:76px;min-width:76px}
+.contract-signing-kicker{font-size:9px;letter-spacing:.16em;color:var(--muted)}
+.contract-signing-club b{font-size:13px;line-height:1.15;color:#fff}
+.contract-signing-club.old{opacity:.84;transform:translateX(-4px)}
+.contract-signing-club.new{box-shadow:0 0 0 1px rgba(66,232,141,.12),0 0 34px rgba(66,232,141,.08);transform:translateX(4px)}
+.contract-signing-center{
+  position:relative;
+  z-index:2;
+  display:grid;
+  justify-items:center;
+  gap:7px;
+  text-align:center;
+}
+.contract-signing-document{
+  position:absolute;
+  top:8px;
+  right:18px;
+  width:82px;
+  height:102px;
+  border-radius:16px;
+  background:linear-gradient(180deg,rgba(255,255,255,.98),rgba(238,243,247,.94));
+  box-shadow:0 18px 32px rgba(0,0,0,.34);
+  transform:rotate(9deg);
+  animation:contractFloat 3.8s ease-in-out infinite;
+}
+.contract-signing-document span{position:absolute;left:12px;right:12px;top:16px;font-size:10px;letter-spacing:.15em;color:#314050}
+.contract-signing-document i,.contract-signing-document em{position:absolute;left:14px;right:14px;height:3px;border-radius:999px;background:rgba(24,40,56,.18)}
+.contract-signing-document i{top:42px;box-shadow:0 14px 0 rgba(24,40,56,.12),0 28px 0 rgba(24,40,56,.12)}
+.contract-signing-document em{left:auto;right:14px;bottom:14px;width:34px;height:18px;border-radius:0;background:transparent;border-bottom:3px solid rgba(33,56,74,.55);transform:rotate(-8deg)}
+.contract-signing-avatar{
+  width:110px;
+  height:132px;
+  display:grid;
+  place-items:end center;
+  border-radius:24px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 18px 34px rgba(0,0,0,.28);
+}
+.contract-signing-avatar .face-avatar{transform:scale(1.07);transform-origin:center bottom}
+.contract-signing-center strong{font-size:20px;color:#fff;letter-spacing:.03em}
+.contract-signing-center small{font-size:11px;color:var(--muted)}
+.contract-signing-swoosh{
+  position:absolute;
+  left:50%;
+  bottom:10px;
+  transform:translateX(-50%);
+  font-size:58px;
+  color:rgba(244,214,68,.18);
+  pointer-events:none;
+  animation:signatureFlash 2.8s ease-in-out infinite;
+}
+@keyframes contractFloat{0%,100%{transform:rotate(9deg) translateY(0)}50%{transform:rotate(6deg) translateY(-6px)}}
+@keyframes contractPulse{0%,100%{transform:scale(1);opacity:.18}50%{transform:scale(1.14);opacity:.30}}
+@keyframes signatureFlash{0%,100%{opacity:.12;transform:translateX(-50%) scale(1)}50%{opacity:.28;transform:translateX(-50%) scale(1.08)}}
+
+/* Eventos de carreira, aleatórios e ídolo */
+.event-stage-head{
+  position:absolute;
+  z-index:7;
+  left:14px;
+  right:14px;
+  top:12px;
+  display:flex;
+  justify-content:space-between;
+  gap:10px;
+  align-items:center;
+  pointer-events:none;
+}
+.event-stage-tag,
+.event-stage-code{
+  display:inline-flex;
+  align-items:center;
+  padding:5px 10px;
+  border-radius:999px;
+  background:rgba(6,12,18,.52);
+  border:1px solid rgba(255,255,255,.08);
+  color:rgba(255,255,255,.78);
+  font-size:8px;
+  letter-spacing:.14em;
+}
+.event-stage-story{
+  position:absolute;
+  z-index:6;
+  left:18px;
+  top:56px;
+  max-width:min(54%,310px);
+  display:grid;
+  grid-template-columns:42px minmax(0,1fr);
+  gap:12px;
+  align-items:start;
+}
+.event-stage-emblem{
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:rgba(255,255,255,.08);
+  border:1px solid rgba(255,255,255,.10);
+  color:#fff;
+  font-size:20px;
+  box-shadow:0 12px 26px rgba(0,0,0,.28);
+}
+.event-stage-story strong{display:block;font-size:16px;line-height:1.06;color:#fff}
+.event-stage-story span{display:block;margin-top:5px;font-size:9px;line-height:1.35;letter-spacing:.08em;color:rgba(255,255,255,.76)}
+.btl-event-player{
+  position:absolute;
+  right:18px;
+  bottom:0;
+  z-index:5;
+  width:190px;
+  height:198px;
+  display:grid;
+  align-content:end;
+  justify-items:center;
+  pointer-events:none;
+}
+.btl-event-glow{
+  position:absolute;
+  width:152px;
+  height:152px;
+  bottom:26px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(255,255,255,.22),rgba(255,255,255,.06) 48%,transparent 72%);
+  filter:blur(5px);
+  animation:eventGlowPulse 3.4s ease-in-out infinite;
+}
+.btl-event-player-portrait{
+  position:relative;
+  z-index:2;
+  width:116px;
+  height:150px;
+  display:grid;
+  place-items:end center;
+  border-radius:28px 28px 12px 12px;
+  overflow:hidden;
+  background:linear-gradient(180deg,rgba(255,255,255,.08),rgba(255,255,255,.02));
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 14px 34px rgba(0,0,0,.34);
+}
+.btl-event-player-portrait .face-avatar{transform:scale(1.08);transform-origin:center bottom}
+.btl-event-motion-prop{
+  position:absolute;
+  right:26px;
+  top:48px;
+  z-index:3;
+  width:34px;
+  height:34px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:rgba(4,10,15,.58);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 10px 24px rgba(0,0,0,.28);
+  animation:eventBadgeFloat 2.8s ease-in-out infinite;
+}
+.btl-event-player-label{
+  position:relative;
+  z-index:2;
+  margin-top:8px;
+  padding:5px 10px;
+  border-radius:999px;
+  background:rgba(6,12,18,.6);
+  border:1px solid rgba(255,255,255,.08);
+  color:#fff;
+  font-size:9px;
+  letter-spacing:.14em;
+}
+.btl-player-dribble .btl-event-player-portrait{transform:translateY(0) rotate(-2deg)}
+.btl-player-celebrate .btl-event-player-portrait{transform:translateY(-2px)}
+.btl-player-interview .btl-event-player-portrait{transform:rotate(1deg)}
+.btl-player-warmup .btl-event-player-portrait{transform:translateY(-1px) rotate(-1deg)}
+.btl-player-signature .btl-event-player-portrait{transform:translateY(2px) rotate(2deg)}
+.btl-random-marquee{
+  position:absolute;
+  z-index:8;
+  left:0;
+  right:0;
+  top:0;
+  display:flex;
+  gap:18px;
+  align-items:center;
+  padding:6px 14px;
+  background:linear-gradient(90deg,rgba(196,54,77,.92),rgba(137,21,44,.92));
+  color:#fff;
+  font-size:8px;
+  letter-spacing:.15em;
+}
+.btl-random-ticker{
+  position:absolute;
+  z-index:7;
+  left:0;
+  right:0;
+  bottom:0;
+  overflow:hidden;
+  padding:5px 0;
+  background:rgba(0,0,0,.28);
+  border-top:1px solid rgba(255,255,255,.06);
+}
+.btl-random-ticker span{
+  display:inline-block;
+  white-space:nowrap;
+  color:rgba(255,255,255,.84);
+  font-size:8px;
+  letter-spacing:.16em;
+  animation:eventTickerMove 10s linear infinite;
+}
+.icon-event-medallion,
+.idol-event-mentor{
+  position:absolute;
+  z-index:6;
+  left:18px;
+  bottom:18px;
+  display:grid;
+  gap:4px;
+  align-items:center;
+  padding:10px 12px;
+  border-radius:16px;
+  background:rgba(6,12,18,.55);
+  border:1px solid rgba(255,255,255,.08);
+  box-shadow:0 16px 34px rgba(0,0,0,.3);
+}
+.icon-event-medallion span,
+.idol-event-mentor small{font-size:8px;letter-spacing:.16em;color:rgba(255,255,255,.72)}
+.icon-event-medallion b,
+.idol-event-mentor b{font-size:15px;color:#fff;line-height:1}
+.icon-event-stars{
+  position:absolute;
+  z-index:6;
+  right:22px;
+  top:58px;
+  color:rgba(244,214,68,.88);
+  font-size:16px;
+  letter-spacing:.22em;
+  text-shadow:0 0 20px rgba(244,214,68,.35);
+  animation:eventBadgeFloat 2.4s ease-in-out infinite;
+}
+.idol-event-aura{
+  position:absolute;
+  z-index:1;
+  left:18px;
+  bottom:18px;
+  width:180px;
+  height:96px;
+  border-radius:50%;
+  background:radial-gradient(circle,rgba(244,214,68,.18),transparent 68%);
+  filter:blur(8px);
+}
+.idol-event-crown{
+  width:28px;
+  height:28px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:rgba(244,214,68,.14);
+  color:#f4d644;
+  font-size:15px;
+}
+.idol-event-mentor{grid-template-columns:28px minmax(0,1fr);column-gap:10px;min-width:190px}
+.idol-event-quote{
+  position:absolute;
+  z-index:6;
+  left:18px;
+  right:200px;
+  bottom:18px;
+  padding:8px 12px;
+  border-radius:12px;
+  background:rgba(255,255,255,.05);
+  border:1px solid rgba(255,255,255,.07);
+  color:rgba(255,255,255,.78);
+  font-size:10px;
+  line-height:1.35;
+}
+.event-brand-seal{
+  position:absolute;
+  right:24px;
+  top:52px;
+  z-index:7;
+  padding:10px 14px;
+  border-radius:16px;
+  background:rgba(0,0,0,.26);
+  border:1px solid rgba(255,255,255,.08);
+}
+.event-kind-visual-idol .event-stage-story{top:48px;max-width:min(52%,290px)}
+.event-kind-visual-random .event-stage-story{top:58px}
+.event-kind-visual-random .btl-event-player{right:14px}
+.event-kind-visual-sponsor .event-stage-story{max-width:min(48%,280px)}
+.event-kind-visual-icon .event-stage-story{max-width:min(50%,290px)}
+
+@keyframes eventGlowPulse{0%,100%{transform:scale(1);opacity:.75}50%{transform:scale(1.08);opacity:1}}
+@keyframes eventBadgeFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+@keyframes eventTickerMove{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+@media(max-width:720px){
+  .contract-signing-scene{grid-template-columns:1fr;gap:12px;padding:18px}
+  .contract-signing-document{right:10px;top:12px;transform:rotate(7deg) scale(.88)}
+  .contract-signing-club{min-height:0}
+}
+@media(max-width:620px){
+  .btl-summary-cup{align-items:flex-start!important}
+  .btl-summary-cup .btl-summary-competition-logo{width:56px;min-width:56px;height:56px}
+  .btl-summary-offer{grid-template-columns:48px minmax(0,1fr)}
+  .event-stage-head{left:10px;right:10px;top:10px;gap:6px}
+  .event-stage-tag,.event-stage-code{font-size:7px;padding:4px 8px}
+  .event-stage-story{left:12px;top:56px;max-width:58%;grid-template-columns:34px minmax(0,1fr);gap:8px}
+  .event-stage-emblem{width:34px;height:34px;font-size:16px;border-radius:11px}
+  .event-stage-story strong{font-size:13px}
+  .event-stage-story span{font-size:8px}
+  .btl-event-player{width:150px;height:170px;right:8px}
+  .btl-event-player-portrait{width:92px;height:126px}
+  .btl-event-motion-prop{right:14px;top:46px;width:28px;height:28px}
+  .icon-event-medallion,.idol-event-mentor{left:12px;bottom:12px;padding:8px 10px}
+  .idol-event-quote{left:12px;right:140px;bottom:12px;font-size:8px;padding:7px 9px}
+  .event-brand-seal{right:12px;top:44px;transform:scale(.92);transform-origin:top right}
+}
+
+/* ===== V10.8.1 · CENAS CINEMÁTICAS DINÂMICAS, NÃO CARTÕES ESTÁTICOS ===== */
+.leaderboard-club-browser{display:grid;gap:5px;margin:10px 0}
+.leaderboard-club-browser label{font-size:10px;color:var(--muted);letter-spacing:.045em}
+#leaderboard-club-select{width:100%;min-height:39px;padding:7px 12px;color:#edf5f3;background:#0d1c25;border:1px solid rgba(255,255,255,.16);border-radius:10px}
+#leaderboard-club-select:focus-visible{outline:2px solid var(--green);outline-offset:2px}
+.leaderboard-team-header{display:flex;justify-content:space-between;align-items:center;gap:10px;margin:9px 0;padding:9px 11px;border-radius:10px;background:rgba(66,232,141,.07);border:1px solid rgba(66,232,141,.14)}
+.leaderboard-team-header strong{font-size:13px}.leaderboard-team-header span{font-size:10px;color:var(--muted)}
+.leaderboard-generated-label{display:block;color:#e3c67c;font-size:8px;letter-spacing:.1em}
+.leaderboard-data-note{display:block;margin-top:9px;line-height:1.5;font-size:9px;color:var(--muted)}
+.leaderboard-no-stats{margin:12px 0;font-size:11px}
+
+/* Stage direction: three visible kinetic beats, actors and object movement.
+   No image/video downloads or JavaScript timers are needed for the loops. */
+#event-modal .career-event-scene .btl-scene-cinematic{position:absolute;inset:0;z-index:4;overflow:hidden;pointer-events:none;--cine-color:#77d9ff;--cine-length:5.8s}
+#event-modal .career-event-scene .cinematic-beam{position:absolute;left:42%;top:-44%;width:130px;height:270px;transform-origin:50% 0;transform:rotate(-13deg);background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.04) 70%,transparent);clip-path:polygon(48% 0,52% 0,100% 100%,0 100%);filter:blur(7px);animation:cineSweep var(--cine-length) ease-in-out infinite}
+#event-modal .career-event-scene .cinematic-actor{position:absolute;width:34px;height:80px;bottom:22px;display:block;filter:drop-shadow(0 9px 7px rgba(0,0,0,.48));transform-origin:50% 100%}
+#event-modal .career-event-scene .cinematic-actor i{position:absolute;top:0;left:11px;width:15px;height:15px;border-radius:50%;background:#c7d6e4;box-shadow:inset 1px -3px 4px rgba(0,0,0,.12)}
+#event-modal .career-event-scene .cinematic-actor b{position:absolute;top:17px;left:7px;width:23px;height:34px;clip-path:polygon(20% 0,80% 0,100% 22%,85% 45%,77% 100%,23% 100%,15% 45%,0 22%);background:linear-gradient(100deg,#56a4ec,#163f71);border-radius:5px}
+#event-modal .career-event-scene .cinematic-actor em{position:absolute;top:49px;left:8px;width:22px;height:28px;background:linear-gradient(90deg,#778eab 0 42%,transparent 42% 58%,#778eab 58%);clip-path:polygon(0 0,100% 0,96% 100%,59% 100%,50% 18%,40% 100%,0 100%)}
+#event-modal .career-event-scene .actor-left{left:39%;animation:cineWalkLeft var(--cine-length) ease-in-out infinite}
+#event-modal .career-event-scene .actor-right{left:63%;transform:scaleX(-1);animation:cineWalkRight var(--cine-length) ease-in-out infinite}
+#event-modal .career-event-scene .actor-right b{background:linear-gradient(100deg,#e1c05a,#766020)}
+#event-modal .career-event-scene .cinematic-action{position:absolute;left:51%;bottom:64px;z-index:6;display:grid;place-items:center;width:32px;height:32px;border-radius:50%;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.3),rgba(255,255,255,.035));border:1px solid rgba(255,255,255,.16);color:#fff;font-size:22px;text-shadow:0 2px 12px var(--cine-color);animation:cineExchange var(--cine-length) cubic-bezier(.3,.1,.4,1) infinite}
+#event-modal .career-event-scene .cinematic-energy{position:absolute;left:55%;bottom:60px;width:6px;height:6px;border:1px solid var(--cine-color);box-shadow:0 0 20px 5px var(--cine-color);border-radius:50%;animation:cineEnergy var(--cine-length) ease-out infinite}
+#event-modal .career-event-scene .cinematic-camera{position:absolute;inset:0;z-index:7;background:radial-gradient(ellipse at 55% 55%,rgba(255,255,255,.14),transparent 43%);opacity:0;animation:cineFlash var(--cine-length) steps(1,end) infinite}
+#event-modal .career-event-scene .cinematic-beats{position:absolute;bottom:8px;left:44%;width:96px;display:flex;gap:4px;z-index:7}
+#event-modal .career-event-scene .cinematic-beats i{height:2px;flex:1;border-radius:10px;background:rgba(255,255,255,.22);animation:cineBeat var(--cine-length) ease infinite}
+#event-modal .career-event-scene .cinematic-beats i:nth-child(2){animation-delay:-1.9s}
+#event-modal .career-event-scene .cinematic-beats i:nth-child(3){animation-delay:-3.8s}
+#event-modal .career-event-scene .scene-object{animation:cineProps 5s ease-in-out infinite}
+#event-modal .career-event-scene .scene-object.obj-index-1{animation-delay:-1.4s}
+#event-modal .career-event-scene .scene-object.obj-index-2{animation-delay:-2.8s}
+#event-modal .career-event-scene .scene-object-glyph{animation:cineObjectGlow 3.3s ease-in-out infinite}
+#event-modal .career-event-scene .btl-event-player-portrait{animation:cinePlayerPose 5s ease-in-out infinite}
+#event-modal .career-event-scene .btl-event-player-label{animation:cinePlayerReveal 5s ease-in-out infinite}
+
+/* Distinct choreography families chosen per ID/theme. */
+#event-modal .btl-motion-rehab{--cine-color:#56dcff;--cine-length:6.7s}
+#event-modal .btl-motion-rehab .cinematic-action{font-size:30px;color:#7fe6ff;animation:cineHeartbeat 2.1s ease-in-out infinite}
+#event-modal .btl-motion-rehab .cinematic-energy{width:75px;height:24px;left:45%;bottom:44px;border-radius:10px;border:2px solid rgba(127,230,255,.5);box-shadow:0 0 18px rgba(100,219,255,.32);animation:cineEnergy var(--cine-length) ease-out infinite}
+#event-modal .btl-motion-rehab .actor-left{animation:cinePhysio var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-pitch{--cine-color:#72ffc0;--cine-length:4.8s}
+#event-modal .btl-motion-pitch .cinematic-action{animation:cineBallDribble var(--cine-length) cubic-bezier(.3,0,.5,1) infinite}
+#event-modal .btl-motion-pitch .actor-left{animation:cineRunAcross var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-press{--cine-color:#e29bff;--cine-length:5.2s}
+#event-modal .btl-motion-press .cinematic-action{font-size:26px;animation:cineLensZoom var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-press .cinematic-camera{animation:cinePressFlash var(--cine-length) steps(1,end) infinite}
+#event-modal .btl-motion-contract{--cine-color:#f6db87;--cine-length:6s}
+#event-modal .btl-motion-contract .cinematic-action{animation:cinePenSign var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-contract .actor-right{animation:cineHandshake var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-journey{--cine-color:#9dbdff;--cine-length:5.4s}
+#event-modal .btl-motion-journey .cinematic-action{animation:cinePlaneTravel var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-tactics{--cine-color:#83ebff;--cine-length:6.4s}
+#event-modal .btl-motion-tactics .cinematic-action{font-size:34px;animation:cineTacticsDraw var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-legacy,#event-modal .btl-motion-mentor{--cine-color:#f4d36d;--cine-length:6.2s}
+#event-modal .btl-motion-mentor .actor-right{width:46px;height:100px;left:55%;bottom:16px;animation:cineMentorEntrance var(--cine-length) cubic-bezier(.2,.7,.5,1) infinite}
+#event-modal .btl-motion-mentor .actor-right i{width:21px;height:21px;left:14px;background:#d7b885}
+#event-modal .btl-motion-mentor .actor-right b{width:31px;height:47px;left:8px;top:22px;background:linear-gradient(135deg,#d1ae4b,#5b4526)}
+#event-modal .btl-motion-mentor .actor-right em{top:67px;left:10px;width:28px;height:31px}
+#event-modal .btl-motion-mentor .actor-left{left:32%;bottom:13px;animation:cineJuniorListen var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-mentor .cinematic-action{left:48%;bottom:98px;animation:cineMentorWisdom var(--cine-length) cubic-bezier(.2,.7,.3,1) infinite}
+#event-modal .btl-motion-mentor .cinematic-beam{animation:cineMentorSpotlight var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-legacy .cinematic-action{animation:cineLegacyLift var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-locker{--cine-color:#bdc6ff;--cine-length:5.9s}
+#event-modal .btl-motion-locker .actor-left{animation:cineLockerTalk var(--cine-length) ease-in-out infinite}
+#event-modal .btl-motion-spotlight{--cine-color:#ffd98a;--cine-length:5.6s}
+#event-modal .btl-scene-phase-2{--cine-length:5.1s}
+#event-modal .btl-scene-phase-3{--cine-length:6.9s}
+#event-modal .btl-scene-phase-4{--cine-length:4.7s}
+
+@keyframes cineSweep{0%,100%{transform:rotate(-18deg);opacity:.15}45%{transform:rotate(24deg);opacity:.45}}
+@keyframes cineWalkLeft{0%,15%,100%{transform:translateX(-8px) rotate(-4deg)}40%,65%{transform:translateX(18px) rotate(2deg)}}
+@keyframes cineWalkRight{0%,10%,100%{transform:scaleX(-1) translateX(-6px)}35%,60%{transform:scaleX(-1) translateX(10px)}}
+@keyframes cineExchange{0%,15%,100%{transform:translate(-42px,10px) rotate(-15deg) scale(.8);opacity:0}30%{opacity:1}50%{transform:translate(12px,-42px) rotate(20deg) scale(1.18);opacity:1}75%{transform:translate(58px,4px) rotate(45deg) scale(.9);opacity:0}}
+@keyframes cineEnergy{0%,15%,100%{transform:scale(.15);opacity:0}45%{transform:scale(1.7);opacity:.7}70%{transform:scale(.4);opacity:0}}
+@keyframes cineFlash{0%,35%,55%,100%{opacity:0}36%,52%{opacity:.35}}
+@keyframes cineBeat{0%,8%,100%{background:rgba(255,255,255,.2);transform:scaleX(.8)}25%,45%{background:var(--cine-color);transform:scaleX(1)}}
+@keyframes cineProps{0%,100%{translate:0 0}50%{translate:0 -5px}}
+@keyframes cineObjectGlow{0%,100%{opacity:.6;text-shadow:none}50%{opacity:1;text-shadow:0 0 22px rgba(255,255,255,.48)}}
+@keyframes cinePlayerPose{0%,100%{translate:0 2px;rotate:-1deg}45%{translate:0 -5px;rotate:2deg}}
+@keyframes cinePlayerReveal{0%,100%{opacity:.6}50%{opacity:1}}
+@keyframes cineHeartbeat{0%,100%{transform:scale(.75);opacity:.4}14%,23%{transform:scale(1.2);opacity:1}30%,55%{transform:scale(.8);opacity:.6}60%,69%{transform:scale(1.15);opacity:1}}
+@keyframes cinePhysio{0%,100%{transform:translate(0,0) rotate(-4deg)}25%,52%{transform:translate(12px,5px) rotate(10deg)}75%{transform:translate(-5px,-3px) rotate(-3deg)}}
+@keyframes cineBallDribble{0%,100%{transform:translate(-48px,10px) rotate(-10deg)}20%{transform:translate(-20px,-20px) rotate(15deg)}45%{transform:translate(12px,14px) rotate(85deg)}68%{transform:translate(48px,-43px) rotate(200deg)}85%{transform:translate(74px,-53px) rotate(300deg);opacity:.4}}
+@keyframes cineRunAcross{0%,100%{transform:translate(-26px,0) rotate(-7deg)}45%{transform:translate(50px,-5px) rotate(7deg)}}
+@keyframes cineLensZoom{0%,100%{transform:scale(.6);opacity:.5}35%,65%{transform:scale(1.5);opacity:1}}
+@keyframes cinePressFlash{0%,23%,27%,56%,60%,100%{opacity:0}24%,57%{opacity:.56}}
+@keyframes cinePenSign{0%,18%,100%{transform:translate(-24px,-24px) rotate(-50deg);opacity:.3}35%{transform:translate(-14px,9px) rotate(-10deg);opacity:1}60%{transform:translate(29px,12px) rotate(12deg);opacity:1}73%{transform:translate(55px,-13px) rotate(35deg);opacity:.4}}
+@keyframes cineHandshake{0%,100%{transform:scaleX(-1) translateX(-20px)}42%,67%{transform:scaleX(-1) translateX(9px) rotate(-10deg)}}
+@keyframes cinePlaneTravel{0%,100%{transform:translate(-96px,33px) rotate(-24deg) scale(.6);opacity:0}25%{opacity:1}60%{transform:translate(65px,-38px) rotate(-24deg) scale(1.28);opacity:1}90%{transform:translate(120px,-70px) rotate(-24deg) scale(.65);opacity:0}}
+@keyframes cineTacticsDraw{0%,100%{transform:translate(-24px,12px) rotate(-15deg);opacity:.25}20%{opacity:1}52%{transform:translate(32px,-27px) rotate(20deg) scale(1.2);opacity:1}85%{transform:translate(67px,12px) rotate(75deg);opacity:0}}
+@keyframes cineMentorEntrance{0%,100%{transform:scaleX(-1) translate(42px,9px);opacity:.35}24%,75%{transform:scaleX(-1) translate(0,0);opacity:1}48%{transform:scaleX(-1) translate(-12px,-3px) rotate(-5deg)}}
+@keyframes cineJuniorListen{0%,100%{transform:translate(-9px,0) rotate(-2deg)}42%,64%{transform:translate(18px,1px) rotate(9deg)}}
+@keyframes cineMentorWisdom{0%,20%,100%{transform:translate(26px,-7px) scale(.3);opacity:0}38%{transform:translate(0,-22px) scale(1.3);opacity:1}65%{transform:translate(-48px,-43px) scale(.95);opacity:.7}79%{transform:translate(-80px,-56px) scale(.5);opacity:0}}
+@keyframes cineMentorSpotlight{0%,100%{transform:rotate(28deg);opacity:.1}30%,75%{transform:rotate(-13deg);opacity:.55}}
+@keyframes cineLegacyLift{0%,100%{transform:translate(0,15px) scale(.6);opacity:.3}45%,65%{transform:translate(0,-47px) scale(1.65);opacity:1}}
+@keyframes cineLockerTalk{0%,100%{transform:rotate(-8deg) translateY(0)}30%,60%{transform:rotate(12deg) translateY(-5px)}}
+
+@media(max-width:620px){
+  #event-modal .career-event-scene .cinematic-actor{transform:scale(.8);bottom:16px}
+  #event-modal .career-event-scene .actor-left{left:46%}
+  #event-modal .career-event-scene .actor-right{left:64%}
+  #event-modal .career-event-scene .cinematic-action{left:55%;bottom:54px;width:28px;height:28px;font-size:19px}
+  #event-modal .career-event-scene .cinematic-beats{left:45%;width:70px}
+}
+@media(prefers-reduced-motion:reduce){
+  #event-modal .btl-scene-cinematic *,#event-modal .scene-object,#event-modal .scene-object-glyph,#event-modal .btl-event-player-portrait,#event-modal .btl-event-player-label,
+  .contract-signing-scene *{animation:none!important;transition:none!important}
+  #event-modal .btl-scene-cinematic .cinematic-action{opacity:1!important;transform:none!important}
+}
+/* Ídolos: a coreografia muda conforme conselho, treino, recuperação e legado. */
+#event-modal .idol-variant-training .cinematic-action{animation:cineBallDribble 4.3s cubic-bezier(.3,.1,.4,1) infinite}
+#event-modal .idol-variant-training .actor-left{animation:cineRunAcross 4.3s ease-in-out infinite}
+#event-modal .idol-variant-video .cinematic-action{animation:cineTacticsDraw 5.8s ease-in-out infinite}
+#event-modal .idol-variant-video .cinematic-camera{animation:cinePressFlash 5.8s steps(1,end) infinite}
+#event-modal .idol-variant-recovery .cinematic-action{animation:cineHeartbeat 2.1s ease-in-out infinite}
+#event-modal .idol-variant-media .cinematic-camera{animation:cinePressFlash 4.8s steps(1,end) infinite}
+#event-modal .idol-variant-career .cinematic-action{animation:cinePenSign 5.8s ease-in-out infinite}
+#event-modal .idol-variant-biggame .cinematic-beam{animation:cineSweep 4.8s ease-in-out infinite}
+#event-modal .idol-variant-legacy .cinematic-action{animation:cineLegacyLift 6.2s ease-in-out infinite}
+#event-modal .idol-variant-leadership .actor-left{animation:cineHandshake 5.5s ease-in-out infinite}
