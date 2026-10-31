@@ -20,10 +20,12 @@ function normalizeRoster(data,fromUser=false){
   list.push({name,number:String(item.number||'').replace(/[^0-9]/g,'').slice(0,2),position:String(item.position||'MC').slice(0,12),country:String(item.country||'').slice(0,40),nationalCode:String(item.nationalCode||'').toUpperCase().slice(0,3),rating:Number(item.rating)||null});
  }
  if(!list.length)throw Error('Nenhum jogador válido no arquivo.');
- return {club,requestedClub:club,country:String(data.country||'').toUpperCase().slice(0,3),source:fromUser?'IMPORTAÇÃO DO USUÁRIO':String(data.source||''),sourceUrl:fromUser?'':String(data.sourceUrl||''),retrievedAt:fromUser?new Date().toISOString():String(data.retrievedAt||''),historicalSnapshot:false,sourcePublication:!fromUser&&data.source==='OFICIAL 2026/27',scope:fromUser?'Arquivo escolhido pelo usuário':String(data.scope||''),crest:String(data.crest||''),players:list};
+ return {club,requestedClub:club,country:String(data.country||'').toUpperCase().slice(0,3),source:fromUser?'IMPORTAÇÃO DO USUÁRIO':String(data.source||''),sourceUrl:fromUser?'':String(data.sourceUrl||''),retrievedAt:fromUser?new Date().toISOString():String(data.retrievedAt||''),historicalSnapshot:!!data.historicalSnapshot,sourcePublication:!fromUser&&data.source==='OFICIAL 2026/27',scope:fromUser?'Arquivo escolhido pelo usuário':String(data.scope||''),crest:String(data.crest||''),players:list};
 }
 function cache(data){const key=norm(data.requestedClub||data.club);live.set(key,{data,t:Date.now()});for(const person of data.players){const id=norm(person.name);players.set(id,{club:data.requestedClub||data.club,source:data.source})}}
 async function getRoster(name,code='',options={}){
+ const fromCareer=window.BTLWorldRosterForClub?.(name,code);
+ if(fromCareer){const validated=normalizeRoster(fromCareer);cache(validated);return validated}
  const o=official()[norm(name)];if(o&&!options.live){const validated=normalizeRoster(o);cache(validated);return validated}
  const cached=live.get(norm(name));if(cached&&!options.live&&Date.now()-cached.t<12*3600000)return cached.data;
  const url=new URL('/api/roster',document.baseURI);url.searchParams.set('club',name);if(code)url.searchParams.set('country',code);
@@ -50,7 +52,7 @@ function simpleCsv(raw){
  const data={club:names[0],players:lines.map(a=>({name:a[ni],position:a[pos]||'MC',number:a[no]||'',country:a[country]||'',rating:a[ovr]||'',nationalCode:a[nat]||''}))};return normalizeRoster(data,true);
 }
 async function readUpload(file){if(file.size>500_000)throw Error('Arquivo grande demais: limite de 500 KB.');const text=await file.text();let data;if(/\.json$/i.test(file.name)){const parsed=JSON.parse(text);if(Array.isArray(parsed))throw Error('JSON deve ser objeto com club e players.');data=normalizeRoster(parsed,true)}else data=simpleCsv(text);cache(data);return data}
-const sourceLabel=d=>d.source==='OFICIAL 2026/27'?'Lista publicada pelo clube/liga em 2026/27':d.source==='IMPORTAÇÃO DO USUÁRIO'?'Arquivo importado por você':`${d.source} · consulta atual`;
+const sourceLabel=d=>d.source?.includes('Transfermarkt')?'Transfermarkt/Kaggle · base datada (não é elenco atual certificado)':d.source==='OFICIAL 2026/27'?'Lista publicada pelo clube/liga em 2026/27':d.source==='IMPORTAÇÃO DO USUÁRIO'?'Arquivo importado por você':`${d.source} · consulta atual`;
 const dateLabel=d=>{const date=new Date(d.retrievedAt);return !isNaN(date)?date.toLocaleDateString('pt-BR'):'sem data confirmada'};
 function render(data){shown=data;const status=document.getElementById('roster-status'),out=document.getElementById('roster-result');if(!status||!out)return;
  // Provider logos are intentionally ignored; all visible club crests use Commons.
@@ -59,8 +61,8 @@ function render(data){shown=data;const status=document.getElementById('roster-st
  const article=data.sourceUrl&&/^https:\/\//.test(data.sourceUrl)?`<a href="${esc(data.sourceUrl)}" rel="noopener noreferrer" target="_blank">Ver publicação original ↗</a>`:'';
  out.innerHTML=`<header class="roster-team-title">${src}<div><b>${esc(data.club)}</b><small>${esc(data.league||data.source)} · ${data.players.length} atletas</small></div></header>
  <p class="roster-source-meta"><b>${esc(sourceLabel(data))}</b> · ${esc(dateLabel(data))} ${article}</p>
- <p class="roster-notice">${data.source==='OFICIAL 2026/27'?'Listagem publicada para 2026/27; não garante ausência de transferências posteriores à publicação.':data.source==='IMPORTAÇÃO DO USUÁRIO'?'Os dados deste arquivo não foram verificados automaticamente.':'Plantel atual do provedor, não uma reconstituição garantida de 22/10/2026.'}</p>
- <div class="roster-team-actions"><button class="secondary" type="button" id="roster-apply-to-world">Usar no mundo simulado</button><button class="secondary" type="button" id="roster-export-current">Exportar CSV</button></div>
+ <p class="roster-notice">${data.historicalSnapshot?'Jogadores do seu save. O arquivo Transfermarkt/Kaggle utilizado pode ser anterior à última janela de transferências.':data.source==='OFICIAL 2026/27'?'Listagem publicada para 2026/27; não garante ausência de transferências posteriores à publicação.':data.source==='IMPORTAÇÃO DO USUÁRIO'?'Os dados deste arquivo não foram verificados automaticamente.':'Plantel atual do provedor, não uma reconstituição garantida de 22/10/2026.'}</p>
+ <div class="roster-team-actions">${data.historicalSnapshot?'':'<button class="secondary" type="button" id="roster-apply-to-world">Usar no mundo simulado</button>'}<button class="secondary" type="button" id="roster-export-current">Exportar CSV</button></div>
  <div class="roster-roster-grid">${data.players.map(p=>`<div class="roster-player"><span>${esc(p.number||'—')}</span><div><b>${esc(p.name)}</b><small>${esc(p.position||'—')}${p.country?' · '+esc(p.country):''}</small></div></div>`).join('')}</div>`;
  document.getElementById('roster-export-current')?.addEventListener('click',()=>download(toCSV([['club','name','number','position','country','rating','nationalCode'],...data.players.map(x=>[data.club,x.name,x.number,x.position,x.country,x.rating,x.nationalCode])]),'btl-'+norm(data.club)+'-2026-27.csv','text/csv;charset=utf-8'));
  document.getElementById('roster-apply-to-world')?.addEventListener('click',()=>{

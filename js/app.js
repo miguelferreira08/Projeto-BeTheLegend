@@ -39,7 +39,7 @@ let awardCeremonyAfter = null;
 let celebrationAfter = null;
 const MAX_MARKET_VALUE = 300000000;
 const MAX_SEASON_GA = 145;
-const MAX_CAREER_SEASONS = 18;
+const MAX_CAREER_SEASONS = 24; // safety limit; age 36–40 determines normal retirement
 const MIN_START_AGE = 17;
 const MAX_START_AGE = 22;
 try{
@@ -54,7 +54,36 @@ function clearDraftState(){sessionStorage.removeItem(DRAFT_KEY);sessionStorage.r
 
 const DEFAULT_THEME = {accent:'#42e88d',secondary:'#f4f7f5',bg:'#071016',panel:'#0d1820',panel2:'#111f29',border:'#243640',buttonText:'#032313'};
 
-function save(){ localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); }
+// Large worlds live in IndexedDB; localStorage contains the career metadata only.
+// Small legacy worlds remain inline as a backward-compatible fallback.
+let worldRestorePromise=null,careerWorldLoading=false;
+let worldStoreReady=false,worldDirty=Array.isArray(state.worldPlayers)&&state.worldPlayers.length>900&&!state.worldDbKey,worldPersistChain=Promise.resolve(),worldStoreError='';
+function save(){
+  const largeWorld=Array.isArray(state.worldPlayers)&&state.worldPlayers.length>900;
+  if(largeWorld)state.worldDbKey=STORAGE_KEY;
+  const serialized=JSON.stringify(state,(key,value)=>key==='worldPlayers'&&largeWorld?undefined:value);
+  localStorage.setItem(STORAGE_KEY,serialized);
+  if(worldDirty&&worldStoreReady&&window.BTLWorldCareer){
+    worldDirty=false;
+    const snapshot=state.worldPlayers,metadata=state.worldDataset||{};
+    worldPersistChain=worldPersistChain.catch(()=>{}).then(()=>window.BTLWorldCareer.persist(STORAGE_KEY,snapshot,metadata)).catch(err=>{worldDirty=true;worldStoreError=String(err?.message||err);console.error('Falha ao gravar mundo de jogadores:',err)});
+  }
+}
+async function loadPersistedWorld(){
+  if(!window.BTLWorldCareer)return;
+  const loadingState=state;
+  try{
+    const saved=await window.BTLWorldCareer.restore(STORAGE_KEY);
+    if(state!==loadingState){worldStoreReady=true;if(worldDirty)save();return;}
+    if(saved?.players?.length&&(!state.worldPlayers?.length||state.worldDbKey)){
+      state.worldPlayers=saved.players;state.worldDataset=saved.meta||state.worldDataset||{};
+    }
+    worldStoreReady=true;
+    if(worldDirty)save();
+    renderWorldOverview();
+  }catch(e){worldStoreError=String(e?.message||e);worldStoreReady=false;console.warn('Banco de elencos indisponível:',e)}
+}
+
 function saveBadges(){ localStorage.setItem(BADGE_KEY, JSON.stringify(badgeCache)); }
 const badBadgeUrls=new Set();
 const badgeRequestsInFlight=new Map();
@@ -1579,12 +1608,50 @@ function selectDraftAttribute(attributeId){
   const current=attributeDraft.current;attributeDraft.selections[attributeId]={value:current.values[attributeId],legend:current.legend.name,legendRating:current.legend.rating,category:current.legend.category||'historical',source:current.legend.source||''};attributeDraft.usedLegends.push(current.legend.name);saveDraftState();
   if(selectedDraftCount()>=fields.length){renderAttributeDraft();setTimeout(finalizeCareerFromDraft,260);return;}drawLegendForDraft();saveDraftState();renderAttributeDraft();
 }
-function finalizeCareerFromDraft(){
+async function finalizeCareerFromDraft(){
+  if(careerWorldLoading)return;
+  careerWorldLoading=true;
+  let starterWorld=null,starterWarning='';
+  const status=document.getElementById('world-import-status');
+  if(status)status.textContent='Preparando automaticamente o universo de jogadores do Transfermarkt/Kaggle…';
+  const draftPreview=document.getElementById('draft-overall-preview');
+  if(draftPreview)draftPreview.textContent='Preparando elencos reais para o save…';
+  try{
+    if(worldRestorePromise)await worldRestorePromise;
+    if(!window.BTLWorldCareer||!window.BTLWorldAuto)throw Error('Motor automático indisponível');
+    const auto=await window.BTLWorldAuto.load();
+    if(!auto?.players?.length)throw Error('Catálogo de jogadores vazio');
+    if(!worldStoreReady)throw Error('O navegador não disponibilizou a gravação persistente do universo');
+    // Commit atômico da população antes de criar o novo save. Se falhar, não
+    // identificamos o save como catálogo completo.
+    await worldPersistChain.catch(()=>{});
+    await window.BTLWorldCareer.persist(STORAGE_KEY,auto.players,auto.meta);
+    starterWorld=auto;
+  }catch(error){
+    starterWarning=String(error?.message||error);
+    console.warn('Carreira iniciada com base local parcial:',error);
+  }
   const profile=pendingPlayerProfile,fields=attributeFieldsForPosition(profile.position),dnaAttributes={},attributeOrigins={};
   fields.forEach(f=>{const pick=attributeDraft.selections[f.id];dnaAttributes[f.id]=pick.value;attributeOrigins[f.id]={legend:pick.legend,legendRating:pick.legendRating,category:pick.category,source:pick.source};});
   const overall=68,potential=calculatePotentialFromAttributes(dnaAttributes,profile.position),attributes=buildStartingAttributes(dnaAttributes,potential,profile.position),value=1100000;
-  const player={...profile,overall,potential,initialPotential:potential,value,titles:0,trophies:[],awards:[],calledUp:false,nationalTeamGames:0,nationalTeamGoals:0,nationalTeamAssists:0,nationalTrust:0,nationalCaptain:false,morale:70,reputation:10,developmentBoost:0,marketBonus:0,retired:false,attributes,dnaAttributes,attributeOrigins};
-  state={created:true,player,season:null,history:[],offers:[],news:[`${player.name}, ${player.age} anos, inicia a carreira com GER 68. O DNA escolhido definiu POT ${potential}.`],pendingEvent:null,savedCareers:[...getSavedCareers()]};ensureDivisionPools(START_YEAR);state.season=createSeason(player,START_YEAR,undefined);pendingPlayerProfile=null;attributeDraft=null;clearDraftState();save();showView('career');toast(`Carreira iniciada! GER 68 · POT ${potential}`);
+  const player={...profile,retirementTarget:window.BTLWorldCareer?.retirementAge({id:'career:'+profile.name+'|'+profile.birthdate})||38,overall,potential,initialPotential:potential,value,titles:0,trophies:[],awards:[],calledUp:false,nationalTeamGames:0,nationalTeamGoals:0,nationalTeamAssists:0,nationalTrust:0,nationalCaptain:false,morale:70,reputation:10,developmentBoost:0,marketBonus:0,retired:false,attributes,dnaAttributes,attributeOrigins};
+  state={created:true,player,season:null,history:[],offers:[],news:[`${player.name}, ${player.age} anos, inicia a carreira com GER 68. O DNA escolhido definiu POT ${potential}.`],pendingEvent:null,savedCareers:[...getSavedCareers()]};
+  if(starterWorld){
+    state.worldPlayers=starterWorld.players;
+    state.worldDataset={...starterWorld.meta};
+    state.worldDbKey=STORAGE_KEY;
+    state.officialSquadImported2026=true;
+    state.news.push(`Base Transfermarkt/Kaggle de ${starterWorld.meta.sourceDate} carregada automaticamente com ${starterWorld.players.length} atletas. Elencos após julho/2026 não estão verificados.`);
+    worldDirty=false;
+  }else{
+    state.worldDataset={source:'Elencos parciais locais (não verificados pelo Transfermarkt)',sourceDate:null,automatic:false,error:starterWarning};
+    state.news.push('Base completa indisponível. Usando elencos parciais locais; transferências de 2026/27 não estão garantidas.');
+  }
+  ensureDivisionPools(START_YEAR);state.season=createSeason(player,START_YEAR,undefined);state.lastWorldEvolutionYear=START_YEAR;state.worldEvolutionHistory=[];
+  ensureWorldPlayers();if(!starterWorld)worldDirty=true;
+  pendingPlayerProfile=null;attributeDraft=null;clearDraftState();careerWorldLoading=false;
+  save();showView('career');renderWorldOverview();
+  toast(starterWorld?`Carreira iniciada · ${starterWorld.players.length.toLocaleString('pt-BR')} atletas Transfermarkt/Kaggle (jul/2026).`:'Carreira iniciada com banco parcial: dados completos indisponíveis.');
 }
 function attributeElitePointChance(current){
   if(current<92)return 1;
@@ -3864,16 +3931,20 @@ function inferredWorldPlayerBirthYear(name=''){
   return START_YEAR-(22+(stableHash(name)%12));
 }
 function worldPlayerAge(wp,year=state.season?.year||START_YEAR){return Math.max(16,(Number(year)||START_YEAR)-(wp.birthYear||inferredWorldPlayerBirthYear(wp.name)));}
-function worldRetirementChance(age){if(age<36)return 0;return ({36:.06,37:.11,38:.20,39:.32,40:.48,41:.66,42:.84,43:.96})[age]??(age>=44?1:0);}
+// Aposentadoria aplicada à população completa na entrada da PRÓXIMA temporada.
+function worldRetirementChance(age){return window.BTLWorldCareer?.retirementProbability(age)||0;}
 function simulateWorldRetirements(year=state.season?.year||START_YEAR){
-  ensureWorldPlayers().forEach(wp=>{
-    if(wp.retired)return;
-    wp.birthYear=wp.birthYear||inferredWorldPlayerBirthYear(wp.name);
-    const age=worldPlayerAge(wp,year),chance=worldRetirementChance(age);
-    if(chance<=0)return;
-    const forced=age>=44||(wp.name==='Cristiano Ronaldo'&&age>=43);
-    if(forced||Math.random()<chance){wp.retired=true;wp.retiredYear=year;wp.retiredAge=age;wp.club='';}
-  });
+  const engine=window.BTLWorldCareer;if(!engine)return null;
+  const players=ensureWorldPlayers();
+  if(Number(state.lastWorldEvolutionYear||START_YEAR)>=year)return null;
+  const report=engine.advance(players,year,{seedYear:START_YEAR});
+  state.lastWorldEvolutionYear=year;
+  state.worldEvolutionHistory=Array.isArray(state.worldEvolutionHistory)?state.worldEvolutionHistory:[];
+  state.worldEvolutionHistory.push({year,aged:report.aged,retiredCount:report.retirements.length,generatedCount:report.generated.length,retirements:report.retirements.slice(0,12),generated:report.generated.slice(0,12)});
+  state.worldEvolutionHistory=state.worldEvolutionHistory.slice(-24);
+  if(report.retirements.length)state.news.push(`Mundo ${year}: ${report.retirements.length} aposentadorias e ${report.generated.length} novos profissionais gerados.`);
+  worldDirty=true;
+  return report;
 }
 const EXTRA_ACTIVE_PLAYERS=[
 {name:'Giorgian de Arrascaeta',rating:86,position:'MEI',club:'Flamengo',countryCode:'BR',nationalCode:'UY'},
@@ -3922,8 +3993,15 @@ const EXTRA_ACTIVE_PLAYERS=[
 ];
 function ensureWorldPlayers(){
   if(!Array.isArray(state.worldPlayers)||!state.worldPlayers.length){
-    const base=(typeof CURRENT_DRAFT_PLAYERS!=='undefined'?CURRENT_DRAFT_PLAYERS:[]).map(x=>{const m=CURRENT_PLAYER_META[x.name]||[];return {id:normalizeKey(x.name),name:x.name,rating:x.rating||84,position:x.position||'ATA',club:m[0]||'',countryCode:m[1]||'',nationalCode:m[2]||'',birthYear:inferredWorldPlayerBirthYear(x.name),retired:false};});
-    state.worldPlayers=[...base,...EXTRA_ACTIVE_PLAYERS.map(x=>({...x,id:normalizeKey(x.name),birthYear:x.birthYear||inferredWorldPlayerBirthYear(x.name),retired:false}))];
+    const seed=window.BTLTransfermarktSeed;
+    if(Array.isArray(seed?.players)&&seed.players.length){
+      // New saves begin with all members of the catalog. Existing careers are not overwritten.
+      state.worldPlayers=seed.players.map(p=>({...p}));state.worldDataset={...seed.meta};
+      state.officialSquadImported2026=true;worldDirty=true;
+    }else{
+      const base=(typeof CURRENT_DRAFT_PLAYERS!=='undefined'?CURRENT_DRAFT_PLAYERS:[]).map(x=>{const m=CURRENT_PLAYER_META[x.name]||[];return {id:normalizeKey(x.name),name:x.name,rating:x.rating||84,position:x.position||'ATA',club:m[0]||'',countryCode:m[1]||'',nationalCode:m[2]||'',birthYear:inferredWorldPlayerBirthYear(x.name),birthEstimated:!CURRENT_PLAYER_BIRTH_YEARS[x.name],lastAgedYear:START_YEAR,retired:false};});
+      state.worldPlayers=[...base,...EXTRA_ACTIVE_PLAYERS.map(x=>({...x,id:normalizeKey(x.name),birthYear:x.birthYear||inferredWorldPlayerBirthYear(x.name),birthEstimated:!x.birthYear,lastAgedYear:START_YEAR,retired:false}))];
+    }
   }
   // Primeira inicialização da temporada 2026: importa elencos de fontes oficiais
   // sem apagar progresso e sem reescrever temporadas já avançadas.
@@ -3936,14 +4014,14 @@ function ensureWorldPlayers(){
         if(current){current.club=squad.club;current.countryCode=squad.country;continue;}
         const record={id,name:item.name,club:squad.club,countryCode:squad.country,nationalCode:'',
           position:item.position||'MC',rating:73+(stableHash(id)%11),
-          birthYear:inferredWorldPlayerBirthYear(item.name),retired:false,
+          birthYear:inferredWorldPlayerBirthYear(item.name),birthEstimated:true,lastAgedYear:START_YEAR,retired:false,
           source:'2026/27 · fonte oficial',estimatedSimulationRating:true};
         state.worldPlayers.push(record);existing.set(id,record);
       }
     }
-    state.officialSquadImported2026=true;save();
+    state.officialSquadImported2026=true;worldDirty=true;save();
   }
-  state.worldPlayers.forEach(wp=>{wp.birthYear=wp.birthYear||inferredWorldPlayerBirthYear(wp.name);wp.retired=!!wp.retired;});
+  state.worldPlayers.forEach(wp=>{if(!wp.birthYear){wp.birthYear=inferredWorldPlayerBirthYear(wp.name);wp.birthEstimated=true;}wp.lastAgedYear=Number(wp.lastAgedYear)||Number(state.season?.year||START_YEAR);wp.retired=!!wp.retired;});
   return state.worldPlayers;
 }
 /* V14: opt-in roster changes. Source and date accompany each player.
@@ -3963,14 +4041,81 @@ window.BTLImportRosterToCareer=function(roster){
     if(!id||name.length<3||touched.has(id))continue;touched.add(id);
     const existing=all.get(id);const code=String(athlete.nationalCode||'').toUpperCase();
     const fields={club:canonical,countryCode,nationalCode:code||existing?.nationalCode||'',rosterSource:roster.source||'fonte externa',rosterUpdatedAt:sourceDate};
-    if(existing){Object.assign(existing,fields);updated++}
-    else {const rating=Number(athlete.rating);const record={id,name,position:athlete.position||'MC',rating:Number.isFinite(rating)&&rating>=40&&rating<=99?rating:73+stableHash(id)%11,birthYear:inferredWorldPlayerBirthYear(name),retired:false,...fields,estimatedSimulationRating:!(rating>=40&&rating<=99)};world.push(record);all.set(id,record);added++}
+    if(existing&&!existing.retired){Object.assign(existing,fields);worldDirty=true;updated++}
+    else {const rating=Number(athlete.rating);const record={id,name,position:athlete.position||'MC',rating:Number.isFinite(rating)&&rating>=40&&rating<=99?rating:73+stableHash(id)%11,birthYear:inferredWorldPlayerBirthYear(name),birthEstimated:true,lastAgedYear:START_YEAR,retired:false,...fields,estimatedSimulationRating:!(rating>=40&&rating<=99)};world.push(record);all.set(id,record);worldDirty=true;added++}
   }
   if(!added&&!updated)return {ok:false,message:'Nenhum jogador válido para importar.'};
   save();return {ok:true,message:`${canonical}: ${added} atletas adicionados, ${updated} atualizados. Outros jogadores não foram removidos sem confirmação do destino. Fonte: ${roster.source||'arquivo próprio'}.`};
 };
+
+window.BTLWorldRosterForClub=function(club,country=''){
+  if(!state?.created||!Array.isArray(state.worldPlayers)||!state.worldPlayers.length)return null;
+  const name=normalizeKey(club);if(!name)return null;
+  const canonical=findClubDataAny(club)||findClubData(club,country);
+  const keys=new Set([name,normalizeKey(canonical?.name||'')].filter(Boolean));
+  const loose=s=>normalizeKey(s).replace(/(?:footballclub|futebolclube|fc|cf|sc|ac)$/,'');
+  const looseKeys=new Set([...keys].map(loose));
+  const matches=state.worldPlayers.filter(p=>!p.retired&&p.club&&(
+    keys.has(normalizeKey(p.club))||looseKeys.has(loose(p.club))
+  )).slice(0,120);
+  if(!matches.length)return null;
+  const meta=state.worldDataset||{};
+  return {club:canonical?.name||club,requestedClub:club,country:country||matches[0].countryCode||'',
+    source:meta.source||'Banco do save',retrievedAt:meta.sourceDate?meta.sourceDate+'T00:00:00Z':'',
+    historicalSnapshot:true,scope:'Atletas ativos no universo desta carreira',
+    sourceUrl:meta.sourceUrl||'',
+    players:matches.map(p=>({name:p.name,position:p.position||'MC',number:p.number||'',country:p.nationalCode||'',rating:p.rating,id:p.id}))};
+};
+
+let worldPlayerFilter='';
+function renderWorldOverview(){
+  const overview=document.getElementById('world-career-summary'),events=document.getElementById('world-career-events'),results=document.getElementById('world-player-results');
+  if(!overview)return;
+  const world=Array.isArray(state.worldPlayers)?state.worldPlayers:[];
+  const last=state.worldEvolutionHistory?.at(-1);
+  const total=world.length,active=world.reduce((n,p)=>n+(!p.retired?1:0),0),regens=world.reduce((n,p)=>n+(!!p.generated),0);
+  const dataset=state.worldDataset;
+  const summaryText=dataset?.source?`Origem: ${dataset.source} · referência ${dataset.sourceDate||'data não informada'} · elencos não confirmados para outubro/2026.`:'Origem: listas locais do projeto (cobertura parcial, não validadas pelo Transfermarkt).';
+  overview.innerHTML=`<div class="world-counts"><span><strong>${active.toLocaleString('pt-BR')}</strong><small>Ativos</small></span><span><strong>${(total-active).toLocaleString('pt-BR')}</strong><small>Aposentados</small></span><span><strong>${regens.toLocaleString('pt-BR')}</strong><small>Gerados</small></span></div><p>${esc(summaryText)}</p>`;
+  if(events)events.textContent=last?`Virada ${last.year}: ${last.retiredCount??last.retirements.length} aposentadorias e ${last.generatedCount??last.generated.length} reposições. Processamento único por ano.`:'A evolução do mundo começa na primeira virada de temporada.';
+  if(!results)return;
+  const query=normalizeKey(worldPlayerFilter),matching=query?world.filter(p=>normalizeKey(p.name).includes(query)||normalizeKey(p.club||p.lastClub).includes(query)):world.filter(p=>p.generated||p.retired).slice(-12).reverse();
+  results.innerHTML=matching.slice(0,24).map(p=>`<div class="world-row"><span><strong>${esc(p.name)}</strong><small>${esc(p.club||p.lastClub||'Sem clube')} · ${esc(p.position||'MC')} · ${worldPlayerAge(p,state.season?.year||START_YEAR)} anos</small></span><span class="world-row-status">${p.retired?'Aposentado':p.generated?'Gerado · GER '+Number(p.rating||0):'GER '+Number(p.rating||0)}</span></div>`).join('')||'<small>Nenhum jogador encontrado.</small>';
+}
+async function readWorldCSV(file){
+  if(file.size>40000000)throw Error('Arquivo acima de 40 MB. Divida o CSV em arquivos menores.');
+  if(/\.gz$/i.test(file.name)){
+    if(typeof DecompressionStream==='undefined')throw Error('Seu navegador não descompacta .gz. Extraia o CSV primeiro.');
+    const text=await new Response(file.stream().pipeThrough(new DecompressionStream('gzip'))).text();return window.BTLWorldCareer.parseCSV(text);
+  }
+  return window.BTLWorldCareer.parseCSV(await file.text());
+}
+async function importWorldCSV(files){
+  if(!state.created||!state.player)throw Error('Crie uma carreira antes de importar os dados.');
+  if(Number(state.season?.year||START_YEAR)!==START_YEAR||state.history?.length)throw Error('Importação integral permitida apenas antes de concluir a primeira temporada.');
+  if(!worldStoreReady)throw Error('O armazenamento persistente IndexedDB não está disponível. Nenhum dado foi alterado.');
+  const list=Array.from(files||[]),playerFile=list.find(f=>/^players\.csv(?:\.gz)?$/i.test(f.name)),clubFile=list.find(f=>/^clubs\.csv(?:\.gz)?$/i.test(f.name));
+  if(!playerFile)throw Error('Selecione o arquivo players.csv do Kaggle/Transfermarkt (ou players.csv.gz).');
+  const rows=await readWorldCSV(playerFile),input=window.BTLWorldCareer.mapTransfermarkt(rows,{year:START_YEAR,sourceDate:'2026-07-06'});
+  if(clubFile)window.BTLWorldCareer.attachClubs(input.players,await readWorldCSV(clubFile));
+  for(const wp of input.players){
+    const siteClub=findClubDataAny(wp.club)||findClubData(wp.club,wp.countryCode);
+    if(siteClub?.name){wp.club=siteClub.name;wp.countryCode=wp.countryCode||siteClub.countryCode||'';}
+  }
+  if(input.players.length<5)throw Error('O arquivo não contém jogadores ativos suficientes.');
+  // Atomic: first persist new players, only then change the in-memory career.
+  const meta={source:input.source,sourceDate:input.sourceDate,importedAt:new Date().toISOString(),records:input.players.length,excluded:input.omitted};
+  await worldPersistChain.catch(()=>{});
+  await window.BTLWorldCareer.persist(STORAGE_KEY,input.players,meta);
+  state.worldPlayers=input.players;state.worldDataset=meta;state.worldDbKey=STORAGE_KEY;state.officialSquadImported2026=true;state.lastWorldEvolutionYear=START_YEAR;state.worldEvolutionHistory=[];
+  worldDirty=false;save();renderWorldOverview();return `${input.players.length.toLocaleString('pt-BR')} atletas reais importados (${input.omitted} registros descartados). GER é estimado a partir do valor de mercado, não um atributo Transfermarkt. Fonte de julho/2026: pode conter transferências desatualizadas.`;
+}
+document.getElementById('world-player-search')?.addEventListener('input',e=>{worldPlayerFilter=e.target.value;renderWorldOverview()});
+
+
 function simulateWorldTransfers(){
-  simulateWorldRetirements(state.season?.year||START_YEAR);
+  if(state.worldDbKey&&!worldStoreReady)throw Error('Aguarde a recuperação do banco de jogadores.');
+  simulateWorldRetirements((state.season?.year||START_YEAR)+1);
   const pool=allTransferClubs().filter(c=>(c.strength||0)>=76);
   ensureWorldPlayers().forEach(wp=>{
     if(wp.retired||Math.random()>.035)return;
@@ -3987,7 +4132,7 @@ function simulateWorldTransfers(){
       return true;
     });
     if(!candidates.length)return;
-    const dest=candidates[rnd(0,candidates.length-1)];wp.club=dest.name;wp.countryCode=dest.countryCode;wp.transferred=true;
+    const dest=candidates[rnd(0,candidates.length-1)];wp.club=dest.name;wp.countryCode=dest.countryCode;wp.transferred=true;worldDirty=true;
   });
 }
 function recordCompetitionStat(event,perf){
@@ -4396,7 +4541,7 @@ function render(){
   const newsIcon=n=>/les[aã]o|tratamento|fora/i.test(n)?'✚':/campe[aã]o|t[ií]tulo|trof[eé]u/i.test(n)?'★':/sele[cç][aã]o|convoca/i.test(n)?'◉':/proposta|mercado|clube/i.test(n)?'↗':'●';
   $('#news').innerHTML=(state.news.slice(-4).reverse().map(n=>`<div class="news-item compact"><span class="news-icon">${newsIcon(n)}</span><div><strong>${n}</strong></div></div>`).join('')||'<div class="empty-visual">○<span>Sem notícias</span></div>');
   renderSavedCareers();
-  renderCompetitionLeaderboards();animateSeasonDashboard();syncPausedOverlayButton();renderHistory();renderOffers();renderHonours();renderMarketTier();if(state.pendingEvent&&!pausedCareerOverlay&&!state.journeyPaused)openPendingEvent();
+  renderCompetitionLeaderboards();animateSeasonDashboard();syncPausedOverlayButton();renderHistory();renderOffers();renderHonours();renderMarketTier();renderWorldOverview();if(state.pendingEvent&&!pausedCareerOverlay&&!state.journeyPaused)openPendingEvent();
 }
 function renderHistory(){
   if(!state.created)return;const current=state.season&&!state.season.closed?state.season:{clubGames:0,clubGoals:0,clubAssists:0};const totals=state.history.reduce((a,h)=>({games:a.games+h.games,goals:a.goals+h.goals,assists:a.assists+h.assists}),{games:current.clubGames||0,goals:current.clubGoals||0,assists:current.clubAssists||0});
@@ -5098,11 +5243,11 @@ function showSeasonSpotlight(log){
   $('#spotlight-stats').innerHTML=`<div><strong>${log.perf.rating.toFixed(1)}</strong><small>Nota</small></div><div><strong>${log.perf.goals}</strong><small>Gols</small></div><div><strong>${log.perf.assists}</strong><small>Assist.</small></div><div><strong>${log.perf.extraValue}</strong><small>${log.perf.extraLabel}</small></div>`;
   $('#season-spotlight').classList.remove('hidden');
 }
-function careerSeasonLimitReached(){return (state.history||[]).length>=MAX_CAREER_SEASONS;}
+function careerSeasonLimitReached(p=state.player){return !!p&&(p.age>=Number(p.retirementTarget||window.BTLWorldCareer?.retirementAge({id:'career:'+p.name+'|'+p.birthdate})||38)||(state.history||[]).length>=MAX_CAREER_SEASONS);}
 function retireAtCareerSeasonLimit(p=state.player){
-  if(!p||p.retired||!careerSeasonLimitReached())return false;
+  if(!p||p.retired||!careerSeasonLimitReached(p))return false;
   p.retired=true;p.retiredAge=p.age;p.legacyCardSeen=false;pendingCareerCard=true;state.offers=[];
-  state.news.push(`${p.name} encerra oficialmente a carreira após ${MAX_CAREER_SEASONS} temporadas, aos ${p.age} anos.`);
+  state.news.push(`${p.name} encerra oficialmente a carreira aos ${p.age} anos, após ${(state.history||[]).length} temporadas.`);
   return true;
 }
 function legacyV4_processSeasonEnd(){
@@ -5147,6 +5292,7 @@ $('#close-spotlight').addEventListener('click',()=>{$('#season-spotlight').class
 
 $('#finish-season').addEventListener('click',()=>{
   const p=state.player,s=state.season;if(!s||!s.closed||p.retired)return;
+  if(state.worldDbKey&&!worldStoreReady){toast('O banco de jogadores ainda não foi recuperado. Não é seguro avançar.');return;}
   const oldDelta=s.developmentDelta||0;const stayed=p.club===(s.clubAtStart||p.club);
   commitSeasonQualifications(s);const last=qualifiedForYear(p.clubCountry,p.club,s.year);
   const cupEarned=(s.leagueCup?.won&&s.countryAtStart==='ENG')?'UEFA Conference League':null;
@@ -5326,6 +5472,7 @@ function developmentResult(avg){
     if(base>0&&!eliteOverallAdvanceAllowed(p,avg,rate,contributionTarget,roleSkill,primaryValue,attacking))base=0;
   }
 
+  if(age>=(gk?35:32)&&age<37){base=age>=35?(avg>=8.45?0:-1):(avg>=8.3?0:Math.random()<.60?-1:0);}
   if(age>=37){
     if(age<=38)base=avg>=8.7?-1:-rnd(1,2);
     else if(age<=40)base=-rnd(1,2);
@@ -6147,6 +6294,6 @@ function repairStalledYoungDevelopment(){
   }
   save();
 }
-preloadTrophyImages();populateCreationFields();enhanceAllSelects();setupBirthdateLimits();renderAppearanceStudio();updateAppearancePreview();applyV95Migrations();applyV101Migrations();applyV104Migrations();normalizePersistentState();repairStalledYoungDevelopment();sanitizeAwardsEligibility();save();if(LEGACY_V95_FOR_MIGRATION)localStorage.setItem(LEGACY_V103_CLAIM_KEY,'1');initSoundtrack();render();observeSiteImages();if(state.pendingEvent&&!pausedCareerOverlay&&!state.journeyPaused)openPendingEvent();if(state.pendingPenaltyShootout&&!pausedCareerOverlay&&!state.journeyPaused)setTimeout(openPenaltyShootoutDecision,120);if(state.player?.retired&&!state.player.legacyCardSeen)setTimeout(showCareerLegacyCard,100);
+preloadTrophyImages();populateCreationFields();enhanceAllSelects();setupBirthdateLimits();renderAppearanceStudio();updateAppearancePreview();applyV95Migrations();applyV101Migrations();applyV104Migrations();normalizePersistentState();repairStalledYoungDevelopment();sanitizeAwardsEligibility();save();if(LEGACY_V95_FOR_MIGRATION)localStorage.setItem(LEGACY_V103_CLAIM_KEY,'1');initSoundtrack();render();worldRestorePromise=loadPersistedWorld();observeSiteImages();if(state.pendingEvent&&!pausedCareerOverlay&&!state.journeyPaused)openPendingEvent();if(state.pendingPenaltyShootout&&!pausedCareerOverlay&&!state.journeyPaused)setTimeout(openPenaltyShootoutDecision,120);if(state.player?.retired&&!state.player.legacyCardSeen)setTimeout(showCareerLegacyCard,100);
 // Navegação interna — sem depender do histórico externo do navegador.
 document.getElementById('btl-site-back')?.addEventListener('click',navigateBackInsideSite);

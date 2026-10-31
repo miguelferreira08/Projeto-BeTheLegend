@@ -10253,3 +10253,18 @@ small,.eyebrow,.game-brand-kicker{letter-spacing:.045em}
 /* Wikimedia Commons trophy artwork in the title celebration; text fallback stays legible. */
 #celebration-icon .honour-art { width:96px; height:96px; max-width:100%; border-radius:14px; padding:6px; }
 #celebration-icon .honour-art.fallback b { font-size:18px; letter-spacing:.09em; }
+
+/* Universo vivo: estado do save, importação e rastreabilidade */
+.world-career-panel{margin:1.4rem 0;padding:1.25rem}
+.world-career-panel .section-title{align-items:flex-start;flex-wrap:wrap;gap:.5rem}
+.world-counts{display:flex;flex-wrap:wrap;gap:.8rem;margin:.85rem 0}
+.world-counts>span{display:flex;flex:1;flex-direction:column;min-width:90px;border:1px solid var(--border,#293741);border-radius:12px;padding:.8rem}
+.world-counts strong{font-size:1.35rem}.world-counts small{opacity:.75}
+.world-career-panel p{font-size:.82rem;line-height:1.55;opacity:.85;margin:.65rem 0}
+.world-upload-label{display:block;font-size:.82rem;font-weight:700;margin:1rem 0 .45rem}
+.world-career-panel input[type=file],.world-career-panel input[type=search]{display:block;width:100%;max-width:100%;padding:.75rem;box-sizing:border-box;border-radius:10px;background:var(--panel,#111b24);color:inherit;border:1px solid var(--border,#293741)}
+.world-player-results{max-height:280px;overflow:auto;margin-top:1rem}
+.world-row{display:flex;justify-content:space-between;gap:1rem;align-items:center;padding:.65rem .25rem;border-bottom:1px solid var(--border,#293741)}
+.world-row>span:first-child{min-width:0}.world-row strong{display:block;overflow-wrap:anywhere;font-size:.86rem}.world-row small{display:block;opacity:.75;font-size:.74rem}
+.world-row-status{font-size:.75rem;white-space:nowrap;opacity:.85}
+@media(max-width:550px){.world-row{align-items:flex-start}.world-row-status{white-space:normal;text-align:right}}

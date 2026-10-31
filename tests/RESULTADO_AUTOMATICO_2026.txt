@@ -1,0 +1,64 @@
+TAP version 13
+# Subtest: baixa e descompacta automaticamente o snapshot Transfermarkt e preserva os IDs reais
+ok 1 - baixa e descompacta automaticamente o snapshot Transfermarkt e preserva os IDs reais
+  ---
+  duration_ms: 47.404178
+  type: 'test'
+  ...
+# Subtest: reutiliza o snapshot por sessão e não substitui carreiras por trás do usuário
+ok 2 - reutiliza o snapshot por sessão e não substitui carreiras por trás do usuário
+  ---
+  duration_ms: 0.640895
+  type: 'test'
+  ...
+# Subtest: rota Cloudflare não aceita urls externas nem partes não autorizadas
+ok 3 - rota Cloudflare não aceita urls externas nem partes não autorizadas
+  ---
+  duration_ms: 6.856585
+  type: 'test'
+  ...
+# Subtest: distribuição de aposentadoria concentrada entre 36 e 40, média entre 36 e 40
+ok 4 - distribuição de aposentadoria concentrada entre 36 e 40, média entre 36 e 40
+  ---
+  duration_ms: 46.040202
+  type: 'test'
+  ...
+# Subtest: envelhece e declina sem passar do mínimo e cria reposição de mesma posição e clube
+ok 5 - envelhece e declina sem passar do mínimo e cria reposição de mesma posição e clube
+  ---
+  duration_ms: 1.358526
+  type: 'test'
+  ...
+# Subtest: processar duas vezes o mesmo ano não duplica jogadores gerados
+ok 6 - processar duas vezes o mesmo ano não duplica jogadores gerados
+  ---
+  duration_ms: 0.38803
+  type: 'test'
+  ...
+# Subtest: avanço a longo prazo: IDs únicos, sem ressuscitar atletas e sem degradação de juvenis antes do auge
+ok 7 - avanço a longo prazo: IDs únicos, sem ressuscitar atletas e sem degradação de juvenis antes do auge
+  ---
+  duration_ms: 31.99718
+  type: 'test'
+  ...
+# Subtest: importação Kaggle respeita IDs, ano de nascimento, nacionalidade e não inventa GER
+ok 8 - importação Kaggle respeita IDs, ano de nascimento, nacionalidade e não inventa GER
+  ---
+  duration_ms: 2.158351
+  type: 'test'
+  ...
+# Subtest: 50 mil jogadores, evolução em massa e reposições com custo controlado
+ok 9 - 50 mil jogadores, evolução em massa e reposições com custo controlado
+  ---
+  duration_ms: 202.3257
+  type: 'test'
+  ...
+1..9
+# tests 9
+# suites 0
+# pass 9
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 380.193277
