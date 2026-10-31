@@ -4078,8 +4078,28 @@ function upgradeFictionalPlayerNames(players){
   renamedRosterInstances.add(players);
   let count=0;
   for(const wp of players){
+    if(wp.generated===true&&!wp.youthRatingV110&&window.BTLWorldCareer?.youthRating){
+      // Reequilibra apenas os fictícios antigos de todos os saves; preserva
+      // nomes, IDs, vínculos e qualquer estatística já registrada no histórico.
+      const now=Math.max(2026,Number((typeof state==='object'&&state?.season?.year)||2026));
+      const oldBirth=Number(wp.birthYear)||0;
+      const created=Number(wp.generationYear)||Math.max(2026,Math.min(now,(oldBirth||2007)+19));
+      const createdYear=Math.max(2026,Math.min(now,created));
+      const seed=typeof stableHash==='function'?stableHash(String(wp.id||'')):0;
+      const ageAtEntry=16+seed%4;
+      const base=window.BTLWorldCareer.youthRating(wp.id);
+      const potential=window.BTLWorldCareer.youthPotential(wp.id,base);
+      wp.birthYear=createdYear-ageAtEntry;
+      wp.generationYear=createdYear;
+      wp.rating=base;
+      wp.potential=potential;
+      wp.lastAgedYear=createdYear;
+      window.BTLWorldCareer.evolveRating(wp,now);
+      wp.youthRatingV110=true;
+      if(!/^(?:atleta simulado|jogador simulado|simulated player)\s*\d+$/i.test(String(wp.name||'')))count++;
+    }
     if(!window.BTLPlayerNames.needsName(wp))continue;
-    // Regens already have names. Replace only generic placeholders or legacy roster labels.
+    // Nunca renomear atletas reais nem perder o identificador do registro.
     if(!/^(?:atleta simulado|jogador simulado|simulated player)\s*\d+$/i.test(String(wp.name||'')))continue;
     const country=wp.nationalCode||wp.countryCode||canonicalClubCountryCode(wp.club,'')||'';
     const slot=Number(String(wp.id||'').split(':').pop())||0;
@@ -4285,12 +4305,20 @@ function leaderboardPlayerProfile(wp){
  const winger=/^(PD|PE|RW|LW|ED|EE|PONTA)$/.test(pos);
  const striker=/^(ATA|ST|CF|CA|AV|SA|SEGUNDO ATACANTE)$/.test(pos);
  const type=gk?'gk':defender?'def':holding?'holding':central?'cm':creator?'creator':winger?'wing':striker?'striker':'cm';
- const quality=clamp(.74+(Number(wp.rating||78)-74)*.025,.65,1.40);
+ const rating=Number(wp.rating||68);
+ const quality=wp.generated?clamp(.35+(rating-48)*.023,.32,1.14):clamp(.74+(rating-74)*.025,.65,1.40);
  const goalWeight={gk:0,def:.028,holding:.07,cm:.12,creator:.19,wing:.31,striker:.48}[type]*quality;
  const assistWeight={gk:0,def:.065,holding:.11,cm:.21,creator:.35,wing:.22,striker:.13}[type]*quality;
  const gameGoalCeiling={gk:0,def:.125,holding:.18,cm:.27,creator:.25,wing:.56,striker:.74}[type]*quality;
  const gameAssistCeiling={gk:0,def:.2,holding:.33,cm:.48,creator:.46,wing:.45,striker:.34}[type]*quality;
- return {type,goalWeight,assistWeight,gameGoalCeiling,gameAssistCeiling,maxMatchGoals:type==='striker'||type==='wing'?3:type==='creator'?2:type==='gk'?0:1};
+ // Jovens de GER baixo não se tornam artilheiros de elite por falta
+ // de atletas cadastrados; os gols restantes continuam pertencendo ao clube.
+ const youthGoalCap=rating>=96?65:rating>=91?42:rating>=86?28:rating>=79?18:rating>=74?12:rating>=69?8:rating>=64?5:rating>=58?3:2;
+ const youthAssistCap=rating>=96?38:rating>=91?29:rating>=86?22:rating>=79?15:rating>=74?10:rating>=69?7:rating>=64?5:rating>=58?3:2;
+ return {type,goalWeight,assistWeight,gameGoalCeiling,gameAssistCeiling,
+   maxSeasonGoals:wp.generated?youthGoalCap:Infinity,
+   maxSeasonAssists:wp.generated?youthAssistCap:Infinity,
+   maxMatchGoals:type==='striker'||type==='wing'?(wp.generated&&rating<74?1:3):type==='creator'?2:type==='gk'?0:1};
 }
 function recordedLeaderboardStatistics(title,players){
  const s=state.season;if(!s)return new Map();
@@ -4341,6 +4369,7 @@ function recordedLeaderboardStatistics(title,players){
      for(let n=0;n<goals-userGoals;n++){
        const options=selected.filter(x=>{
          const maxSeason=x.row.games?Math.min(
+           x.profile.maxSeasonGoals,
            Number.isFinite(limit)?Math.ceil(limit*x.profile.gameGoalCeiling)+1:Infinity,
            Math.floor(x.row.games*x.profile.gameGoalCeiling)+1):0;
          const matchGoals=x._lastMatch===id?x._matchGoals||0:0;
@@ -4355,7 +4384,7 @@ function recordedLeaderboardStatistics(title,players){
        if(n>=userAssists&&stableHash(`${title}|${id}|${side}|assist|${n}`)%100<64){
          const choices=selected.filter(x=>{
            if(x===scorer||x.profile.assistWeight<=0)return false;
-           const maxAssist=Math.floor(x.row.games*x.profile.gameAssistCeiling)+1;
+           const maxAssist=Math.min(x.profile.maxSeasonAssists,Math.floor(x.row.games*x.profile.gameAssistCeiling)+1);
            return x.row.assists<maxAssist;
          });
          const assister=pick(choices,otherSquadWeight,`${title}|${id}|${side}|assister|${n}`,'assistWeight');
@@ -4415,11 +4444,13 @@ function leaderboardSyntheticPlayer(club,country,slot,year){
   const id=`roster-sim:${normalizeKey(country||'xx')}:${normalizeKey(club)}:${slot}`;
   const hash=stableHash(id),positions=['GOL','ZAG','ZAG','LD','LE','VOL','MC','MEI','PD','PE','ATA','ATA','MC','MEI'];
   const pos=positions[(slot-1)%positions.length];
-  const teamStrength=clubStrength(club,country)||findClubDataAny(club)?.strength||75;
-  const rating=clamp(Math.round(teamStrength-9+hash%12),53,89);
+  // Atletas fictícios que completam elencos começam jovens e pouco experientes;
+  // o poder de um clube não transforma reservas gerados em estrelas instantâneas.
+  const rating=window.BTLWorldCareer?.youthRating(id)??(48+hash%15);
+  const potential=window.BTLWorldCareer?.youthPotential(id,rating)??Math.min(94,rating+8);
   const name=window.BTLPlayerNames?.generate(id,country,slot)||`Jogador ${String(slot).padStart(2,'0')}`;
-  return {id,name,club,countryCode:country||'',nationalCode:'',position:pos,rating,
-    birthYear:year-(19+hash%10),lastAgedYear:year,retired:false,generated:true,rosterPlaceholder:true,
+  return {id,name,club,countryCode:country||'',nationalCode:'',position:pos,rating,potential,
+    birthYear:year-(16+hash%4),lastAgedYear:year,retired:false,generated:true,generationYear:year,rosterPlaceholder:true,youthRatingV110:true,
     estimatedSimulationRating:true,source:'ELENCO FICTÍCIO · GERADO PELO JOGO'};
 }
 function ensureLeaderboardRosterCoverage(clubs,world){
@@ -4571,14 +4602,17 @@ function renderCompetitionLeaderboards(){
   }
   const filtered=leaderboardSelectedTeam?rows.filter(r=>normalizeKey(r.team)===leaderboardSelectedTeam):rows;
   const ordered=filtered.sort((a,b)=>(b[leaderboardMode]||0)-(a[leaderboardMode]||0)||(b.goals||0)-(a.goals||0)||(b.games||0)-(a.games||0)||(b.rating||0)-(a.rating||0));
-  const eligible=leaderboardSelectedTeam?ordered:ordered.filter(r=>Number(r[leaderboardMode]||0)>0);
+  const withStats=ordered.filter(r=>Number(r[leaderboardMode]||0)>0);
+  // Na visão geral, prioriza atletas reais: preenchimentos fictícios podem
+  // ser consultados pelo filtro de clube, mas não monopolizam o top 8.
+  const eligible=leaderboardSelectedTeam?ordered:(withStats.some(r=>!r.rosterPlaceholder)?withStats.filter(r=>!r.rosterPlaceholder):withStats);
   const top=eligible.slice(0,leaderboardSelectedTeam?22:8),userIndex=eligible.findIndex(x=>x.isUser);
   if(!leaderboardSelectedTeam&&userIndex>=8)top.push({...eligible[userIndex],shownRank:userIndex+1});
-  const header=leaderboardSelectedTeam?`<div class="leaderboard-team-header"><strong>${esc(teamNames.find(n=>normalizeKey(n)===leaderboardSelectedTeam)||'Equipe')}</strong><span>${eligible.length} atletas · ${eligible.filter(r=>r.generated).length} gerados</span></div>`:'';
-  const rowsMarkup=top.map((r,i)=>`<div class="leaderboard-row ${r.isUser?'is-user':''}"><b>${r.shownRank||i+1}</b><span><strong>${esc(r.name)}</strong>${r.rosterPlaceholder?'<small class="leaderboard-generated-label">GERADO</small>':''}</span>${leaderboardTeamVisual(r,leaderboardCompetition)}<strong>${r[leaderboardMode]||0}</strong></div>`).join('');
+  const header=leaderboardSelectedTeam?`<div class="leaderboard-team-header"><strong>${esc(teamNames.find(n=>normalizeKey(n)===leaderboardSelectedTeam)||'Equipe')}</strong><span>${eligible.length} atletas</span></div>`:'';
+  const rowsMarkup=top.map((r,i)=>`<div class="leaderboard-row ${r.isUser?'is-user':''}"><b>${r.shownRank||i+1}</b><span><strong>${esc(r.name)}</strong></span>${leaderboardTeamVisual(r,leaderboardCompetition)}<strong>${r[leaderboardMode]||0}</strong></div>`).join('');
   box.innerHTML=header+`<div class="leaderboard-head"><span>#</span><span>Jogador</span><span>Equipe</span><span>${leaderboardMode==='goals'?'Gols':'Assist.'}</span></div>`+
     (rowsMarkup||'<p class="muted leaderboard-no-stats">Nenhum gol ou assistência registrado nesta competição até agora. Selecione um clube para ver os atletas do elenco.</p>')+
-    '<small class="leaderboard-data-note">Estatísticas atribuídas somente a partidas registradas na carreira. Atletas marcados GERADO são fictícios e completam elencos sem dados suficientes.</small>';
+    '<small class="leaderboard-data-note">Estatísticas de partidas registradas na carreira. A classificação geral prioriza jogadores reais cadastrados; selecione um clube para consultar todo o elenco, inclusive atletas fictícios de preenchimento.</small>';
   hydratePenaltyBadges(box);
   tabs.querySelectorAll('[data-leader-competition]').forEach(btn=>btn.addEventListener('click',()=>{
     leaderboardCompetition=btn.dataset.leaderCompetition;leaderboardSelectedTeam='';renderCompetitionLeaderboards();

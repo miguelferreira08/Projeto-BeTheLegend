@@ -1,7 +1,7 @@
 /* Be The Legend — simulated-world lifecycle v1.
  * Pure and deterministic progression. The only verified biographical fields
  * come from the source CSV; no simulated rating is presented as Transfermarkt
- * or EA/FM ability data. Synthetic players are ALWAYS labeled as generated.
+ * or EA/FM ability data. Synthetic origin is retained in stored metadata.
  */
 (function(root,factory){
   const api=factory();
@@ -44,8 +44,33 @@
     return 40;
   }
   function retirementProbability(age){const a=Math.floor(age);return a<36?0:a===36?.12:a===37?19/88:a===38?28/69:a===39?25/41:1}
+  // Recrutas fictícios começam como jovens em formação. Um craque imediato
+  // surge em apenas ~0,15% dos sorteios, sem depender do GER do aposentado.
+  function youthRating(id){
+    const tier=hash('btl-youth-tier:'+String(id))%10000;
+    const roll=hash('btl-youth-rating:'+String(id));
+    if(tier<8500)return 48+roll%15;        // 85% · GER 48–62
+    if(tier<9840)return 63+roll%7;         // 13,4% · GER 63–69
+    if(tier<9985)return 70+roll%7;         // 1,45% · GER 70–76
+    return 77+roll%7;                      // 0,15% · GER 77–83
+  }
+  function youthPotential(id,rating){
+    const roll=hash('btl-youth-potential:'+String(id))%100;
+    const offset=hash('btl-youth-potential-offset:'+String(id));
+    if(roll<18)return rating;              // Parte dos jovens não vai evoluir.
+    if(roll<45)return clamp(rating+1+offset%6,rating,93);
+    if(roll<90)return clamp(rating+7+offset%12,rating,94);
+    return clamp(rating+19+offset%13,rating,96);
+  }
   function estimatedRating(value){const v=Number(value);return Number.isFinite(v)&&v>0?clamp(Math.round(65+13*Math.log10(v/1000000)),45,95):64}
   function yearlyDelta(player,nextAge,year){
+    if(player.generated){
+      // Progressão individual; nem toda temporada traz melhoria.
+      const chance=hash(String(player.id)+':youth-development:'+year)%100;
+      if(nextAge<=20)return chance<12?2:chance<56?1:0;
+      if(nextAge<=24)return chance<15?2:chance<63?1:0;
+      if(nextAge<=28)return chance<31?1:0;
+    }
     const keeper=player.position==='GOL';
     const peak=keeper?32:28;
     if(nextAge<=20)return 1+(hash(player.id+':growth:'+year)%3===0?1:0);
@@ -78,8 +103,8 @@
     let id='regen:'+year+':'+hash(identity+'|'+club+'|'+serial).toString(36);
     let suffix=0;while(used.has(id))id='regen:'+year+':'+hash(identity+'|'+club+'|'+serial+'|'+(++suffix)).toString(36);
     used.add(id);
-    const offset=hash(id),age=16+offset%4,base=clamp(Math.round(53+(Number(retired.rating)||68)*.16+(offset%13)),52,76);
-    const ceiling=clamp(base+11+hash(id+':potential')%17,base+4,94);
+    const offset=hash(id),age=16+offset%4,base=youthRating(id);
+    const ceiling=youthPotential(id,base);
     const nationality=retired.nationalCode||retired.countryCode||'';
     const name=playerNames?.generate(id,nationality,serial)||FIRST_NAMES[offset%FIRST_NAMES.length]+' '+LAST_NAMES[hash(id+':surname')%LAST_NAMES.length];
     return {id,name,club,countryCode:retired.countryCode||'',nationalCode:nationality,position:retired.position||'MC',birthYear:year-age,rating:base,potential:ceiling,retired:false,generated:true,generationYear:year,source:'GERADO PELO JOGO',lastAgedYear:year,retirementTarget:retirementAge({id}),number:null};
@@ -100,7 +125,8 @@
       evolveRating(p,year);
       changes.aged+=Math.max(0,year-before);
       const a=ageAt(p,year);
-      // Ano inaugural protegido: nenhuma aposentadoria antes de a estreia ser concluída.
+      // Primeira temporada (2026) protegida. Aposentadorias passam a ocorrer
+      // no mundo a partir da segunda temporada (2027), nunca no ano inicial.
       if(year>seedYear&&a!==null&&a>=retirementAge(p)){
         p.retired=true;p.retiredAge=a;p.retiredYear=year;p.lastClub=p.club;
         p.club='';p.retirementTarget=retirementAge(p);
@@ -180,5 +206,5 @@
     });return true}finally{db.close()}
   }
   async function restore(key){const db=await openStorage();try{return await new Promise((resolve,reject)=>{const tx=db.transaction('worlds','readonly'),req=tx.objectStore('worlds').get(String(key));req.onsuccess=()=>resolve(req.result||null);req.onerror=()=>reject(req.error)})}finally{db.close()}}
-  return {START_YEAR,retirementAge,retirementProbability,ageAt,yearlyDelta,evolveRating,advance,summary,parseCSV,mapTransfermarkt,attachClubs,position,estimatedRating,countryCode,competitionCountry,persist,restore};
+  return {START_YEAR,retirementAge,retirementProbability,ageAt,yearlyDelta,evolveRating,youthRating,youthPotential,advance,summary,parseCSV,mapTransfermarkt,attachClubs,position,estimatedRating,countryCode,competitionCountry,persist,restore};
 });
