@@ -55,8 +55,7 @@
 #decision-competition .competition-inline{align-items:center}
 
 .decision-score-team strong,
-.penalty-team-meta strong,
-#decision-match{display:none!important}
+.penalty-team-meta strong{display:none!important}
 .penalty-team-meta{min-width:72px;justify-content:center}
 .penalty-dot-row{flex-wrap:wrap}
 .penalty-dot.sudden-dot{border-style:solid}

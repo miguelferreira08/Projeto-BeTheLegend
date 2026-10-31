@@ -50,14 +50,59 @@
     const nickname=normNick(document.getElementById('auth-login-nickname')?.value),password=document.getElementById('auth-login-password')?.value||'';const account=accounts().find(a=>a.type==='local'&&nickKey(a.nickname)===nickKey(nickname));
     if(!account){showError('Conta não encontrada neste dispositivo.');return}try{showError('Verificando…');const hash=await passwordHash(password,account.passwordSalt);if(hash!==account.passwordHash){showError('Senha incorreta.');return}startSession(account)}catch(err){showError(err.message||'Não foi possível entrar.')}
   }
+  // Google Identity Services fornece a credencial, mas o servidor deve validá-la.
+  // Nunca aceite o token apenas com decodificação do JWT no navegador.
+  function googleErrorMessage(status,serverCode,reason,networkFailure=false){
+    const host=location.hostname.toLowerCase();
+    if(location.protocol==='file:'||host==='localhost'||host==='127.0.0.1')
+      return 'O login Google exige uma hospedagem com a função /api/auth/google. Abra a versão publicada em https://projeto-bethelegend.pages.dev/.';
+    if(host.endsWith('.github.io'))
+      return 'O GitHub Pages não executa a verificação Google (/api/auth/google). Use https://projeto-bethelegend.pages.dev/ para entrar com Google.';
+    if(networkFailure)
+      return 'Não foi possível acessar /api/auth/google. Verifique sua conexão e as funções do deploy no Cloudflare Pages.';
+    if(status===404||status===405)
+      return `A API Google não está ativa neste domínio (HTTP ${status}). Publique a pasta functions/ no Cloudflare Pages pelo GitHub ou Wrangler.`;
+    if(status===401){
+      if(reason==='audience')
+        return 'O token Google foi emitido para outro Client ID (HTTP 401). Confira se GOOGLE_CLIENT_ID no Cloudflare é igual ao ID de js/google-auth-config.js.';
+      if(reason==='expiration')
+        return 'A credencial Google expirou (HTTP 401). Atualize a página e entre novamente.';
+      return 'O servidor rejeitou a credencial Google (HTTP 401). Verifique o Client ID, a origem autorizada e a configuração OAuth.';
+    }
+    if(status===403)
+      return 'O servidor bloqueou a solicitação Google (HTTP 403). Verifique as regras de segurança do Cloudflare e as permissões OAuth.';
+    if(status===503){
+      if(serverCode==='google_not_configured')
+        return 'O Client ID de Google no Cloudflare não está configurado corretamente (HTTP 503).';
+      return 'O verificador Google está temporariamente indisponível (HTTP 503). Tente novamente e confira os logs das funções.';
+    }
+    if(status===502||status===504||status>=500)
+      return `A autenticação no servidor falhou (HTTP ${status}). Consulte os logs do Cloudflare Pages Functions.`;
+    if(status===200)
+      return 'A rota /api/auth/google respondeu sem uma identidade verificada. Verifique se a função correta está publicada.';
+    return `Falha na validação Google (HTTP ${status||'desconhecido'}). Confira a rota /api/auth/google no domínio atual.`;
+  }
   async function handleGoogleCredential(response){
     const credential=String(response?.credential||'');
     if(!credential){showError('O Google não retornou uma credencial.');return}
+    // Não enviar tokens de identidade para um host que não executa Pages Functions.
+    const host=location.hostname.toLowerCase();
+    if(location.protocol==='file:'||host.endsWith('.github.io')){
+      showError(googleErrorMessage(0,'',''));return;
+    }
     showError('Validando credencial Google…');let payload;
+    let r;
     try{
-      const r=await fetch('/api/auth/google',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({credential}),cache:'no-store'});
-      const data=await r.json();if(!r.ok||!data?.identity?.sub)throw Error('unverified');payload=data.identity;
-    }catch(_){showError('Não foi possível validar a identidade. Publique no Cloudflare Pages com funções ativadas e autorize seu domínio no Google Cloud.');return}
+      r=await fetch('/api/auth/google',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({credential}),cache:'no-store'});
+    }catch(_){showError(googleErrorMessage(0,'','',true));return}
+    let data;
+    try{data=await r.json()}catch(_){
+      showError(googleErrorMessage(r.status,'',''));return;
+    }
+    if(!r.ok||!data?.identity?.sub){
+      showError(googleErrorMessage(r.status,String(data?.error||''),String(data?.reason||'')));return;
+    }
+    payload=data.identity;
     showError('');
     const existing=accounts().find(a=>a.type==='google'&&a.googleSub===payload.sub);
     if(existing){upsertAccount({...existing,email:payload.email||existing.email||'',googleName:payload.name||existing.googleName||''});startSession(existing);return}

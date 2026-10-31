@@ -27,11 +27,17 @@ export async function verifyGoogleToken(token,clientId,get=fetch){
  if(!await crypto.subtle.verify('RSASSA-PKCS1-v1_5',key,decode(parts[2]),signingData))throw Error('bad_signature');
  return {sub:payload.sub,email:String(payload.email||''),name:String(payload.name||'').slice(0,130),given_name:String(payload.given_name||'').slice(0,70)};
 }
+// GET is a safe diagnostic: it does not authenticate anybody or expose credentials.
+export async function onRequestGet({env}){
+ const value=String(env?.GOOGLE_CLIENT_ID||DEFAULT_CLIENT_ID).trim();
+ return reply({service:'be-the-legend-google-auth',route:'available',method:'POST',client_id_source:env?.GOOGLE_CLIENT_ID?'environment':'default',configured:value.endsWith('.apps.googleusercontent.com')});
+}
+const PUBLIC_REJECTION_REASONS=new Set(['audience','expiration','issuer','issued_future','not_yet_valid','key_server','kid_missing','algorithm','bad_signature','email_unverified','invalid_token','invalid_segments','subject']);
 export async function onRequestPost({request,env}){
  const clientId=String(env?.GOOGLE_CLIENT_ID||DEFAULT_CLIENT_ID).trim();
  if(!clientId.endsWith('.apps.googleusercontent.com'))return reply({error:'google_not_configured'},503);
  if(Number(request.headers.get('content-length')||0)>14000)return reply({error:'invalid_token'},413);
  let body;try{body=await request.json()}catch{return reply({error:'invalid_request'},400)}
  try{return reply({identity:await verifyGoogleToken(body?.credential,clientId)})}
- catch(err){return reply({error:err.message==='key_server'?'temporarily_unavailable':'google_token_rejected'},err.message==='key_server'?503:401)}
+ catch(err){const reason=String(err?.message||'');return reply({error:reason==='key_server'?'temporarily_unavailable':'google_token_rejected',reason:PUBLIC_REJECTION_REASONS.has(reason)?reason:'validation_failed'},reason==='key_server'?503:401)}
 }

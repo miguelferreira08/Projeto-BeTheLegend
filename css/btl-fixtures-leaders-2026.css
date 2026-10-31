@@ -1,0 +1,11 @@
+
+/* BTL 2026-10-30: confrontos sempre identificados durante as decisões. */
+#match-decision-modal #decision-match{display:block!important;margin:12px 0 18px!important;text-align:center!important;font-size:inherit!important;}
+#decision-match .btl-decision-fixture{display:flex;justify-content:center;align-items:center;gap:clamp(10px,2vw,25px);max-width:100%;min-width:0;}
+#decision-match .btl-decision-fixture-team{display:flex;align-items:center;flex-direction:column;justify-content:center;gap:7px;flex:1 1 0;min-width:0;max-width:230px;}
+#decision-match .btl-decision-fixture-team .next-team-visual{display:grid;place-items:center;width:60px;min-width:60px;max-width:60px;}
+#decision-match .btl-decision-fixture-team .crest-shell{width:58px!important;height:58px!important;padding:5px!important;border-radius:12px!important;}
+#decision-match .btl-decision-fixture-team .national-flag-image{max-width:62px;height:40px;}
+#decision-match .btl-decision-fixture-name{display:block!important;color:#f5f8fc;font-size:clamp(11px,1.5vw,15px);font-weight:800;line-height:1.35;overflow-wrap:anywhere;}
+#decision-match .btl-decision-versus{color:var(--comp-accent,#ffdc36);font-weight:900;font-size:23px;flex:0 0 auto;}
+@media(max-width:560px){#decision-match .btl-decision-fixture-team .next-team-visual{width:48px;min-width:48px;}#decision-match .btl-decision-fixture-team .crest-shell{width:47px!important;height:47px!important;}#decision-match .btl-decision-fixture-name{font-size:11px;}#decision-match .btl-decision-fixture{gap:9px;}}
