@@ -1,0 +1,51 @@
+/* Be The Legend 11.1 — escolha de posição em campo
+   O select original permanece no DOM para validação, saves e acessibilidade. */
+.btl-position-native-label{
+  position:absolute!important;left:-10000px!important;
+  width:1px!important;height:1px!important;overflow:hidden!important;
+  opacity:0!important;pointer-events:none!important
+}
+.btl-position-pitch-field{
+  border:1px solid rgba(119,184,137,.32);
+  border-radius:18px;padding:16px;
+  background:linear-gradient(160deg,rgba(24,49,39,.66),rgba(7,20,22,.75));
+  min-width:0;grid-column:1/-1
+}
+.btl-position-pitch-field legend{padding:0 8px;font-size:14px;font-weight:800;color:#f4f7f7}
+.btl-pitch{
+  position:relative;width:min(100%,620px);aspect-ratio:1.35;
+  margin:8px auto 0;min-height:310px;max-height:460px;
+  border:3px solid rgba(220,255,224,.76);border-radius:12px;
+  background:repeating-linear-gradient(0deg,#12462f 0%,#12462f 12.5%,#195338 12.5%,#195338 25%);
+  box-shadow:inset 0 0 0 6px rgba(13,50,34,.7),0 20px 45px rgba(0,0,0,.25);
+  overflow:hidden
+}
+.btl-pitch-midline{position:absolute;left:3%;right:3%;top:50%;height:2px;background:rgba(232,255,233,.65)}
+.btl-pitch-circle{position:absolute;top:50%;left:50%;width:21%;aspect-ratio:1;transform:translate(-50%,-50%);border:2px solid rgba(232,255,233,.65);border-radius:50%}
+.btl-pitch-topbox,.btl-pitch-bottombox{position:absolute;left:24%;width:52%;height:14%;border:2px solid rgba(232,255,233,.64)}
+.btl-pitch-topbox{top:0;border-top:0}.btl-pitch-bottombox{bottom:0;border-bottom:0}
+.btl-pitch-centerline{position:absolute;left:50%;top:50%;width:8px;height:8px;transform:translate(-50%,-50%);border-radius:50%;background:#f4fff1}
+.btl-pitch-position{
+  position:absolute;z-index:2;transform:translate(-50%,-50%);
+  width:46px;height:35px;border:1px solid rgba(255,255,255,.64);border-radius:9px;
+  background:linear-gradient(155deg,#102c23,#081a15);color:#fff!important;
+  font-size:11px!important;font-weight:850!important;cursor:pointer;
+  box-shadow:0 6px 15px rgba(0,0,0,.32);touch-action:manipulation;
+  transition:transform .16s ease,background .16s ease,box-shadow .16s ease
+}
+.btl-pitch-position:hover,.btl-pitch-position:focus-visible{
+  transform:translate(-50%,-50%) scale(1.13);
+  background:#246944;outline:2px solid #f4d644;outline-offset:2px
+}
+.btl-pitch-position[aria-pressed="true"]{
+  transform:translate(-50%,-50%) scale(1.16);
+  background:#f4d644;color:#0b2117!important;
+  border-color:#fff;box-shadow:0 0 0 3px rgba(244,214,68,.25),0 9px 18px rgba(0,0,0,.4)
+}
+.btl-pitch-caption{color:rgba(238,255,242,.8);font-size:12px!important;margin:12px 3px 2px;text-align:center}
+@media(max-width:650px){
+ .btl-position-pitch-field{padding:10px;border-radius:14px}
+ .btl-pitch{aspect-ratio:.92;min-height:370px;max-height:480px}
+ .btl-pitch-position{width:39px;height:32px;font-size:10px!important}
+}
+@media(prefers-reduced-motion:reduce){.btl-pitch-position{transition:none!important}}
