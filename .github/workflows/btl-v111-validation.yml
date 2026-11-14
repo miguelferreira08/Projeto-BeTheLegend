@@ -1,0 +1,39 @@
+name: BTL v11.1 regression and ZIP
+on:
+  push:
+    branches:
+      - btl-v111-correcoes-validacao
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  validate-and-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Configure Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Check JavaScript syntax
+        run: |
+          node --check js/app.js
+          node --check js/world-career.js
+          node --check js/career-v111.js
+      - name: Run career regression tests
+        run: node tests/v111-career-regression.cjs
+      - name: Package full web game
+        run: |
+          mkdir -p /tmp/btl-v111
+          rsync -a --exclude='.git/' --exclude='.github/' --exclude='tests/' --exclude='QA-V20/' --exclude='QA-capturas/' --exclude='*.zip' ./ /tmp/btl-v111/
+          cd /tmp/btl-v111
+          zip -qr "$GITHUB_WORKSPACE/Be_The_Legend_V11_1_COMPLETO.zip" .
+          unzip -tq "$GITHUB_WORKSPACE/Be_The_Legend_V11_1_COMPLETO.zip"
+      - name: Upload verified ZIP
+        uses: actions/upload-artifact@v4
+        with:
+          name: Be_The_Legend_V11_1_COMPLETO
+          path: Be_The_Legend_V11_1_COMPLETO.zip
+          retention-days: 14
