@@ -35,6 +35,7 @@ cctx.countryByCode=code=>teams.get(code)||null;
 cctx.codeForCountryName=name=>teams.get(name)?.code||'';
 cctx.canonicalClubCountryCode=()=> 'ENG';
 cctx.clubStrength=()=>80;
+cctx.nationalTeamStrength=()=>82;
 cctx.WORLD_AWARD_RIVALS=[{name:'Robert Lewandowski',countryCode:'ES',rating:91,goalBase:28,assistBase:7,teamPower:94},{name:'C01 29',countryCode:'ENG',rating:86,goalBase:24,assistBase:8,teamPower:90}];
 cctx.COMPETITION_RULES={ENG:{league:'Premier League'}};
 cctx.LEAGUE_CLUB_POOLS={ENG:['A','B','C']};
