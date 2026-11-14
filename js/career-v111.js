@@ -272,7 +272,10 @@ function renderPositionPitch(){
     pitch.appendChild(button);
   }
   select.addEventListener('change',()=>[...pitch.querySelectorAll('button')].forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.positionName===select.value))));
-  if(!select.value)select.value=''; // o formulário continua obrigatório
+  // Exige uma escolha consciente; mantém a validação do select original.
+  if(!select.querySelector('option[value=""]')){const placeholder=document.createElement('option');placeholder.value='';placeholder.textContent='Escolha no campo';select.insertBefore(placeholder,select.firstChild);}
+  select.value='';
+  select.dispatchEvent(new Event('change',{bubbles:true}));
 }
 function filterCountries(){
   const select=document.querySelector('#nationality');if(!select)return;
