@@ -1,0 +1,46 @@
+name: Be The Legend v11.2 — Supercopas e chaveamentos
+on:
+  push:
+    branches: [btl-v112-chaves-titulos-supercopas]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  test-and-package:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Obter projeto
+        uses: actions/checkout@v4
+      - name: Configurar Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Verificar sintaxe
+        run: |
+          node --check js/app.js
+          node --check js/career-v111.js
+          node --check js/season-lineage-v112.js
+      - name: Regressao V11.1
+        run: node tests/v111-career-regression.cjs
+      - name: Regressao Supercopas V11.2
+        run: node tests/v112-season-lineage-regression.cjs
+      - name: Preparar Chromium
+        run: |
+          npm install --no-save --no-package-lock playwright@1.56.0
+          PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-x64 npx playwright install chromium
+      - name: Teste de navegador
+        run: PLAYWRIGHT_HOST_PLATFORM_OVERRIDE=ubuntu24.04-x64 node tests/v111-browser-smoke.cjs
+      - name: Gerar projeto completo em ZIP
+        run: |
+          mkdir -p /tmp/btl-v112
+          rsync -a --exclude='.git/' --exclude='.github/' --exclude='tests/' --exclude='QA-V20/' --exclude='QA-capturas/' --exclude='*.zip' ./ /tmp/btl-v112/
+          cd /tmp/btl-v112
+          zip -qr "$GITHUB_WORKSPACE/Be_The_Legend_V11_2_COMPLETO.zip" .
+          unzip -tq "$GITHUB_WORKSPACE/Be_The_Legend_V11_2_COMPLETO.zip"
+      - name: Entregar ZIP validado
+        uses: actions/upload-artifact@v4
+        with:
+          name: Be_The_Legend_V11_2_COMPLETO
+          path: Be_The_Legend_V11_2_COMPLETO.zip
+          retention-days: 14
